@@ -32,6 +32,7 @@
 - RLS, função e duas restrições de unicidade cobertas por pgTAP.
 - Commit funcional: `c2f2fe8b36f86dcf062d92bdc1a73c60de3916d0`.
 - Deploy Netlify: `6a7b2eab8609c90008e526f6`, estado `ready`, sem erro ou segredo detectado.
+- Smoke test aceito pelo owner: `Ciclo — Liderança & Equipe`, de 11/08/2026 a 09/11/2026.
 
 ## Segurança e advisors
 
@@ -47,4 +48,4 @@
 
 ## Próximo gate
 
-Homologar em produção o início e a exibição do ciclo. Nenhuma nova feature está autorizada por este documento.
+Homologação concluída. O próximo gate permitido é a definição documental da Mission Foundation; nenhuma implementação é autorizada por este documento.

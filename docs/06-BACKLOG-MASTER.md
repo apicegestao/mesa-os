@@ -119,3 +119,28 @@ Objetivo proposto: transformar um diagnóstico concluído em uma única priorida
 **Status:** COMPLETE — PRODUCTION RELEASED
 
 Objetivo: criar um período operacional de 90 dias, único e rastreável para a prioridade ativa, sem antecipar Missões, metas, tarefas ou progresso.
+
+## GOV-2.10D — Mission Foundation Definition & Alignment
+
+**Status:** IN PROGRESS
+
+### Entregáveis autorizados
+
+- Homologação documental do CYC-2.9.
+- Alignment Check e Pre-Flight da Mission Foundation.
+- Feature Spec preliminar MIS-2.11.
+- Decisões pendentes sobre origem, quantidade, estrutura, estados, ordem, permissões e conclusão.
+- Atualização de governança e Post-Flight documental.
+
+### Restrições
+
+- Nenhum código, migration, configuração externa ou deploy funcional.
+- Nenhuma Missão real, Ferramenta, Implementação, Evidência ou Evolução.
+- Nenhum TutorIA ou geração por IA.
+- MIS-2.11 não autorizado para BUILD até aprovação explícita.
+
+## MIS-2.11 — Mission Foundation
+
+**Status:** PROPOSAL — NOT AUTHORIZED FOR BUILD
+
+Objetivo proposto: representar o trabalho orientado do ciclo por meio de Missões estruturadas e rastreáveis, sem antecipar a ferramenta metodológica ou a comprovação da implementação.

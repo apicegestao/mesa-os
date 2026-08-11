@@ -1,17 +1,17 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** CYC-2.9 — Cycle Foundation
-**Mode:** BUILD
-**Status:** COMPLETE — PRODUCTION RELEASED
+**Sprint:** GOV-2.10D — Mission Foundation Definition & Alignment
+**Mode:** DEFINITION
+**Status:** IN PROGRESS
 
 ## Authorized
 
-- Criar um único ciclo ativo para a organização a partir da prioridade confirmada.
-- Iniciar imediatamente, com duração fixa de 90 dias corridos e término calculado automaticamente.
-- Usar o título `Ciclo — [Dimensão]` e permitir acesso somente ao `owner` ativo.
-- Exibir o ciclo ativo sem progresso, conclusão manual ou alteração posterior.
-- Migration versionada, RLS, operação transacional, testes e documentação de encerramento.
+- Registrar a homologação do ciclo real em produção.
+- Executar Alignment Check e Pre-Flight da Mission Foundation.
+- Criar Feature Spec preliminar MIS-2.11.
+- Explicitar decisões, limites, critérios de aceite e riscos.
+- Atualizar roadmap, backlog, rastreabilidade e Post-Flight documental.
 
 ## Not Authorized
 
@@ -37,11 +37,15 @@
 - Escolha humana em caso de empate no menor score.
 - Seleção de dimensão diferente da única menor candidata.
 - Alteração, substituição, cancelamento ou segunda prioridade.
-- Meta, Missão, ferramenta, plano de ação ou recomendação.
+- Missão real, meta, ferramenta, plano de ação ou recomendação.
 - Edição, cancelamento, substituição ou conclusão manual do ciclo.
 - Encerramento automático do ciclo ao ultrapassar a data final.
 - Segundo ciclo ou múltiplos ciclos por organização.
+- Código, migration, configuração externa ou deploy funcional.
+- Geração de Missão por TutorIA ou qualquer IA.
+- Ferramenta, Implementação, Evidência ou Evolução.
+- Implementação de MIS-2.11 antes de aprovação explícita e novo Current Scope em BUILD.
 
 ## Exit criteria
 
-Migration remota aplicada; operação validada com rollback; lint, typecheck, testes e build aprovados; deploy de produção saudável; documentação canônica e Post-Flight atualizados.
+Homologação do CYC-2.9 registrada; Pre-Flight e Feature Spec preliminar MIS-2.11 criados; decisões obrigatórias explicitadas; documentos consistentes; nenhuma alteração funcional; Post-Flight entregue.

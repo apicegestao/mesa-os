@@ -43,3 +43,7 @@
 | CYC-2.9 | Início transacional owner-only | `public.start_cycle(uuid)` | teste remoto com rollback |
 | CYC-2.9 | Experiência do ciclo | `src/modules/cycle`, `src/app/app/page.tsx` | lint + typecheck + testes + build |
 | CYC-2.9 | Governança e encerramento | `docs/34-PRE-FLIGHT-CYC-2.9.md`, `docs/35-POST-FLIGHT-CYC-2.9.md` | revisão documental |
+| GOV-2.10D | Homologação do ciclo | `docs/35-POST-FLIGHT-CYC-2.9.md` | smoke test aceito pelo owner |
+| GOV-2.10D | Alignment e Pre-Flight | `docs/36-PRE-FLIGHT-2.10D.md` | revisão documental |
+| GOV-2.10D | Proposta Mission Foundation | `docs/37-FEATURE-SPEC-MIS-2.11-DRAFT.md` | decisões pendentes explícitas |
+| GOV-2.10D | Encerramento | `docs/38-POST-FLIGHT-2.10D.md` | Post-Flight review |

@@ -2,7 +2,7 @@
 
 ## Fase atual
 
-Próximo incremento ainda não autorizado. Deve ser definido após homologação do CYC-2.9.
+Sprint GOV-2.10D — Mission Foundation Definition & Alignment: definição governada do primeiro objeto operacional do ciclo, sem implementação.
 
 ## Fases concluídas
 
@@ -16,9 +16,9 @@ Próximo incremento ainda não autorizado. Deve ser definido após homologação
 - Sprint GOV-2.8D — Cycle Foundation Definition & Alignment: decisões e limites do primeiro ciclo aprovados.
 - Sprint CYC-2.9 — Cycle Foundation: ciclo inicial de 90 dias ligado à prioridade confirmada, publicado em produção.
 
-## Próximo incremento
+## Próximo incremento proposto, não autorizado para BUILD
 
-Ainda não autorizado. Deve ser definido somente após homologação do CYC-2.9, sem antecipar Missões, TutorIA ou progresso.
+MIS-2.11 — Mission Foundation. Proposta de Missões estruturadas ligadas ao ciclo ativo, sem antecipar Ferramentas, Implementação, Evidência ou Evolução. BUILD depende da aprovação da Feature Spec.
 
 ## Sequenciamento governado
 
