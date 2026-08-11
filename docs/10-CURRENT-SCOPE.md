@@ -1,17 +1,25 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** RT-2.15 — Core Loop Completion Release Train
+**Sprint:** RT-2.18 — Experience Recomposition
 **Mode:** BUILD
-**Status:** COMPLETE — PRODUCTION RELEASED
+**Status:** IN PROGRESS — APPROVED
 
-## Authorized
+## Production baseline
 
 - IMP-2.15A — implementação com rascunho e confirmação explícita.
 - EVD-2.15B — evidência operacional estruturada e imutável.
 - MTR-2.15C — conclusão e desbloqueio atômicos.
 - STA-2.15D — estado e próxima ação derivados.
-- Migrations aditivas e separadas, testes, documentação e um deploy consolidado.
+
+## Authorized
+
+- DSX-2.18A — Design System & Responsive App Shell.
+- IAX-2.18B — Member Information Architecture & Next Action.
+- WUX-2.18C — Guided Mission and Tool Workspace.
+- TPX-2.18D — TutorIA Presence & Methodology Projection Foundation.
+- Refatoração de composição estritamente necessária aos quatro incrementos.
+- Testes, CI, preview, revisão, um merge e um deploy consolidado.
 
 ## Not Authorized
 
@@ -49,9 +57,21 @@
 - Implementação, Evidência ou Evolução.
 - Exportação, anexos, comentários ou colaboração por `member`.
 - Feature de negócio, migration, alteração de dados ou deploy manual.
+- Alteração de código, banco, Supabase, Netlify ou produção durante o GOV-2.16R.
+- Tratar o protótipo compilado como base de produção ou copiar código do legado.
+- Inventar novamente decisões já aprovadas sem primeiro recuperar a fonte.
+- Alterar documentos `FROZEN` antes de Change Request explícito e rastreável.
 - Redução de testes, RLS, validação server-side ou rastreabilidade.
 - Qualquer capacidade, dado ou transição não descritos no Definition Pack aprovado.
 
-## Exit criteria
+## Exit criteria do RT-2.18
 
-Atendidos em 2026-08-11. Evidências consolidadas em `docs/56-POST-FLIGHT-RT-2.15.md`. Próximo incremento ainda não autorizado.
+- Experiência compacta e responsiva com Próxima Melhor Ação derivada.
+- Core loop e contratos persistidos preservados.
+- Nenhuma IA ou progresso metodológico simulado.
+- Testes, lint, typecheck e build completos.
+- Pre-Release Review, deploy único, smoke e Post-Flight.
+
+## Encerramento
+
+BUILD autorizado em 2026-08-11 pelo Definition Pack aprovado. A baseline de produção permanece RT-2.15 até merge, deploy, smoke e Post-Flight do RT-2.18.

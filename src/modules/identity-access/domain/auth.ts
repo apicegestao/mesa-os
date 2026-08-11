@@ -10,3 +10,15 @@ export const genericLoginMessage =
 export function safeNextPath(value: string | null) {
   return value?.startsWith("/") && !value.startsWith("//") ? value : "/app";
 }
+
+export function authRedirectBaseUrl(productionUrl: string, deployUrl?: string, deployContext?: string) {
+  if (deployContext !== "deploy-preview" && deployContext !== "branch-deploy") return productionUrl;
+  if (!deployUrl) return productionUrl;
+  try {
+    const url = new URL(deployUrl);
+    const approvedHost = url.protocol === "https:" && url.hostname.endsWith("--mesa-os.netlify.app");
+    return approvedHost ? url.origin : productionUrl;
+  } catch {
+    return productionUrl;
+  }
+}

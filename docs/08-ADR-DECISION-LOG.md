@@ -112,3 +112,31 @@ O frontend usa somente publishable key. Chaves secret/service-role ficam exclusi
 - Evidência, conclusão da Missão e desbloqueio da próxima ocorrem em uma transação server-side.
 - A próxima Missão é determinada pela posição metodológica, sem escolha, pulo ou reordenação.
 - Estado e próxima ação do core loop são derivados dos registros canônicos, sem percentual duplicado.
+
+## ADR-035 — Approved product source baseline
+
+**Status:** ACCEPTED
+
+- A conversa `Mesa OS V2`, id `6a7671ee-20b0-83e9-ba40-12c7b311f0b7`, é a baseline histórica oficial da visão e das decisões aprovadas do produto.
+- O repositório permanece como contrato operacional para BUILD; a conversa fonte não substitui Feature Spec, testes ou Current Scope.
+- Omissões documentais exigem recuperação e reconciliação, não descarte silencioso.
+- Toda definição de domínio deve indicar quais decisões fonte foram consultadas.
+
+## ADR-036 — TutorIA-centered product architecture
+
+**Status:** ACCEPTED
+
+- TutorIA é o agente operacional central da metodologia e da experiência, não um módulo periférico de chat.
+- Sua arquitetura separa contexto, memória, conhecimento, raciocínio, políticas, tools e ações.
+- TutorIA não acessa o banco diretamente; ações passam por contratos autorizados, validação, escopo e auditoria.
+- Autonomia é graduada por risco, confiança e política, com escalonamento humano quando previsto.
+- A experiência possui presença contextual, painel acoplado ao trabalho e workspace completo.
+
+## ADR-037 — Event-driven communication and official WhatsApp
+
+**Status:** ACCEPTED
+
+- Proatividade nasce de eventos e Scheduler, não de disparos isolados implementados nas telas.
+- Automation Engine avalia contexto, regras, ator, canal, cooldown, escalonamento e resultado.
+- Communication Orchestrator coordena prioridades, frequência e consolidação de mensagens.
+- WhatsApp usa apenas API oficial, gateway controlado, webhooks, consentimento e opt-out rastreáveis.

@@ -10,6 +10,8 @@ import { ToolPanel } from "@/modules/structured-tool/tool-panel";
 import { loadCoreLoopWorkspace } from "@/modules/core-loop";
 import { CoreLoopPanel } from "@/modules/core-loop/core-loop-panel";
 import { logout } from "@/modules/identity-access";
+import { AppChrome, deriveNextAction, MethodologyMap, TutoriaPresence } from "@/modules/member-experience";
+import { lowestCandidates } from "@/modules/priority/domain/priority";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -39,8 +41,36 @@ export default async function AuthenticatedShellPage() {
   const availableMission = missions.find((mission) => mission.status === "available");
   const toolWorkspace = availableMission ? await loadToolWorkspace(supabase, availableMission.id, availableMission.definition_id) : null;
   const coreLoopWorkspace = availableMission && toolWorkspace?.updatedAt ? await loadCoreLoopWorkspace(supabase, availableMission.id) : null;
-  return <main className="app-shell">
-    <header className="app-header"><a href="/app" className="brand" aria-label="Mesa OS — início"><span>M</span><div><strong>Mesa OS</strong><small>{organization?.name}</small></div></a><form action={logout}><button type="submit" className="header-action">Sair</button></form></header>
-    {workspace ? workspace.status === "completed" ? <><DiagnosticResult workspace={workspace} />{workspace.executionId && workspace.result && <div className="priority-wrap"><PriorityPanel executionId={workspace.executionId} result={workspace.result} priority={priority} />{priority&&<CyclePanel priorityId={priority.id} cycle={cycle}/>} {cycle&&<MissionPanel cycleId={cycle.id} missions={missions}/>} {availableMission&&toolWorkspace&&<ToolPanel missionId={availableMission.id} workspace={toolWorkspace} readOnly={coreLoopWorkspace?.implementation?.status === "implemented"}/>} {availableMission&&coreLoopWorkspace&&<CoreLoopPanel missionId={availableMission.id} workspace={coreLoopWorkspace}/>}</div>}</> : <DiagnosticExperience initialWorkspace={workspace} /> : <section className="diagnostic-layout"><div className="card"><p className="eyebrow">Mesa OS</p><h1>Diagnóstico indisponível</h1><p className="summary">Não foi possível carregar a definição neste momento. Tente novamente em instantes.</p></div></section>}
-  </main>;
+  const organizationName = organization?.name ?? "Sua empresa";
+
+  if (!workspace) return <AppChrome organizationName={organizationName} logoutAction={logout}><section className="experience-card empty-experience"><p className="eyebrow">Mesa OS</p><h1>Diagnóstico indisponível</h1><p>Não foi possível carregar a definição neste momento. Tente novamente em instantes.</p></section></AppChrome>;
+
+  if (workspace.status !== "completed") {
+    const nextAction = deriveNextAction({ diagnosticStatus: "draft", hasPriority: false, priorityTied: false, hasCycle: false, hasMissions: false, hasAvailableMission: false, hasToolDraft: false, implementationStatus: "none" });
+    return <AppChrome organizationName={organizationName} logoutAction={logout} nextAction={nextAction}><section id="diagnostico" className="experience-section"><DiagnosticExperience initialWorkspace={workspace} /></section></AppChrome>;
+  }
+
+  const tied = workspace.result ? lowestCandidates(workspace.result).length > 1 : false;
+  const nextAction = deriveNextAction({
+    diagnosticStatus: "completed",
+    hasPriority: Boolean(priority),
+    priorityTied: tied,
+    hasCycle: Boolean(cycle),
+    hasMissions: missions.length > 0,
+    hasAvailableMission: Boolean(availableMission),
+    hasToolDraft: Boolean(toolWorkspace?.updatedAt),
+    implementationStatus: coreLoopWorkspace?.implementation?.status ?? "none",
+  });
+
+  return <AppChrome organizationName={organizationName} logoutAction={logout} nextAction={nextAction}>
+    <TutoriaPresence />
+    <section id="jornada" className="experience-section journey-section" aria-labelledby="journey-title">
+      <div className="section-heading"><div><p className="eyebrow">Minha jornada</p><h2 id="journey-title">Do diagnóstico à transformação</h2></div><span className="status-pill">Ciclo atual</span></div>
+      <div className="journey-rail" aria-label="Etapas da jornada"><span className="done">Diagnóstico</span><span className={priority ? "done" : "current"}>Prioridade</span><span className={cycle ? "done" : priority ? "current" : "future"}>Ciclo</span><span className={availableMission ? "current" : "future"}>Missão</span><span className="future">Evolução</span></div>
+      {workspace.executionId && workspace.result && <div className="journey-panels"><div id="prioridade"><PriorityPanel executionId={workspace.executionId} result={workspace.result} priority={priority} /></div>{priority && <div id="ciclo"><CyclePanel priorityId={priority.id} cycle={cycle} /></div>}{cycle && <div id="missao"><MissionPanel cycleId={cycle.id} missions={missions} /></div>}</div>}
+    </section>
+    {availableMission && toolWorkspace && <section id="workspace" className="experience-section workspace-section" aria-labelledby="workspace-title"><div className="section-heading"><div><p className="eyebrow">Meu sistema de gestão</p><h2 id="workspace-title">Entender, construir e aplicar</h2></div></div><div className="workspace-steps"><span className="done">1 · Entender</span><span className={toolWorkspace.updatedAt ? "done" : "current"}>2 · Construir</span><span className={coreLoopWorkspace?.implementation ? "done" : "future"}>3 · Aplicar</span><span className={coreLoopWorkspace?.implementation?.status === "implemented" ? "current" : "future"}>4 · Evidenciar</span></div><ToolPanel missionId={availableMission.id} workspace={toolWorkspace} readOnly={coreLoopWorkspace?.implementation?.status === "implemented"}/>{coreLoopWorkspace && <div id="implementacao"><CoreLoopPanel missionId={availableMission.id} workspace={coreLoopWorkspace}/></div>}</section>}
+    <section id="diagnostico" className="experience-section diagnostic-archive"><details><summary><span><small>Raio-X do Empresário · Mês 0</small><strong>Consultar diagnóstico de entrada</strong></span><span aria-hidden="true">+</span></summary><DiagnosticResult workspace={workspace} /></details></section>
+    <div id="metodologia"><MethodologyMap /></div>
+  </AppChrome>;
 }
