@@ -2,6 +2,16 @@
 
 | Backlog | Requisito | Implementação | Verificação |
 |---|---|---|---|
+| GOV-2.17D | Alignment Check | `docs/70-ALIGNMENT-CHECK-GOV-2.17D.md` | fontes, autoridades e conflitos revisados |
+| GOV-2.17D | Definition Pack integrado | `docs/71-DEFINITION-PACK-RT-2.18-DRAFT.md` | escopo, segurança, testes e rollback explícitos |
+| GOV-2.16R | Baseline histórica oficial | `docs/64-CHANGE-REQUEST-PRODUCT-SOURCE-BASELINE.md`, `docs/65-APPROVED-PRODUCT-SOURCE-REGISTER.md` | aprovação explícita do owner + identificação estável |
+| GOV-2.16R | Inventário de decisões | `docs/63-SOURCE-RECOVERY-MESA-OS-V2.md` | comparação com conversa fonte |
+| GOV-2.16R | Matriz de reconciliação | `docs/66-SOURCE-TO-GOVERNANCE-MATRIX.md` | cobertura por domínio e status |
+| GOV-2.16R | Autoridade e protocolo | `docs/00-CONSTITUTION.md`, `docs/09-CONSTRUCTION-PROTOCOL.md`, `docs/08-ADR-DECISION-LOG.md` | revisão de hierarquia e Change Request |
+| GOV-2.16R | Direção de produto e UX | `docs/01-BLUEPRINT.md`, `docs/02-V2-SCOPE.md`, `docs/05-UX-ARCHITECTURE.md` | centralidade do TutorIA e fontes preservadas |
+| GOV-2.16R | Arquitetura canônica TutorIA | `docs/67-TUTORIA-CANONICAL-ARCHITECTURE.md` | cobertura de contexto, memória, knowledge, policies, tools, actions e canais |
+| GOV-2.16R | Metodologia 4 × 4 | `docs/68-METHODOLOGY-4X4-RECONCILIATION.md` | correspondências, divergências e decisões abertas explícitas |
+| GOV-2.16R | Controle operacional | `docs/03-ROADMAP.md`, `docs/06-BACKLOG-MASTER.md`, `docs/10-CURRENT-SCOPE.md` | documentação-only; nenhum BUILD |
 | GOV-2.1R | Bootstrap web | `src/app`, configuração Next/TS | lint, typecheck, build |
 | GOV-2.1R | Modular monolith | `src/modules`, `modules/README.md` | revisão estrutural |
 | GOV-2.1R | Database foundation | `supabase/config.toml`, `supabase/migrations` | migration review / pgTAP quando DB local disponível |

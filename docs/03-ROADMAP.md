@@ -2,7 +2,7 @@
 
 ## Fase atual
 
-Próximo incremento ainda não autorizado. Deve ser definido após a homologação do RT-2.15.
+GOV-2.17D concluído. Definition Pack do RT-2.18 — Experience Recomposition está aguardando aprovação explícita.
 
 ## Fases concluídas
 
@@ -21,10 +21,12 @@ Próximo incremento ainda não autorizado. Deve ser definido após a homologaç�
 - Sprint TOL-2.13 — Structured Tool Foundation: Mapa de Papéis e Decisões schema-driven, publicado e homologado em produção.
 - Sprint GOV-2.14F — Governance Fast Track: Release Train seguro e cloud-first adotado, com redução de builds documentais.
 - RT-2.15 — Core Loop Completion: Implementação, Evidência e transição da Missão 1 para a Missão 2 publicadas.
+- GOV-2.16R — Product Source Reconciliation: conversa `Mesa OS V2` registrada como baseline oficial, documentos de autoridade reconciliados e arquiteturas canônicas de TutorIA e metodologia preservadas.
+- GOV-2.17D — Experience Recomposition Definition: escopo visual e transição segura definidos, sem BUILD.
 
-## Próximo Release Train proposto
+## Próxima decisão de Release Train
 
-RT-2.15 — Core Loop Completion: Definition Pack integrado de Implementação, Evidência, transição de Missão e estado do core loop. BUILD depende da aprovação do pack.
+RT-2.18 — Experience Recomposition, conforme `docs/71-DEFINITION-PACK-RT-2.18-DRAFT.md`. BUILD depende de aprovação explícita.
 
 ## Sequenciamento governado
 

@@ -1,5 +1,47 @@
 # Backlog Master
 
+## GOV-2.17D — Experience Recomposition Definition
+
+**Status:** COMPLETE — AWAITING PACK APPROVAL
+
+Objetivo: definir a recomposição segura da experiência antes de alterar o frontend, usando SRC-001, SRC-002 e SRC-003 sem antecipar IA real ou modificar o core loop.
+
+## RT-2.18 — Experience Recomposition
+
+**Status:** IN PROGRESS — APPROVED FOR BUILD
+
+- DSX-2.18A — Design System & Responsive App Shell.
+- IAX-2.18B — Member Information Architecture & Next Action.
+- WUX-2.18C — Guided Mission and Tool Workspace.
+- TPX-2.18D — TutorIA Presence & Methodology Projection Foundation.
+
+Autoridade: `docs/71-DEFINITION-PACK-RT-2.18-DRAFT.md`, aprovado explicitamente em 2026-08-11.
+
+## GOV-2.16R — Product Source Reconciliation
+
+**Status:** COMPLETE — DOCUMENTATION ONLY
+
+### Objetivo
+
+Recuperar a conversa fonte `Mesa OS V2` como baseline histórica oficial, reconciliar suas decisões com o Governance Pack e impedir perda de escopo por compressão documental.
+
+### Entregáveis
+
+- Source Register com identificação estável da conversa e referências complementares.
+- Inventário de decisões recuperadas.
+- Matriz Source → Governance → Backlog → Release.
+- Change Request dos documentos congelados.
+- Constituição, Blueprint, Scope, ADRs, UX e Construction Protocol reconciliados.
+- Mapa de lacunas para TutorIA, Journey, Tools, Automation, WhatsApp, Evolução, Concierge e Admin.
+- Reconciliação específica da metodologia 4 × 4.
+- Post-Flight documental e proposta do próximo Definition Pack.
+
+### Restrições
+
+- Nenhum código, migration, integração, secret ou deploy.
+- Nenhuma cópia de código do protótipo.
+- Nenhuma capacidade recuperada é automaticamente autorizada para BUILD.
+
 ## GOV-2.1R — Clean Bootstrap
 
 **Status:** COMPLETE

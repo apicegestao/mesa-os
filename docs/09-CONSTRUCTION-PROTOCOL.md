@@ -1,6 +1,6 @@
 # MOS-CP — Mesa OS Construction Protocol
 
-**Versão:** 1.1
+**Versão:** 1.2
 
 ## Modo padrão
 
@@ -9,14 +9,29 @@ Durante construção, o modo padrão é `BUILD`. Ele permite implementar, testar
 ## Hierarquia de autoridade
 
 1. Constitution.
-2. Blueprint, V2 Scope e ADRs.
-3. Backlog Master e Traceability Matrix.
-4. Feature Specification.
-5. Current Scope / sprint atual.
-6. Instruções da conversa.
-7. Sugestões da IA.
+2. Approved Product Source Register e decisões fonte explicitamente aprovadas.
+3. Blueprint, V2 Scope e ADRs.
+4. Backlog Master e Traceability Matrix.
+5. Feature Specification.
+6. Current Scope / sprint atual.
+7. Instruções da conversa corrente.
+8. Sugestões da IA.
 
 Em conflito, vence o nível superior. Uma solicitação explícita de alteração de governança deve primeiro atualizar os documentos correspondentes.
+
+## Source Recovery obrigatório
+
+A conversa `Mesa OS V2`, identificada de forma estável no Source Register, é a baseline histórica oficial do produto.
+
+Antes de definir ou implementar qualquer domínio relevante, o agente deve:
+
+1. localizar o domínio na conversa fonte;
+2. comparar as decisões com Constitution, Blueprint, Scope, ADRs, Backlog e UX Architecture;
+3. registrar requisitos ausentes ou conflitos na matriz de reconciliação;
+4. canonizar a decisão por Change Request quando necessário;
+5. somente então preparar Definition Pack e BUILD.
+
+O agente não pode alegar que uma capacidade aprovada deixou de existir apenas porque foi omitida de um resumo posterior. Também não pode executar diretamente a partir da conversa sem especificação, critérios de aceite e Current Scope.
 
 ## Regras de BUILD
 
@@ -30,7 +45,7 @@ Em conflito, vence o nível superior. Uma solicitação explícita de alteraçã
 
 ## Pre-Flight obrigatório
 
-Antes de editar: declarar item, documentos consultados, escopo, fora do escopo, arquivos previstos, migrations, riscos, testes e conflitos.
+Antes de editar: declarar item, documentos consultados, decisões da conversa fonte consultadas, escopo, fora do escopo, arquivos previstos, migrations, riscos, testes e conflitos.
 
 ## Regression Guard
 
