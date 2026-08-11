@@ -191,7 +191,7 @@ Objetivo proposto: permitir que o owner estruture um `Mapa de Papéis e Decisõe
 
 ## RT-2.15 — Core Loop Completion Release Train
 
-**Status:** APPROVED FOR BUILD — RELEASE TRAIN ACTIVE
+**Status:** COMPLETE — PRODUCTION RELEASED
 
 Objetivo proposto: concluir a primeira passagem operacional por Implementação, Evidência, transição da Missão e estado da próxima ação em um único marco de produção.
 

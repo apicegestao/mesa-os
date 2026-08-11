@@ -73,3 +73,4 @@
 | EVD-2.15B | Evidência operacional imutável | `20260811160002_evidence_foundation.sql`, `src/modules/core-loop` | Vitest + pgTAP + RLS |
 | MTR-2.15C | Conclusão e desbloqueio atômicos | `20260811160003_mission_transition.sql` | pgTAP + rollback + idempotência |
 | STA-2.15D | Próxima ação derivada | `src/modules/core-loop`, `src/app/app/page.tsx` | Vitest + typecheck + build |
+| RT-2.15 | Encerramento | `docs/56-POST-FLIGHT-RT-2.15.md` | CI + advisors + deploy + smoke |
