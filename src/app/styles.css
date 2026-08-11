@@ -252,3 +252,93 @@ button:disabled { cursor: wait; opacity: 0.65; }
   .journey-rail span, .workspace-steps span { flex: 0 0 7.5rem; }
   .workspace-section .tool-entries { grid-template-columns: 1fr; }
 }
+
+/* RT-2.18.1 — visual fidelity and compact density */
+:root { --font-sans: Arial, Helvetica, sans-serif; }
+html, body, button, input, select, textarea { font-family: Arial, Helvetica, sans-serif; }
+h1, h2, h3, .brand > span, .experience-brand > span, .mini-orb, .tutoria-orb,
+.welcome-card h1, .diagnostic-heading h1, .ime-score, .result-grid h2,
+.response-review h2, .priority-card h2, .next-action-card h1,
+.section-heading h2, .tutoria-presence h2, .methodology-card h2 { font-family: Arial, Helvetica, sans-serif; }
+
+h1 { font-size: clamp(1.75rem, 4vw, 2.7rem); line-height: 1.08; }
+.shell { padding: 1rem; }
+.status { width: min(100%, 31rem); padding: clamp(1.25rem, 4vw, 2rem); border-radius: 0.85rem; }
+.login-card .summary { margin-top: 0.65rem; }
+.login-options { margin-top: 1.25rem; }
+.auth-form { margin-top: 0; }
+.magic-link-option { margin-top: 1rem; border-top: 1px solid var(--color-border); padding-top: 0.9rem; }
+.magic-link-option summary { color: var(--color-accent); cursor: pointer; font-size: 0.82rem; font-weight: 700; }
+.magic-link-option .auth-form { margin-top: 0.9rem; }
+
+.experience-sidebar { width: 14rem; padding: 1.1rem 0.8rem; }
+.experience-main { padding-left: 14rem; }
+.experience-brand { padding: 0 0.4rem 1rem; }
+.experience-brand > span { width: 2.25rem; height: 2.25rem; font-size: 1rem; }
+.experience-sidebar nav { margin-top: 1rem; }
+.experience-sidebar nav a { padding: 0.62rem 0.65rem; font-size: 0.81rem; }
+.experience-topbar { min-height: 3.7rem; padding: 0.5rem clamp(1rem, 3vw, 2rem); font-size: 0.84rem; }
+.experience-content { width: min(calc(100% - 1.5rem), 72rem); padding: clamp(0.9rem, 2vw, 1.5rem) 0 3rem; }
+.next-action-card { align-items: center; gap: 1.25rem; padding: clamp(1.15rem, 2.5vw, 1.65rem); border-radius: 0.9rem; box-shadow: 0 0.75rem 2rem rgb(16 43 77 / 14%); }
+.next-action-card h1 { max-width: 40rem; font-size: clamp(1.55rem, 3vw, 2.35rem); font-weight: 700; letter-spacing: -0.025em; }
+.next-action-card p:not(.eyebrow) { margin-top: 0.55rem; font-size: 0.9rem; line-height: 1.45; }
+.primary-link { gap: 0.8rem; padding: 0.72rem 0.9rem; border-radius: 0.55rem; font-size: 0.82rem; }
+.experience-section, .experience-card, .tutoria-presence { margin-top: 0.85rem; }
+.experience-section, .experience-card { border-radius: 0.8rem; box-shadow: 0 0.35rem 1.25rem rgb(16 43 77 / 5%); }
+.experience-section { padding: clamp(1rem, 2vw, 1.35rem); }
+.section-heading h2, .tutoria-presence h2, .methodology-card h2 { font-size: clamp(1.2rem, 2vw, 1.65rem); font-weight: 700; letter-spacing: -0.015em; }
+.section-intro { margin: 0.5rem 0 0.8rem; font-size: 0.86rem; line-height: 1.45; }
+.tutoria-presence { gap: 0.9rem; padding: 0.95rem 1rem; border-radius: 0.8rem; }
+.tutoria-presence p:not(.eyebrow) { margin-top: 0.25rem; font-size: 0.84rem; line-height: 1.4; }
+.tutoria-orb { width: 2.65rem; height: 2.65rem; font-size: 1rem; }
+.journey-rail, .workspace-steps { margin: 1rem 0; }
+.journey-panels { gap: 0.7rem; }
+.experience-shell .priority-card { padding: 0.95rem; }
+.experience-shell .priority-card h2 { margin-bottom: 0.55rem; font-size: clamp(1.15rem, 2vw, 1.45rem); font-weight: 700; }
+.experience-shell .priority-card > p { font-size: 0.86rem; line-height: 1.45; }
+.experience-shell .priority-card textarea { min-height: 4.5rem; }
+.workspace-section .tool-entry { padding: 0.9rem; }
+.diagnostic-archive summary { padding: 0.95rem 1rem; }
+.methodology-card { padding: 1rem; }
+.methodology-pillar, .methodology-outcome { min-height: 4.6rem; padding: 0.8rem; font-size: 0.82rem; }
+
+.journey-progress { margin-top: 0.85rem; padding: 0.9rem 1rem; border: 1px solid var(--exp-line); border-radius: 0.8rem; background: white; }
+.progress-summary { display: flex; align-items: end; justify-content: space-between; gap: 1rem; }
+.progress-summary strong { font-size: 0.9rem; }
+.progress-summary > span { color: var(--exp-blue); font-size: 1.15rem; font-weight: 800; }
+.colored-progress { display: grid; grid-template-columns: repeat(8, 1fr); gap: 0.28rem; margin-top: 0.7rem; }
+.colored-progress i { height: 0.42rem; border-radius: 999px; background: #e5ebf0; }
+.colored-progress i.complete.blue { background: #397bb5; }.colored-progress i.complete.gold { background: #b88439; }
+.colored-progress i.complete.plum { background: #955277; }.colored-progress i.complete.green { background: #2f806b; }
+.progress-labels { display: grid; grid-template-columns: repeat(8, 1fr); gap: 0.28rem; margin-top: 0.45rem; }
+.progress-labels span { overflow: hidden; color: #8a9bab; font-size: 0.62rem; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.progress-labels span.complete { color: var(--exp-ink); }
+
+.mentor-note { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem; margin-top: 0.85rem; padding: 1rem 1.1rem; border-radius: 0.8rem; background: linear-gradient(120deg, #102b4d, #173f6f); color: white; }
+.mentor-avatar { display: grid; width: 2.8rem; height: 2.8rem; place-items: center; border: 1px solid rgb(255 255 255 / 28%); border-radius: 50%; background: rgb(255 255 255 / 10%); font-size: 0.78rem; font-weight: 800; }
+.mentor-note .light { color: #88bdea; }
+.mentor-note blockquote { margin: 0.2rem 0 0.35rem; font-size: clamp(1rem, 2vw, 1.25rem); font-weight: 700; line-height: 1.3; }
+.mentor-note small { color: #bfd0df; }
+.ghost-light { border: 1px solid rgb(255 255 255 / 38%); border-radius: 0.5rem; padding: 0.65rem 0.8rem; color: white; font-size: 0.77rem; font-weight: 700; text-decoration: none; white-space: nowrap; }
+.ghost-light.unavailable { opacity: 0.65; }
+
+.security-card { display: grid; grid-template-columns: 1fr minmax(17rem, 0.8fr); gap: 1.25rem; margin-top: 0.85rem; padding: 1rem 1.1rem; border: 1px solid var(--exp-line); border-radius: 0.8rem; background: white; }
+.security-card h2 { margin: 0; font-size: 1.2rem; }
+.security-card > div > p:last-child { margin: 0.4rem 0 0; color: var(--exp-muted); font-size: 0.84rem; line-height: 1.4; }
+.password-setup-form { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem 0.65rem; }
+.password-setup-form label { font-size: 0.72rem; font-weight: 700; }
+.password-setup-form input { width: 100%; border: 1px solid var(--exp-line); border-radius: 0.45rem; padding: 0.62rem; }
+.password-setup-form button, .password-setup-form .feedback { grid-column: 1 / -1; }
+.password-setup-form button { padding: 0.62rem 0.8rem; }
+
+@media (max-width: 1040px) {
+  .experience-main { padding-left: 0; }
+}
+@media (max-width: 760px) {
+  .progress-labels { display: none; }
+  .mentor-note, .security-card { grid-template-columns: auto 1fr; }
+  .mentor-note .ghost-light { grid-column: 2; justify-self: start; }
+  .security-card > div, .password-setup-form { grid-column: 1 / -1; }
+  .password-setup-form { grid-template-columns: 1fr; }
+  .password-setup-form button, .password-setup-form .feedback { grid-column: auto; }
+}

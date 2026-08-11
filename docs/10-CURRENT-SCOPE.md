@@ -1,9 +1,9 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** RT-2.18 — Experience Recomposition
+**Sprint:** RT-2.18.1 — Visual Fidelity & Methodology Reset
 **Mode:** BUILD
-**Status:** IN PROGRESS — APPROVED
+**Status:** IN PROGRESS — APPROVED FOR BUILD
 
 ## Production baseline
 
@@ -14,6 +14,9 @@
 
 ## Authorized
 
+- Visual fidelity correction using the approved HTML: Arial, compact density, colored canonical progress and Lula contextual card.
+- Authenticated password creation and direct email/password sign-in.
+- One-time reset of methodological execution data for Grupo Ápice, preserving identity, organization and membership.
 - DSX-2.18A — Design System & Responsive App Shell.
 - IAX-2.18B — Member Information Architecture & Next Action.
 - WUX-2.18C — Guided Mission and Tool Workspace.
