@@ -8,7 +8,7 @@ function emptyEntry(workspace: ToolWorkspace) {
   return Object.fromEntries(workspace.schema.fields.map((field) => [field.key, ""]));
 }
 
-export function ToolPanel({ missionId, workspace }: { missionId: string; workspace: ToolWorkspace }) {
+export function ToolPanel({ missionId, workspace, readOnly = false }: { missionId: string; workspace: ToolWorkspace; readOnly?: boolean }) {
   const [entries, setEntries] = useState<ToolEntry[]>(workspace.entries.length ? workspace.entries : [emptyEntry(workspace)]);
   const [message, setMessage] = useState<string | null>(null);
   const [pending, run] = useTransition();
@@ -48,18 +48,18 @@ export function ToolPanel({ missionId, workspace }: { missionId: string; workspa
         <legend>Entrada {index + 1}</legend>
         {workspace.schema.fields.map((field) => <label key={field.key}>
           <span>{field.label}</span><small>{field.help}</small>
-          {field.control === "textarea" ? <textarea required={field.required} maxLength={field.maxLength} value={entry[field.key] ?? ""} onChange={(event) => updateEntry(index, field.key, event.target.value)} /> : <input required={field.required} maxLength={field.maxLength} value={entry[field.key] ?? ""} onChange={(event) => updateEntry(index, field.key, event.target.value)} />}
+          {field.control === "textarea" ? <textarea disabled={readOnly} required={field.required} maxLength={field.maxLength} value={entry[field.key] ?? ""} onChange={(event) => updateEntry(index, field.key, event.target.value)} /> : <input disabled={readOnly} required={field.required} maxLength={field.maxLength} value={entry[field.key] ?? ""} onChange={(event) => updateEntry(index, field.key, event.target.value)} />}
         </label>)}
         <div className="tool-entry-actions">
-          <button type="button" className="button-secondary" disabled={index === 0} onClick={() => move(index, -1)}>Subir</button>
-          <button type="button" className="button-secondary" disabled={index === entries.length - 1} onClick={() => move(index, 1)}>Descer</button>
-          <button type="button" className="button-secondary" disabled={entries.length <= workspace.schema.minItems} onClick={() => setEntries((current) => current.filter((_, position) => position !== index))}>Remover</button>
+          <button type="button" className="button-secondary" disabled={readOnly || index === 0} onClick={() => move(index, -1)}>Subir</button>
+          <button type="button" className="button-secondary" disabled={readOnly || index === entries.length - 1} onClick={() => move(index, 1)}>Descer</button>
+          <button type="button" className="button-secondary" disabled={readOnly || entries.length <= workspace.schema.minItems} onClick={() => setEntries((current) => current.filter((_, position) => position !== index))}>Remover</button>
         </div>
       </fieldset>)}
     </div>
     <div className="tool-main-actions">
-      <button type="button" className="button-secondary" disabled={entries.length >= workspace.schema.maxItems} onClick={() => setEntries((current) => [...current, emptyEntry(workspace)])}>Adicionar entrada</button>
-      <button type="button" disabled={pending} onClick={save}>{pending ? "Salvando…" : "Salvar rascunho"}</button>
+      <button type="button" className="button-secondary" disabled={readOnly || entries.length >= workspace.schema.maxItems} onClick={() => setEntries((current) => [...current, emptyEntry(workspace)])}>Adicionar entrada</button>
+      <button type="button" disabled={readOnly || pending} onClick={save}>{readOnly ? "Ferramenta congelada" : pending ? "Salvando…" : "Salvar rascunho"}</button>
     </div>
     {message && <p className="feedback" role="status">{message}</p>}
   </section>;

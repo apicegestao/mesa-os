@@ -3,7 +3,7 @@
 **Release:** V2.0  
 **Sprint:** RT-2.15 — Core Loop Completion Release Train
 **Mode:** BUILD
-**Status:** APPROVED — PRE-FLIGHT OPEN
+**Status:** BUILD IN PROGRESS
 
 ## Authorized
 

@@ -8,7 +8,8 @@ export type Mission = {
   title: string;
   objective: string;
   rationale: string;
-  status: "locked" | "available";
+  status: "locked" | "available" | "completed";
+  completed_at: string | null;
 };
 
 export async function loadMissions(
@@ -17,7 +18,7 @@ export async function loadMissions(
 ) {
   const { data } = await supabase
     .from("missions")
-    .select("id,definition_id,position,title,objective,rationale,status")
+    .select("id,definition_id,position,title,objective,rationale,status,completed_at")
     .eq("cycle_id", cycleId)
     .order("position");
 

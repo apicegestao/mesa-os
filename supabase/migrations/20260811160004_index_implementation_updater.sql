@@ -1,0 +1,2 @@
+create index mission_implementations_updated_by_idx
+on public.mission_implementations(updated_by);

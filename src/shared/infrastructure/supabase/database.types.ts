@@ -514,15 +514,27 @@ export type Database = {
         ]
       }
       missions: {
-        Row: { created_at: string; created_by: string; cycle_id: string; definition_id: string; id: string; objective: string; organization_id: string; position: number; rationale: string; status: string; title: string }
-        Insert: { created_at?: string; created_by: string; cycle_id: string; definition_id: string; id?: string; objective: string; organization_id: string; position: number; rationale: string; status: string; title: string }
-        Update: { created_at?: string; created_by?: string; cycle_id?: string; definition_id?: string; id?: string; objective?: string; organization_id?: string; position?: number; rationale?: string; status?: string; title?: string }
+        Row: { completed_at: string | null; completed_by: string | null; created_at: string; created_by: string; cycle_id: string; definition_id: string; id: string; objective: string; organization_id: string; position: number; rationale: string; status: string; title: string }
+        Insert: { completed_at?: string | null; completed_by?: string | null; created_at?: string; created_by: string; cycle_id: string; definition_id: string; id?: string; objective: string; organization_id: string; position: number; rationale: string; status: string; title: string }
+        Update: { completed_at?: string | null; completed_by?: string | null; created_at?: string; created_by?: string; cycle_id?: string; definition_id?: string; id?: string; objective?: string; organization_id?: string; position?: number; rationale?: string; status?: string; title?: string }
         Relationships: [
           { foreignKeyName: "missions_created_by_fkey"; columns: ["created_by"]; isOneToOne: false; referencedRelation: "identities"; referencedColumns: ["id"] },
           { foreignKeyName: "missions_cycle_id_fkey"; columns: ["cycle_id"]; isOneToOne: false; referencedRelation: "cycles"; referencedColumns: ["id"] },
           { foreignKeyName: "missions_definition_id_fkey"; columns: ["definition_id"]; isOneToOne: false; referencedRelation: "mission_definitions"; referencedColumns: ["id"] },
           { foreignKeyName: "missions_organization_id_fkey"; columns: ["organization_id"]; isOneToOne: false; referencedRelation: "organizations"; referencedColumns: ["id"] },
         ]
+      }
+      mission_implementations: {
+        Row: { confirmed_at: string | null; created_at: string; created_by: string; id: string; implemented_on: string; mission_id: string; organization_id: string; status: string; summary: string; tool_instance_id: string; updated_at: string; updated_by: string }
+        Insert: { confirmed_at?: string | null; created_at?: string; created_by: string; id?: string; implemented_on: string; mission_id: string; organization_id: string; status: string; summary: string; tool_instance_id: string; updated_at?: string; updated_by: string }
+        Update: { confirmed_at?: string | null; created_at?: string; created_by?: string; id?: string; implemented_on?: string; mission_id?: string; organization_id?: string; status?: string; summary?: string; tool_instance_id?: string; updated_at?: string; updated_by?: string }
+        Relationships: []
+      }
+      mission_evidence: {
+        Row: { description: string; evidence_type: string; id: string; implementation_id: string; mission_id: string; occurred_on: string; organization_id: string; submitted_at: string; submitted_by: string }
+        Insert: { description: string; evidence_type: string; id?: string; implementation_id: string; mission_id: string; occurred_on: string; organization_id: string; submitted_at?: string; submitted_by: string }
+        Update: { description?: string; evidence_type?: string; id?: string; implementation_id?: string; mission_id?: string; occurred_on?: string; organization_id?: string; submitted_at?: string; submitted_by?: string }
+        Relationships: []
       }
       organizations: {
         Row: {
@@ -644,6 +656,14 @@ export type Database = {
       save_mission_tool_draft: {
         Args: { submitted_payload: Json; target_mission_id: string }
         Returns: string
+      }
+      save_mission_implementation: {
+        Args: { confirm_implementation?: boolean; implementation_date: string; implementation_summary: string; target_mission_id: string }
+        Returns: string
+      }
+      submit_mission_evidence_and_advance: {
+        Args: { evidence_date: string; evidence_description: string; submitted_evidence_type: string; target_mission_id: string }
+        Returns: Json
       }
       save_diagnostic_responses: {
         Args: { submitted_answers: Json; target_execution_id: string }
