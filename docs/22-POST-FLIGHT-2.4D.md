@@ -38,6 +38,10 @@ Nenhuma criada nesta etapa documental.
 
 DIA-2.5 — Diagnostic Foundation.
 
+## Insumo recebido após a definição inicial
+
+O arquivo JSX `raio-x-mesa-dos-donos.jsx` foi aceito como fonte candidata e analisado em `23-SOURCE-ANALYSIS-RAIO-X.md`. A Feature Spec foi refinada, mas permanece pendente de aprovação de produto.
+
 ## Próximo gate
 
 Responder e aprovar as dez decisões obrigatórias da Feature Spec. Somente depois: atualizar a spec para `APPROVED FOR BUILD`, abrir novo Current Scope em BUILD e executar novo Pre-Flight antes de editar código.

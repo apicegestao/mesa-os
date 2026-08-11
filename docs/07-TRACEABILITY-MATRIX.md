@@ -21,3 +21,4 @@
 | GOV-2.4D | Proposta Diagnostic Foundation | `docs/21-FEATURE-SPEC-DIA-2.5-DRAFT.md` | decisões pendentes explícitas |
 | GOV-2.4D | Governança atualizada | `docs/03-ROADMAP.md`, `docs/06-BACKLOG-MASTER.md`, `docs/10-CURRENT-SCOPE.md` | consistência entre documentos |
 | GOV-2.4D | Encerramento | `docs/22-POST-FLIGHT-2.4D.md` | Post-Flight review |
+| DIA-2.5 | Fonte metodológica candidata | `docs/23-SOURCE-ANALYSIS-RAIO-X.md` | comparação com Feature Spec e guardrails |
