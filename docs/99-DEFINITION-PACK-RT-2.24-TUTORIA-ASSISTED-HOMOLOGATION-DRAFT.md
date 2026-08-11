@@ -1,6 +1,6 @@
 # Definition Pack — RT-2.24 TutorIA Assistido em Homologação
 
-**Status:** DRAFT — aguardando aprovação do owner
+**Status:** APPROVED — owner approval recorded on 2026-08-11
 **Modo proposto:** BUILD em homologação isolada, dentro do Protocolo 98
 
 ## Objetivo

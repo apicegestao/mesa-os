@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { GoogleGenAI } from "@google/genai";
 import { loadCycle } from "@/modules/cycle";
 import { loadDiagnosticWorkspace } from "@/modules/diagnostic";
 import { loadPublishedMethodologyMap } from "@/modules/methodology";
@@ -55,13 +56,11 @@ export async function POST(request: Request) {
 
   const startedAt = Date.now();
   try {
-    const baseUrl = process.env.GOOGLE_GEMINI_BASE_URL!.replace(/\/$/, "");
-    const response = await fetch(`${baseUrl}/v1beta/models/${MODEL}:generateContent`, { method: "POST", headers: { "content-type": "application/json", "x-goog-api-key": process.env.GEMINI_API_KEY! }, body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: buildOrientationPrompt({ objective: usage.request.objective, question: usage.request.question, memberState, methodology }) }] }], generationConfig: { responseMimeType: "application/json", maxOutputTokens: 360, temperature: 0.2 } }), signal: AbortSignal.timeout(12_000) });
-    const body = await response.json().catch(() => null) as { candidates?: { content?: { parts?: { text?: string }[] } }[]; usageMetadata?: { promptTokenCount?: number; candidatesTokenCount?: number } } | null;
-    const text = body?.candidates?.[0]?.content?.parts?.map((part) => part.text ?? "").join("") ?? "";
-    const orientation = response.ok ? parseOrientationOutput(text) : null;
-    const inputTokens = Math.max(0, body?.usageMetadata?.promptTokenCount ?? 0);
-    const outputTokens = Math.max(0, body?.usageMetadata?.candidatesTokenCount ?? 0);
+    const genAI = new GoogleGenAI({});
+    const response = await genAI.models.generateContent({ model: MODEL, contents: buildOrientationPrompt({ objective: usage.request.objective, question: usage.request.question, memberState, methodology }), config: { responseMimeType: "application/json", maxOutputTokens: 360, temperature: 0.2, httpOptions: { timeout: 12_000 } } });
+    const orientation = parseOrientationOutput(response.text ?? "");
+    const inputTokens = Math.max(0, response.usageMetadata?.promptTokenCount ?? 0);
+    const outputTokens = Math.max(0, response.usageMetadata?.candidatesTokenCount ?? 0);
     const observedCost = estimateModelCostUsdMicros("gemini_flash", inputTokens, outputTokens);
     const settleBudget = (cost: number) => supabase.rpc("settle_tutoria_member_budget", { target_reservation_id: reservationId, observed_cost_usd_micros: cost });
     const recordUsage = (resolution: "served" | "unavailable" | "escalated") => supabase.from("ai_usage_events").insert({ organization_id: membership.organization_id, actor_identity_id: actorIdentityId, capability_code: "tutoria_orientation", model_route_code: "gemini_flash", resolution, input_tokens: inputTokens, output_tokens: outputTokens, estimated_cost_usd_micros: observedCost });

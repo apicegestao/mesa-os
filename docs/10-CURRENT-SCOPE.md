@@ -1,7 +1,7 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** RT-2.22 — TutorIA Guided Orientation
+**Sprint:** RT-2.24 — TutorIA Assistido em Homologação
 **Mode:** BUILD
 **Status:** IN PROGRESS — APPROVED FOR BUILD
 
@@ -44,6 +44,9 @@
 - TBG-2.23A — política de orçamento de IA versionada, por membro e em escopo global interno separado.
 - TBG-2.23B — reserva e liquidação atômicas server-side antes de qualquer inferência.
 - TBG-2.23C — leitura e alteração de limite pelo owner, com trilha de auditoria; verba global interna permanece sem interface de membro.
+- TAH-2.24A — primeira conversa assistida do TutorIA, com entrada e saída tipadas.
+- TAH-2.24B — política útil contra abuso, preservando dúvidas empresariais legítimas.
+- TAH-2.24C — ativação exclusiva em preview/homologação via Netlify AI Gateway, com teto por chamada e sem chave pessoal.
 
 ## Not Authorized
 
@@ -101,4 +104,4 @@
 
 ## Encerramento
 
-BUILD RT-2.20 e RT-2.21 autorizados pelo owner em 2026-08-11. A baseline de produção permanece a release atualmente publicada até merge, deploy, smoke e Post-Flight consolidados.
+BUILD RT-2.20, RT-2.21, RT-2.23 e RT-2.24 autorizados pelo owner em 2026-08-11. A baseline de produção permanece a release atualmente publicada até merge, deploy, smoke e Post-Flight consolidados.
