@@ -41,6 +41,9 @@
 - TGO-2.22A — orientação contextual de leitura, com entrada e saída tipadas.
 - TGO-2.22B — gateway de modelo server-side, rate limit e auditoria sem conteúdo sensível.
 - TGO-2.22C — ativação bloqueada por ambiente e limites de homologação; sem inferência até os gates próprios.
+- TBG-2.23A — política de orçamento de IA versionada, por membro e em escopo global interno separado.
+- TBG-2.23B — reserva e liquidação atômicas server-side antes de qualquer inferência.
+- TBG-2.23C — leitura e alteração de limite pelo owner, com trilha de auditoria; verba global interna permanece sem interface de membro.
 
 ## Not Authorized
 

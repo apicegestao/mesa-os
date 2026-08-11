@@ -14,8 +14,9 @@ export function estimateModelCostUsdMicros(route: ModelRouteCode, inputTokens: n
 export const TUTORIA_ORIENTATION_MAX_INPUT_TOKENS = 1_200;
 export const TUTORIA_ORIENTATION_MAX_OUTPUT_TOKENS = 360;
 
+export const TUTORIA_ORIENTATION_MAX_COST_USD_MICROS = estimateModelCostUsdMicros("gemini_flash", TUTORIA_ORIENTATION_MAX_INPUT_TOKENS, TUTORIA_ORIENTATION_MAX_OUTPUT_TOKENS);
+
 export function orientationRequestBudgetAllowed(env: Partial<Record<"TUTORIA_ORIENTATION_MAX_COST_USD_MICROS_PER_REQUEST", string | undefined>> = process.env as Partial<Record<"TUTORIA_ORIENTATION_MAX_COST_USD_MICROS_PER_REQUEST", string | undefined>>) {
   const limit = Number(env.TUTORIA_ORIENTATION_MAX_COST_USD_MICROS_PER_REQUEST ?? "0");
-  const maximumEstimate = estimateModelCostUsdMicros("gemini_flash", TUTORIA_ORIENTATION_MAX_INPUT_TOKENS, TUTORIA_ORIENTATION_MAX_OUTPUT_TOKENS);
-  return Number.isSafeInteger(limit) && limit >= maximumEstimate;
+  return Number.isSafeInteger(limit) && limit >= TUTORIA_ORIENTATION_MAX_COST_USD_MICROS;
 }

@@ -1750,6 +1750,10 @@ export type Database = {
       }
     }
     Functions: {
+      reserve_tutoria_member_budget: {
+        Args: { maximum_cost_usd_micros: number; requested_capability_code: string }
+        Returns: { allowed: boolean; denial_code: string | null; reservation_id: string | null }[]
+      }
       confirm_priority: {
         Args: { priority_rationale: string; target_execution_id: string }
         Returns: string
@@ -1761,6 +1765,10 @@ export type Database = {
       save_diagnostic_responses: {
         Args: { submitted_answers: Json; target_execution_id: string }
         Returns: undefined
+      }
+      settle_tutoria_member_budget: {
+        Args: { observed_cost_usd_micros: number; target_reservation_id: string }
+        Returns: boolean
       }
       save_mission_implementation: {
         Args: {
@@ -1813,6 +1821,7 @@ export type Database = {
       }
     }
     Enums: {
+      ai_budget_reservation_status: "reserved" | "settled" | "released"
       ai_usage_resolution: "served" | "unavailable" | "escalated"
       diagnostic_execution_status: "draft" | "completed"
       diagnostic_revision_status: "draft" | "published" | "retired"

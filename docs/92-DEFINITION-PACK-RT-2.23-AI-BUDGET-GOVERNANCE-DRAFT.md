@@ -1,6 +1,6 @@
 # Definition Pack — RT-2.23 AI Budget Governance
 
-**Status:** DRAFT — aguardando aprovação do owner
+**Status:** APPROVED — owner, 2026-08-11
 **Modo proposto:** BUILD em homologação isolada
 
 ## Objetivo

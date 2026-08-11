@@ -5,7 +5,7 @@ import { loadPublishedMethodologyMap } from "@/modules/methodology";
 import { loadMissions } from "@/modules/mission";
 import { loadPriority } from "@/modules/priority";
 import { buildTutorIAMemberState, buildTutorIAMethodologySummary, recordTutorIAReadGateway } from "@/modules/tutoria-foundation";
-import { buildOrientationPrompt, estimateModelCostUsdMicros, evaluateTutorIAUsage, orientationGatewayEnabled, orientationRequestBudgetAllowed, parseOrientationOutput } from "@/modules/tutoria-guidance";
+import { buildOrientationPrompt, estimateModelCostUsdMicros, evaluateTutorIAUsage, orientationGatewayEnabled, orientationRequestBudgetAllowed, parseOrientationOutput, TUTORIA_ORIENTATION_MAX_COST_USD_MICROS } from "@/modules/tutoria-guidance";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -45,6 +45,13 @@ export async function POST(request: Request) {
   }
   const { error: startAuditError } = await audit("invocation_started", "unavailable", { provider_code: "netlify_ai_gateway", failure_code: "model_invocation_started" });
   if (startAuditError) return NextResponse.json({ code: "orientation_escalated" }, { status: 409 });
+  const { data: reservationRows, error: reservationError } = await supabase.rpc("reserve_tutoria_member_budget", { requested_capability_code: "tutoria_orientation", maximum_cost_usd_micros: TUTORIA_ORIENTATION_MAX_COST_USD_MICROS });
+  const reservation = reservationRows?.[0];
+  const reservationId = reservation?.reservation_id;
+  if (reservationError || !reservation?.allowed || !reservationId) {
+    await audit("invocation_finished", "unavailable", { provider_code: "netlify_ai_gateway", failure_code: reservation?.denial_code ?? "budget_reservation_failed" });
+    return NextResponse.json({ code: "orientation_budget_unavailable" }, { status: 503 });
+  }
 
   const startedAt = Date.now();
   try {
@@ -55,16 +62,21 @@ export async function POST(request: Request) {
     const orientation = response.ok ? parseOrientationOutput(text) : null;
     const inputTokens = Math.max(0, body?.usageMetadata?.promptTokenCount ?? 0);
     const outputTokens = Math.max(0, body?.usageMetadata?.candidatesTokenCount ?? 0);
-    const recordUsage = (resolution: "served" | "unavailable" | "escalated") => supabase.from("ai_usage_events").insert({ organization_id: membership.organization_id, actor_identity_id: actorIdentityId, capability_code: "tutoria_orientation", model_route_code: "gemini_flash", resolution, input_tokens: inputTokens, output_tokens: outputTokens, estimated_cost_usd_micros: estimateModelCostUsdMicros("gemini_flash", inputTokens, outputTokens) });
+    const observedCost = estimateModelCostUsdMicros("gemini_flash", inputTokens, outputTokens);
+    const settleBudget = (cost: number) => supabase.rpc("settle_tutoria_member_budget", { target_reservation_id: reservationId, observed_cost_usd_micros: cost });
+    const recordUsage = (resolution: "served" | "unavailable" | "escalated") => supabase.from("ai_usage_events").insert({ organization_id: membership.organization_id, actor_identity_id: actorIdentityId, capability_code: "tutoria_orientation", model_route_code: "gemini_flash", resolution, input_tokens: inputTokens, output_tokens: outputTokens, estimated_cost_usd_micros: observedCost });
     if (!orientation || orientation.confidence_band === "low" || orientation.escalation_required) {
       await audit("invocation_finished", "escalated", { provider_code: "netlify_ai_gateway", duration_ms: Date.now() - startedAt, failure_code: orientation ? "low_confidence" : "invalid_model_output" });
+      await settleBudget(observedCost);
       await recordUsage("escalated");
       return NextResponse.json({ code: "orientation_escalated" }, { status: 409 });
     }
     await audit("invocation_finished", "served", { provider_code: "netlify_ai_gateway", duration_ms: Date.now() - startedAt, response_schema_valid: true });
+    await settleBudget(observedCost);
     await recordUsage("served");
     return NextResponse.json({ orientation });
   } catch {
+    await supabase.rpc("settle_tutoria_member_budget", { target_reservation_id: reservationId, observed_cost_usd_micros: 0 });
     await audit("invocation_finished", "unavailable", { provider_code: "netlify_ai_gateway", duration_ms: Date.now() - startedAt, failure_code: "provider_unavailable" });
     return NextResponse.json({ code: "orientation_unavailable" }, { status: 503 });
   }
