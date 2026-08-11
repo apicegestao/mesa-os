@@ -2,7 +2,7 @@
 
 ## Fase atual
 
-Próximo incremento ainda não autorizado. Deve ser definido após o fechamento do TOL-2.13.
+GOV-2.14F — Governance Fast Track: adoção do Release Train seguro e cloud-first antes da conclusão do core loop.
 
 ## Fases concluídas
 
@@ -20,9 +20,9 @@ Próximo incremento ainda não autorizado. Deve ser definido após o fechamento 
 - Sprint GOV-2.12D — Tool Foundation Definition & Alignment: primeira Ferramenta schema-driven delimitada e aprovada.
 - Sprint TOL-2.13 — Structured Tool Foundation: Mapa de Papéis e Decisões schema-driven, publicado e homologado em produção.
 
-## Próximo incremento
+## Próximo Release Train proposto
 
-Ainda não autorizado. Pela ordem canônica, o próximo candidato é a definição de Implementação, sem antecipar Evidência ou Evolução.
+RT-2.15 — Core Loop Completion: Definition Pack integrado de Implementação, Evidência, transição de Missão e estado do core loop. BUILD depende da aprovação do pack.
 
 ## Sequenciamento governado
 

@@ -59,3 +59,6 @@
 | TOL-2.13 | Validação e persistência owner-only | `public.save_mission_tool_draft(uuid,jsonb)` | payload válido/inválido com rollback |
 | TOL-2.13 | Renderização schema-driven | `src/modules/structured-tool`, `src/app/app/page.tsx` | Vitest + typecheck + build |
 | TOL-2.13 | Encerramento | `docs/44-PRE-FLIGHT-TOL-2.13.md`, `docs/45-POST-FLIGHT-TOL-2.13.md` | Post-Flight review |
+| GOV-2.14F | Protocolo Fast Track | `docs/09-CONSTRUCTION-PROTOCOL.md`, `docs/46-GOVERNANCE-FAST-TRACK-V1.1.md` | revisão de autoridade |
+| GOV-2.14F | Deploy documental ignorado | `netlify.toml` | configuração revisada + deploy inicial único |
+| GOV-2.14F | Fluxo cloud-first | branch `agent/governance-fast-track`, Pull Request e GitHub Actions | CI do PR |

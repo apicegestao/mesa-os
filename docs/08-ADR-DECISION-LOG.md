@@ -90,3 +90,14 @@ O frontend usa somente publishable key. Chaves secret/service-role ficam exclusi
 - Existe no máximo um rascunho por Missão; o payload é validado integralmente no servidor.
 - O rascunho contém de 1 a 20 entradas e permanece editável após a data final do ciclo.
 - Salvar não submete, aprova, conclui ou desbloqueia Missão e não representa Implementação, Evidência ou Evolução.
+
+## ADR-033 — Cloud-first secure release trains
+
+**Status:** ACCEPTED
+
+- Incrementos consecutivos podem ser definidos e aprovados em lote quando compõem uma entrega vertical coerente.
+- Governança, migrations, RLS, testes e rastreabilidade continuam obrigatórios por incremento.
+- Desenvolvimento ocorre em branch e chega à produção por um único merge em `main` após CI completo.
+- Produção recebe um deploy por Release Train; alterações exclusivamente documentais são ignoradas pelo build do Netlify.
+- Nenhuma instalação local no computador do owner é exigida; GitHub, CI, Netlify e Supabase são os planos de controle em nuvem.
+- Proteção administrativa de `main` e imposição Git-only devem ser ativadas nas plataformas quando seus conectores expuserem essa configuração ou pelo painel do owner.
