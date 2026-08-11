@@ -31,6 +31,7 @@
 - Teste transacional com empate simulado: corretamente rejeitado e revertido.
 - Produção permaneceu com zero prioridades após os testes.
 - RLS ativo e uma política owner-only.
+- Smoke test aceito em produção: prioridade `Liderança & Equipe`, score de origem 30/100, confirmada com justificativa válida; o conteúdo confidencial não foi lido na verificação.
 
 ## Migration
 
@@ -50,4 +51,4 @@
 
 ## Próximo gate
 
-Owner confirma a prioridade em produção. Qualquer implementação de TutorIA Tie-Breaker ou Ciclo exige novo Current Scope.
+Smoke test de produção concluído. Qualquer implementação de TutorIA Tie-Breaker ou Ciclo exige novo Current Scope.

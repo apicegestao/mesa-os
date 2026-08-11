@@ -2,7 +2,7 @@
 
 ## Fase atual
 
-Sprint PRI-2.7 — Priority Foundation concluído e publicado. Próximo incremento depende de Definition & Alignment próprio.
+Sprint GOV-2.8D — Cycle Foundation Definition & Alignment: definição governada do contêiner temporal da prioridade, sem implementação.
 
 ## Fases concluídas
 
@@ -14,9 +14,9 @@ Sprint PRI-2.7 — Priority Foundation concluído e publicado. Próximo incremen
 - Sprint GOV-2.6D — Priority Foundation Definition & Alignment: definição governada do segundo passo do core loop.
 - Sprint PRI-2.7 — Priority Foundation: confirmação rastreável sem empate e espera segura para futuro desempate TutorIA.
 
-## Próximo incremento
+## Próximo incremento proposto, não autorizado para BUILD
 
-Não definido. TutorIA Tie-Breaker e Ciclo permanecem propostas não autorizadas para BUILD.
+CYC-2.9 — Cycle Foundation. Proposta de ciclo de 90 dias ligado à prioridade ativa, sem Missões ou execução antecipadas. BUILD depende da aprovação da Feature Spec.
 
 ## Sequenciamento governado
 

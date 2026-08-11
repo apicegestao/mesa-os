@@ -36,3 +36,6 @@
 | PRI-2.7 | Regra de candidato e empate | `src/modules/priority/domain` | Vitest |
 | PRI-2.7 | Experiência e persistência | `src/modules/priority`, `src/app/app/page.tsx` | typecheck + build |
 | PRI-2.7 | Encerramento | `docs/30-POST-FLIGHT-PRI-2.7.md` | Post-Flight review |
+| GOV-2.8D | Alignment e Pre-Flight | `docs/31-PRE-FLIGHT-2.8D.md` | revisão documental |
+| GOV-2.8D | Proposta Cycle Foundation | `docs/32-FEATURE-SPEC-CYC-2.9-DRAFT.md` | decisões pendentes explícitas |
+| GOV-2.8D | Encerramento | `docs/33-POST-FLIGHT-2.8D.md` | Post-Flight review |

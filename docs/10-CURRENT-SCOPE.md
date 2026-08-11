@@ -1,18 +1,16 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** PRI-2.7 — Priority Foundation
-**Mode:** BUILD
-**Status:** COMPLETE — PRODUCTION RELEASED
+**Sprint:** GOV-2.8D — Cycle Foundation Definition & Alignment
+**Mode:** DEFINITION
+**Status:** COMPLETE
 
 ## Authorized
 
-- Identificar menor score dimensional do diagnóstico concluído.
-- Sem empate: owner confirma a dimensão candidata com justificativa curta obrigatória.
-- Persistir uma prioridade imutável e rastreável à execução, dimensão, score, autor e data.
-- Em empate: exibir estado `Aguardando desempate TutorIA`, sem escolha ou persistência humana.
-- RLS, grants mínimos, função transacional, testes e Post-Flight.
-- Experiência de próxima ação sem dashboard e sem antecipar Ciclo.
+- Registrar homologação da prioridade em produção.
+- Alignment Check, Pre-Flight e Feature Spec preliminar de Cycle Foundation.
+- Proposta de ciclo temporal vinculado à prioridade.
+- Decisões pendentes, limites, critérios e Post-Flight documental.
 
 ## Not Authorized
 
@@ -39,7 +37,9 @@
 - Seleção de dimensão diferente da única menor candidata.
 - Alteração, substituição, cancelamento ou segunda prioridade.
 - Prazo, meta, Ciclo, Missão, ferramenta, plano de ação ou recomendação.
+- Código, migration, configuração externa ou criação real de Ciclo.
+- Implementação de CYC-2.9 antes de Feature Spec aprovada e novo Current Scope em BUILD.
 
 ## Exit criteria
 
-Feature Spec aprovada; Pre-Flight BUILD; prioridade rastreável e imutável; empate bloqueado para futuro TutorIA; isolamento organizacional; lint, typecheck, testes, build e banco aprovados; migration e deploy após gates; Post-Flight entregue.
+Pre-Flight registrado; Feature Spec preliminar CYC-2.9 criada; decisões obrigatórias explicitadas; documentos consistentes; nenhuma alteração de produto ou infraestrutura; Post-Flight entregue.

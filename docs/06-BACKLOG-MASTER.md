@@ -95,3 +95,27 @@ Objetivo proposto: permitir que um membro autorizado execute o primeiro passo do
 **Status:** COMPLETE — PRODUCTION RELEASED
 
 Objetivo proposto: transformar um diagnóstico concluído em uma única prioridade organizacional confirmada pelo owner, rastreável à dimensão e à execução de origem, sem antecipar Ciclo ou Missão.
+
+## GOV-2.8D — Cycle Foundation Definition & Alignment
+
+**Status:** COMPLETE
+
+### Entregáveis autorizados
+
+- Homologação documental do PRI-2.7.
+- Alignment Check e Pre-Flight de Cycle Foundation.
+- Feature Spec preliminar CYC-2.9.
+- Decisões pendentes sobre duração, estados, permissões e encerramento.
+- Atualização de governança e Post-Flight.
+
+### Restrições
+
+- Nenhum código, migration ou configuração externa.
+- Nenhuma Missão, meta operacional, ferramenta ou evidência.
+- CYC-2.9 não autorizado para BUILD até aprovação explícita.
+
+## CYC-2.9 — Cycle Foundation
+
+**Status:** PROPOSAL — NOT AUTHORIZED FOR BUILD
+
+Objetivo proposto: criar um período operacional limitado e rastreável para a prioridade ativa, preparando o próximo passo do core loop sem antecipar Missões.
