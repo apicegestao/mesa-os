@@ -49,7 +49,7 @@ export async function POST(request: Request) {
   const startedAt = Date.now();
   try {
     const baseUrl = process.env.GOOGLE_GEMINI_BASE_URL!.replace(/\/$/, "");
-    const response = await fetch(`${baseUrl}/v1beta/models/${MODEL}:generateContent`, { method: "POST", headers: { "content-type": "application/json", "x-goog-api-key": process.env.GEMINI_API_KEY! }, body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: buildOrientationPrompt({ objective: usage.request.objective, memberState, methodology }) }] }], generationConfig: { responseMimeType: "application/json", maxOutputTokens: 360, temperature: 0.2 } }), signal: AbortSignal.timeout(12_000) });
+    const response = await fetch(`${baseUrl}/v1beta/models/${MODEL}:generateContent`, { method: "POST", headers: { "content-type": "application/json", "x-goog-api-key": process.env.GEMINI_API_KEY! }, body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: buildOrientationPrompt({ objective: usage.request.objective, question: usage.request.question, memberState, methodology }) }] }], generationConfig: { responseMimeType: "application/json", maxOutputTokens: 360, temperature: 0.2 } }), signal: AbortSignal.timeout(12_000) });
     const body = await response.json().catch(() => null) as { candidates?: { content?: { parts?: { text?: string }[] } }[]; usageMetadata?: { promptTokenCount?: number; candidatesTokenCount?: number } } | null;
     const text = body?.candidates?.[0]?.content?.parts?.map((part) => part.text ?? "").join("") ?? "";
     const orientation = response.ok ? parseOrientationOutput(text) : null;
