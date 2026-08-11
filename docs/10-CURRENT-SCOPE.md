@@ -1,7 +1,7 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** RT-2.20 — Measurement Backbone
+**Sprint:** RT-2.21 — TutorIA Foundation
 **Mode:** BUILD
 **Status:** IN PROGRESS — APPROVED FOR BUILD
 
@@ -34,11 +34,15 @@
 - TPX-2.18D — TutorIA Presence & Methodology Projection Foundation.
 - Refatoração de composição estritamente necessária aos quatro incrementos.
 - Testes, CI, preview, revisão, um merge e um deploy consolidado.
+- TCF-2.21A — pacote de contexto mínimo, tipado e isolado por organização e finalidade.
+- TCF-2.21B — policy engine determinístico e gateway allow-list de leitura.
+- TCF-2.21C — auditoria imutável e observabilidade sem conteúdo sensível.
+- TCF-2.21D — CTA contextual honesta do TutorIA, sem IA ativa.
 
 ## Not Authorized
 
 - Journey ou jornada do membro.
-- TutorIA.
+- TutorIA fora dos contratos TCF-2.21A a TCF-2.21D.
 - Tools ou ferramentas metodológicas.
 - Concierge.
 - WhatsApp.
@@ -55,7 +59,7 @@
 - Edição administrativa da metodologia.
 - Reabertura, invalidação ou sobrescrita de resultado concluído.
 - Participação colaborativa ou submissão por `member` neste primeiro incremento.
-- Implementação do TutorIA ou desempate automático neste sprint.
+- Modelo, provedor, prompt, chat, memória conversacional, RAG, autonomia decisória ou desempate automático do TutorIA.
 - Escolha humana em caso de empate no menor score.
 - Seleção de dimensão diferente da única menor candidata.
 - Alteração, substituição, cancelamento ou segunda prioridade.
@@ -70,15 +74,15 @@
 - Submissão final, aprovação ou mudança de estado da Missão.
 - Implementação, Evidência ou Evolução.
 - Exportação, anexos, comentários ou colaboração por `member`.
-- Feature de negócio, migration ou alteração de dados fora do RT-2.20; deploy manual continua proibido.
+- Feature de negócio, migration ou alteração de dados fora dos RT-2.20/RT-2.21; deploy manual continua proibido.
 - Alteração de código, banco, Supabase, Netlify ou produção durante o GOV-2.16R.
 - Tratar o protótipo compilado como base de produção ou copiar código do legado.
 - Inventar novamente decisões já aprovadas sem primeiro recuperar a fonte.
 - Alterar documentos `FROZEN` antes de Change Request explícito e rastreável.
 - Redução de testes, RLS, validação server-side ou rastreabilidade.
-- Conteúdo, treinamento, ferramenta, regra de progressão ou compatibilidade metodológica não aprovados e não descritos no Definition Pack RT-2.20.
+- Conteúdo, treinamento, ferramenta, regra de progressão ou compatibilidade metodológica não aprovados e não descritos nos Definition Packs RT-2.20/RT-2.21.
 
-## Exit criteria do RT-2.20
+## Exit criteria dos RT-2.20 e RT-2.21
 
 - Mapa 4 × 4 persistido e versionado como fonte da Jornada.
 - T1, T2 e ciclos seguintes preservam histórico e aceitam seleção por período.
@@ -86,7 +90,9 @@
 - Core loop e dados existentes preservados sem inferência de evolução.
 - Nenhuma IA, conteúdo, aprovação ou progresso metodológico simulado.
 - Testes, lint, typecheck, build, Pre-Release Review, deploy único, smoke e Post-Flight completos.
+- Toda montagem de contexto e tool de leitura do TutorIA permanece limitada à organização autenticada, tem política e auditoria sem conteúdo sensível.
+- A interface não apresenta resposta, recomendação, aprovação ou autonomia de IA antes do incremento próprio.
 
 ## Encerramento
 
-BUILD RT-2.20 autorizado pelo owner em 2026-08-11. A baseline de produção permanece a release atualmente publicada até merge, deploy, smoke e Post-Flight do RT-2.20.
+BUILD RT-2.20 e RT-2.21 autorizados pelo owner em 2026-08-11. A baseline de produção permanece a release atualmente publicada até merge, deploy, smoke e Post-Flight consolidados.

@@ -1652,6 +1652,24 @@ export type Database = {
           },
         ]
       }
+      tutoria_context_audits: {
+        Row: { absent_fields: string[]; actor_identity_id: string; created_at: string; id: string; organization_id: string; purpose: Database["public"]["Enums"]["tutoria_context_purpose"]; source_codes: string[] }
+        Insert: { absent_fields?: string[]; actor_identity_id: string; created_at?: string; id?: string; organization_id: string; purpose: Database["public"]["Enums"]["tutoria_context_purpose"]; source_codes?: string[] }
+        Update: { absent_fields?: string[]; actor_identity_id?: string; created_at?: string; id?: string; organization_id?: string; purpose?: Database["public"]["Enums"]["tutoria_context_purpose"]; source_codes?: string[] }
+        Relationships: []
+      }
+      tutoria_policy_decisions: {
+        Row: { actor_identity_id: string; context_audit_id: string; created_at: string; id: string; organization_id: string; outcome: Database["public"]["Enums"]["tutoria_policy_outcome"]; reason_code: string; requested_tool: Database["public"]["Enums"]["tutoria_tool_name"] }
+        Insert: { actor_identity_id: string; context_audit_id: string; created_at?: string; id?: string; organization_id: string; outcome: Database["public"]["Enums"]["tutoria_policy_outcome"]; reason_code: string; requested_tool: Database["public"]["Enums"]["tutoria_tool_name"] }
+        Update: { actor_identity_id?: string; context_audit_id?: string; created_at?: string; id?: string; organization_id?: string; outcome?: Database["public"]["Enums"]["tutoria_policy_outcome"]; reason_code?: string; requested_tool?: Database["public"]["Enums"]["tutoria_tool_name"] }
+        Relationships: []
+      }
+      tutoria_tool_audits: {
+        Row: { actor_identity_id: string; created_at: string; duration_ms: number; id: string; organization_id: string; outcome: Database["public"]["Enums"]["tutoria_tool_outcome"]; policy_decision_id: string; result_codes: string[]; tool_name: Database["public"]["Enums"]["tutoria_tool_name"] }
+        Insert: { actor_identity_id: string; created_at?: string; duration_ms: number; id?: string; organization_id: string; outcome: Database["public"]["Enums"]["tutoria_tool_outcome"]; policy_decision_id: string; result_codes?: string[]; tool_name: Database["public"]["Enums"]["tutoria_tool_name"] }
+        Update: { actor_identity_id?: string; created_at?: string; duration_ms?: number; id?: string; organization_id?: string; outcome?: Database["public"]["Enums"]["tutoria_tool_outcome"]; policy_decision_id?: string; result_codes?: string[]; tool_name?: Database["public"]["Enums"]["tutoria_tool_name"] }
+        Relationships: []
+      }
     }
     Views: {
       current_evidence_status: {
@@ -1788,6 +1806,10 @@ export type Database = {
       invitation_status: "pending" | "accepted" | "revoked" | "expired"
       membership_role: "owner" | "member"
       membership_status: "active" | "revoked"
+      tutoria_context_purpose: "screen_presence" | "read_member_state" | "read_methodology"
+      tutoria_policy_outcome: "allow" | "deny" | "escalate"
+      tutoria_tool_name: "read_member_state" | "read_methodology_map"
+      tutoria_tool_outcome: "success" | "denied" | "failed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1920,6 +1942,10 @@ export const Constants = {
       invitation_status: ["pending", "accepted", "revoked", "expired"],
       membership_role: ["owner", "member"],
       membership_status: ["active", "revoked"],
+      tutoria_context_purpose: ["screen_presence", "read_member_state", "read_methodology"],
+      tutoria_policy_outcome: ["allow", "deny", "escalate"],
+      tutoria_tool_name: ["read_member_state", "read_methodology_map"],
+      tutoria_tool_outcome: ["success", "denied", "failed"],
     },
   },
 } as const

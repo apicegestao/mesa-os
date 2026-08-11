@@ -15,6 +15,7 @@ import { logout, PasswordSetup } from "@/modules/identity-access";
 import { AppChrome, deriveNextAction, DiagnosticsOverview, EvidenceOverview, EvolutionProjection, JourneyDeliveries, JourneyProgress, MemberHome, MentorNote, MethodologyMap, type MemberView, type ProgressStep } from "@/modules/member-experience";
 import { lowestCandidates } from "@/modules/priority/domain/priority";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
+import { buildTutorIAMemberState, buildTutorIAMethodologySummary, recordTutorIAReadGateway } from "@/modules/tutoria-foundation";
 
 export const dynamic = "force-dynamic";
 
@@ -51,6 +52,20 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
   const measurements = await loadMeasurementProjection(supabase, membership.organization_id);
   const methodologyMap = await loadPublishedMethodologyMap(supabase);
   const organizationName = organization?.name ?? "Sua empresa";
+  if (activeView === "today") {
+    const tutorMemberState = buildTutorIAMemberState({
+      hasDiagnosticWorkspace: Boolean(workspace), hasPriority: Boolean(priority), hasActiveCycle: Boolean(cycle), hasAvailableMission: Boolean(availableMission), hasSubmittedEvidence: evidenceRecords.length > 0,
+    });
+    const tutorMethodology = buildTutorIAMethodologySummary(methodologyMap);
+    await recordTutorIAReadGateway({
+      supabase, authenticatedIdentityId: subject, organizationId: membership.organization_id, membershipActive: membership.status === "active", requestedTool: "read_member_state",
+      sourceCodes: ["member_state", "methodology_summary"],
+      absentFields: [
+        ...(tutorMemberState.diagnosticWorkspace === "absent" ? ["diagnostic_workspace"] : []),
+        ...(tutorMethodology.status === "absent" ? ["published_methodology"] : []),
+      ],
+    });
+  }
 
   if (!workspace) return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout}><section className="experience-card empty-experience"><p className="eyebrow">Mesa OS</p><h1>Diagnóstico indisponível</h1><p>Não foi possível carregar a definição neste momento. Tente novamente em instantes.</p></section></AppChrome>;
 
