@@ -1,7 +1,7 @@
 # Post-Flight — MIS-2.11 Mission Foundation
 
 **Backlog:** MIS-2.11
-**Status:** READY FOR PRODUCTION RELEASE
+**Status:** COMPLETE — PRODUCTION RELEASED
 **Data:** 2026-08-11
 
 ## Implementado
@@ -27,7 +27,10 @@
 - ESLint e TypeScript aprovados.
 - Vitest: 7 arquivos e 14 testes aprovados.
 - Next.js build de produção aprovado.
-- Simulação remota complementar não foi concluída por limite temporário do conector; a criação real permanece pendente para smoke test pelo owner.
+- A simulação remota complementar foi substituída pelo smoke test real do owner, executado pelo fluxo protegido do produto.
+- Commit funcional: `56b200db52cbc21a14cf53dc811450d7f947d70f`.
+- Deploy Netlify: `6a7b345e225b770008726d0d`, estado `ready`, sem erro ou segredo detectado.
+- Smoke test aceito pelo owner: `Missão 1 de 3 — Clareza de papéis e decisões`, com objetivo e justificativa corretos e Missões seguintes protegidas.
 
 ## Segurança
 
@@ -40,4 +43,4 @@
 
 ## Próximo gate
 
-Publicar e homologar em produção o provisionamento e a exibição da primeira Missão. Nenhuma etapa posterior do core loop está autorizada.
+Publicação e homologação concluídas. O próximo gate permitido é Definition & Alignment de Ferramenta; nenhuma implementação posterior é autorizada por este documento.

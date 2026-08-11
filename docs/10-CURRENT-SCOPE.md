@@ -3,7 +3,7 @@
 **Release:** V2.0  
 **Sprint:** MIS-2.11 — Mission Foundation
 **Mode:** BUILD
-**Status:** IN PROGRESS
+**Status:** COMPLETE — PRODUCTION RELEASED
 
 ## Authorized
 
