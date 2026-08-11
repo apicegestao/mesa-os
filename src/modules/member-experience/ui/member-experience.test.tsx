@@ -67,6 +67,9 @@ describe("member experience foundations", () => {
   it("does not invent evidence approval states", () => {
     render(<EvidenceOverview implementation={null} evidenceSubmitted={false} />);
     expect(screen.getByRole("heading", { name: "Evidências" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Provas por pilar" })).toBeInTheDocument();
+    expect(screen.getByText("Em revisão")).toBeInTheDocument();
+    expect(screen.getByText("Para corrigir")).toBeInTheDocument();
     expect(screen.getByText("Nenhuma evidência registrada ainda")).toBeInTheDocument();
     expect(screen.queryByText("Aprovada")).not.toBeInTheDocument();
   });

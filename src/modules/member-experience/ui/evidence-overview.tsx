@@ -2,21 +2,19 @@ export function EvidenceOverview({
   implementation,
   evidenceSubmitted,
   missionTitle,
+  pillarLabel,
 }: {
   implementation: { status: "draft" | "implemented"; summary: string; implementedOn: string } | null;
   evidenceSubmitted: boolean;
   missionTitle?: string;
+  pillarLabel?: string;
 }) {
   const registered = evidenceSubmitted ? 1 : 0;
   return <section className="records-page" aria-labelledby="evidence-title">
-    <header className="records-heading"><p className="eyebrow">Transformação comprovada</p><h1 id="evidence-title">Evidências</h1><p>Fatos observáveis que demonstram o uso real do que foi construído.</p></header>
-    <div className="evidence-stat-grid"><article><span>Registradas</span><strong>{registered}</strong><small>no ciclo atual</small></article><article><span>Implementações</span><strong>{implementation?.status === "implemented" ? 1 : 0}</strong><small>colocadas em prática</small></article><article><span>Pendentes</span><strong>{implementation?.status === "implemented" && !evidenceSubmitted ? 1 : 0}</strong><small>aguardando comprovação</small></article></div>
-    <section className="evidence-history"><div className="records-section-title"><div><p className="eyebrow">Histórico</p><h2>Registros do ciclo</h2></div><span>{registered} registro</span></div>
-      {evidenceSubmitted ? <article className="evidence-history-row"><span className="evidence-check">✓</span><div><strong>{missionTitle ?? "Missão do ciclo"}</strong><p>{implementation?.summary ?? "Implementação comprovada por evidência registrada."}</p><small>{implementation?.implementedOn ? formatDate(implementation.implementedOn) : "Data registrada"}</small></div><span className="evidence-tag">Registrada</span></article> : <div className="records-empty"><strong>Nenhuma evidência registrada ainda</strong><p>Quando uma implementação for comprovada, o registro aparecerá aqui com seu estado rastreável.</p></div>}
+    <header className="records-heading"><p className="eyebrow">Implantação comprovada</p><h1 id="evidence-title">Evidências</h1><p>Uma entrega só avança quando a ferramenta atende ao padrão e existe prova de uso real.</p></header>
+    <div className="evidence-stat-grid four"><article><span>Enviadas</span><strong>{registered}</strong><small>no ciclo atual</small></article><article><span>Registradas</span><strong>{registered}</strong><small>imutáveis e rastreáveis</small></article><article><span>Em revisão</span><strong>0</strong><small>fluxo ainda não ativado</small></article><article><span>Para corrigir</span><strong>0</strong><small>nenhuma devolução</small></article></div>
+    <section className="evidence-history proof-history"><div className="records-section-title"><div><p className="eyebrow">Histórico do T1</p><h2>Provas por pilar</h2></div>{implementation?.status === "implemented" && !evidenceSubmitted ? <a className="new-evidence-link" href="/app?view=journey#implementacao">+ Nova evidência</a> : <span>{registered} registro</span>}</div>
+      {evidenceSubmitted ? <article className="proof-row"><span className="proof-icon">▤</span><div><strong>{missionTitle ?? "Missão do ciclo"}</strong><p>{pillarLabel ?? "Pilar do ciclo"}</p><small>{implementation?.summary ?? "Implementação comprovada por evidência registrada."}</small></div><span className="evidence-tag">Registrada</span><span className="proof-review">Registro canônico</span><a href="/app?view=journey#implementacao">Abrir →</a></article> : <div className="records-empty"><strong>Nenhuma evidência registrada ainda</strong><p>Quando uma implementação for comprovada, o registro aparecerá aqui com seu estado rastreável.</p>{implementation?.status === "implemented" && <a className="empty-evidence-link" href="/app?view=journey#implementacao">Registrar primeira evidência</a>}</div>}
     </section>
   </section>;
-}
-
-function formatDate(value: string) {
-  return new Date(`${value}T12:00:00`).toLocaleDateString("pt-BR");
 }
