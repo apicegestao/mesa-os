@@ -18,3 +18,28 @@
 - Documentação canônica.
 
 Nenhum item de negócio está autorizado neste sprint.
+
+## GOV-2.2D — Definition & Alignment
+
+**Status:** COMPLETE
+
+### Entregáveis autorizados
+
+- Alignment Check do primeiro incremento pós-bootstrap.
+- Pre-Flight documental.
+- Feature Spec preliminar para Identity & Access Foundation.
+- Registro explícito de decisões pendentes.
+- Atualização de roadmap, backlog, rastreabilidade e Current Scope.
+- Post-Flight documental.
+
+### Restrições
+
+- Nenhum código, migration ou configuração externa.
+- Nenhuma regra de papéis, convite ou cadastro presumida.
+- A proposta IAM-2.3 não está autorizada para BUILD até aprovação explícita.
+
+## IAM-2.3 — Identity & Access Foundation
+
+**Status:** PROPOSAL — NOT AUTHORIZED FOR BUILD
+
+Objetivo preliminar: estabelecer autenticação, sessão segura e vínculo organizacional mínimo como pré-requisito para capacidades posteriores. A implementação depende das decisões abertas na Feature Spec e de novo Pre-Flight.

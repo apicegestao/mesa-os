@@ -1,22 +1,17 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** 2.1R — Clean Bootstrap  
-**Mode:** BUILD
+**Sprint:** 2.2D — Definition & Alignment
+**Mode:** DEFINITION
 
 ## Authorized
 
-- Aplicação greenfield; nenhum código legado.
-- Bootstrap de repositório.
-- Next.js, React e TypeScript.
-- Arquitetura de monólito modular.
-- PostgreSQL/Supabase preparado por migrations versionadas.
-- Configuração de development, staging e production.
-- Lint, typecheck, testes, build e CI.
-- Design System foundation sem telas de negócio.
-- Observabilidade/logging básica.
-- Segurança de secrets.
-- Documentação canônica.
+- Alignment Check e Pre-Flight documental.
+- Definição preliminar do primeiro incremento pós-bootstrap.
+- Feature Spec em estado `DRAFT`.
+- Registro de perguntas e decisões pendentes.
+- Atualização dos documentos canônicos de planejamento e rastreabilidade.
+- Post-Flight documental.
 
 ## Not Authorized
 
@@ -28,10 +23,11 @@
 - Dashboards de negócio.
 - AI Tool Factory.
 - White label.
-- Autenticação e RBAC como features completas.
+- Qualquer implementação de autenticação, sessão, identidade ou RBAC.
 - Entidades ou regras de negócio.
 - Qualquer feature fora da fundação.
+- Código, migration, alteração no Supabase, alteração no Netlify ou configuração externa.
 
 ## Exit criteria
 
-Documentação presente; estrutura modular criada; migration baseline versionada; ambientes documentados; CI configurada; lint, typecheck, testes e build aprovados; Post-Flight entregue.
+Alignment Check e Pre-Flight registrados; Feature Spec preliminar criada; decisões pendentes explícitas; roadmap, backlog e rastreabilidade atualizados; Post-Flight entregue.

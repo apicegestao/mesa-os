@@ -9,3 +9,6 @@
 | GOV-2.1R | Observabilidade | `src/shared/observability` | teste unitário |
 | GOV-2.1R | Secret safety | `.gitignore`, `.env.*.example`, env schema | secret scan manual e build |
 | GOV-2.1R | CI | `.github/workflows/ci.yml` | configuração revisada |
+| GOV-2.2D | Alignment e escopo | `docs/15-PRE-FLIGHT-2.2D.md`, `docs/16-FEATURE-SPEC-IAM-2.3-DRAFT.md` | revisão documental |
+| GOV-2.2D | Governança atualizada | `docs/03-ROADMAP.md`, `docs/06-BACKLOG-MASTER.md`, `docs/10-CURRENT-SCOPE.md` | consistência entre documentos |
+| GOV-2.2D | Encerramento | `docs/17-POST-FLIGHT-2.2D.md` | decisões pendentes registradas |
