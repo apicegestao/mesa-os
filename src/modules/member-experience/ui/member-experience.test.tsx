@@ -6,6 +6,7 @@ import { JourneyProgress } from "./journey-progress";
 import { MentorNote } from "./mentor-note";
 import { MemberHome } from "./member-home";
 import { EvolutionProjection } from "./evolution-projection";
+import { EvidenceOverview } from "./evidence-overview";
 
 describe("member experience foundations", () => {
   it("presents TutorIA honestly without an interactive fake capability", () => {
@@ -46,9 +47,16 @@ describe("member experience foundations", () => {
 
   it("keeps evolution honest until a valid comparison exists", () => {
     render(<EvolutionProjection diagnosticComplete={false} completedSteps={0} totalSteps={8} evidenceSubmitted={false} />);
-    expect(screen.getByRole("heading", { name: "O que mudou na gestão" })).toBeInTheDocument();
-    expect(screen.getByText("Em construção")).toBeInTheDocument();
-    expect(screen.getByText(/comparação será liberada somente/i)).toBeInTheDocument();
-    expect(screen.getByText("Nenhuma evidência ainda")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Evolução da empresa" })).toBeInTheDocument();
+    expect(screen.getByText("aguardando Raio-X")).toBeInTheDocument();
+    expect(screen.getByText("Sem comparação longitudinal")).toBeInTheDocument();
+    expect(screen.getByText("Nenhum marco comprovado")).toBeInTheDocument();
+  });
+
+  it("does not invent evidence approval states", () => {
+    render(<EvidenceOverview implementation={null} evidenceSubmitted={false} />);
+    expect(screen.getByRole("heading", { name: "Evidências" })).toBeInTheDocument();
+    expect(screen.getByText("Nenhuma evidência registrada ainda")).toBeInTheDocument();
+    expect(screen.queryByText("Aprovada")).not.toBeInTheDocument();
   });
 });

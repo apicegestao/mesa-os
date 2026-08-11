@@ -31,6 +31,9 @@ Não há conflito de autoridade. A reconstrução preserva o core loop persistid
 - manter TutorIA central e visível, declarando honestamente sua indisponibilidade funcional;
 - unificar o Raio-X na mesma linguagem visual, com progresso dinâmico por pilar;
 - projetar a área Evolução somente com estado canônico, bloqueando comparações ainda inexistentes;
+- separar Hoje, Jornada, Evidências e Evolução em áreas próprias, evitando a página única extensa;
+- manter o Raio-X pendente como destaque em Hoje e projetar seu resultado somente em Evolução;
+- preparar a Direção do Lula como superfície contextual ligada a conteúdo externo, sem geração por IA neste incremento;
 - mover configuração de senha para uma área secundária recolhível;
 - preservar os fluxos atuais de diagnóstico, prioridade, ciclo, missão, ferramenta, implementação e evidência.
 

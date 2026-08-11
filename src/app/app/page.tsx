@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { DiagnosticExperience, DiagnosticResult, loadDiagnosticWorkspace } from "@/modules/diagnostic";
+import { DiagnosticExperience, loadDiagnosticWorkspace } from "@/modules/diagnostic";
 import { loadPriority, PriorityPanel } from "@/modules/priority";
 import { loadCycle } from "@/modules/cycle";
 import { CyclePanel } from "@/modules/cycle/cycle-panel";
@@ -10,13 +10,15 @@ import { ToolPanel } from "@/modules/structured-tool/tool-panel";
 import { loadCoreLoopWorkspace } from "@/modules/core-loop";
 import { CoreLoopPanel } from "@/modules/core-loop/core-loop-panel";
 import { logout, PasswordSetup } from "@/modules/identity-access";
-import { AppChrome, deriveNextAction, EvolutionProjection, JourneyProgress, MemberHome, MentorNote, MethodologyMap, type ProgressStep } from "@/modules/member-experience";
+import { AppChrome, deriveNextAction, EvidenceOverview, EvolutionProjection, JourneyProgress, MemberHome, MentorNote, MethodologyMap, type MemberView, type ProgressStep } from "@/modules/member-experience";
 import { lowestCandidates } from "@/modules/priority/domain/priority";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 
 export const dynamic = "force-dynamic";
 
-export default async function AuthenticatedShellPage() {
+export default async function AuthenticatedShellPage({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
+  const requestedView = (await searchParams).view;
+  const activeView: MemberView = requestedView === "journey" || requestedView === "evidence" || requestedView === "evolution" ? requestedView : "today";
   const supabase = await createSupabaseServerClient();
   const { data } = await supabase.auth.getClaims();
   const subject = data?.claims?.sub;
@@ -49,13 +51,11 @@ export default async function AuthenticatedShellPage() {
 
   if (workspace.status !== "completed") {
     const nextAction = deriveNextAction({ diagnosticStatus: "draft", hasPriority: false, priorityTied: false, hasCycle: false, hasMissions: false, hasAvailableMission: false, hasToolDraft: false, implementationStatus: "none" });
-    return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout} progress={0}>
-      <MemberHome memberName={memberName} nextAction={nextAction} cycle={null} completedSteps={0} totalSteps={8} />
-      <MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} />
-      <section id="diagnostico" className="experience-section"><DiagnosticExperience initialWorkspace={workspace} /></section>
-      <EvolutionProjection diagnosticComplete={false} completedSteps={0} totalSteps={8} evidenceSubmitted={false} />
-      <div id="metodologia"><MethodologyMap /></div>
-      <details className="account-settings"><summary>Conta e segurança</summary><PasswordSetup /></details>
+    return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout} progress={0} activeView={activeView}>
+      {activeView === "today" && <><MemberHome memberName={memberName} nextAction={nextAction} cycle={null} completedSteps={0} totalSteps={8} /><section className="pending-diagnostic-card"><div><p className="eyebrow">Pendência prioritária</p><h2>Concluir o Raio-X do Empresário</h2><p>Finalize sua leitura de entrada para liberar a prioridade metodológica.</p></div><details><summary>Continuar Raio-X</summary><DiagnosticExperience initialWorkspace={workspace} /></details></section><MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} /></>}
+      {activeView === "journey" && <><JourneyProgress steps={draftProgressSteps} /><div id="metodologia"><MethodologyMap /></div><details className="account-settings"><summary>Conta e segurança</summary><PasswordSetup /></details></>}
+      {activeView === "evidence" && <EvidenceOverview implementation={null} evidenceSubmitted={false} />}
+      {activeView === "evolution" && <EvolutionProjection diagnosticComplete={false} result={null} completedSteps={0} totalSteps={8} evidenceSubmitted={false} />}
     </AppChrome>;
   }
 
@@ -83,19 +83,24 @@ export default async function AuthenticatedShellPage() {
   const completedSteps = progressSteps.filter((step) => step.complete).length;
   const progress = Math.round((completedSteps / progressSteps.length) * 100);
 
-  return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout} progress={progress}>
-    <MemberHome memberName={memberName} nextAction={nextAction} cycle={cycle} priorityLabel={priority?.dimension_label} missionTitle={availableMission?.title} completedSteps={completedSteps} totalSteps={progressSteps.length} />
-    <JourneyProgress steps={progressSteps} />
+  return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout} progress={progress} activeView={activeView}>
+    {activeView === "today" && <><MemberHome memberName={memberName} nextAction={nextAction} cycle={cycle} priorityLabel={priority?.dimension_label} missionTitle={availableMission?.title} completedSteps={completedSteps} totalSteps={progressSteps.length} /><MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} /></>}
+    {activeView === "journey" && <><JourneyProgress steps={progressSteps} />
     <section id="jornada" className="experience-section journey-section" aria-labelledby="journey-title">
       <div className="section-heading"><div><p className="eyebrow">Minha jornada</p><h2 id="journey-title">Do diagnóstico à transformação</h2></div><span className="status-pill">Ciclo atual</span></div>
       <div className="journey-rail" aria-label="Etapas da jornada"><span className="done">Diagnóstico</span><span className={priority ? "done" : "current"}>Prioridade</span><span className={cycle ? "done" : priority ? "current" : "future"}>Ciclo</span><span className={availableMission ? "current" : "future"}>Missão</span><span className="future">Evolução</span></div>
       {workspace.executionId && workspace.result && <div className="journey-panels"><div id="prioridade"><PriorityPanel executionId={workspace.executionId} result={workspace.result} priority={priority} /></div>{priority && <div id="ciclo"><CyclePanel priorityId={priority.id} cycle={cycle} /></div>}{cycle && <div id="missao"><MissionPanel cycleId={cycle.id} missions={missions} /></div>}</div>}
     </section>
     {availableMission && toolWorkspace && <section id="workspace" className="experience-section workspace-section" aria-labelledby="workspace-title"><div className="section-heading"><div><p className="eyebrow">Meu sistema de gestão</p><h2 id="workspace-title">Entender, construir e aplicar</h2></div></div><div className="workspace-steps"><span className="done">1 · Entender</span><span className={toolWorkspace.updatedAt ? "done" : "current"}>2 · Construir</span><span className={coreLoopWorkspace?.implementation ? "done" : "future"}>3 · Aplicar</span><span className={coreLoopWorkspace?.implementation?.status === "implemented" ? "current" : "future"}>4 · Evidenciar</span></div><ToolPanel missionId={availableMission.id} workspace={toolWorkspace} readOnly={coreLoopWorkspace?.implementation?.status === "implemented"}/>{coreLoopWorkspace && <div id="implementacao"><CoreLoopPanel missionId={availableMission.id} workspace={coreLoopWorkspace}/></div>}</section>}
-    <section id="diagnostico" className="experience-section diagnostic-archive"><details><summary><span><small>Raio-X do Empresário · Mês 0</small><strong>Consultar diagnóstico de entrada</strong></span><span aria-hidden="true">+</span></summary><DiagnosticResult workspace={workspace} /></details></section>
-    <MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} />
-    <EvolutionProjection diagnosticComplete completedSteps={completedSteps} totalSteps={progressSteps.length} evidenceSubmitted={Boolean(coreLoopWorkspace?.evidenceSubmitted)} />
-    <div id="metodologia"><MethodologyMap /></div>
-    <details className="account-settings"><summary>Conta e segurança</summary><PasswordSetup /></details>
+    <div id="metodologia"><MethodologyMap /></div><details className="account-settings"><summary>Conta e segurança</summary><PasswordSetup /></details></>}
+    {activeView === "evidence" && <EvidenceOverview implementation={coreLoopWorkspace?.implementation ?? null} evidenceSubmitted={Boolean(coreLoopWorkspace?.evidenceSubmitted)} missionTitle={availableMission?.title} />}
+    {activeView === "evolution" && <EvolutionProjection diagnosticComplete result={workspace.result} completedSteps={completedSteps} totalSteps={progressSteps.length} evidenceSubmitted={Boolean(coreLoopWorkspace?.evidenceSubmitted)} />}
   </AppChrome>;
 }
+
+const draftProgressSteps: ProgressStep[] = [
+  { label: "Diagnóstico", complete: false, tone: "blue" }, { label: "Prioridade", complete: false, tone: "gold" },
+  { label: "Ciclo", complete: false, tone: "plum" }, { label: "Missão", complete: false, tone: "green" },
+  { label: "Ferramenta", complete: false, tone: "blue" }, { label: "Aplicação", complete: false, tone: "gold" },
+  { label: "Evidência", complete: false, tone: "plum" }, { label: "Evolução", complete: false, tone: "green" },
+];
