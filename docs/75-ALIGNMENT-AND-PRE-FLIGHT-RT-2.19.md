@@ -29,6 +29,8 @@ Não há conflito de autoridade. A reconstrução preserva o core loop persistid
 - manter Arial em toda a aplicação;
 - reduzir tamanho, espaçamento e extensão vertical dos cards;
 - manter TutorIA central e visível, declarando honestamente sua indisponibilidade funcional;
+- unificar o Raio-X na mesma linguagem visual, com progresso dinâmico por pilar;
+- projetar a área Evolução somente com estado canônico, bloqueando comparações ainda inexistentes;
 - mover configuração de senha para uma área secundária recolhível;
 - preservar os fluxos atuais de diagnóstico, prioridade, ciclo, missão, ferramenta, implementação e evidência.
 

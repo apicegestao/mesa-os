@@ -10,7 +10,7 @@ import { ToolPanel } from "@/modules/structured-tool/tool-panel";
 import { loadCoreLoopWorkspace } from "@/modules/core-loop";
 import { CoreLoopPanel } from "@/modules/core-loop/core-loop-panel";
 import { logout, PasswordSetup } from "@/modules/identity-access";
-import { AppChrome, deriveNextAction, JourneyProgress, MemberHome, MentorNote, MethodologyMap, type ProgressStep } from "@/modules/member-experience";
+import { AppChrome, deriveNextAction, EvolutionProjection, JourneyProgress, MemberHome, MentorNote, MethodologyMap, type ProgressStep } from "@/modules/member-experience";
 import { lowestCandidates } from "@/modules/priority/domain/priority";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 
@@ -53,6 +53,7 @@ export default async function AuthenticatedShellPage() {
       <MemberHome memberName={memberName} nextAction={nextAction} cycle={null} completedSteps={0} totalSteps={8} />
       <MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} />
       <section id="diagnostico" className="experience-section"><DiagnosticExperience initialWorkspace={workspace} /></section>
+      <EvolutionProjection diagnosticComplete={false} completedSteps={0} totalSteps={8} evidenceSubmitted={false} />
       <div id="metodologia"><MethodologyMap /></div>
       <details className="account-settings"><summary>Conta e segurança</summary><PasswordSetup /></details>
     </AppChrome>;
@@ -93,6 +94,7 @@ export default async function AuthenticatedShellPage() {
     {availableMission && toolWorkspace && <section id="workspace" className="experience-section workspace-section" aria-labelledby="workspace-title"><div className="section-heading"><div><p className="eyebrow">Meu sistema de gestão</p><h2 id="workspace-title">Entender, construir e aplicar</h2></div></div><div className="workspace-steps"><span className="done">1 · Entender</span><span className={toolWorkspace.updatedAt ? "done" : "current"}>2 · Construir</span><span className={coreLoopWorkspace?.implementation ? "done" : "future"}>3 · Aplicar</span><span className={coreLoopWorkspace?.implementation?.status === "implemented" ? "current" : "future"}>4 · Evidenciar</span></div><ToolPanel missionId={availableMission.id} workspace={toolWorkspace} readOnly={coreLoopWorkspace?.implementation?.status === "implemented"}/>{coreLoopWorkspace && <div id="implementacao"><CoreLoopPanel missionId={availableMission.id} workspace={coreLoopWorkspace}/></div>}</section>}
     <section id="diagnostico" className="experience-section diagnostic-archive"><details><summary><span><small>Raio-X do Empresário · Mês 0</small><strong>Consultar diagnóstico de entrada</strong></span><span aria-hidden="true">+</span></summary><DiagnosticResult workspace={workspace} /></details></section>
     <MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} />
+    <EvolutionProjection diagnosticComplete completedSteps={completedSteps} totalSteps={progressSteps.length} evidenceSubmitted={Boolean(coreLoopWorkspace?.evidenceSubmitted)} />
     <div id="metodologia"><MethodologyMap /></div>
     <details className="account-settings"><summary>Conta e segurança</summary><PasswordSetup /></details>
   </AppChrome>;

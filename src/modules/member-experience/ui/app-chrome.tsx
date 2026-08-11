@@ -7,7 +7,7 @@ export function AppChrome({ organizationName, memberName, logoutAction, progress
       <a href="#hoje" className="experience-brand" aria-label="Mesa dos Donos — Hoje"><span className="brand-bars"><i /><i /><i /></span><div><strong>MESA</strong><small>DOS DONOS</small></div></a>
       <div className="sidebar-profile"><span>{initials}</span><div><strong>{memberName ?? "Membro"}</strong><small>{organizationName} · T1</small></div></div>
       <p className="sidebar-role">Ambiente do membro</p>
-      <nav aria-label="Navegação principal"><a href="#hoje" className="active"><span>⌂</span>Hoje</a><a href="#metodologia"><span>◇</span>Minha trilha</a><a href="#diagnostico"><span>◫</span>Diagnósticos</a><a href="#implementacao"><span>✓</span>Evidências</a><a href="#jornada"><span>↗</span>Evolução</a></nav>
+      <nav aria-label="Navegação principal"><a href="#hoje" className="active"><span>⌂</span>Hoje</a><a href="#diagnostico"><span>◫</span>Raio-X</a><a href="#evolucao"><span>↗</span>Evolução</a><a href="#metodologia"><span>◇</span>Minha trilha</a><a href="#implementacao"><span>✓</span>Evidências</a></nav>
       <div className="sidebar-progress"><div><span>{progress}%</span><small>Progresso do T1</small></div><div className="sidebar-progress-track"><i style={{ width: `${progress}%` }} /></div></div>
       <button className="sidebar-tutoria" type="button" disabled title="TutorIA será ativado em incremento próprio"><span className="mini-orb">T</span><div><strong>Falar com a TutorIA</strong><small>Orientação em preparação</small></div></button>
     </aside>

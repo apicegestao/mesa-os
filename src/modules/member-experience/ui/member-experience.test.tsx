@@ -5,6 +5,7 @@ import { TutoriaPresence } from "./tutoria-presence";
 import { JourneyProgress } from "./journey-progress";
 import { MentorNote } from "./mentor-note";
 import { MemberHome } from "./member-home";
+import { EvolutionProjection } from "./evolution-projection";
 
 describe("member experience foundations", () => {
   it("presents TutorIA honestly without an interactive fake capability", () => {
@@ -41,5 +42,13 @@ describe("member experience foundations", () => {
     expect(screen.getAllByText("0 de 8 etapas")).toHaveLength(2);
     expect(screen.getByText("Ainda não medido")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Pedir ajuda à TutorIA" })).toBeDisabled();
+  });
+
+  it("keeps evolution honest until a valid comparison exists", () => {
+    render(<EvolutionProjection diagnosticComplete={false} completedSteps={0} totalSteps={8} evidenceSubmitted={false} />);
+    expect(screen.getByRole("heading", { name: "O que mudou na gestão" })).toBeInTheDocument();
+    expect(screen.getByText("Em construção")).toBeInTheDocument();
+    expect(screen.getByText(/comparação será liberada somente/i)).toBeInTheDocument();
+    expect(screen.getByText("Nenhuma evidência ainda")).toBeInTheDocument();
   });
 });
