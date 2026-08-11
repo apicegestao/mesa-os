@@ -11,10 +11,10 @@ import { JourneyDeliveries } from "./journey-deliveries";
 import { DiagnosticsOverview } from "./diagnostics-overview";
 
 describe("member experience foundations", () => {
-  it("presents TutorIA honestly without an interactive fake capability", () => {
+  it("presents TutorIA as a governed assisted capability", () => {
     render(<TutoriaPresence />);
     expect(screen.getByRole("heading", { name: "Orientação dentro da sua jornada" })).toBeInTheDocument();
-    expect(screen.getByText(/conversa inteligente ainda não está ativada/i)).toBeInTheDocument();
+    expect(screen.getByText(/protegida por orçamento/i)).toBeInTheDocument();
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });

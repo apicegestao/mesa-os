@@ -6,3 +6,4 @@ export { summarizeAIUsage } from "./usage-metrics";
 export type { AIUsageEventMetric, AIUsageInternalSummary } from "./usage-metrics";
 export { evaluateTutorIAUsage, orientationRequestSchema } from "./usage-policy";
 export type { OrientationRequest, TutorIAUsageDecision } from "./usage-policy";
+export { TutorIAAssistant } from "./ui";
