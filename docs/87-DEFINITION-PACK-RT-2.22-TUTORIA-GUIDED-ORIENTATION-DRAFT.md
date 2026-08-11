@@ -1,8 +1,8 @@
 # Definition Pack — RT-2.22 TutorIA Guided Orientation
 
-**Status:** DRAFT — aguardando aprovação do owner  
-**Modo proposto:** BUILD em homologação isolada  
-**Não autoriza:** configuração de segredo, consumo de IA, deploy, promoção ou produção.
+**Status:** APPROVED — owner, 2026-08-11
+**Modo:** BUILD em homologação isolada
+**Não autoriza:** configuração de segredo, consumo de IA, deploy, promoção ou produção sem gate próprio.
 
 ## Objetivo
 

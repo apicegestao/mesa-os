@@ -1658,6 +1658,12 @@ export type Database = {
         Update: { absent_fields?: string[]; actor_identity_id?: string; created_at?: string; id?: string; organization_id?: string; purpose?: Database["public"]["Enums"]["tutoria_context_purpose"]; source_codes?: string[] }
         Relationships: []
       }
+      tutoria_orientation_audits: {
+        Row: { actor_identity_id: string; created_at: string; duration_ms: number; event_kind: string; failure_code: string | null; id: string; input_token_estimate: number | null; model_code: string | null; objective: Database["public"]["Enums"]["tutoria_orientation_objective"]; organization_id: string; outcome: Database["public"]["Enums"]["tutoria_orientation_outcome"]; output_token_estimate: number | null; policy_decision_id: string | null; provider_code: string; response_schema_valid: boolean }
+        Insert: { actor_identity_id: string; created_at?: string; duration_ms?: number; event_kind?: string; failure_code?: string | null; id?: string; input_token_estimate?: number | null; model_code?: string | null; objective: Database["public"]["Enums"]["tutoria_orientation_objective"]; organization_id: string; outcome: Database["public"]["Enums"]["tutoria_orientation_outcome"]; output_token_estimate?: number | null; policy_decision_id?: string | null; provider_code: string; response_schema_valid?: boolean }
+        Update: { actor_identity_id?: string; created_at?: string; duration_ms?: number; event_kind?: string; failure_code?: string | null; id?: string; input_token_estimate?: number | null; model_code?: string | null; objective?: Database["public"]["Enums"]["tutoria_orientation_objective"]; organization_id?: string; outcome?: Database["public"]["Enums"]["tutoria_orientation_outcome"]; output_token_estimate?: number | null; policy_decision_id?: string | null; provider_code?: string; response_schema_valid?: boolean }
+        Relationships: []
+      }
       tutoria_policy_decisions: {
         Row: { actor_identity_id: string; context_audit_id: string; created_at: string; id: string; organization_id: string; outcome: Database["public"]["Enums"]["tutoria_policy_outcome"]; reason_code: string; requested_tool: Database["public"]["Enums"]["tutoria_tool_name"] }
         Insert: { actor_identity_id: string; context_audit_id: string; created_at?: string; id?: string; organization_id: string; outcome: Database["public"]["Enums"]["tutoria_policy_outcome"]; reason_code: string; requested_tool: Database["public"]["Enums"]["tutoria_tool_name"] }
@@ -1807,6 +1813,8 @@ export type Database = {
       membership_role: "owner" | "member"
       membership_status: "active" | "revoked"
       tutoria_context_purpose: "screen_presence" | "read_member_state" | "read_methodology"
+      tutoria_orientation_objective: "understand_next_step" | "understand_methodology"
+      tutoria_orientation_outcome: "served" | "unavailable" | "escalated"
       tutoria_policy_outcome: "allow" | "deny" | "escalate"
       tutoria_tool_name: "read_member_state" | "read_methodology_map"
       tutoria_tool_outcome: "success" | "denied" | "failed"
@@ -1943,6 +1951,8 @@ export const Constants = {
       membership_role: ["owner", "member"],
       membership_status: ["active", "revoked"],
       tutoria_context_purpose: ["screen_presence", "read_member_state", "read_methodology"],
+      tutoria_orientation_objective: ["understand_next_step", "understand_methodology"],
+      tutoria_orientation_outcome: ["served", "unavailable", "escalated"],
       tutoria_policy_outcome: ["allow", "deny", "escalate"],
       tutoria_tool_name: ["read_member_state", "read_methodology_map"],
       tutoria_tool_outcome: ["success", "denied", "failed"],

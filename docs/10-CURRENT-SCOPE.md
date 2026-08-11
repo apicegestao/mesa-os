@@ -1,7 +1,7 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** RT-2.21 — TutorIA Foundation
+**Sprint:** RT-2.22 — TutorIA Guided Orientation
 **Mode:** BUILD
 **Status:** IN PROGRESS — APPROVED FOR BUILD
 
@@ -38,6 +38,9 @@
 - TCF-2.21B — policy engine determinístico e gateway allow-list de leitura.
 - TCF-2.21C — auditoria imutável e observabilidade sem conteúdo sensível.
 - TCF-2.21D — CTA contextual honesta do TutorIA, sem IA ativa.
+- TGO-2.22A — orientação contextual de leitura, com entrada e saída tipadas.
+- TGO-2.22B — gateway de modelo server-side, rate limit e auditoria sem conteúdo sensível.
+- TGO-2.22C — ativação bloqueada por ambiente e limites de homologação; sem inferência até os gates próprios.
 
 ## Not Authorized
 
