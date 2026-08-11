@@ -101,3 +101,14 @@ O frontend usa somente publishable key. Chaves secret/service-role ficam exclusi
 - Produção recebe um deploy por Release Train; alterações exclusivamente documentais são ignoradas pelo build do Netlify.
 - Nenhuma instalação local no computador do owner é exigida; GitHub, CI, Netlify e Supabase são os planos de controle em nuvem.
 - Proteção administrativa de `main` e imposição Git-only devem ser ativadas nas plataformas quando seus conectores expuserem essa configuração ou pelo painel do owner.
+
+## ADR-034 — Implementation, evidence and mission transition
+
+**Status:** PROPOSED — AWAITING RT-2.15 APPROVAL
+
+- Ferramenta salva é preparação; Implementação exige confirmação explícita de uso real.
+- Evidência é um registro operacional factual, imutável e distinto de impacto ou Evolução.
+- A Missão somente conclui quando Ferramenta, Implementação e Evidência válidas coexistem.
+- Evidência, conclusão da Missão e desbloqueio da próxima ocorrem em uma transação server-side.
+- A próxima Missão é determinada pela posição metodológica, sem escolha, pulo ou reordenação.
+- Estado e próxima ação do core loop são derivados dos registros canônicos, sem percentual duplicado.

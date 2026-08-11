@@ -62,3 +62,9 @@
 | GOV-2.14F | Protocolo Fast Track | `docs/09-CONSTRUCTION-PROTOCOL.md`, `docs/46-GOVERNANCE-FAST-TRACK-V1.1.md` | revisão de autoridade |
 | GOV-2.14F | Deploy documental ignorado | `netlify.toml` | configuração revisada + deploy inicial único |
 | GOV-2.14F | Fluxo cloud-first | branch `agent/governance-fast-track`, Pull Request e GitHub Actions | CI do PR |
+| RT-2.15 | Alignment Check integrado | `docs/48-ALIGNMENT-CHECK-RT-2.15.md` | revisão de autoridade |
+| IMP-2.15A | Definição de Implementação | `docs/49-FEATURE-SPEC-IMP-2.15A.md` | critérios e testes propostos |
+| EVD-2.15B | Definição de Evidência | `docs/50-FEATURE-SPEC-EVD-2.15B.md` | critérios e testes propostos |
+| MTR-2.15C | Definição de transição | `docs/51-FEATURE-SPEC-MTR-2.15C.md` | invariantes transacionais |
+| STA-2.15D | Definição de estado | `docs/52-FEATURE-SPEC-STA-2.15D.md` | matriz de próxima ação |
+| RT-2.15 | Definition Pack | `docs/53-DEFINITION-PACK-RT-2.15.md` | aprovação explícita única |

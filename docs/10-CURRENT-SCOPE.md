@@ -1,17 +1,15 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** GOV-2.14F — Governance Fast Track
-**Mode:** GOVERNANCE
-**Status:** COMPLETE — PRODUCTION RELEASED
+**Sprint:** RT-2.15 — Core Loop Completion Definition Pack
+**Mode:** DEFINITION
+**Status:** AWAITING SINGLE APPROVAL — BUILD NOT AUTHORIZED
 
-## Authorized
+## Authorized now
 
-- Instituir Release Train seguro no Construction Protocol v1.1.
-- Adotar branch, Pull Request e CI como fluxo padrão antes de `main`.
-- Impedir builds Netlify quando somente documentação mudar.
-- Registrar a arquitetura cloud-first e os gates preservados.
-- Propor o primeiro Definition Pack integrado do core loop.
+- Alignment Check e Definition Pack integrados.
+- Specs de Implementação, Evidência, transição e próxima ação.
+- Atualizações exclusivamente documentais de backlog e rastreabilidade.
 
 ## Not Authorized
 
@@ -50,8 +48,8 @@
 - Exportação, anexos, comentários ou colaboração por `member`.
 - Feature de negócio, migration, alteração de dados ou deploy manual.
 - Redução de testes, RLS, validação server-side ou rastreabilidade.
-- Merge automático ou BUILD do RT-2.15 antes da aprovação do Definition Pack.
+- Código, migration, dados, configuração funcional, deploy manual ou BUILD do RT-2.15 antes da aprovação do Definition Pack.
 
 ## Exit criteria
 
-Atendidos em 2026-08-11. Evidências consolidadas em `docs/47-POST-FLIGHT-GOV-2.14F.md`. O RT-2.15 permanece como proposta sem autorização de BUILD.
+Definition Pack completo, CI documental aprovado e aprovação explícita única do owner registrada. BUILD permanece bloqueado até esse registro.
