@@ -12,6 +12,7 @@
 - Auditoria imutável de início e desfecho de orientação, sem prompt, resposta, segredo ou evidência bruta.
 - Ledger interno de uso por organização, membro, capacidade, rota de modelo e resolução; registra tokens e custo estimado em micros de dólar. O valor é estimativa técnica, não substitui a fatura do provedor/Netlify.
 - Catálogo preparado, sem fallback automático: Gemini Flash (rota primária), GPT-5 mini e Claude Haiku (rotas futuras).
+- Agregação interna pronta para custo por membro, capacidade, modelo e resolução, incluindo custo médio por orientação servida; nenhuma métrica individual aparece na experiência do membro.
 - Guardrail de ativação: sem `TUTORIA_ORIENTATION_ENABLED=true` e as variáveis injetadas do Gateway, a rota devolve indisponibilidade e não chama modelo.
 
 ## Verificações
