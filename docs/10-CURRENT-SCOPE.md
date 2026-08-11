@@ -1,17 +1,18 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** GOV-2.6D — Priority Foundation Definition & Alignment
-**Mode:** DEFINITION
-**Status:** COMPLETE
+**Sprint:** PRI-2.7 — Priority Foundation
+**Mode:** BUILD
+**Status:** COMPLETE — PRODUCTION RELEASED
 
 ## Authorized
 
-- Alignment Check e Pre-Flight de Priority Foundation.
-- Feature Spec preliminar PRI-2.7.
-- Proposta de seleção humana assistida pelo menor score dimensional.
-- Critérios preliminares, decisões pendentes e limites explícitos.
-- Atualização de roadmap, backlog, rastreabilidade e Post-Flight.
+- Identificar menor score dimensional do diagnóstico concluído.
+- Sem empate: owner confirma a dimensão candidata com justificativa curta obrigatória.
+- Persistir uma prioridade imutável e rastreável à execução, dimensão, score, autor e data.
+- Em empate: exibir estado `Aguardando desempate TutorIA`, sem escolha ou persistência humana.
+- RLS, grants mínimos, função transacional, testes e Post-Flight.
+- Experiência de próxima ação sem dashboard e sem antecipar Ciclo.
 
 ## Not Authorized
 
@@ -33,10 +34,12 @@
 - Edição administrativa da metodologia.
 - Reabertura, invalidação ou sobrescrita de resultado concluído.
 - Participação colaborativa ou submissão por `member` neste primeiro incremento.
-- Código, migration, alteração de Supabase/Netlify ou configuração externa.
-- Criação, confirmação ou persistência de prioridade.
-- Implementação de PRI-2.7 antes de Feature Spec aprovada e novo Current Scope em BUILD.
+- Implementação do TutorIA ou desempate automático neste sprint.
+- Escolha humana em caso de empate no menor score.
+- Seleção de dimensão diferente da única menor candidata.
+- Alteração, substituição, cancelamento ou segunda prioridade.
+- Prazo, meta, Ciclo, Missão, ferramenta, plano de ação ou recomendação.
 
 ## Exit criteria
 
-Pre-Flight registrado; Feature Spec preliminar PRI-2.7 criada; decisões obrigatórias explicitadas; documentos governados consistentes; Post-Flight entregue; nenhuma alteração de produto ou infraestrutura.
+Feature Spec aprovada; Pre-Flight BUILD; prioridade rastreável e imutável; empate bloqueado para futuro TutorIA; isolamento organizacional; lint, typecheck, testes, build e banco aprovados; migration e deploy após gates; Post-Flight entregue.

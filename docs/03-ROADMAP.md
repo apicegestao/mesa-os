@@ -2,7 +2,7 @@
 
 ## Fase atual
 
-Sprint GOV-2.6D — Priority Foundation Definition & Alignment: definição governada do segundo passo do core loop, sem implementação.
+Sprint PRI-2.7 — Priority Foundation concluído e publicado. Próximo incremento depende de Definition & Alignment próprio.
 
 ## Fases concluídas
 
@@ -11,10 +11,12 @@ Sprint GOV-2.6D — Priority Foundation Definition & Alignment: definição gove
 - Sprint IAM-2.3 — Identity & Access Foundation: autenticação por magic link, sessão segura e pertencimento organizacional mínimo, validado em produção.
 - Sprint GOV-2.4D — Diagnostic Foundation Definition & Alignment: definição governada do primeiro domínio do core loop.
 - Sprint DIA-2.5 — Diagnostic Foundation: Raio-X do Empresário no Mês 0, com definição versionada, rascunho, submissão e resultado rastreável.
+- Sprint GOV-2.6D — Priority Foundation Definition & Alignment: definição governada do segundo passo do core loop.
+- Sprint PRI-2.7 — Priority Foundation: confirmação rastreável sem empate e espera segura para futuro desempate TutorIA.
 
-## Próximo incremento proposto, não autorizado para BUILD
+## Próximo incremento
 
-PRI-2.7 — Priority Foundation. O sistema apresenta a menor dimensão do Raio-X como candidata e o owner confirma uma única prioridade. Empates exigem escolha humana. O BUILD depende da aprovação da Feature Spec e de novo Current Scope.
+Não definido. TutorIA Tie-Breaker e Ciclo permanecem propostas não autorizadas para BUILD.
 
 ## Sequenciamento governado
 

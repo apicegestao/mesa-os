@@ -446,11 +446,83 @@ export type Database = {
         }
         Relationships: []
       }
+      priorities: {
+        Row: {
+          confirmed_at: string
+          confirmed_by: string
+          diagnostic_dimension_id: string
+          diagnostic_execution_id: string
+          dimension_code: string
+          dimension_label: string
+          id: string
+          organization_id: string
+          rationale: string
+          source_score: number
+        }
+        Insert: {
+          confirmed_at?: string
+          confirmed_by: string
+          diagnostic_dimension_id: string
+          diagnostic_execution_id: string
+          dimension_code: string
+          dimension_label: string
+          id?: string
+          organization_id: string
+          rationale: string
+          source_score: number
+        }
+        Update: {
+          confirmed_at?: string
+          confirmed_by?: string
+          diagnostic_dimension_id?: string
+          diagnostic_execution_id?: string
+          dimension_code?: string
+          dimension_label?: string
+          id?: string
+          organization_id?: string
+          rationale?: string
+          source_score?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "priorities_confirmed_by_fkey"
+            columns: ["confirmed_by"]
+            isOneToOne: false
+            referencedRelation: "identities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "priorities_diagnostic_dimension_id_fkey"
+            columns: ["diagnostic_dimension_id"]
+            isOneToOne: false
+            referencedRelation: "diagnostic_dimensions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "priorities_diagnostic_execution_id_fkey"
+            columns: ["diagnostic_execution_id"]
+            isOneToOne: true
+            referencedRelation: "diagnostic_executions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "priorities_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      confirm_priority: {
+        Args: { priority_rationale: string; target_execution_id: string }
+        Returns: string
+      }
       save_diagnostic_responses: {
         Args: { submitted_answers: Json; target_execution_id: string }
         Returns: undefined

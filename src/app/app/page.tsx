@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { DiagnosticExperience, DiagnosticResult, loadDiagnosticWorkspace } from "@/modules/diagnostic";
+import { loadPriority, PriorityPanel } from "@/modules/priority";
 import { logout } from "@/modules/identity-access";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 
@@ -24,8 +25,9 @@ export default async function AuthenticatedShellPage() {
   if (membership.role !== "owner") return <main className="shell"><section className="status"><p className="eyebrow">Mesa OS · {organization?.name}</p><h1>Acesso confirmado</h1><p className="summary">O Raio-X inicial está disponível somente para o responsável da organização neste momento.</p><form action={logout}><button type="submit" className="button-secondary">Sair</button></form></section></main>;
 
   const workspace = await loadDiagnosticWorkspace(supabase, membership.organization_id);
+  const priority = workspace?.status === "completed" ? await loadPriority(supabase, membership.organization_id) : null;
   return <main className="app-shell">
     <header className="app-header"><a href="/app" className="brand" aria-label="Mesa OS — início"><span>M</span><div><strong>Mesa OS</strong><small>{organization?.name}</small></div></a><form action={logout}><button type="submit" className="header-action">Sair</button></form></header>
-    {workspace ? workspace.status === "completed" ? <DiagnosticResult workspace={workspace} /> : <DiagnosticExperience initialWorkspace={workspace} /> : <section className="diagnostic-layout"><div className="card"><p className="eyebrow">Mesa OS</p><h1>Diagnóstico indisponível</h1><p className="summary">Não foi possível carregar a definição neste momento. Tente novamente em instantes.</p></div></section>}
+    {workspace ? workspace.status === "completed" ? <><DiagnosticResult workspace={workspace} />{workspace.executionId && workspace.result && <div className="priority-wrap"><PriorityPanel executionId={workspace.executionId} result={workspace.result} priority={priority} /></div>}</> : <DiagnosticExperience initialWorkspace={workspace} /> : <section className="diagnostic-layout"><div className="card"><p className="eyebrow">Mesa OS</p><h1>Diagnóstico indisponível</h1><p className="summary">Não foi possível carregar a definição neste momento. Tente novamente em instantes.</p></div></section>}
   </main>;
 }

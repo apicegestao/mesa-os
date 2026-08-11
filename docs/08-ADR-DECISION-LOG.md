@@ -50,3 +50,12 @@ O frontend usa somente publishable key. Chaves secret/service-role ficam exclusi
 - Uma execução concluída preserva a revisão metodológica utilizada e não pode ser sobrescrita.
 - O primeiro release implementa somente `Mês 0`; reaplicação e evolução longitudinal exigem incremento próprio.
 - A primeira definição é provisionada por seed idempotente e versionado, sem interface administrativa.
+
+## ADR-029 — Priority tie handling
+
+**Status:** ACCEPTED
+
+- Sem empate no menor score, o owner confirma a prioridade com justificativa curta.
+- Em empate no menor score, nenhuma escolha humana é aceita; o estado permanece aguardando futuro desempate TutorIA.
+- TutorIA não será improvisado no PRI-2.7, não acessará o banco diretamente e exigirá Feature Spec própria antes de decidir.
+- Confirmar prioridade não cria Ciclo, Missão, prazo, meta ou plano de ação.

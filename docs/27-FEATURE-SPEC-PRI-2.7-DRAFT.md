@@ -1,6 +1,8 @@
 # PRI-2.7 — Priority Foundation
 
-**Status:** DRAFT — NOT AUTHORIZED FOR BUILD
+**Status:** APPROVED FOR BUILD
+
+**Aprovação:** Rafael Portela Martins, 2026-08-11, com ADR-029 para empates.
 
 ## Objetivo
 
@@ -19,8 +21,8 @@ O Diagnóstico mostra a situação atual, mas não determina sozinho onde a orga
 
 - Apresentar o resultado dimensional do diagnóstico concluído.
 - Destacar a menor dimensão como candidata baseada em evidência.
-- Em empate na menor pontuação, apresentar todas as candidatas empatadas.
-- Owner escolhe e confirma exatamente uma dimensão como prioridade.
+- Em empate na menor pontuação, apresentar o bloqueio para futuro desempate TutorIA; nenhuma escolha humana.
+- Sem empate, owner confirma a única menor dimensão como prioridade.
 - Registrar diagnóstico, revisão metodológica, dimensão, score no momento da escolha, autor e data.
 - Exibir a prioridade confirmada como próxima referência do membro.
 - Garantir isolamento organizacional, imutabilidade da origem e auditoria.
@@ -39,8 +41,8 @@ O Diagnóstico mostra a situação atual, mas não determina sozinho onde a orga
 
 1. Owner conclui o Diagnóstico.
 2. O sistema apresenta os scores dimensionais e explica que o menor score é uma candidata, não uma decisão automática.
-3. Sem empate, o owner pode confirmar a candidata ou selecionar outra dimensão, se essa liberdade for aprovada.
-4. Em empate, o owner escolhe uma das candidatas empatadas.
+3. Sem empate, o owner informa justificativa curta e confirma a única candidata.
+4. Em empate, o fluxo aguarda futuro desempate TutorIA e não permite confirmação.
 5. Antes de confirmar, o sistema mostra a escolha e sua origem.
 6. Owner confirma explicitamente.
 7. A prioridade fica registrada; nenhuma etapa de Ciclo é criada.
@@ -50,7 +52,7 @@ O Diagnóstico mostra a situação atual, mas não determina sozinho onde a orga
 - Prioridade depende de diagnóstico concluído da própria organização.
 - Uma organização possui no máximo uma prioridade ativa neste incremento.
 - O sistema não confirma prioridade silenciosamente.
-- Empate sempre exige escolha humana.
+- Empate nunca permite escolha humana neste incremento.
 - A prioridade preserva o score e a revisão de origem.
 - Confirmar prioridade não representa implementação nem evolução.
 
@@ -100,16 +102,17 @@ O Diagnóstico mostra a situação atual, mas não determina sozinho onde a orga
 - Nenhum Ciclo, Missão ou recomendação de ferramenta é criado.
 - Lint, typecheck, testes, build, banco e E2E relevantes são aprovados.
 
-## Decisões obrigatórias antes do BUILD
+## Decisões aprovadas para o BUILD
 
-1. O owner pode escolher qualquer dimensão ou somente uma das menores candidatas?
-2. Quando não há empate, ainda é obrigatória uma confirmação humana explícita?
-3. Deve haver justificativa textual? Proposta: opcional, curta e classificada como dado confidencial.
-4. A prioridade confirmada pode ser alterada antes da criação de Ciclo, ou será imutável neste release?
-5. O `member` pode visualizar a prioridade confirmada ou permanece sem acesso?
-6. O título da prioridade é o nome da dimensão ou existe texto metodológico próprio por dimensão?
-7. Qual mensagem mínima explica “por que isso importa” para cada dimensão?
-8. Confirmar que não haverá prazo, meta ou plano de ação em PRI-2.7.
+1. Owner confirma somente a única menor dimensão candidata.
+2. Confirmação humana explícita obrigatória quando não há empate.
+3. Justificativa curta obrigatória e confidencial.
+4. Prioridade imutável neste release.
+5. Somente owner visualiza neste incremento.
+6. Título é o nome da dimensão.
+7. Explicação usa score, origem e justificativa, sem texto metodológico inventado.
+8. Não haverá prazo, meta ou plano de ação.
+9. Empate permanece bloqueado para futuro TutorIA, sem intervenção humana.
 
 ## Testes necessários
 

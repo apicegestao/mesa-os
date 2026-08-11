@@ -32,3 +32,7 @@
 | GOV-2.6D | Proposta Priority Foundation | `docs/27-FEATURE-SPEC-PRI-2.7-DRAFT.md` | decisões pendentes explícitas |
 | GOV-2.6D | Governança atualizada | `docs/03-ROADMAP.md`, `docs/06-BACKLOG-MASTER.md`, `docs/10-CURRENT-SCOPE.md` | consistência entre documentos |
 | GOV-2.6D | Encerramento | `docs/28-POST-FLIGHT-2.6D.md` | Post-Flight review |
+| PRI-2.7 | Prioridade e confirmação transacional | `supabase/migrations/20260811135526_priority_foundation.sql` | teste remoto com rollback |
+| PRI-2.7 | Regra de candidato e empate | `src/modules/priority/domain` | Vitest |
+| PRI-2.7 | Experiência e persistência | `src/modules/priority`, `src/app/app/page.tsx` | typecheck + build |
+| PRI-2.7 | Encerramento | `docs/30-POST-FLIGHT-PRI-2.7.md` | Post-Flight review |

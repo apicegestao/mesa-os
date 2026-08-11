@@ -92,6 +92,6 @@ Objetivo proposto: permitir que um membro autorizado execute o primeiro passo do
 
 ## PRI-2.7 — Priority Foundation
 
-**Status:** PROPOSAL — NOT AUTHORIZED FOR BUILD
+**Status:** COMPLETE — PRODUCTION RELEASED
 
 Objetivo proposto: transformar um diagnóstico concluído em uma única prioridade organizacional confirmada pelo owner, rastreável à dimensão e à execução de origem, sem antecipar Ciclo ou Missão.
