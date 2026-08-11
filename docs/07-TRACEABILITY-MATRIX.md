@@ -74,3 +74,7 @@
 | MTR-2.15C | Conclusão e desbloqueio atômicos | `20260811160003_mission_transition.sql` | pgTAP + rollback + idempotência |
 | STA-2.15D | Próxima ação derivada | `src/modules/core-loop`, `src/app/app/page.tsx` | Vitest + typecheck + build |
 | RT-2.15 | Encerramento | `docs/56-POST-FLIGHT-RT-2.15.md` | CI + advisors + deploy + smoke |
+| RT-2.16 | Alignment e Definition Pack | `docs/57-ALIGNMENT-CHECK-RT-2.16.md`, `docs/61-DEFINITION-PACK-RT-2.16.md` | aprovação explícita única |
+| SCH-2.16A | Validação schema-driven | `docs/58-FEATURE-SPEC-SCH-2.16A.md` | critérios propostos |
+| TOL-2.16B | Ferramenta da Missão 2 | `docs/59-FEATURE-SPEC-TOL-2.16B.md` | schema proposto |
+| OPS-2.16C | Operacionalização da Missão 2 | `docs/60-FEATURE-SPEC-OPS-2.16C.md` | invariantes de reuso |

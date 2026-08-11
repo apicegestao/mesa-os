@@ -201,3 +201,15 @@ Objetivo proposto: concluir a primeira passagem operacional por Implementação,
 - STA-2.15D — Core-loop Status & Next Action.
 
 Autoridade de definição: `docs/53-DEFINITION-PACK-RT-2.15.md` e specs vinculadas. Aprovação explícita registrada em 2026-08-11.
+
+## RT-2.16 — Management Rhythm Release Train
+
+**Status:** DEFINITION PACK — AWAITING SINGLE APPROVAL
+
+Objetivo: operacionalizar a Missão 2 por meio de validação genérica schema-driven, Ferramenta Ritmo de Gestão e reuso do core loop até a Missão 3.
+
+- SCH-2.16A — Schema-driven Validation Generalization.
+- TOL-2.16B — Ritmo de Gestão da Equipe.
+- OPS-2.16C — Mission 2 Operationalization.
+
+Nenhum BUILD autorizado antes da aprovação explícita de `docs/61-DEFINITION-PACK-RT-2.16.md`.

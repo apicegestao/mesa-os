@@ -1,17 +1,15 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** RT-2.15 — Core Loop Completion Release Train
-**Mode:** BUILD
-**Status:** COMPLETE — PRODUCTION RELEASED
+**Sprint:** RT-2.16 — Management Rhythm Definition Pack
+**Mode:** DEFINITION
+**Status:** AWAITING SINGLE APPROVAL — BUILD NOT AUTHORIZED
 
-## Authorized
+## Authorized now
 
-- IMP-2.15A — implementação com rascunho e confirmação explícita.
-- EVD-2.15B — evidência operacional estruturada e imutável.
-- MTR-2.15C — conclusão e desbloqueio atômicos.
-- STA-2.15D — estado e próxima ação derivados.
-- Migrations aditivas e separadas, testes, documentação e um deploy consolidado.
+- Alignment Check e Definition Pack RT-2.16.
+- Specs SCH-2.16A, TOL-2.16B e OPS-2.16C.
+- Mudanças exclusivamente documentais.
 
 ## Not Authorized
 
@@ -50,8 +48,8 @@
 - Exportação, anexos, comentários ou colaboração por `member`.
 - Feature de negócio, migration, alteração de dados ou deploy manual.
 - Redução de testes, RLS, validação server-side ou rastreabilidade.
-- Qualquer capacidade, dado ou transição não descritos no Definition Pack aprovado.
+- Código, migration, dados ou BUILD do RT-2.16 antes da aprovação explícita do pack.
 
 ## Exit criteria
 
-Atendidos em 2026-08-11. Evidências consolidadas em `docs/56-POST-FLIGHT-RT-2.15.md`. Próximo incremento ainda não autorizado.
+Definition Pack completo, CI documental aprovado e aprovação explícita única registrada. BUILD permanece bloqueado até esse registro.
