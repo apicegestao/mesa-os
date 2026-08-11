@@ -47,7 +47,7 @@ export default async function AuthenticatedShellPage() {
 
   if (workspace.status !== "completed") {
     const nextAction = deriveNextAction({ diagnosticStatus: "draft", hasPriority: false, priorityTied: false, hasCycle: false, hasMissions: false, hasAvailableMission: false, hasToolDraft: false, implementationStatus: "none" });
-    return <AppChrome organizationName={organizationName} logoutAction={logout} nextAction={nextAction}><section id="diagnostico" className="experience-section"><DiagnosticExperience initialWorkspace={workspace} /></section></AppChrome>;
+    return <AppChrome organizationName={organizationName} logoutAction={logout} nextAction={nextAction}><PasswordSetup /><section id="diagnostico" className="experience-section"><DiagnosticExperience initialWorkspace={workspace} /></section></AppChrome>;
   }
 
   const tied = workspace.result ? lowestCandidates(workspace.result).length > 1 : false;
