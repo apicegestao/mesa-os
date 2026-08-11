@@ -504,6 +504,15 @@ export type Database = {
           referencedColumns: ["id"]
         }]
       }
+      mission_tool_bindings: {
+        Row: { created_at: string; id: string; mission_definition_id: string; tool_revision_id: string }
+        Insert: { created_at?: string; id?: string; mission_definition_id: string; tool_revision_id: string }
+        Update: { created_at?: string; id?: string; mission_definition_id?: string; tool_revision_id?: string }
+        Relationships: [
+          { foreignKeyName: "mission_tool_bindings_mission_definition_id_fkey"; columns: ["mission_definition_id"]; isOneToOne: true; referencedRelation: "mission_definitions"; referencedColumns: ["id"] },
+          { foreignKeyName: "mission_tool_bindings_tool_revision_id_fkey"; columns: ["tool_revision_id"]; isOneToOne: false; referencedRelation: "tool_definition_revisions"; referencedColumns: ["id"] },
+        ]
+      }
       missions: {
         Row: { created_at: string; created_by: string; cycle_id: string; definition_id: string; id: string; objective: string; organization_id: string; position: number; rationale: string; status: string; title: string }
         Insert: { created_at?: string; created_by: string; cycle_id: string; definition_id: string; id?: string; objective: string; organization_id: string; position: number; rationale: string; status: string; title: string }
@@ -601,6 +610,24 @@ export type Database = {
           },
         ]
       }
+      tool_definition_revisions: {
+        Row: { code: string; created_at: string; id: string; name: string; schema: Json; status: string; version: number }
+        Insert: { code: string; created_at?: string; id?: string; name: string; schema: Json; status: string; version: number }
+        Update: { code?: string; created_at?: string; id?: string; name?: string; schema?: Json; status?: string; version?: number }
+        Relationships: []
+      }
+      tool_instances: {
+        Row: { created_at: string; created_by: string; id: string; mission_id: string; organization_id: string; payload: Json; status: string; tool_revision_id: string; updated_at: string; updated_by: string }
+        Insert: { created_at?: string; created_by: string; id?: string; mission_id: string; organization_id: string; payload: Json; status?: string; tool_revision_id: string; updated_at?: string; updated_by: string }
+        Update: { created_at?: string; created_by?: string; id?: string; mission_id?: string; organization_id?: string; payload?: Json; status?: string; tool_revision_id?: string; updated_at?: string; updated_by?: string }
+        Relationships: [
+          { foreignKeyName: "tool_instances_created_by_fkey"; columns: ["created_by"]; isOneToOne: false; referencedRelation: "identities"; referencedColumns: ["id"] },
+          { foreignKeyName: "tool_instances_mission_id_fkey"; columns: ["mission_id"]; isOneToOne: true; referencedRelation: "missions"; referencedColumns: ["id"] },
+          { foreignKeyName: "tool_instances_organization_id_fkey"; columns: ["organization_id"]; isOneToOne: false; referencedRelation: "organizations"; referencedColumns: ["id"] },
+          { foreignKeyName: "tool_instances_tool_revision_id_fkey"; columns: ["tool_revision_id"]; isOneToOne: false; referencedRelation: "tool_definition_revisions"; referencedColumns: ["id"] },
+          { foreignKeyName: "tool_instances_updated_by_fkey"; columns: ["updated_by"]; isOneToOne: false; referencedRelation: "identities"; referencedColumns: ["id"] },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -613,6 +640,10 @@ export type Database = {
       provision_cycle_missions: {
         Args: { target_cycle_id: string }
         Returns: number
+      }
+      save_mission_tool_draft: {
+        Args: { submitted_payload: Json; target_mission_id: string }
+        Returns: string
       }
       save_diagnostic_responses: {
         Args: { submitted_answers: Json; target_execution_id: string }

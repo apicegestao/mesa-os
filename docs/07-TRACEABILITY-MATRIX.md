@@ -55,3 +55,7 @@
 | GOV-2.12D | Alignment e Pre-Flight | `docs/41-PRE-FLIGHT-2.12D.md` | revisão documental |
 | GOV-2.12D | Proposta Structured Tool | `docs/42-FEATURE-SPEC-TOL-2.13-DRAFT.md` | decisões pendentes explícitas |
 | GOV-2.12D | Encerramento | `docs/43-POST-FLIGHT-2.12D.md` | Post-Flight review |
+| TOL-2.13 | Schema e rascunho versionados | `supabase/migrations/20260811144739_structured_tool_foundation.sql` | pgTAP + seed review |
+| TOL-2.13 | Validação e persistência owner-only | `public.save_mission_tool_draft(uuid,jsonb)` | payload válido/inválido com rollback |
+| TOL-2.13 | Renderização schema-driven | `src/modules/structured-tool`, `src/app/app/page.tsx` | Vitest + typecheck + build |
+| TOL-2.13 | Encerramento | `docs/44-PRE-FLIGHT-TOL-2.13.md`, `docs/45-POST-FLIGHT-TOL-2.13.md` | Post-Flight review |

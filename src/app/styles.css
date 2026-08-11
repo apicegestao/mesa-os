@@ -108,6 +108,17 @@ button:disabled { cursor: wait; opacity: 0.65; }
 .priority-card { max-width: 48rem; margin: 0 auto; padding: clamp(1.5rem, 5vw, 3rem); border-top: 4px solid var(--color-warm); }
 .priority-card h2 { margin: 0 0 1rem; font-family: Georgia, serif; font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 500; }
 .priority-card > p { color: var(--color-muted); line-height: 1.65; }
+.tool-card { max-width: 64rem; }
+.tool-entries { display: grid; gap: 1rem; margin: 1.5rem 0; }
+.tool-entry { display: grid; gap: 1rem; margin: 0; padding: 1.25rem; border: 1px solid var(--color-border); border-radius: 0.75rem; }
+.tool-entry legend { padding: 0 0.5rem; font-weight: 800; }
+.tool-entry label { display: grid; gap: 0.4rem; }
+.tool-entry label span { font-weight: 700; }
+.tool-entry label small { color: var(--color-muted); }
+.tool-entry input, .tool-entry textarea { width: 100%; padding: 0.8rem; border: 1px solid var(--color-border); border-radius: 0.5rem; font: inherit; }
+.tool-entry textarea { min-height: 7rem; resize: vertical; }
+.tool-entry-actions, .tool-main-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.tool-main-actions { justify-content: space-between; }
 .priority-card label { display: block; margin: 1.5rem 0 0.5rem; font-weight: 700; }
 .priority-card textarea { width: 100%; min-height: 8rem; resize: vertical; border: 1px solid var(--color-border); border-radius: 0.7rem; padding: 0.85rem; background: white; color: var(--color-text); font: inherit; line-height: 1.5; }
 .priority-card textarea:focus-visible { outline: 3px solid color-mix(in srgb, var(--color-accent) 35%, transparent); outline-offset: 2px; }

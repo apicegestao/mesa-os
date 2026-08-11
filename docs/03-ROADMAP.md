@@ -2,7 +2,7 @@
 
 ## Fase atual
 
-Sprint GOV-2.12D — Tool Foundation Definition & Alignment: definição governada da primeira Ferramenta estruturada, sem implementação.
+Sprint TOL-2.13 — Structured Tool Foundation: implementação governada do Mapa de Papéis e Decisões.
 
 ## Fases concluídas
 
@@ -17,10 +17,11 @@ Sprint GOV-2.12D — Tool Foundation Definition & Alignment: definição governa
 - Sprint CYC-2.9 — Cycle Foundation: ciclo inicial de 90 dias ligado à prioridade confirmada, publicado em produção.
 - Sprint GOV-2.10D — Mission Foundation Definition & Alignment: primeira metodologia de Missões delimitada e aprovada.
 - Sprint MIS-2.11 — Mission Foundation: três Missões versionadas, com primeira ação disponível, publicado e homologado em produção.
+- Sprint GOV-2.12D — Tool Foundation Definition & Alignment: primeira Ferramenta schema-driven delimitada e aprovada.
 
-## Próximo incremento proposto, não autorizado para BUILD
+## Incremento em construção
 
-TOL-2.13 — Structured Tool Foundation. Proposta de `Mapa de Papéis e Decisões` schema-driven para a primeira Missão, sem antecipar Implementação, Evidência ou Evolução. BUILD depende da aprovação da Feature Spec.
+TOL-2.13 — Structured Tool Foundation. `Mapa de Papéis e Decisões` schema-driven e retomável, sem antecipar Implementação, Evidência ou Evolução.
 
 ## Sequenciamento governado
 

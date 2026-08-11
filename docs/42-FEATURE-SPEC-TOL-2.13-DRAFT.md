@@ -1,6 +1,8 @@
 # TOL-2.13 — Structured Tool Foundation
 
-**Status:** DRAFT — NOT AUTHORIZED FOR BUILD
+**Status:** APPROVED FOR BUILD
+
+**Aprovação:** Rafael Portela Martins, 2026-08-11.
 
 ## Objetivo
 
@@ -93,4 +95,4 @@ O schema, rótulos, textos de ajuda, obrigatoriedade, limites e ordem pertencem 
 
 ## Gate
 
-TOL-2.13 permanece bloqueado para BUILD até aprovação explícita das oito decisões, atualização do Current Scope e novo Pre-Flight.
+Gate de BUILD aberto após aprovação explícita, atualização do Current Scope e Pre-Flight TOL-2.13.

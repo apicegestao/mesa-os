@@ -80,3 +80,13 @@ O frontend usa somente publishable key. Chaves secret/service-role ficam exclusi
 - Existe no máximo uma Missão disponível por ciclo.
 - Não há conclusão, desbloqueio, edição, reordenação ou substituição neste incremento.
 - Missão não antecipa Ferramenta, Implementação, Evidência, Evolução ou TutorIA.
+
+## ADR-032 — Structured tool definitions and drafts
+
+**Status:** ACCEPTED
+
+- Ferramentas são definições metodológicas versionadas com schema publicado, nunca campos codificados diretamente na interface.
+- A primeira Ferramenta é o `Mapa de Papéis e Decisões`, vinculada somente à primeira Missão de `Liderança & Equipe`.
+- Existe no máximo um rascunho por Missão; o payload é validado integralmente no servidor.
+- O rascunho contém de 1 a 20 entradas e permanece editável após a data final do ciclo.
+- Salvar não submete, aprova, conclui ou desbloqueia Missão e não representa Implementação, Evidência ou Evolução.

@@ -1,17 +1,17 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** GOV-2.12D — Tool Foundation Definition & Alignment
-**Mode:** DEFINITION
+**Sprint:** TOL-2.13 — Structured Tool Foundation
+**Mode:** BUILD
 **Status:** IN PROGRESS
 
 ## Authorized
 
-- Registrar a homologação da primeira Missão em produção.
-- Executar Alignment Check e Pre-Flight da Structured Tool Foundation.
-- Criar Feature Spec preliminar TOL-2.13.
-- Definir limites, decisões obrigatórias, critérios de aceite e riscos.
-- Atualizar roadmap, backlog, rastreabilidade e Post-Flight documental.
+- Criar definição versionada e schema-driven do `Mapa de Papéis e Decisões`.
+- Vincular a Ferramenta à primeira Missão de `Liderança & Equipe`.
+- Permitir rascunho owner-only com 1 a 20 entradas, salvamento explícito e retomada.
+- Renderizar campos, rótulos, ajuda, ordem e limites a partir do schema publicado.
+- Aplicar validação server-side, RLS, grants mínimos, testes e documentação.
 
 ## Not Authorized
 
@@ -37,7 +37,7 @@
 - Escolha humana em caso de empate no menor score.
 - Seleção de dimensão diferente da única menor candidata.
 - Alteração, substituição, cancelamento ou segunda prioridade.
-- Ferramenta real, meta, plano de ação detalhado ou recomendação automatizada.
+- Meta, plano de ação detalhado ou recomendação automatizada.
 - Edição, cancelamento, substituição ou conclusão manual do ciclo.
 - Encerramento automático do ciclo ao ultrapassar a data final.
 - Segundo ciclo ou múltiplos ciclos por organização.
@@ -45,11 +45,10 @@
 - Ferramenta, Implementação, Evidência ou Evolução.
 - Conclusão, desbloqueio, reordenação, substituição ou edição de Missão.
 - Definições de Missão para dimensões diferentes de `Liderança & Equipe`.
-- Código, migration, configuração externa ou deploy funcional.
-- Formulário real, preenchimento, submissão ou mudança de estado da Missão.
+- Submissão final, aprovação ou mudança de estado da Missão.
 - Implementação, Evidência ou Evolução.
-- Implementação de TOL-2.13 antes de aprovação explícita e novo Current Scope em BUILD.
+- Exportação, anexos, comentários ou colaboração por `member`.
 
 ## Exit criteria
 
-Homologação do MIS-2.11 registrada; Pre-Flight e Feature Spec preliminar TOL-2.13 criados; decisões obrigatórias explicitadas; nenhuma alteração funcional; Post-Flight entregue.
+Migration remota aplicada; rascunho validado com rollback; lint, typecheck, testes e build aprovados; deploy saudável; Post-Flight atualizado.

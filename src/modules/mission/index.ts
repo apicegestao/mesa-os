@@ -3,6 +3,7 @@ import type { Database } from "@/shared/infrastructure/supabase/database.types";
 
 export type Mission = {
   id: string;
+  definition_id: string;
   position: number;
   title: string;
   objective: string;
@@ -16,7 +17,7 @@ export async function loadMissions(
 ) {
   const { data } = await supabase
     .from("missions")
-    .select("id,position,title,objective,rationale,status")
+    .select("id,definition_id,position,title,objective,rationale,status")
     .eq("cycle_id", cycleId)
     .order("position");
 

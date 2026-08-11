@@ -147,7 +147,7 @@ Objetivo proposto: representar o trabalho orientado do ciclo por meio de Missõe
 
 ## GOV-2.12D — Tool Foundation Definition & Alignment
 
-**Status:** IN PROGRESS
+**Status:** COMPLETE
 
 ### Entregáveis autorizados
 
@@ -166,6 +166,6 @@ Objetivo proposto: representar o trabalho orientado do ciclo por meio de Missõe
 
 ## TOL-2.13 — Structured Tool Foundation
 
-**Status:** PROPOSAL — NOT AUTHORIZED FOR BUILD
+**Status:** BUILD IN PROGRESS
 
 Objetivo proposto: permitir que o owner estruture um `Mapa de Papéis e Decisões` como rascunho versionado da primeira Missão, sem tratar preenchimento como implementação comprovada.

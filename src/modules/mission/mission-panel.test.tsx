@@ -18,6 +18,7 @@ describe("MissionPanel", () => {
         missions={[
           {
             id: "mission-1",
+            definition_id: "definition-1",
             position: 1,
             title: "Clareza de papéis e decisões",
             objective: "Tornar explícitas as responsabilidades essenciais.",
@@ -26,6 +27,7 @@ describe("MissionPanel", () => {
           },
           {
             id: "mission-2",
+            definition_id: "definition-2",
             position: 2,
             title: "Conteúdo protegido",
             objective: "Este conteúdo ainda não deve aparecer.",

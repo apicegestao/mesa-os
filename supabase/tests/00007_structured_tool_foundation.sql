@@ -1,0 +1,12 @@
+begin;
+select plan(8);
+select has_table('public', 'tool_definition_revisions', 'tool revision table exists');
+select has_table('public', 'mission_tool_bindings', 'mission tool binding table exists');
+select has_table('public', 'tool_instances', 'tool instance table exists');
+select row_security_active('public', 'tool_definition_revisions', 'tool revisions have RLS');
+select row_security_active('public', 'mission_tool_bindings', 'bindings have RLS');
+select row_security_active('public', 'tool_instances', 'tool instances have RLS');
+select has_function('public', 'save_mission_tool_draft', array['uuid', 'jsonb'], 'save draft function exists');
+select col_is_unique('public', 'tool_instances', 'mission_id', 'one tool draft per mission');
+select * from finish();
+rollback;
