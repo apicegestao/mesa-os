@@ -1,17 +1,17 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** TOL-2.13 — Structured Tool Foundation
-**Mode:** BUILD
-**Status:** COMPLETE — PRODUCTION RELEASED
+**Sprint:** GOV-2.14F — Governance Fast Track
+**Mode:** GOVERNANCE
+**Status:** IN PROGRESS
 
 ## Authorized
 
-- Criar definição versionada e schema-driven do `Mapa de Papéis e Decisões`.
-- Vincular a Ferramenta à primeira Missão de `Liderança & Equipe`.
-- Permitir rascunho owner-only com 1 a 20 entradas, salvamento explícito e retomada.
-- Renderizar campos, rótulos, ajuda, ordem e limites a partir do schema publicado.
-- Aplicar validação server-side, RLS, grants mínimos, testes e documentação.
+- Instituir Release Train seguro no Construction Protocol v1.1.
+- Adotar branch, Pull Request e CI como fluxo padrão antes de `main`.
+- Impedir builds Netlify quando somente documentação mudar.
+- Registrar a arquitetura cloud-first e os gates preservados.
+- Propor o primeiro Definition Pack integrado do core loop.
 
 ## Not Authorized
 
@@ -48,7 +48,10 @@
 - Submissão final, aprovação ou mudança de estado da Missão.
 - Implementação, Evidência ou Evolução.
 - Exportação, anexos, comentários ou colaboração por `member`.
+- Feature de negócio, migration, alteração de dados ou deploy manual.
+- Redução de testes, RLS, validação server-side ou rastreabilidade.
+- Merge automático ou BUILD do RT-2.15 antes da aprovação do Definition Pack.
 
 ## Exit criteria
 
-Migration remota aplicada; rascunho validado com rollback; lint, typecheck, testes e build aprovados; deploy saudável; Post-Flight atualizado.
+Protocolo e ADR atualizados; CI aprovado no PR; configuração Netlify validada; merge único realizado; primeiro Definition Pack aberto sem feature antecipada.

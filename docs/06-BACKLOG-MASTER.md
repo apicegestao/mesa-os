@@ -169,3 +169,28 @@ Objetivo proposto: representar o trabalho orientado do ciclo por meio de Missõe
 **Status:** COMPLETE — PRODUCTION RELEASED
 
 Objetivo proposto: permitir que o owner estruture um `Mapa de Papéis e Decisões` como rascunho versionado da primeira Missão, sem tratar preenchimento como implementação comprovada.
+
+## GOV-2.14F — Governance Fast Track
+
+**Status:** IN PROGRESS
+
+### Entregáveis autorizados
+
+- Construction Protocol v1.1 com Release Train seguro.
+- ADR de fluxo cloud-first.
+- Branch e Pull Request como caminho padrão de integração.
+- CI completo antes de merge.
+- Netlify sem build para alterações exclusivamente documentais.
+- Proposta do primeiro Release Train integrado.
+
+### Restrições
+
+- Nenhuma feature de negócio, migration ou alteração de dados.
+- Nenhum merge automático em `main`.
+- Nenhuma redução de RLS, testes, rastreabilidade ou gates de segurança.
+
+## RT-2.15 — Core Loop Completion Release Train
+
+**Status:** PROPOSAL — NOT AUTHORIZED FOR BUILD
+
+Objetivo proposto: concluir a primeira passagem operacional por Implementação, Evidência, transição da Missão e estado da próxima ação em um único marco de produção.

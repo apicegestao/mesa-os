@@ -1,5 +1,7 @@
 # MOS-CP — Mesa OS Construction Protocol
 
+**Versão:** 1.1
+
 ## Modo padrão
 
 Durante construção, o modo padrão é `BUILD`. Ele permite implementar, testar, corrigir e refatorar dentro do escopo. Não permite inventar produto.
@@ -37,3 +39,36 @@ Uma entrega só termina após lint, typecheck, testes relevantes e build. Testes
 ## Post-Flight obrigatório
 
 Registrar implementado, deliberadamente não implementado, testes, migrations, documentação, dívida técnica, proposals e rastreabilidade.
+
+## Release Train seguro
+
+O Fast Track reduz esperas e deploys, nunca controles. Pode agrupar de dois a quatro incrementos consecutivos do core loop quando formarem uma única entrega vertical homologável.
+
+### Regras vinculantes
+
+- Cada incremento mantém Feature Spec, escopo, critérios de aceite, migrations e rastreabilidade próprios.
+- Um Definition Pack pode reunir as decisões dos incrementos e receber uma aprovação explícita única.
+- Uma aprovação em lote não autoriza itens ausentes do pack nem altera decisões `FROZEN`.
+- O trabalho ocorre em branch `agent/*` ou `release/*`; `main` representa somente produção.
+- Pull Request para `main` exige CI completo e revisão do diff integrado.
+- Migrations permanecem separadas, ordenadas, aditivas e verificadas antes do merge.
+- Segredos permanecem exclusivamente nos ambientes gerenciados.
+- Um único merge e um único deploy de produção encerram o Release Train.
+- Post-Flight pode ser consolidado, mas deve registrar resultados e pendências por incremento.
+- Commits exclusivamente documentais não devem consumir deploy de produção.
+
+### Gates do Release Train
+
+1. Alignment Check integrado.
+2. Definition Pack com escopo, fora do escopo, specs e matriz de dependências.
+3. Aprovação explícita do pack.
+4. BUILD em branch com verificações contínuas.
+5. Pre-Release Review: migrations, segurança, regressão e secret scan.
+6. Merge único em `main`.
+7. Deploy único, smoke test integrado e Post-Flight consolidado.
+
+### Interrupção obrigatória
+
+O train volta ao fluxo unitário quando surgir conflito de autoridade, mudança `FROZEN`, risco destrutivo, dependência externa não aprovada, falha de isolamento ou decisão de produto que altere materialmente o pacote aprovado.
+
+Hotfix de segurança ou indisponibilidade pode usar fluxo separado, mas exige escopo mínimo, testes relevantes e Post-Flight próprio.
