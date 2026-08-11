@@ -108,6 +108,12 @@ export type Database = {
           },
         ]
       }
+      ai_usage_events: {
+        Row: { actor_identity_id: string; capability_code: string; created_at: string; estimated_cost_usd_micros: number; id: string; input_tokens: number; model_route_code: string; organization_id: string; output_tokens: number; resolution: Database["public"]["Enums"]["ai_usage_resolution"] }
+        Insert: { actor_identity_id: string; capability_code: string; created_at?: string; estimated_cost_usd_micros?: number; id?: string; input_tokens?: number; model_route_code: string; organization_id: string; output_tokens?: number; resolution: Database["public"]["Enums"]["ai_usage_resolution"] }
+        Update: { actor_identity_id?: string; capability_code?: string; created_at?: string; estimated_cost_usd_micros?: number; id?: string; input_tokens?: number; model_route_code?: string; organization_id?: string; output_tokens?: number; resolution?: Database["public"]["Enums"]["ai_usage_resolution"] }
+        Relationships: []
+      }
       development_outcomes: {
         Row: {
           code: string
@@ -1807,6 +1813,7 @@ export type Database = {
       }
     }
     Enums: {
+      ai_usage_resolution: "served" | "unavailable" | "escalated"
       diagnostic_execution_status: "draft" | "completed"
       diagnostic_revision_status: "draft" | "published" | "retired"
       invitation_status: "pending" | "accepted" | "revoked" | "expired"
@@ -1945,6 +1952,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      ai_usage_resolution: ["served", "unavailable", "escalated"],
       diagnostic_execution_status: ["draft", "completed"],
       diagnostic_revision_status: ["draft", "published", "retired"],
       invitation_status: ["pending", "accepted", "revoked", "expired"],

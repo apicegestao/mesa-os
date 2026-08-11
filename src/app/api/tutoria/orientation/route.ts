@@ -5,7 +5,7 @@ import { loadPublishedMethodologyMap } from "@/modules/methodology";
 import { loadMissions } from "@/modules/mission";
 import { loadPriority } from "@/modules/priority";
 import { buildTutorIAMemberState, buildTutorIAMethodologySummary, recordTutorIAReadGateway } from "@/modules/tutoria-foundation";
-import { buildOrientationPrompt, orientationGatewayEnabled, orientationObjectiveSchema, parseOrientationOutput } from "@/modules/tutoria-guidance";
+import { buildOrientationPrompt, estimateModelCostUsdMicros, orientationGatewayEnabled, orientationObjectiveSchema, parseOrientationOutput } from "@/modules/tutoria-guidance";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -50,14 +50,19 @@ export async function POST(request: Request) {
   try {
     const baseUrl = process.env.GOOGLE_GEMINI_BASE_URL!.replace(/\/$/, "");
     const response = await fetch(`${baseUrl}/v1beta/models/${MODEL}:generateContent`, { method: "POST", headers: { "content-type": "application/json", "x-goog-api-key": process.env.GEMINI_API_KEY! }, body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: buildOrientationPrompt({ objective: payload.data, memberState, methodology }) }] }], generationConfig: { responseMimeType: "application/json", maxOutputTokens: 360, temperature: 0.2 } }), signal: AbortSignal.timeout(12_000) });
-    const body = await response.json().catch(() => null) as { candidates?: { content?: { parts?: { text?: string }[] } }[] } | null;
+    const body = await response.json().catch(() => null) as { candidates?: { content?: { parts?: { text?: string }[] } }[]; usageMetadata?: { promptTokenCount?: number; candidatesTokenCount?: number } } | null;
     const text = body?.candidates?.[0]?.content?.parts?.map((part) => part.text ?? "").join("") ?? "";
     const orientation = response.ok ? parseOrientationOutput(text) : null;
+    const inputTokens = Math.max(0, body?.usageMetadata?.promptTokenCount ?? 0);
+    const outputTokens = Math.max(0, body?.usageMetadata?.candidatesTokenCount ?? 0);
+    const recordUsage = (resolution: "served" | "unavailable" | "escalated") => supabase.from("ai_usage_events").insert({ organization_id: membership.organization_id, actor_identity_id: actorIdentityId, capability_code: "tutoria_orientation", model_route_code: "gemini_flash", resolution, input_tokens: inputTokens, output_tokens: outputTokens, estimated_cost_usd_micros: estimateModelCostUsdMicros("gemini_flash", inputTokens, outputTokens) });
     if (!orientation || orientation.confidence_band === "low" || orientation.escalation_required) {
       await audit("invocation_finished", "escalated", { provider_code: "netlify_ai_gateway", duration_ms: Date.now() - startedAt, failure_code: orientation ? "low_confidence" : "invalid_model_output" });
+      await recordUsage("escalated");
       return NextResponse.json({ code: "orientation_escalated" }, { status: 409 });
     }
     await audit("invocation_finished", "served", { provider_code: "netlify_ai_gateway", duration_ms: Date.now() - startedAt, response_schema_valid: true });
+    await recordUsage("served");
     return NextResponse.json({ orientation });
   } catch {
     await audit("invocation_finished", "unavailable", { provider_code: "netlify_ai_gateway", duration_ms: Date.now() - startedAt, failure_code: "provider_unavailable" });

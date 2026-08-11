@@ -10,6 +10,8 @@
 - Contexto limitado ao estado derivado do membro e ao resumo quantitativo da metodologia, ambos vindos dos contratos RT-2.21.
 - Rate limit lógico de quatro tentativas por minuto por identidade e organização.
 - Auditoria imutável de início e desfecho de orientação, sem prompt, resposta, segredo ou evidência bruta.
+- Ledger interno de uso por organização, membro, capacidade, rota de modelo e resolução; registra tokens e custo estimado em micros de dólar. O valor é estimativa técnica, não substitui a fatura do provedor/Netlify.
+- Catálogo preparado, sem fallback automático: Gemini Flash (rota primária), GPT-5 mini e Claude Haiku (rotas futuras).
 - Guardrail de ativação: sem `TUTORIA_ORIENTATION_ENABLED=true` e as variáveis injetadas do Gateway, a rota devolve indisponibilidade e não chama modelo.
 
 ## Verificações
