@@ -1,5 +1,5 @@
 begin;
-select plan(15);
+select plan(16);
 select has_table('public', 'mission_implementations', 'implementation table exists');
 select has_table('public', 'mission_evidence', 'evidence table exists');
 select row_security_active('public', 'mission_implementations', 'implementations have RLS');
@@ -15,5 +15,6 @@ select has_index('public', 'mission_evidence_organization_id_idx', 'evidence org
 select has_check('public', 'missions', 'missions_status_check', 'mission status remains constrained');
 select has_check('public', 'missions', 'missions_completion_check', 'mission completion metadata constrained');
 select has_trigger('public', 'tool_instances', 'prevent_confirmed_tool_change', 'confirmed tool becomes immutable');
+select has_index('public', 'mission_implementations_updated_by_idx', 'implementation updater foreign key indexed');
 select * from finish();
 rollback;
