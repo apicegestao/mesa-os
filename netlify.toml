@@ -1,0 +1,20 @@
+[build]
+  command = "pnpm build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  PNPM_VERSION = "11.16.0"
+
+[context.production.environment]
+  NEXT_PUBLIC_APP_ENV = "production"
+
+[context.deploy-preview.environment]
+  NEXT_PUBLIC_APP_ENV = "staging"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"

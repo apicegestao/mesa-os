@@ -1,0 +1,31 @@
+# ADR / Decision Log
+
+## ADR-001 — Modular Monolith
+
+**Status:** FROZEN  
+O sistema começa como monólito modular. Distribuição prematura não é autorizada.
+
+## ADR-002 — Next.js, TypeScript e PostgreSQL
+
+**Status:** FROZEN  
+Next.js/React + TypeScript strict e PostgreSQL/Supabase formam a base técnica.
+
+## ADR-003 — Ambientes separados
+
+**Status:** FROZEN  
+Development, staging e production têm configuração e credenciais próprias.
+
+## ADR-004 — Schema e segurança
+
+**Status:** ACCEPTED  
+Alterações de banco usam migrations versionadas. Schemas expostos exigem grants explícitos e RLS por tabela. Secret/service-role keys nunca vão para clientes ou Git.
+
+## ADR-025 — Legacy Abandonment
+
+**Status:** FROZEN  
+O código da tentativa anterior foi rejeitado como base de produção por problemas de qualidade, UX, funcionalidade e confiabilidade. O Mesa OS V2 será reconstruído do zero sob o Governance Pack. Nenhuma linha do legado será copiada.
+
+## ADR-026 — Supabase modern key model
+
+**Status:** ACCEPTED  
+O frontend usa somente publishable key. Chaves secret/service-role ficam exclusivamente em runtime server-side quando houver necessidade autorizada.
