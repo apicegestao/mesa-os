@@ -270,6 +270,11 @@ h1 { font-size: clamp(1.75rem, 4vw, 2.7rem); line-height: 1.08; }
 .magic-link-option { margin-top: 1rem; border-top: 1px solid var(--color-border); padding-top: 0.9rem; }
 .magic-link-option summary { color: var(--color-accent); cursor: pointer; font-size: 0.82rem; font-weight: 700; }
 .magic-link-option .auth-form { margin-top: 0.9rem; }
+.oauth-access { display: grid; gap: 0.5rem; }
+.github-login { width: 100%; align-items: center; gap: 0.65rem; background: #10243d; }
+.github-login span { display: grid; width: 1.7rem; height: 1.7rem; place-items: center; border-radius: 50%; background: white; color: #10243d; font-size: 0.62rem; font-weight: 900; }
+.login-divider { display: flex; align-items: center; gap: 0.7rem; margin: 1rem 0; color: var(--color-muted); font-size: 0.72rem; }
+.login-divider::before, .login-divider::after { height: 1px; flex: 1; background: var(--color-border); content: ""; }
 
 .experience-sidebar { width: 14rem; padding: 1.1rem 0.8rem; }
 .experience-main { padding-left: 14rem; }

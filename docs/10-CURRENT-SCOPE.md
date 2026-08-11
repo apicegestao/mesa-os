@@ -1,7 +1,7 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** RT-2.18.1 — Visual Fidelity & Methodology Reset
+**Sprint:** RT-2.18.2 — Fast OAuth Access
 **Mode:** BUILD
 **Status:** IN PROGRESS — APPROVED FOR BUILD
 
@@ -16,6 +16,7 @@
 
 - Visual fidelity correction using the approved HTML: Arial, compact density, colored canonical progress and Lula contextual card.
 - Authenticated password creation and direct email/password sign-in.
+- GitHub OAuth sign-in with verified-email identity linking and existing membership authorization.
 - One-time reset of methodological execution data for Grupo Ápice, preserving identity, organization and membership.
 - DSX-2.18A — Design System & Responsive App Shell.
 - IAX-2.18B — Member Information Architecture & Next Action.

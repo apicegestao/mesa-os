@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import { requestMagicLink } from "../actions/request-magic-link";
 import { signInWithPassword } from "../actions/sign-in-with-password";
 import type { LoginState } from "../domain/auth";
+import { GitHubLoginButton } from "./github-login-button";
 
 const initialState: LoginState = { status: "idle" };
 
@@ -13,6 +14,8 @@ export function LoginForm() {
 
   return (
     <div className="login-options">
+      <GitHubLoginButton />
+      <div className="login-divider"><span>ou use sua senha</span></div>
       <form action={passwordAction} className="auth-form">
         <label htmlFor="email">E-mail</label>
         <input id="email" name="email" type="email" autoComplete="email" required />
