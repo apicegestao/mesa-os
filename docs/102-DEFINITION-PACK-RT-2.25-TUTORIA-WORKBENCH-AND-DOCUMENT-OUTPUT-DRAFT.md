@@ -1,6 +1,6 @@
 # Definition Pack — RT-2.25 TutorIA Workbench e Saídas de Documento
 
-**Status:** DRAFT — aguardando aprovação do owner
+**Status:** APPROVED — owner approval recorded on 2026-08-11
 **Modo proposto:** BUILD em homologação isolada, após o smoke autenticado do RT-2.24
 
 ## Decisão de produto
@@ -8,6 +8,8 @@
 TutorIA é o centro da experiência Mesa dos Donos. Ele acolhe perguntas abertas de gestão, ensina fundamentos, ajuda a estruturar decisões e conduz o membro pela metodologia. Limites existem para proteger dados, custos e integridade — não para transformar o TutorIA em um FAQ.
 
 Pedidos claramente recreativos ou alheios ao propósito empresarial (por exemplo, imagens, figurinhas, memes e entretenimento) continuam recusados localmente. Dúvidas reais, inclusive iniciais, incompletas ou situacionais, continuam permitidas e recebem uma resposta, uma pergunta de esclarecimento ou encaminhamento honesto.
+
+TutorIA não é um analisador superficial. Para DRE e demais ferramentas, ele atua como especialista: valida coerência dos dados disponíveis, explicita premissas e lacunas, identifica sinais de atenção, compara períodos quando houver base válida e transforma a leitura em orientação executável. Ele não inventa números, não apresenta hipótese como fato, nem substitui a decisão do membro ou uma revisão humana necessária.
 
 ## Escopo proposto
 
@@ -21,6 +23,7 @@ Pedidos claramente recreativos ou alheios ao propósito empresarial (por exemplo
 
 - Fluxos assistidos para DRE, RACI, SWOT e demais ferramentas explicitamente publicadas no Mapa de Desenvolvimento.
 - Cada saída nasce estruturada, revisável pelo membro e vinculada a ciclo, missão, pilar e versão metodológica quando aplicável.
+- Para DRE, a análise especializada distingue fato, cálculo, inferência e pergunta em aberto; avalia receita, custos, margem, despesas, resultado, tendência, variações e qualidade do dado conforme a informação efetivamente disponível.
 - TutorIA prepara e explica; ele não aprova evidência, conclui Missão, altera indicador ou toma decisão em nome do membro.
 
 ### TWR-2.25C — documentos de identidade Mesa
@@ -59,6 +62,7 @@ Pedidos claramente recreativos ou alheios ao propósito empresarial (por exemplo
 3. PDF e XLSX preservam identidade Mesa, dados corretos e escopo organizacional.
 4. Cada chamada tem rota, custo, orçamento, auditoria e comportamento seguro em falha.
 5. Nenhum modelo recebe dados de outra organização ou persiste conversa fora do contrato aprovado.
+6. A análise de DRE é rastreável: dado de origem, cálculo, hipótese e orientação não se confundem.
 
 ## Decisão pedida
 

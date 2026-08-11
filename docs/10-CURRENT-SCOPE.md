@@ -1,7 +1,7 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** RT-2.24 — TutorIA Assistido em Homologação
+**Sprint:** RT-2.25 — TutorIA Workbench e Documentos
 **Mode:** BUILD
 **Status:** IN PROGRESS — APPROVED FOR BUILD
 
@@ -47,6 +47,10 @@
 - TAH-2.24A — primeira conversa assistida do TutorIA, com entrada e saída tipadas.
 - TAH-2.24B — política útil contra abuso, preservando dúvidas empresariais legítimas.
 - TAH-2.24C — ativação exclusiva em preview/homologação via Netlify AI Gateway, com teto por chamada e sem chave pessoal.
+- TWR-2.25A — conversa de gestão ampliada e especializada, sem bloqueio arbitrário de dúvidas empresariais.
+- TWR-2.25B — workbench estruturado para ferramentas explicitamente autorizadas pelo Mapa de Desenvolvimento.
+- TWR-2.25C — prévia e exportação governada de PDF/XLSX com identidade Mesa dos Donos.
+- TWR-2.25D — roteamento server-side de modelos com custo, retenção, isolamento e auditoria.
 
 ## Not Authorized
 
@@ -104,4 +108,4 @@
 
 ## Encerramento
 
-BUILD RT-2.20, RT-2.21, RT-2.23 e RT-2.24 autorizados pelo owner em 2026-08-11. A baseline de produção permanece a release atualmente publicada até merge, deploy, smoke e Post-Flight consolidados.
+BUILD RT-2.20, RT-2.21, RT-2.23, RT-2.24 e RT-2.25 autorizados pelo owner em 2026-08-11. A baseline de produção permanece a release atualmente publicada até merge, deploy, smoke e Post-Flight consolidados.
