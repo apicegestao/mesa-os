@@ -1,7 +1,7 @@
 # Post-Flight — IAM-2.3 Identity & Access Foundation
 
 **Backlog:** IAM-2.3  
-**Status:** CODE COMPLETE — REMOTE RELEASE PENDING  
+**Status:** RELEASE IN PROGRESS
 **Data:** 2026-08-11
 
 ## Implementado
@@ -16,6 +16,10 @@
 - Papéis `owner` e `member`, uma organização por identidade e convite com validade padrão de 72 horas.
 - Grants explícitos, RLS, índices e funções auxiliares privadas.
 - URL pública de produção declarada no contexto do Netlify.
+- Baseline e migrations IAM aplicadas ao Supabase de produção.
+- Site URL, callback exato e bloqueio de cadastro público configurados.
+- Rafael provisionado como `owner` da organização Grupo Ápice e convite enviado.
+- Tipos TypeScript regenerados a partir do schema remoto.
 
 ## Deliberadamente não implementado
 
@@ -23,7 +27,6 @@
 - Interface completa de administração de membros.
 - Múltiplas organizações por identidade.
 - Qualquer feature ou dado metodológico/de negócio.
-- Aplicação remota da migration, provisionamento do primeiro `owner` e alteração remota do Supabase Auth.
 
 ## Verificação
 
@@ -36,14 +39,12 @@
 
 ## Migration
 
-`20260811120405_identity_access_foundation.sql` foi criada pela Supabase CLI 2.113.0. É aditiva e não foi aplicada remotamente.
+`20260811120405_identity_access_foundation.sql` e `20260811123109_index_invitation_inviter.sql` foram criadas pela Supabase CLI 2.113.0 e aplicadas remotamente após o baseline.
 
 ## Limitações operacionais
 
-- Login funcional em produção depende de aplicar a migration e configurar Site URL/redirect no Supabase Auth.
-- O primeiro usuário, organização e vínculo `owner` exigem provisionamento administrativo auditado.
 - Staging requer projeto Supabase dedicado.
-- Testes E2E reais dependem de identidades de teste e do ambiente remoto configurado.
+- A aceitação do convite depende da ação do destinatário no e-mail recebido.
 
 ## Proposals
 
