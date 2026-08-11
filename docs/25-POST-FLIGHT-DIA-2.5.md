@@ -36,6 +36,7 @@
 - A transação de teste foi revertida; produção permaneceu com zero execuções e zero respostas.
 - Supabase remoto: 1 definição, 1 revisão publicada, 5 dimensões, 20 perguntas, 5 opções e 7 políticas RLS.
 - Netlify: deploy `6a7b25fca6e0a90009aab9bf`, pronto em 38 segundos; 88 arquivos e nenhum secret detectado.
+- Smoke test autenticado aceito pelo owner em produção: navegação pelas dimensões, preenchimento, conclusão e IME funcionando corretamente.
 
 ## Migrations
 
@@ -56,7 +57,6 @@ Registradas remotamente como versões `20260811133316`, `20260811133430` e `2026
 
 ## Limitações operacionais
 
-- O smoke test visual autenticado aguarda o próximo login do owner. A sessão do navegador de QA estava expirada; nenhum magic link foi disparado automaticamente e nenhuma rota pública de teste foi criada.
 - Staging persistente continua condicionado a projeto Supabase dedicado.
 
 ## Dívida técnica
@@ -65,4 +65,4 @@ Registradas remotamente como versões `20260811133316`, `20260811133430` e `2026
 
 ## Próximo gate permitido
 
-Owner entra em produção, inicia o Raio-X e valida visualmente o primeiro passo. Qualquer reaplicação, Evolução ou Prioridade exige novo sprint de Definition & Alignment e novo Current Scope.
+Smoke test de produção concluído. Qualquer reaplicação, Evolução ou Prioridade exige novo sprint de Definition & Alignment e novo Current Scope.
