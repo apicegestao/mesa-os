@@ -144,3 +144,28 @@ Objetivo: criar um período operacional de 90 dias, único e rastreável para a 
 **Status:** COMPLETE — PRODUCTION RELEASED
 
 Objetivo proposto: representar o trabalho orientado do ciclo por meio de Missões estruturadas e rastreáveis, sem antecipar a ferramenta metodológica ou a comprovação da implementação.
+
+## GOV-2.12D — Tool Foundation Definition & Alignment
+
+**Status:** IN PROGRESS
+
+### Entregáveis autorizados
+
+- Homologação documental do MIS-2.11.
+- Alignment Check e Pre-Flight da Structured Tool Foundation.
+- Feature Spec preliminar TOL-2.13.
+- Decisões pendentes sobre vínculo, schema, campos, rascunho, validação, autoria e transições.
+- Atualização de governança e Post-Flight documental.
+
+### Restrições
+
+- Nenhum código, migration, configuração externa ou deploy funcional.
+- Nenhuma Ferramenta real, Implementação, Evidência ou Evolução.
+- Nenhum TutorIA, geração automática ou recomendação por IA.
+- TOL-2.13 não autorizado para BUILD até aprovação explícita.
+
+## TOL-2.13 — Structured Tool Foundation
+
+**Status:** PROPOSAL — NOT AUTHORIZED FOR BUILD
+
+Objetivo proposto: permitir que o owner estruture um `Mapa de Papéis e Decisões` como rascunho versionado da primeira Missão, sem tratar preenchimento como implementação comprovada.

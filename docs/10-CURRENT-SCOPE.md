@@ -1,17 +1,17 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** MIS-2.11 — Mission Foundation
-**Mode:** BUILD
-**Status:** COMPLETE — PRODUCTION RELEASED
+**Sprint:** GOV-2.12D — Tool Foundation Definition & Alignment
+**Mode:** DEFINITION
+**Status:** IN PROGRESS
 
 ## Authorized
 
-- Criar definições metodológicas versionadas de Missão para `Liderança & Equipe`.
-- Provisionar três Missões imutáveis no ciclo ativo, com ordem determinística.
-- Disponibilizar somente a primeira; manter as duas seguintes bloqueadas.
-- Exibir título, objetivo e justificativa da próxima Missão ao owner.
-- Aplicar migration versionada, RLS, grants mínimos, testes e documentação.
+- Registrar a homologação da primeira Missão em produção.
+- Executar Alignment Check e Pre-Flight da Structured Tool Foundation.
+- Criar Feature Spec preliminar TOL-2.13.
+- Definir limites, decisões obrigatórias, critérios de aceite e riscos.
+- Atualizar roadmap, backlog, rastreabilidade e Post-Flight documental.
 
 ## Not Authorized
 
@@ -37,7 +37,7 @@
 - Escolha humana em caso de empate no menor score.
 - Seleção de dimensão diferente da única menor candidata.
 - Alteração, substituição, cancelamento ou segunda prioridade.
-- Meta, ferramenta, plano de ação detalhado ou recomendação automatizada.
+- Ferramenta real, meta, plano de ação detalhado ou recomendação automatizada.
 - Edição, cancelamento, substituição ou conclusão manual do ciclo.
 - Encerramento automático do ciclo ao ultrapassar a data final.
 - Segundo ciclo ou múltiplos ciclos por organização.
@@ -45,7 +45,11 @@
 - Ferramenta, Implementação, Evidência ou Evolução.
 - Conclusão, desbloqueio, reordenação, substituição ou edição de Missão.
 - Definições de Missão para dimensões diferentes de `Liderança & Equipe`.
+- Código, migration, configuração externa ou deploy funcional.
+- Formulário real, preenchimento, submissão ou mudança de estado da Missão.
+- Implementação, Evidência ou Evolução.
+- Implementação de TOL-2.13 antes de aprovação explícita e novo Current Scope em BUILD.
 
 ## Exit criteria
 
-Migration remota aplicada; provisionamento validado com rollback; lint, typecheck, testes e build aprovados; deploy saudável; Post-Flight atualizado.
+Homologação do MIS-2.11 registrada; Pre-Flight e Feature Spec preliminar TOL-2.13 criados; decisões obrigatórias explicitadas; nenhuma alteração funcional; Post-Flight entregue.

@@ -51,3 +51,7 @@
 | MIS-2.11 | Provisionamento owner-only | `public.provision_cycle_missions(uuid)` | teste transacional / smoke test |
 | MIS-2.11 | Próxima Missão sem conteúdo bloqueado | `src/modules/mission`, `src/app/app/page.tsx` | Vitest + typecheck + build |
 | MIS-2.11 | Encerramento | `docs/39-PRE-FLIGHT-MIS-2.11.md`, `docs/40-POST-FLIGHT-MIS-2.11.md` | Post-Flight review |
+| GOV-2.12D | Homologação de Missão | `docs/40-POST-FLIGHT-MIS-2.11.md` | smoke test aceito pelo owner |
+| GOV-2.12D | Alignment e Pre-Flight | `docs/41-PRE-FLIGHT-2.12D.md` | revisão documental |
+| GOV-2.12D | Proposta Structured Tool | `docs/42-FEATURE-SPEC-TOL-2.13-DRAFT.md` | decisões pendentes explícitas |
+| GOV-2.12D | Encerramento | `docs/43-POST-FLIGHT-2.12D.md` | Post-Flight review |
