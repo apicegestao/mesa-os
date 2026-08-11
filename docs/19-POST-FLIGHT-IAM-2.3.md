@@ -1,7 +1,7 @@
 # Post-Flight — IAM-2.3 Identity & Access Foundation
 
 **Backlog:** IAM-2.3  
-**Status:** COMPLETE
+**Status:** COMPLETE — PRODUCTION ACCEPTED
 **Data:** 2026-08-11
 
 ## Implementado
@@ -40,6 +40,7 @@
 - Supabase Security Advisor: nenhum alerta relacionado ao schema/RLS; proteção de senha vazada não se aplica ao fluxo sem senha autorizado.
 - Netlify: deploy de produção `6a7b1770e1585c0008ebe867` aprovado em 35 segundos; 71 arquivos sem secrets.
 - GitHub Actions CI #3: aprovado em 1 minuto e 2 segundos.
+- Smoke test autenticado aceito pelo usuário: sessão ativa, vínculo `owner` com Grupo Ápice resolvido e ação de logout disponível.
 
 ## Migration
 
@@ -54,6 +55,6 @@
 
 Nenhuma feature adicional. A interface completa de convites permanece fora do escopo.
 
-## Próximo gate permitido
+## Gate concluído
 
-Aceitar o convite recebido, solicitar o magic link pela aplicação publicada e executar o smoke test autenticado. Qualquer incremento funcional posterior exige novo Current Scope.
+O convite, o magic link e o acesso autenticado foram validados em produção. Qualquer incremento funcional posterior exige nova Feature Spec aprovada e novo Current Scope em BUILD.

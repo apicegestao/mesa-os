@@ -17,3 +17,7 @@
 | IAM-2.3 | Sessão SSR/PKCE | `src/proxy.ts`, `src/shared/infrastructure/supabase`, `src/app/auth/callback` | typecheck + build |
 | IAM-2.3 | Shell protegido e logout | `src/app/app`, `src/app/login` | lint + typecheck + build |
 | IAM-2.3 | Encerramento | `docs/19-POST-FLIGHT-IAM-2.3.md` | Post-Flight review |
+| GOV-2.4D | Alignment e Pre-Flight | `docs/20-PRE-FLIGHT-2.4D.md` | revisão documental |
+| GOV-2.4D | Proposta Diagnostic Foundation | `docs/21-FEATURE-SPEC-DIA-2.5-DRAFT.md` | decisões pendentes explícitas |
+| GOV-2.4D | Governança atualizada | `docs/03-ROADMAP.md`, `docs/06-BACKLOG-MASTER.md`, `docs/10-CURRENT-SCOPE.md` | consistência entre documentos |
+| GOV-2.4D | Encerramento | `docs/22-POST-FLIGHT-2.4D.md` | Post-Flight review |

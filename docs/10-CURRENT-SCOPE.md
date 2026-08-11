@@ -1,20 +1,16 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** IAM-2.3 — Identity & Access Foundation
-**Mode:** BUILD
+**Sprint:** GOV-2.4D — Diagnostic Foundation Definition & Alignment
+**Mode:** DEFINITION
 
 ## Authorized
 
-- Magic link somente para identidades previamente convidadas.
-- Sessão SSR/PKCE com Supabase Auth.
-- Identidade interna, organização, vínculo e convite mínimos.
-- Papéis `owner` e `member`, limitados à administração de acesso.
-- Uma organização por identidade no primeiro release.
-- Shell autenticado neutro, bloqueio por ausência de vínculo e logout.
-- Migrations versionadas, RLS, grants explícitos e testes de isolamento.
-- Observabilidade técnica sem tokens, secrets ou dados sensíveis.
-- Documentação e Post-Flight do IAM-2.3.
+- Fechamento documental do smoke test autenticado do IAM-2.3.
+- Alignment Check e Pre-Flight do primeiro domínio do core loop.
+- Feature Spec preliminar para DIA-2.5 — Diagnostic Foundation.
+- Registro de decisões pendentes, critérios preliminares e limites.
+- Atualização de roadmap, backlog, rastreabilidade e Post-Flight.
 
 ## Not Authorized
 
@@ -32,8 +28,9 @@
 - Múltiplas organizações por identidade.
 - Perfil empresarial e qualquer regra ou entidade metodológica.
 - Journey, TutorIA, Tools, Concierge, WhatsApp, dashboards de negócio, AI Tool Factory e white label.
-- Aplicação de migration remota ou alteração do Supabase/Netlify sem gate operacional específico.
+- Código, migration, alteração do Supabase/Netlify ou nova configuração externa.
+- Implementação de DIA-2.5 antes de Feature Spec aprovada e novo Current Scope em BUILD.
 
 ## Exit criteria
 
-Feature Spec aprovada; Pre-Flight registrado; schema e RLS versionados; magic link somente para convidados; sessão SSR e shell protegido; logout; testes de isolamento e fluxos relevantes; lint, typecheck, testes e build aprovados; Post-Flight entregue.
+IAM-2.3 encerrado documentalmente; Pre-Flight registrado; Feature Spec preliminar de DIA-2.5 criada; decisões obrigatórias explicitadas; documentos governados consistentes; Post-Flight entregue; nenhuma alteração de produto ou infraestrutura.

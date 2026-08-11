@@ -2,16 +2,17 @@
 
 ## Fase atual
 
-Sprint IAM-2.3 — Identity & Access Foundation: autenticação por magic link, sessão segura e pertencimento organizacional mínimo.
+Sprint GOV-2.4D — Diagnostic Foundation Definition & Alignment: definição governada do primeiro domínio do core loop, sem implementação.
 
 ## Fases concluídas
 
 - Sprint 2.1R — Clean Bootstrap: fundação técnica, sem features de negócio.
 - Sprint 2.2D — Definition & Alignment: definição governada do IAM-2.3.
+- Sprint IAM-2.3 — Identity & Access Foundation: autenticação por magic link, sessão segura e pertencimento organizacional mínimo, validado em produção.
 
-## Próximo incremento proposto
+## Próximo incremento proposto, não autorizado para BUILD
 
-Após IAM-2.3, qualquer incremento de negócio continua condicionado a Feature Spec e atualização explícita do Current Scope.
+DIA-2.5 — Diagnostic Foundation. A proposta deve definir o primeiro passo do core loop sem codificar a metodologia na aplicação. O BUILD depende das decisões abertas, da aprovação da Feature Spec e de nova atualização explícita do Current Scope.
 
 ## Sequenciamento governado
 
