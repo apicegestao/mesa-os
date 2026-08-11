@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { NextAction } from "../domain/next-action";
 
 type PulseItem = { label: string; value: string; progress?: number; tone: "blue" | "gold" | "plum" | "green" };
@@ -6,6 +7,7 @@ export function MemberHome({
   memberName,
   nextAction,
   additionalActions = [],
+  highlightedPending,
   cycle,
   priorityLabel,
   missionTitle,
@@ -15,6 +17,7 @@ export function MemberHome({
   memberName: string;
   nextAction: NextAction;
   additionalActions?: NextAction[];
+  highlightedPending?: ReactNode;
   cycle: { title: string; starts_on: string; ends_on: string } | null;
   priorityLabel?: string;
   missionTitle?: string;
@@ -38,13 +41,13 @@ export function MemberHome({
     </header>
 
     <div className="cycle-overview">
-      <article className="cycle-card">
+      <div className="cycle-column"><article className="cycle-card">
         <div><p className="eyebrow light">Ciclo atual · T1</p><span className="cycle-status">{cycle ? "Em andamento" : "Preparação"}</span></div>
         <h2>{cycle?.title ?? "Fundamentos de gestão"}</h2>
         <p>{cycle ? `${formatDate(cycle.starts_on)} até ${formatDate(cycle.ends_on)}` : "O ciclo começa depois da confirmação da prioridade."}</p>
         <div className="cycle-progress"><i style={{ width: `${progress}%` }} /></div>
         <footer><strong>{progress}% concluído</strong><span>{completedSteps} de {totalSteps} etapas</span></footer>
-      </article>
+      </article>{highlightedPending}</div>
 
       <article className="result-card">
         <p className="eyebrow">Resultado do ciclo</p>

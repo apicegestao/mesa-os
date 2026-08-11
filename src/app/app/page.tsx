@@ -10,7 +10,7 @@ import { ToolPanel } from "@/modules/structured-tool/tool-panel";
 import { loadCoreLoopWorkspace } from "@/modules/core-loop";
 import { CoreLoopPanel } from "@/modules/core-loop/core-loop-panel";
 import { logout, PasswordSetup } from "@/modules/identity-access";
-import { AppChrome, deriveNextAction, EvidenceOverview, EvolutionProjection, JourneyProgress, MemberHome, MentorNote, MethodologyMap, type MemberView, type ProgressStep } from "@/modules/member-experience";
+import { AppChrome, deriveNextAction, EvidenceOverview, EvolutionProjection, JourneyDeliveries, JourneyProgress, MemberHome, MentorNote, MethodologyMap, type MemberView, type ProgressStep } from "@/modules/member-experience";
 import { lowestCandidates } from "@/modules/priority/domain/priority";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 
@@ -18,7 +18,7 @@ export const dynamic = "force-dynamic";
 
 export default async function AuthenticatedShellPage({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
   const requestedView = (await searchParams).view;
-  const activeView: MemberView = requestedView === "journey" || requestedView === "evidence" || requestedView === "evolution" ? requestedView : "today";
+  const activeView: MemberView = requestedView === "journey" || requestedView === "evidence" || requestedView === "evolution" || requestedView === "account" ? requestedView : "today";
   const supabase = await createSupabaseServerClient();
   const { data } = await supabase.auth.getClaims();
   const subject = data?.claims?.sub;
@@ -52,10 +52,11 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
   if (workspace.status !== "completed") {
     const nextAction = deriveNextAction({ diagnosticStatus: "draft", hasPriority: false, priorityTied: false, hasCycle: false, hasMissions: false, hasAvailableMission: false, hasToolDraft: false, implementationStatus: "none" });
     return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout} progress={0} activeView={activeView}>
-      {activeView === "today" && <><MemberHome memberName={memberName} nextAction={nextAction} cycle={null} completedSteps={0} totalSteps={8} /><section className="pending-diagnostic-card"><div><p className="eyebrow">Pendência prioritária</p><h2>Concluir o Raio-X do Empresário</h2><p>Finalize sua leitura de entrada para liberar a prioridade metodológica.</p></div><details><summary>Continuar Raio-X</summary><DiagnosticExperience initialWorkspace={workspace} /></details></section><MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} /></>}
-      {activeView === "journey" && <><JourneyProgress steps={draftProgressSteps} /><div id="metodologia"><MethodologyMap /></div><details className="account-settings"><summary>Conta e segurança</summary><PasswordSetup /></details></>}
+      {activeView === "today" && <><MemberHome memberName={memberName} nextAction={nextAction} cycle={null} completedSteps={0} totalSteps={8} highlightedPending={<section className="pending-diagnostic-card"><div><p className="eyebrow">Pendência prioritária</p><h2>Concluir o Raio-X do Empresário</h2><p>Finalize sua leitura de entrada para liberar a prioridade metodológica.</p></div><details><summary>Continuar Raio-X</summary><DiagnosticExperience initialWorkspace={workspace} /></details></section>} /><MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} /></>}
+      {activeView === "journey" && <><JourneyProgress steps={draftProgressSteps} /><div id="metodologia"><MethodologyMap /></div><JourneyDeliveries missions={[]} toolStarted={false} implementationStatus="none" evidenceSubmitted={false} /></>}
       {activeView === "evidence" && <EvidenceOverview implementation={null} evidenceSubmitted={false} />}
       {activeView === "evolution" && <EvolutionProjection diagnosticComplete={false} result={null} completedSteps={0} totalSteps={8} evidenceSubmitted={false} />}
+      {activeView === "account" && <section className="account-page"><header className="records-heading"><p className="eyebrow">Sistema</p><h1>Conta e segurança</h1><p>Gerencie sua forma de acesso ao Mesa OS.</p></header><PasswordSetup /></section>}
     </AppChrome>;
   }
 
@@ -92,9 +93,10 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
       {workspace.executionId && workspace.result && <div className="journey-panels"><div id="prioridade"><PriorityPanel executionId={workspace.executionId} result={workspace.result} priority={priority} /></div>{priority && <div id="ciclo"><CyclePanel priorityId={priority.id} cycle={cycle} /></div>}{cycle && <div id="missao"><MissionPanel cycleId={cycle.id} missions={missions} /></div>}</div>}
     </section>
     {availableMission && toolWorkspace && <section id="workspace" className="experience-section workspace-section" aria-labelledby="workspace-title"><div className="section-heading"><div><p className="eyebrow">Meu sistema de gestão</p><h2 id="workspace-title">Entender, construir e aplicar</h2></div></div><div className="workspace-steps"><span className="done">1 · Entender</span><span className={toolWorkspace.updatedAt ? "done" : "current"}>2 · Construir</span><span className={coreLoopWorkspace?.implementation ? "done" : "future"}>3 · Aplicar</span><span className={coreLoopWorkspace?.implementation?.status === "implemented" ? "current" : "future"}>4 · Evidenciar</span></div><ToolPanel missionId={availableMission.id} workspace={toolWorkspace} readOnly={coreLoopWorkspace?.implementation?.status === "implemented"}/>{coreLoopWorkspace && <div id="implementacao"><CoreLoopPanel missionId={availableMission.id} workspace={coreLoopWorkspace}/></div>}</section>}
-    <div id="metodologia"><MethodologyMap /></div><details className="account-settings"><summary>Conta e segurança</summary><PasswordSetup /></details></>}
+    <div id="metodologia"><MethodologyMap /></div><JourneyDeliveries missions={missions} availableMissionId={availableMission?.id} toolStarted={Boolean(toolWorkspace?.updatedAt)} implementationStatus={coreLoopWorkspace?.implementation?.status ?? "none"} evidenceSubmitted={Boolean(coreLoopWorkspace?.evidenceSubmitted)} /></>}
     {activeView === "evidence" && <EvidenceOverview implementation={coreLoopWorkspace?.implementation ?? null} evidenceSubmitted={Boolean(coreLoopWorkspace?.evidenceSubmitted)} missionTitle={availableMission?.title} />}
     {activeView === "evolution" && <EvolutionProjection diagnosticComplete result={workspace.result} completedSteps={completedSteps} totalSteps={progressSteps.length} evidenceSubmitted={Boolean(coreLoopWorkspace?.evidenceSubmitted)} />}
+    {activeView === "account" && <section className="account-page"><header className="records-heading"><p className="eyebrow">Sistema</p><h1>Conta e segurança</h1><p>Gerencie sua forma de acesso ao Mesa OS.</p></header><PasswordSetup /></section>}
   </AppChrome>;
 }
 

@@ -7,6 +7,7 @@ import { MentorNote } from "./mentor-note";
 import { MemberHome } from "./member-home";
 import { EvolutionProjection } from "./evolution-projection";
 import { EvidenceOverview } from "./evidence-overview";
+import { JourneyDeliveries } from "./journey-deliveries";
 
 describe("member experience foundations", () => {
   it("presents TutorIA honestly without an interactive fake capability", () => {
@@ -67,5 +68,12 @@ describe("member experience foundations", () => {
     expect(screen.getByRole("heading", { name: "Evidências" })).toBeInTheDocument();
     expect(screen.getByText("Nenhuma evidência registrada ainda")).toBeInTheDocument();
     expect(screen.queryByText("Aprovada")).not.toBeInTheDocument();
+  });
+
+  it("summarizes only the canonical journey deliveries", () => {
+    render(<JourneyDeliveries missions={[{ id: "mission-1", definition_id: "definition-1", position: 1, title: "Clareza de papéis", objective: "Definir responsabilidades essenciais.", rationale: "Reduz dependência.", status: "available", completed_at: null }]} availableMissionId="mission-1" toolStarted implementationStatus="draft" evidenceSubmitted={false} />);
+    expect(screen.getByRole("heading", { name: "Entregas em implementação" })).toBeInTheDocument();
+    expect(screen.getByText("Em implementação")).toBeInTheDocument();
+    expect(screen.getByText("Clareza de papéis")).toBeInTheDocument();
   });
 });
