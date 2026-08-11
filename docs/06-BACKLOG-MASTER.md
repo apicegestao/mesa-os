@@ -66,6 +66,6 @@ Objetivo: estabelecer autenticação por magic link, sessão segura e vínculo o
 
 ## DIA-2.5 — Diagnostic Foundation
 
-**Status:** IN PROGRESS — BUILD AUTHORIZED
+**Status:** COMPLETE — PRODUCTION RELEASED
 
 Objetivo proposto: permitir que um membro autorizado execute o primeiro passo do core loop por meio de uma definição metodológica versionada, produzindo um resultado rastreável sem antecipar Prioridade ou qualquer etapa posterior.

@@ -3,6 +3,7 @@
 **Release:** V2.0  
 **Sprint:** DIA-2.5 — Diagnostic Foundation
 **Mode:** BUILD
+**Status:** COMPLETE — PRODUCTION RELEASED
 
 ## Authorized
 

@@ -2,7 +2,7 @@
 
 ## Fase atual
 
-Sprint DIA-2.5 — Diagnostic Foundation: Raio-X do Empresário no Mês 0, com definição versionada, rascunho, submissão e resultado rastreável.
+Sprint DIA-2.5 — Diagnostic Foundation concluído e publicado. Próximo incremento depende de Definition & Alignment próprio.
 
 ## Fases concluídas
 
@@ -10,10 +10,11 @@ Sprint DIA-2.5 — Diagnostic Foundation: Raio-X do Empresário no Mês 0, com d
 - Sprint 2.2D — Definition & Alignment: definição governada do IAM-2.3.
 - Sprint IAM-2.3 — Identity & Access Foundation: autenticação por magic link, sessão segura e pertencimento organizacional mínimo, validado em produção.
 - Sprint GOV-2.4D — Diagnostic Foundation Definition & Alignment: definição governada do primeiro domínio do core loop.
+- Sprint DIA-2.5 — Diagnostic Foundation: Raio-X do Empresário no Mês 0, com definição versionada, rascunho, submissão e resultado rastreável.
 
-## Incremento atual
+## Próximo incremento
 
-DIA-2.5 — Diagnostic Foundation, autorizado exclusivamente conforme Feature Spec e Current Scope.
+Não definido. Reaplicações, evolução longitudinal e Prioridade continuam sem autorização para BUILD.
 
 ## Sequenciamento governado
 

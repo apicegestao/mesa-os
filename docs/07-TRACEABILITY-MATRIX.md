@@ -22,3 +22,9 @@
 | GOV-2.4D | Governança atualizada | `docs/03-ROADMAP.md`, `docs/06-BACKLOG-MASTER.md`, `docs/10-CURRENT-SCOPE.md` | consistência entre documentos |
 | GOV-2.4D | Encerramento | `docs/22-POST-FLIGHT-2.4D.md` | Post-Flight review |
 | DIA-2.5 | Fonte metodológica candidata | `docs/23-SOURCE-ANALYSIS-RAIO-X.md` | comparação com Feature Spec e guardrails |
+| DIA-2.5 | Definição e execução versionadas | `supabase/migrations/20260811132443_diagnostic_foundation.sql` | seed remoto + teste transacional |
+| DIA-2.5 | Índices e correção de cálculo | `supabase/migrations/20260811133405_index_diagnostic_foreign_keys.sql`, `supabase/migrations/20260811133531_fix_diagnostic_score_ambiguity.sql` | advisors + IME 60 controlado |
+| DIA-2.5 | Regras de domínio | `src/modules/diagnostic/domain` | Vitest |
+| DIA-2.5 | Persistência e ações | `src/modules/diagnostic/data`, `src/modules/diagnostic/actions` | typecheck + teste transacional remoto |
+| DIA-2.5 | Experiência Mês 0 | `src/modules/diagnostic/ui`, `src/app/app/page.tsx` | testes de componente + build |
+| DIA-2.5 | Encerramento | `docs/25-POST-FLIGHT-DIA-2.5.md` | Post-Flight review |
