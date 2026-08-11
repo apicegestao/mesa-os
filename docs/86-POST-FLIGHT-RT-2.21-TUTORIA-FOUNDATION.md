@@ -14,6 +14,7 @@
 - Catálogo estrito de duas leituras permitidas: estado derivado do próprio membro e resumo quantitativo do mapa metodológico publicado. O contrato não aceita escrita, evidência bruta, texto de ferramenta ou conteúdo conversacional.
 - Um pedido de tool não catalogada passa a retornar `escalate`, em vez de ampliar permissões silenciosamente.
 - Se o registro de auditoria não puder ser concluído, o gateway retorna `escalate/audit_unavailable`; não há continuidade silenciosa.
+- Testes de gateway cobrem o registro mínimo autorizado e a interrupção explícita tanto na falha de contexto quanto na falha da auditoria final.
 - CTA visual permanece desabilitada e honesta: o contexto está protegido, mas a orientação conversacional ainda não está ativa.
 
 ## Verificações
