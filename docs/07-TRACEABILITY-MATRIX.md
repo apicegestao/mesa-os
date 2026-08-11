@@ -12,3 +12,8 @@
 | GOV-2.2D | Alignment e escopo | `docs/15-PRE-FLIGHT-2.2D.md`, `docs/16-FEATURE-SPEC-IAM-2.3-DRAFT.md` | revisão documental |
 | GOV-2.2D | Governança atualizada | `docs/03-ROADMAP.md`, `docs/06-BACKLOG-MASTER.md`, `docs/10-CURRENT-SCOPE.md` | consistência entre documentos |
 | GOV-2.2D | Encerramento | `docs/17-POST-FLIGHT-2.2D.md` | decisões pendentes registradas |
+| IAM-2.3 | Schema e isolamento | `supabase/migrations/20260811120405_identity_access_foundation.sql` | revisão SQL + pgTAP preparado |
+| IAM-2.3 | Magic link sem cadastro | `src/modules/identity-access` | testes unitários + build |
+| IAM-2.3 | Sessão SSR/PKCE | `src/proxy.ts`, `src/shared/infrastructure/supabase`, `src/app/auth/callback` | typecheck + build |
+| IAM-2.3 | Shell protegido e logout | `src/app/app`, `src/app/login` | lint + typecheck + build |
+| IAM-2.3 | Encerramento | `docs/19-POST-FLIGHT-IAM-2.3.md` | Post-Flight review |

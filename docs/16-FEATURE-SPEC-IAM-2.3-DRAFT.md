@@ -1,6 +1,6 @@
 # IAM-2.3 — Identity & Access Foundation
 
-**Status:** DRAFT — NOT AUTHORIZED FOR BUILD
+**Status:** APPROVED FOR BUILD
 
 ## Objetivo
 
@@ -120,14 +120,12 @@ Ainda não autorizados. Eventos técnicos de login, logout e falha podem ser reg
 - Estratégia de staging antes de dados persistentes de homologação.
 - Migração versionada e plano de rollback compatível.
 
-## Decisões obrigatórias antes do BUILD
+## Decisões aprovadas para o BUILD
 
-1. Método inicial de autenticação: magic link, e-mail/senha ou outro método aprovado.
-2. Entrada no sistema: somente convite ou cadastro controlado.
-3. Papéis mínimos e quem pode concedê-los.
-4. Uma pessoa pode pertencer a mais de uma organização no primeiro release?
-5. Quem cria a primeira organização e o primeiro vínculo administrativo?
-6. Política de expiração/revogação de convite e sessão.
-7. Projeto Supabase dedicado para staging.
-
-Sem essas respostas, IAM-2.3 permanece bloqueado para BUILD.
+1. Magic link com sessão SSR/PKCE.
+2. Entrada somente por convite; cadastro público desabilitado no fluxo da aplicação.
+3. Papéis mínimos `owner` e `member`; somente `owner` administra acessos.
+4. Uma organização por identidade no primeiro release.
+5. Primeira organização e primeiro `owner` provisionados administrativamente.
+6. Convites expiram em 72 horas; sessão segue renovação segura do Supabase.
+7. Staging terá projeto Supabase dedicado antes de homologação persistente.

@@ -20,3 +20,17 @@ Valores reais ficam no provedor e em `.env.local`, nunca no Git. Deploy previews
 O repositório está preparado para vinculação ao site Netlify existente. Publicação de produção exige CI verde e autorização explícita do release; o bootstrap não publica automaticamente.
 
 O pnpm usa hoisting público (`.npmrc`) para compatibilidade com o adapter automático de Next.js da Netlify. O adapter não é fixado no projeto e permanece atualizado pela plataforma.
+
+## IAM-2.3 Auth configuration
+
+Antes de liberar login no ambiente correspondente:
+
+- `SITE_URL` do Supabase Auth deve apontar para a URL canônica HTTPS.
+- Redirect permitido exato: `<SITE_URL>/auth/callback`.
+- Para desenvolvimento: `http://localhost:3000/auth/callback`.
+- Cadastro público deve permanecer desabilitado.
+- O template de magic link deve preservar o fluxo PKCE/redirect aprovado.
+- A primeira organização, identidade e associação `owner` são provisionadas administrativamente e auditadas.
+- Staging não reutiliza o banco ou as credenciais de produção.
+
+A aplicação da migration e qualquer alteração remota seguem gate operacional separado após Post-Flight verde.

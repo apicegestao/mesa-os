@@ -29,3 +29,15 @@ O código da tentativa anterior foi rejeitado como base de produção por proble
 
 **Status:** ACCEPTED  
 O frontend usa somente publishable key. Chaves secret/service-role ficam exclusivamente em runtime server-side quando houver necessidade autorizada.
+
+## ADR-027 — IAM initial access model
+
+**Status:** ACCEPTED
+
+- Autenticação inicial por magic link via Supabase Auth e sessão SSR/PKCE.
+- Entrada somente por convite; cadastro público não é autorizado.
+- Papéis iniciais: `owner` e `member`; somente `owner` administra acessos.
+- Uma identidade pertence a no máximo uma organização no primeiro release.
+- A primeira organização e seu primeiro vínculo `owner` são provisionados administrativamente.
+- Convites expiram em 72 horas.
+- Staging exige projeto Supabase separado antes de homologação persistente.

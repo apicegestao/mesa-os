@@ -40,6 +40,6 @@ Nenhum item de negócio está autorizado neste sprint.
 
 ## IAM-2.3 — Identity & Access Foundation
 
-**Status:** PROPOSAL — NOT AUTHORIZED FOR BUILD
+**Status:** COMPLETE — REMOTE RELEASE PENDING
 
-Objetivo preliminar: estabelecer autenticação, sessão segura e vínculo organizacional mínimo como pré-requisito para capacidades posteriores. A implementação depende das decisões abertas na Feature Spec e de novo Pre-Flight.
+Objetivo: estabelecer autenticação por magic link, sessão segura e vínculo organizacional mínimo como pré-requisito para capacidades posteriores. A autorização limita-se ao escopo aprovado na Feature Spec e no Current Scope.

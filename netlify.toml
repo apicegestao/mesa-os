@@ -8,6 +8,7 @@
 
 [context.production.environment]
   NEXT_PUBLIC_APP_ENV = "production"
+  NEXT_PUBLIC_SITE_URL = "https://mesa-os.netlify.app"
 
 [context.deploy-preview.environment]
   NEXT_PUBLIC_APP_ENV = "staging"

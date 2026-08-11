@@ -16,8 +16,17 @@
 
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-sans); }
-.shell { min-height: 100svh; display: grid; place-items: center; padding: var(--space-3); }
+.shell { min-height: 100svh; display: grid; place-items: center; align-content: center; gap: var(--space-2); padding: var(--space-3); }
 .status { width: min(100%, 42rem); padding: clamp(1.5rem, 5vw, 3rem); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
 .eyebrow { margin: 0 0 var(--space-1); color: var(--color-accent); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
 h1 { margin: 0; font-size: clamp(2rem, 8vw, 4rem); line-height: 1; }
 .summary { max-width: 34rem; margin: var(--space-2) 0 0; color: var(--color-muted); line-height: 1.6; }
+.access-link, button { display: inline-flex; justify-content: center; border: 0; border-radius: 0.5rem; padding: 0.75rem 1rem; background: var(--color-accent); color: white; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+button:disabled { cursor: wait; opacity: 0.65; }
+.auth-form { display: grid; gap: 0.75rem; margin-top: var(--space-3); }
+.auth-form label { font-weight: 700; }
+.auth-form input { width: 100%; border: 1px solid var(--color-border); border-radius: 0.5rem; padding: 0.75rem; background: white; color: var(--color-text); font: inherit; }
+.auth-form input:focus-visible, button:focus-visible, .access-link:focus-visible { outline: 3px solid color-mix(in srgb, var(--color-accent) 35%, transparent); outline-offset: 2px; }
+.feedback { margin: 0; color: var(--color-muted); line-height: 1.5; }
+.feedback-error { color: #8a2d22; }
+.button-secondary { margin-top: var(--space-3); background: transparent; color: var(--color-accent); border: 1px solid var(--color-accent); }
