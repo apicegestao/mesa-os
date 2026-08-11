@@ -25,6 +25,8 @@
 
 - Estrutura do branch: mapa 4 × 4, ciclos temporais, episódios diagnósticos, métricas, evidências revisáveis e fronteira de RPC conferidos.
 - Aplicação: lint, typecheck, 39 testes e build de produção passaram.
+- Preview Netlify do PR 12 foi reconstruído com `NEXT_PUBLIC_SUPABASE_URL` e chave pública limitadas ao contexto `deploy-preview`, apontando para o branch Supabase de teste. Produção mantém suas próprias variáveis.
+- Smoke não autenticado confirmou que o preview carrega a tela de login sem erros de console.
 
 ## Gates ainda pendentes
 
@@ -34,3 +36,7 @@
 4. Aprovação explícita de promoção do branch Supabase e merge/deploy único de produção.
 
 Não houve alteração em produção ou no site Netlify de produção nesta revisão.
+
+## Gate de smoke autenticado
+
+O branch Supabase de teste não recebeu usuários, organizações ou memberships reais — decisão correta para não replicar dados de membros em homologação. Por isso, a sessão existente da produção é rejeitada no preview isolado e o smoke autenticado continua pendente de uma conta-fixture convidada, exclusiva para homologação. Nenhuma cópia de dados reais será usada para contornar esse gate.
