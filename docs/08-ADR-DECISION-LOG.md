@@ -69,3 +69,14 @@ O frontend usa somente publishable key. Chaves secret/service-role ficam exclusi
 - Existe no máximo um ciclo por organização e por prioridade.
 - O ciclo permanece ativo após a data final até que um incremento futuro defina a transição de estado.
 - Ciclo não cria Missões, metas, tarefas, ferramentas ou progresso.
+
+## ADR-031 — Initial mission methodology and lifecycle
+
+**Status:** ACCEPTED
+
+- Missões são dados metodológicos versionados e suas instâncias preservam um snapshot imutável.
+- A revisão inicial atende somente `Liderança & Equipe` com três Missões ordenadas: clareza de papéis, ritmo de gestão e delegação responsável.
+- Somente a primeira Missão nasce `available`; as demais nascem `locked`.
+- Existe no máximo uma Missão disponível por ciclo.
+- Não há conclusão, desbloqueio, edição, reordenação ou substituição neste incremento.
+- Missão não antecipa Ferramenta, Implementação, Evidência, Evolução ou TutorIA.

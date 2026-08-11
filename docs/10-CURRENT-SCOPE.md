@@ -1,17 +1,17 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** GOV-2.10D — Mission Foundation Definition & Alignment
-**Mode:** DEFINITION
+**Sprint:** MIS-2.11 — Mission Foundation
+**Mode:** BUILD
 **Status:** IN PROGRESS
 
 ## Authorized
 
-- Registrar a homologação do ciclo real em produção.
-- Executar Alignment Check e Pre-Flight da Mission Foundation.
-- Criar Feature Spec preliminar MIS-2.11.
-- Explicitar decisões, limites, critérios de aceite e riscos.
-- Atualizar roadmap, backlog, rastreabilidade e Post-Flight documental.
+- Criar definições metodológicas versionadas de Missão para `Liderança & Equipe`.
+- Provisionar três Missões imutáveis no ciclo ativo, com ordem determinística.
+- Disponibilizar somente a primeira; manter as duas seguintes bloqueadas.
+- Exibir título, objetivo e justificativa da próxima Missão ao owner.
+- Aplicar migration versionada, RLS, grants mínimos, testes e documentação.
 
 ## Not Authorized
 
@@ -37,15 +37,15 @@
 - Escolha humana em caso de empate no menor score.
 - Seleção de dimensão diferente da única menor candidata.
 - Alteração, substituição, cancelamento ou segunda prioridade.
-- Missão real, meta, ferramenta, plano de ação ou recomendação.
+- Meta, ferramenta, plano de ação detalhado ou recomendação automatizada.
 - Edição, cancelamento, substituição ou conclusão manual do ciclo.
 - Encerramento automático do ciclo ao ultrapassar a data final.
 - Segundo ciclo ou múltiplos ciclos por organização.
-- Código, migration, configuração externa ou deploy funcional.
 - Geração de Missão por TutorIA ou qualquer IA.
 - Ferramenta, Implementação, Evidência ou Evolução.
-- Implementação de MIS-2.11 antes de aprovação explícita e novo Current Scope em BUILD.
+- Conclusão, desbloqueio, reordenação, substituição ou edição de Missão.
+- Definições de Missão para dimensões diferentes de `Liderança & Equipe`.
 
 ## Exit criteria
 
-Homologação do CYC-2.9 registrada; Pre-Flight e Feature Spec preliminar MIS-2.11 criados; decisões obrigatórias explicitadas; documentos consistentes; nenhuma alteração funcional; Post-Flight entregue.
+Migration remota aplicada; provisionamento validado com rollback; lint, typecheck, testes e build aprovados; deploy saudável; Post-Flight atualizado.

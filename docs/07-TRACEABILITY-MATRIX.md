@@ -47,3 +47,7 @@
 | GOV-2.10D | Alignment e Pre-Flight | `docs/36-PRE-FLIGHT-2.10D.md` | revisão documental |
 | GOV-2.10D | Proposta Mission Foundation | `docs/37-FEATURE-SPEC-MIS-2.11-DRAFT.md` | decisões pendentes explícitas |
 | GOV-2.10D | Encerramento | `docs/38-POST-FLIGHT-2.10D.md` | Post-Flight review |
+| MIS-2.11 | Metodologia versionada e instâncias | `supabase/migrations/20260811143052_mission_foundation.sql` | pgTAP + seed review |
+| MIS-2.11 | Provisionamento owner-only | `public.provision_cycle_missions(uuid)` | teste transacional / smoke test |
+| MIS-2.11 | Próxima Missão sem conteúdo bloqueado | `src/modules/mission`, `src/app/app/page.tsx` | Vitest + typecheck + build |
+| MIS-2.11 | Encerramento | `docs/39-PRE-FLIGHT-MIS-2.11.md`, `docs/40-POST-FLIGHT-MIS-2.11.md` | Post-Flight review |

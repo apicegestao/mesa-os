@@ -30,7 +30,7 @@ export function CyclePanel({
           <strong>{formatDate(cycle.ends_on)}</strong>
         </p>
         <p className="feedback">
-          90 dias de foco. As Missões serão definidas no próximo incremento.
+          90 dias de foco na prioridade confirmada.
         </p>
       </section>
     );

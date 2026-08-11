@@ -1,0 +1,13 @@
+begin;
+select plan(9);
+select has_table('public', 'mission_definition_revisions', 'mission revision table exists');
+select has_table('public', 'mission_definitions', 'mission definition table exists');
+select has_table('public', 'missions', 'mission table exists');
+select row_security_active('public', 'mission_definition_revisions', 'mission revisions have RLS');
+select row_security_active('public', 'mission_definitions', 'mission definitions have RLS');
+select row_security_active('public', 'missions', 'missions have RLS');
+select has_function('public', 'provision_cycle_missions', array['uuid'], 'provision function exists');
+select col_is_unique('public', 'missions', array['cycle_id', 'position'], 'mission order is unique per cycle');
+select col_is_unique('public', 'missions', array['cycle_id', 'definition_id'], 'mission definition is unique per cycle');
+select * from finish();
+rollback;

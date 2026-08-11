@@ -486,6 +486,35 @@ export type Database = {
           },
         ]
       }
+      mission_definition_revisions: {
+        Row: { code: string; created_at: string; id: string; name: string; status: string; version: number }
+        Insert: { code: string; created_at?: string; id?: string; name: string; status: string; version: number }
+        Update: { code?: string; created_at?: string; id?: string; name?: string; status?: string; version?: number }
+        Relationships: []
+      }
+      mission_definitions: {
+        Row: { dimension_code: string; id: string; objective: string; position: number; rationale: string; revision_id: string; title: string }
+        Insert: { dimension_code: string; id?: string; objective: string; position: number; rationale: string; revision_id: string; title: string }
+        Update: { dimension_code?: string; id?: string; objective?: string; position?: number; rationale?: string; revision_id?: string; title?: string }
+        Relationships: [{
+          foreignKeyName: "mission_definitions_revision_id_fkey"
+          columns: ["revision_id"]
+          isOneToOne: false
+          referencedRelation: "mission_definition_revisions"
+          referencedColumns: ["id"]
+        }]
+      }
+      missions: {
+        Row: { created_at: string; created_by: string; cycle_id: string; definition_id: string; id: string; objective: string; organization_id: string; position: number; rationale: string; status: string; title: string }
+        Insert: { created_at?: string; created_by: string; cycle_id: string; definition_id: string; id?: string; objective: string; organization_id: string; position: number; rationale: string; status: string; title: string }
+        Update: { created_at?: string; created_by?: string; cycle_id?: string; definition_id?: string; id?: string; objective?: string; organization_id?: string; position?: number; rationale?: string; status?: string; title?: string }
+        Relationships: [
+          { foreignKeyName: "missions_created_by_fkey"; columns: ["created_by"]; isOneToOne: false; referencedRelation: "identities"; referencedColumns: ["id"] },
+          { foreignKeyName: "missions_cycle_id_fkey"; columns: ["cycle_id"]; isOneToOne: false; referencedRelation: "cycles"; referencedColumns: ["id"] },
+          { foreignKeyName: "missions_definition_id_fkey"; columns: ["definition_id"]; isOneToOne: false; referencedRelation: "mission_definitions"; referencedColumns: ["id"] },
+          { foreignKeyName: "missions_organization_id_fkey"; columns: ["organization_id"]; isOneToOne: false; referencedRelation: "organizations"; referencedColumns: ["id"] },
+        ]
+      }
       organizations: {
         Row: {
           created_at: string
@@ -580,6 +609,10 @@ export type Database = {
       confirm_priority: {
         Args: { priority_rationale: string; target_execution_id: string }
         Returns: string
+      }
+      provision_cycle_missions: {
+        Args: { target_cycle_id: string }
+        Returns: number
       }
       save_diagnostic_responses: {
         Args: { submitted_answers: Json; target_execution_id: string }

@@ -1,6 +1,8 @@
 # MIS-2.11 — Mission Foundation
 
-**Status:** DRAFT — NOT AUTHORIZED FOR BUILD
+**Status:** APPROVED FOR BUILD
+
+**Aprovação:** Rafael Portela Martins, 2026-08-11. O owner delegou a seleção conservadora da metodologia inicial, preservando o Governance Pack.
 
 ## Objetivo
 
@@ -67,6 +69,16 @@ O ciclo estabelece tempo e foco, mas ainda não declara resultados intermediári
 - Exibir a próxima ação e uma indicação simples da sequência, sem detalhar Missões bloqueadas.
 - Manter leitura após a data final do ciclo, sem transição automática.
 
+## Decisão metodológica inicial
+
+Para a dimensão ativa `Liderança & Equipe`, a revisão inicial contém três Missões ordenadas:
+
+1. Clareza de papéis e decisões.
+2. Ritmo de gestão da equipe.
+3. Delegação com responsabilidade.
+
+Somente a primeira nasce `available`; as demais nascem `locked`. A definição é dado versionado e não constante da interface. Nenhuma outra dimensão recebe conteúdo neste incremento.
+
 ## Critérios de aceite candidatos
 
 - Nenhuma Missão é criada sem ciclo válido e pertencente à organização do owner.
@@ -79,4 +91,4 @@ O ciclo estabelece tempo e foco, mas ainda não declara resultados intermediári
 
 ## Gate
 
-MIS-2.11 permanece bloqueado para BUILD até aprovação explícita das oito decisões, atualização do Current Scope e novo Pre-Flight.
+Gate de BUILD aberto após aprovação explícita, atualização do Current Scope e Pre-Flight MIS-2.11.

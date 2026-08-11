@@ -2,7 +2,7 @@
 
 ## Fase atual
 
-Sprint GOV-2.10D — Mission Foundation Definition & Alignment: definição governada do primeiro objeto operacional do ciclo, sem implementação.
+Sprint MIS-2.11 — Mission Foundation: implementação governada das Missões iniciais de Liderança & Equipe.
 
 ## Fases concluídas
 
@@ -15,10 +15,11 @@ Sprint GOV-2.10D — Mission Foundation Definition & Alignment: definição gove
 - Sprint PRI-2.7 — Priority Foundation: confirmação rastreável sem empate e espera segura para futuro desempate TutorIA.
 - Sprint GOV-2.8D — Cycle Foundation Definition & Alignment: decisões e limites do primeiro ciclo aprovados.
 - Sprint CYC-2.9 — Cycle Foundation: ciclo inicial de 90 dias ligado à prioridade confirmada, publicado em produção.
+- Sprint GOV-2.10D — Mission Foundation Definition & Alignment: primeira metodologia de Missões delimitada e aprovada.
 
-## Próximo incremento proposto, não autorizado para BUILD
+## Incremento em construção
 
-MIS-2.11 — Mission Foundation. Proposta de Missões estruturadas ligadas ao ciclo ativo, sem antecipar Ferramentas, Implementação, Evidência ou Evolução. BUILD depende da aprovação da Feature Spec.
+MIS-2.11 — Mission Foundation. Três Missões versionadas ligadas ao ciclo ativo, sem antecipar Ferramentas, Implementação, Evidência ou Evolução.
 
 ## Sequenciamento governado
 
