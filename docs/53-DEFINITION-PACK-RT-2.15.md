@@ -1,8 +1,10 @@
 # Definition Pack — RT-2.15 Core Loop Completion
 
-**Status:** PROPOSED — AWAITING SINGLE APPROVAL  
+**Status:** APPROVED FOR BUILD
 **Owner:** Rafael Portela Martins  
 **Data:** 2026-08-11
+
+**Aprovação explícita:** “Aprovo o Definition Pack RT-2.15”, registrada pelo owner em 2026-08-11.
 
 ## Resultado homologável
 

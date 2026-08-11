@@ -1,15 +1,17 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** RT-2.15 — Core Loop Completion Definition Pack
-**Mode:** DEFINITION
-**Status:** AWAITING SINGLE APPROVAL — BUILD NOT AUTHORIZED
+**Sprint:** RT-2.15 — Core Loop Completion Release Train
+**Mode:** BUILD
+**Status:** APPROVED — PRE-FLIGHT OPEN
 
-## Authorized now
+## Authorized
 
-- Alignment Check e Definition Pack integrados.
-- Specs de Implementação, Evidência, transição e próxima ação.
-- Atualizações exclusivamente documentais de backlog e rastreabilidade.
+- IMP-2.15A — implementação com rascunho e confirmação explícita.
+- EVD-2.15B — evidência operacional estruturada e imutável.
+- MTR-2.15C — conclusão e desbloqueio atômicos.
+- STA-2.15D — estado e próxima ação derivados.
+- Migrations aditivas e separadas, testes, documentação e um deploy consolidado.
 
 ## Not Authorized
 
@@ -48,8 +50,8 @@
 - Exportação, anexos, comentários ou colaboração por `member`.
 - Feature de negócio, migration, alteração de dados ou deploy manual.
 - Redução de testes, RLS, validação server-side ou rastreabilidade.
-- Código, migration, dados, configuração funcional, deploy manual ou BUILD do RT-2.15 antes da aprovação do Definition Pack.
+- Qualquer capacidade, dado ou transição não descritos no Definition Pack aprovado.
 
 ## Exit criteria
 
-Definition Pack completo, CI documental aprovado e aprovação explícita única do owner registrada. BUILD permanece bloqueado até esse registro.
+Quatro incrementos implementados e rastreáveis; migrations verificadas; CI e Pre-Release Review aprovados; um merge e um deploy; smoke test integrado e Post-Flight consolidado.

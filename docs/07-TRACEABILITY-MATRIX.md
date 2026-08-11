@@ -68,3 +68,4 @@
 | MTR-2.15C | Definição de transição | `docs/51-FEATURE-SPEC-MTR-2.15C.md` | invariantes transacionais |
 | STA-2.15D | Definição de estado | `docs/52-FEATURE-SPEC-STA-2.15D.md` | matriz de próxima ação |
 | RT-2.15 | Definition Pack | `docs/53-DEFINITION-PACK-RT-2.15.md` | aprovação explícita única |
+| RT-2.15 | Pre-Flight integrado | `docs/54-PRE-FLIGHT-RT-2.15.md` | GO para BUILD controlado |

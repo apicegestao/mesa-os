@@ -1,6 +1,8 @@
 # EVD-2.15B — Evidence Foundation
 
-**Status:** PROPOSED — BUILD NOT AUTHORIZED
+**Status:** APPROVED FOR BUILD
+
+**Aprovação:** Rafael Portela Martins, 2026-08-11, como parte do Definition Pack RT-2.15.
 
 ## Objetivo
 

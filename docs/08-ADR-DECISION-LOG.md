@@ -104,7 +104,7 @@ O frontend usa somente publishable key. Chaves secret/service-role ficam exclusi
 
 ## ADR-034 — Implementation, evidence and mission transition
 
-**Status:** PROPOSED — AWAITING RT-2.15 APPROVAL
+**Status:** ACCEPTED
 
 - Ferramenta salva é preparação; Implementação exige confirmação explícita de uso real.
 - Evidência é um registro operacional factual, imutável e distinto de impacto ou Evolução.
