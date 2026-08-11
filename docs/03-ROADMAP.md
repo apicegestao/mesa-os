@@ -2,7 +2,7 @@
 
 ## Fase atual
 
-Sprint CYC-2.9 — Cycle Foundation: implementação governada do ciclo inicial de 90 dias ligado à prioridade confirmada.
+Próximo incremento ainda não autorizado. Deve ser definido após homologação do CYC-2.9.
 
 ## Fases concluídas
 
@@ -14,6 +14,7 @@ Sprint CYC-2.9 — Cycle Foundation: implementação governada do ciclo inicial 
 - Sprint GOV-2.6D — Priority Foundation Definition & Alignment: definição governada do segundo passo do core loop.
 - Sprint PRI-2.7 — Priority Foundation: confirmação rastreável sem empate e espera segura para futuro desempate TutorIA.
 - Sprint GOV-2.8D — Cycle Foundation Definition & Alignment: decisões e limites do primeiro ciclo aprovados.
+- Sprint CYC-2.9 — Cycle Foundation: ciclo inicial de 90 dias ligado à prioridade confirmada, publicado em produção.
 
 ## Próximo incremento
 

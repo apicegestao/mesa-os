@@ -3,7 +3,7 @@
 **Release:** V2.0  
 **Sprint:** CYC-2.9 — Cycle Foundation
 **Mode:** BUILD
-**Status:** BUILD IN PROGRESS
+**Status:** COMPLETE — PRODUCTION RELEASED
 
 ## Authorized
 

@@ -1,7 +1,7 @@
 # Post-Flight — CYC-2.9 Cycle Foundation
 
-**Backlog:** CYC-2.9  
-**Status:** READY FOR PRODUCTION RELEASE  
+**Backlog:** CYC-2.9
+**Status:** COMPLETE — PRODUCTION RELEASED
 **Data:** 2026-08-11
 
 ## Implementado
@@ -30,6 +30,8 @@
 - Teste transacional remoto como owner executado com rollback.
 - Banco permaneceu com zero ciclos após o teste.
 - RLS, função e duas restrições de unicidade cobertas por pgTAP.
+- Commit funcional: `c2f2fe8b36f86dcf062d92bdc1a73c60de3916d0`.
+- Deploy Netlify: `6a7b2eab8609c90008e526f6`, estado `ready`, sem erro ou segredo detectado.
 
 ## Segurança e advisors
 
