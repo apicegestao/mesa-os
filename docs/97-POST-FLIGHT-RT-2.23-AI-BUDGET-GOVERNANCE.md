@@ -11,6 +11,7 @@
 - O gateway de orientação agora reserva o custo máximo antes de chamar o provedor, mas continua desligado por flags e por falta de configuração de orçamento.
 - Tabelas internas sem grants diretos para membros; revisão de política de membro disponível somente ao owner e sempre por append.
 - Funções privilegiadas movidas para schema privado. Os wrappers públicos são `SECURITY INVOKER`, sem acesso direto às tabelas internas.
+- Área **Governança de IA** em `Conta e segurança` para o owner: limite mensal por membro, cotação de referência e até cinco revisões recentes. A alteração apenas cria uma revisão de política; não habilita IA.
 
 ## Verificações
 
@@ -23,12 +24,11 @@
 ## Não ativado
 
 - Sem AI Gateway, chave, inferência, consumo, cobrança, preview, deploy, merge ou produção.
-- Sem interface de Governança de IA, pois a capacidade permanece em homologação e requer smoke autenticado próprio.
+- Sem configuração de política, IA, preview, deploy, merge ou produção. A tela está construída, mas exige smoke autenticado em homologação antes de uso.
 - Sem implementação do Mesa OS Intelligence; o pacote 94 permanece em rascunho.
 
 ## Gates restantes
 
-1. Implementar e testar a tela de Governança de IA para o owner, com confirmação e histórico.
-2. Configurar somente em preview/homologação uma taxa BRL/USD e o limite inicial de R$100 por membro.
-3. Habilitar a IA apenas em homologação, executar smoke autenticado e conferir reserva, consumo e liberação.
-4. Realizar revisão de preview e obter aprovação explícita para promoção.
+1. Configurar somente em preview/homologação uma taxa BRL/USD e o limite inicial de R$100 por membro, pela tela autenticada.
+2. Habilitar a IA apenas em homologação, executar smoke autenticado e conferir reserva, consumo e liberação.
+3. Realizar revisão de preview e obter aprovação explícita para promoção.

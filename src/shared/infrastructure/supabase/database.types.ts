@@ -108,6 +108,12 @@ export type Database = {
           },
         ]
       }
+      ai_member_budget_policy_revisions: {
+        Row: { created_at: string; created_by_identity_id: string; effective_at: string; id: string; monthly_limit_brl_cents: number; organization_id: string; period_timezone: string; usd_micros_per_brl: number }
+        Insert: { created_at?: string; created_by_identity_id: string; effective_at?: string; id?: string; monthly_limit_brl_cents: number; organization_id: string; period_timezone?: string; usd_micros_per_brl: number }
+        Update: { created_at?: string; created_by_identity_id?: string; effective_at?: string; id?: string; monthly_limit_brl_cents?: number; organization_id?: string; period_timezone?: string; usd_micros_per_brl?: number }
+        Relationships: []
+      }
       ai_usage_events: {
         Row: { actor_identity_id: string; capability_code: string; created_at: string; estimated_cost_usd_micros: number; id: string; input_tokens: number; model_route_code: string; organization_id: string; output_tokens: number; resolution: Database["public"]["Enums"]["ai_usage_resolution"] }
         Insert: { actor_identity_id: string; capability_code: string; created_at?: string; estimated_cost_usd_micros?: number; id?: string; input_tokens?: number; model_route_code: string; organization_id: string; output_tokens?: number; resolution: Database["public"]["Enums"]["ai_usage_resolution"] }
