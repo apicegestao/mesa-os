@@ -2,7 +2,7 @@
 
 ## Fase atual
 
-RT-2.15 — Core Loop Completion em definição. BUILD ainda não autorizado.
+Próximo incremento ainda não autorizado. Deve ser definido após a homologação do RT-2.15.
 
 ## Fases concluídas
 
@@ -20,6 +20,7 @@ RT-2.15 — Core Loop Completion em definição. BUILD ainda não autorizado.
 - Sprint GOV-2.12D — Tool Foundation Definition & Alignment: primeira Ferramenta schema-driven delimitada e aprovada.
 - Sprint TOL-2.13 — Structured Tool Foundation: Mapa de Papéis e Decisões schema-driven, publicado e homologado em produção.
 - Sprint GOV-2.14F — Governance Fast Track: Release Train seguro e cloud-first adotado, com redução de builds documentais.
+- RT-2.15 — Core Loop Completion: Implementação, Evidência e transição da Missão 1 para a Missão 2 publicadas.
 
 ## Próximo Release Train proposto
 

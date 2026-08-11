@@ -3,7 +3,7 @@
 **Release:** V2.0  
 **Sprint:** RT-2.15 — Core Loop Completion Release Train
 **Mode:** BUILD
-**Status:** BUILD IN PROGRESS
+**Status:** COMPLETE — PRODUCTION RELEASED
 
 ## Authorized
 
@@ -54,4 +54,4 @@
 
 ## Exit criteria
 
-Quatro incrementos implementados e rastreáveis; migrations verificadas; CI e Pre-Release Review aprovados; um merge e um deploy; smoke test integrado e Post-Flight consolidado.
+Atendidos em 2026-08-11. Evidências consolidadas em `docs/56-POST-FLIGHT-RT-2.15.md`. Próximo incremento ainda não autorizado.
