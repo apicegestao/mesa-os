@@ -62,3 +62,7 @@ Nenhuma prevista. Descoberta de necessidade de migration interrompe o BUILD e ex
 - dados metodológicos apresentados como progresso pessoal;
 - regressão de isolamento, validação server-side ou core loop;
 - conflito com decisão fonte ou documento FROZEN.
+
+## Preview authentication correction
+
+Durante homologação, confirmou-se que magic links solicitados no deploy preview retornavam ao domínio de produção porque `NEXT_PUBLIC_SITE_URL` é deliberadamente fixo. Foi autorizado um ajuste não destrutivo para selecionar `DEPLOY_PRIME_URL` somente em contextos Netlify `deploy-preview` ou `branch-deploy`, limitado ao hostname `--mesa-os.netlify.app`. Produção continua usando a URL canônica.

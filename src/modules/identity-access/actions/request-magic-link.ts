@@ -1,7 +1,7 @@
 "use server";
 
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
-import { genericLoginMessage, loginSchema, type LoginState } from "../domain/auth";
+import { authRedirectBaseUrl, genericLoginMessage, loginSchema, type LoginState } from "../domain/auth";
 import { getPublicEnv } from "@/shared/config/env";
 
 export async function requestMagicLink(_state: LoginState, formData: FormData): Promise<LoginState> {
@@ -9,12 +9,13 @@ export async function requestMagicLink(_state: LoginState, formData: FormData): 
   if (!parsed.success) return { status: "error", message: "Informe um e-mail válido." };
 
   const env = getPublicEnv();
+  const redirectBaseUrl = authRedirectBaseUrl(env.NEXT_PUBLIC_SITE_URL, process.env.DEPLOY_PRIME_URL, process.env.CONTEXT);
   const supabase = await createSupabaseServerClient();
   await supabase.auth.signInWithOtp({
     email: parsed.data.email,
     options: {
       shouldCreateUser: false,
-      emailRedirectTo: `${env.NEXT_PUBLIC_SITE_URL}/auth/callback?next=/app`,
+      emailRedirectTo: `${redirectBaseUrl}/auth/callback?next=/app`,
     },
   });
 
