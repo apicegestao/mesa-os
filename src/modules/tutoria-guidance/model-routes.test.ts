@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { estimateModelCostUsdMicros, TUTORIA_MODEL_ROUTES } from "./model-routes";
+import { estimateModelCostUsdMicros, orientationRequestBudgetAllowed, TUTORIA_MODEL_ROUTES } from "./model-routes";
 
 describe("TutorIA model routes", () => {
   it("keeps one primary route and prepares alternatives without invoking them", () => {
@@ -10,5 +10,11 @@ describe("TutorIA model routes", () => {
 
   it("estimates usage in USD micros using captured token counts", () => {
     expect(estimateModelCostUsdMicros("gemini_flash", 1_000_000, 1_000_000)).toBe(2_800_000);
+  });
+
+  it("blocks inference until a per-request ceiling is explicitly configured", () => {
+    expect(orientationRequestBudgetAllowed()).toBe(false);
+    expect(orientationRequestBudgetAllowed({ TUTORIA_ORIENTATION_MAX_COST_USD_MICROS_PER_REQUEST: "1" })).toBe(false);
+    expect(orientationRequestBudgetAllowed({ TUTORIA_ORIENTATION_MAX_COST_USD_MICROS_PER_REQUEST: "2000" })).toBe(true);
   });
 });

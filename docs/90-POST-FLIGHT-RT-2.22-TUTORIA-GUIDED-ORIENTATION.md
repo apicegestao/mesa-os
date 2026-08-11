@@ -14,6 +14,7 @@
 - Catálogo preparado, sem fallback automático: Gemini Flash (rota primária), GPT-5 mini e Claude Haiku (rotas futuras).
 - Agregação interna pronta para custo por membro, capacidade, modelo e resolução, incluindo custo médio por orientação servida; nenhuma métrica individual aparece na experiência do membro.
 - Guardrail de ativação: sem `TUTORIA_ORIENTATION_ENABLED=true` e as variáveis injetadas do Gateway, a rota devolve indisponibilidade e não chama modelo.
+- Guardrail financeiro: além da flag, a orientação exige teto explícito por chamada; sem ele, o bloqueio padrão é zero e nenhuma inferência ocorre.
 
 ## Verificações
 
