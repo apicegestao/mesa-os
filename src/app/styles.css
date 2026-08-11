@@ -542,3 +542,15 @@ h1 { font-size: clamp(1.75rem, 4vw, 2.7rem); line-height: 1.08; }
 .records-empty .empty-evidence-link { display:inline-flex; margin-top:.8rem; }
 @media (max-width:900px) { .evidence-stat-grid.four { grid-template-columns:1fr 1fr; }.proof-row { grid-template-columns:auto 1fr auto; }.proof-review { grid-column:2; }.proof-row > a { grid-column:3; grid-row:2; } }
 @media (max-width:560px) { .evidence-stat-grid.four { grid-template-columns:1fr; }.proof-row { grid-template-columns:auto 1fr; }.proof-row .evidence-tag,.proof-review,.proof-row > a { grid-column:2; justify-self:start; } }
+
+/* RT-2.19 evolution reference alignment */
+.evolution-stat-grid { grid-template-columns:1.15fr .9fr .62fr; }
+.evolution-stat-grid .ime-stat::after { display:none; }
+.ime-ring { --ime:0%; position:absolute; right:1rem; bottom:1rem; display:grid; width:3.6rem; height:3.6rem; place-items:center; border-radius:50%; background:conic-gradient(#397fba var(--ime),#e3ebf2 0); }
+.ime-ring::after { width:2.8rem; height:2.8rem; border-radius:50%; background:#fff; content:""; }
+.impact-stat { background:linear-gradient(135deg,#f5faf8,#fff) !important; }.impact-stat > div { margin-top:1rem; }.impact-stat > div strong { margin:0; color:#31806d; font-size:1rem; }.impact-stat > div small { max-width:20rem; margin-top:.45rem; line-height:1.4; }
+.next-analysis-stat strong { font-size:1.15rem; }
+.evolution-detail-grid { grid-template-columns:1.35fr .95fr; }
+.comparison-track { position:relative; height:.48rem; overflow:hidden; border-radius:99px; background:#e8eef3; }.comparison-track i,.comparison-track b { position:absolute; inset:0 auto 0 0; display:block; height:100%; border-radius:inherit; }.comparison-track .baseline { background:#cbd9e5; }.comparison-track b.blue { background:#397fba; }.comparison-track b.gold { background:#b9853d; }.comparison-track b.plum { background:#955277; }.comparison-track b.green { background:#31806d; }
+.history-head { display:grid; grid-template-columns:1fr .55fr .9fr .8fr; gap:1rem; padding:.55rem 0; border-top:1px solid #e5ebf0; color:#8393a2; font-size:.58rem; font-weight:800; letter-spacing:.05em; text-transform:uppercase; }
+@media (max-width:760px) { .evolution-stat-grid,.evolution-detail-grid { grid-template-columns:1fr; }.history-head { display:none; } }

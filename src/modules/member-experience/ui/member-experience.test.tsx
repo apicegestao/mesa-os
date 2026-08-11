@@ -60,7 +60,9 @@ describe("member experience foundations", () => {
     render(<EvolutionProjection diagnosticComplete={false} completedSteps={0} totalSteps={8} evidenceSubmitted={false} />);
     expect(screen.getByRole("heading", { name: "Evolução da empresa" })).toBeInTheDocument();
     expect(screen.getByText("aguardando Raio-X")).toBeInTheDocument();
-    expect(screen.getByText("Sem comparação longitudinal")).toBeInTheDocument();
+    expect(screen.getByText("Atual ainda não medido")).toBeInTheDocument();
+    expect(screen.getByText("Ainda não medido")).toBeInTheDocument();
+    expect(screen.getAllByText("Protegida").length).toBeGreaterThan(0);
     expect(screen.getByText("Nenhum marco comprovado")).toBeInTheDocument();
   });
 
