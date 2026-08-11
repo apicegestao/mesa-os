@@ -2,7 +2,7 @@
 
 ## Fase atual
 
-Próximo incremento ainda não autorizado. Deve ser definido após a homologação do RT-2.15.
+RT-2.16 — Management Rhythm em definição. BUILD ainda não autorizado.
 
 ## Fases concluídas
 
