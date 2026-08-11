@@ -9,8 +9,8 @@ import { loadToolWorkspace } from "@/modules/structured-tool";
 import { ToolPanel } from "@/modules/structured-tool/tool-panel";
 import { loadCoreLoopWorkspace } from "@/modules/core-loop";
 import { CoreLoopPanel } from "@/modules/core-loop/core-loop-panel";
-import { logout } from "@/modules/identity-access";
-import { AppChrome, deriveNextAction, MethodologyMap, TutoriaPresence } from "@/modules/member-experience";
+import { logout, PasswordSetup } from "@/modules/identity-access";
+import { AppChrome, deriveNextAction, JourneyProgress, MentorNote, MethodologyMap, type ProgressStep, TutoriaPresence } from "@/modules/member-experience";
 import { lowestCandidates } from "@/modules/priority/domain/priority";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 
@@ -61,8 +61,19 @@ export default async function AuthenticatedShellPage() {
     hasToolDraft: Boolean(toolWorkspace?.updatedAt),
     implementationStatus: coreLoopWorkspace?.implementation?.status ?? "none",
   });
+  const progressSteps: ProgressStep[] = [
+    { label: "Diagnóstico", complete: true, tone: "blue" },
+    { label: "Prioridade", complete: Boolean(priority), tone: "gold" },
+    { label: "Ciclo", complete: Boolean(cycle), tone: "plum" },
+    { label: "Missão", complete: Boolean(availableMission), tone: "green" },
+    { label: "Ferramenta", complete: Boolean(toolWorkspace?.updatedAt), tone: "blue" },
+    { label: "Aplicação", complete: coreLoopWorkspace?.implementation?.status === "implemented", tone: "gold" },
+    { label: "Evidência", complete: Boolean(coreLoopWorkspace?.evidenceSubmitted), tone: "plum" },
+    { label: "Evolução", complete: false, tone: "green" },
+  ];
 
   return <AppChrome organizationName={organizationName} logoutAction={logout} nextAction={nextAction}>
+    <JourneyProgress steps={progressSteps} />
     <TutoriaPresence />
     <section id="jornada" className="experience-section journey-section" aria-labelledby="journey-title">
       <div className="section-heading"><div><p className="eyebrow">Minha jornada</p><h2 id="journey-title">Do diagnóstico à transformação</h2></div><span className="status-pill">Ciclo atual</span></div>
@@ -71,6 +82,8 @@ export default async function AuthenticatedShellPage() {
     </section>
     {availableMission && toolWorkspace && <section id="workspace" className="experience-section workspace-section" aria-labelledby="workspace-title"><div className="section-heading"><div><p className="eyebrow">Meu sistema de gestão</p><h2 id="workspace-title">Entender, construir e aplicar</h2></div></div><div className="workspace-steps"><span className="done">1 · Entender</span><span className={toolWorkspace.updatedAt ? "done" : "current"}>2 · Construir</span><span className={coreLoopWorkspace?.implementation ? "done" : "future"}>3 · Aplicar</span><span className={coreLoopWorkspace?.implementation?.status === "implemented" ? "current" : "future"}>4 · Evidenciar</span></div><ToolPanel missionId={availableMission.id} workspace={toolWorkspace} readOnly={coreLoopWorkspace?.implementation?.status === "implemented"}/>{coreLoopWorkspace && <div id="implementacao"><CoreLoopPanel missionId={availableMission.id} workspace={coreLoopWorkspace}/></div>}</section>}
     <section id="diagnostico" className="experience-section diagnostic-archive"><details><summary><span><small>Raio-X do Empresário · Mês 0</small><strong>Consultar diagnóstico de entrada</strong></span><span aria-hidden="true">+</span></summary><DiagnosticResult workspace={workspace} /></details></section>
+    <MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} />
     <div id="metodologia"><MethodologyMap /></div>
+    <PasswordSetup />
   </AppChrome>;
 }

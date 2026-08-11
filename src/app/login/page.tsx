@@ -9,5 +9,5 @@ export default async function LoginPage() {
   const { data } = await supabase.auth.getClaims();
   if (data?.claims) redirect("/app");
 
-  return <main className="shell"><section className="status"><p className="eyebrow">Acesso seguro</p><h1>Entrar no Mesa OS</h1><p className="summary">Use o e-mail que recebeu o convite. Enviaremos um link de acesso sem senha.</p><LoginForm /></section></main>;
+  return <main className="shell"><section className="status login-card"><p className="eyebrow">Acesso seguro</p><h1>Entrar no Mesa OS</h1><p className="summary">Entre diretamente com sua senha. O link por e-mail permanece como alternativa de recuperação.</p><LoginForm /></section></main>;
 }

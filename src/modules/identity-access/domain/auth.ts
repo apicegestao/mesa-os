@@ -2,7 +2,19 @@ import { z } from "zod";
 
 export const loginSchema = z.object({ email: z.string().trim().toLowerCase().email() });
 
-export type LoginState = { status: "idle" | "sent" | "error"; message?: string };
+export const passwordLoginSchema = loginSchema.extend({
+  password: z.string().min(12).max(128),
+});
+
+export const passwordSetupSchema = z.object({
+  password: z.string().min(12).max(128),
+  confirmation: z.string().min(12).max(128),
+}).refine((value) => value.password === value.confirmation, {
+  message: "As senhas precisam ser iguais.",
+  path: ["confirmation"],
+});
+
+export type LoginState = { status: "idle" | "sent" | "success" | "error"; message?: string };
 
 export const genericLoginMessage =
   "Se o e-mail estiver autorizado, você receberá um link de acesso em instantes.";

@@ -2,6 +2,8 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { MethodologyMap } from "./methodology-map";
 import { TutoriaPresence } from "./tutoria-presence";
+import { JourneyProgress } from "./journey-progress";
+import { MentorNote } from "./mentor-note";
 
 describe("member experience foundations", () => {
   it("presents TutorIA honestly without an interactive fake capability", () => {
@@ -17,5 +19,18 @@ describe("member experience foundations", () => {
     expect(screen.getByRole("heading", { name: "O que evolui em cada trimestre" })).toBeInTheDocument();
     expect(screen.getByText("DRE e painel mínimo")).toBeInTheDocument();
     expect(screen.getByText(/não representa seu progresso individual/i)).toBeInTheDocument();
+  });
+
+  it("shows progress only from supplied canonical steps", () => {
+    render(<JourneyProgress steps={[{ label: "Diagnóstico", complete: true, tone: "blue" }, { label: "Ciclo", complete: false, tone: "gold" }]} />);
+    expect(screen.getByText("1 de 2 etapas")).toBeInTheDocument();
+    expect(screen.getByText("50%")).toBeInTheDocument();
+  });
+
+  it("restores Lula guidance without inventing an external destination", () => {
+    render(<MentorNote />);
+    expect(screen.getByText("Direção do Lula")).toBeInTheDocument();
+    expect(screen.getByText(/o trimestre não termina/i)).toBeInTheDocument();
+    expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
 });
