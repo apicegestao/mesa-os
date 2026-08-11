@@ -191,6 +191,13 @@ Objetivo proposto: permitir que o owner estruture um `Mapa de Papéis e Decisõe
 
 ## RT-2.15 — Core Loop Completion Release Train
 
-**Status:** PROPOSAL — NOT AUTHORIZED FOR BUILD
+**Status:** APPROVED FOR BUILD — RELEASE TRAIN ACTIVE
 
 Objetivo proposto: concluir a primeira passagem operacional por Implementação, Evidência, transição da Missão e estado da próxima ação em um único marco de produção.
+
+- IMP-2.15A — Implementation Foundation.
+- EVD-2.15B — Evidence Foundation.
+- MTR-2.15C — Mission Transition.
+- STA-2.15D — Core-loop Status & Next Action.
+
+Autoridade de definição: `docs/53-DEFINITION-PACK-RT-2.15.md` e specs vinculadas. Aprovação explícita registrada em 2026-08-11.

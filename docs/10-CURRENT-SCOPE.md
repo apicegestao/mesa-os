@@ -1,17 +1,17 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** GOV-2.14F — Governance Fast Track
-**Mode:** GOVERNANCE
-**Status:** COMPLETE — PRODUCTION RELEASED
+**Sprint:** RT-2.15 — Core Loop Completion Release Train
+**Mode:** BUILD
+**Status:** APPROVED — PRE-FLIGHT OPEN
 
 ## Authorized
 
-- Instituir Release Train seguro no Construction Protocol v1.1.
-- Adotar branch, Pull Request e CI como fluxo padrão antes de `main`.
-- Impedir builds Netlify quando somente documentação mudar.
-- Registrar a arquitetura cloud-first e os gates preservados.
-- Propor o primeiro Definition Pack integrado do core loop.
+- IMP-2.15A — implementação com rascunho e confirmação explícita.
+- EVD-2.15B — evidência operacional estruturada e imutável.
+- MTR-2.15C — conclusão e desbloqueio atômicos.
+- STA-2.15D — estado e próxima ação derivados.
+- Migrations aditivas e separadas, testes, documentação e um deploy consolidado.
 
 ## Not Authorized
 
@@ -50,8 +50,8 @@
 - Exportação, anexos, comentários ou colaboração por `member`.
 - Feature de negócio, migration, alteração de dados ou deploy manual.
 - Redução de testes, RLS, validação server-side ou rastreabilidade.
-- Merge automático ou BUILD do RT-2.15 antes da aprovação do Definition Pack.
+- Qualquer capacidade, dado ou transição não descritos no Definition Pack aprovado.
 
 ## Exit criteria
 
-Atendidos em 2026-08-11. Evidências consolidadas em `docs/47-POST-FLIGHT-GOV-2.14F.md`. O RT-2.15 permanece como proposta sem autorização de BUILD.
+Quatro incrementos implementados e rastreáveis; migrations verificadas; CI e Pre-Release Review aprovados; um merge e um deploy; smoke test integrado e Post-Flight consolidado.
