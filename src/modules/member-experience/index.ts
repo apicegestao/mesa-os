@@ -4,6 +4,7 @@ export { MemberHome } from "./ui/member-home";
 export { EvolutionProjection } from "./ui/evolution-projection";
 export { EvidenceOverview } from "./ui/evidence-overview";
 export { JourneyDeliveries } from "./ui/journey-deliveries";
+export { DiagnosticsOverview } from "./ui/diagnostics-overview";
 export type { MemberView } from "./ui/app-chrome";
 export { MethodologyMap } from "./ui/methodology-map";
 export { TutoriaPresence } from "./ui/tutoria-presence";

@@ -8,6 +8,7 @@ import { MemberHome } from "./member-home";
 import { EvolutionProjection } from "./evolution-projection";
 import { EvidenceOverview } from "./evidence-overview";
 import { JourneyDeliveries } from "./journey-deliveries";
+import { DiagnosticsOverview } from "./diagnostics-overview";
 
 describe("member experience foundations", () => {
   it("presents TutorIA honestly without an interactive fake capability", () => {
@@ -75,5 +76,13 @@ describe("member experience foundations", () => {
     expect(screen.getByRole("heading", { name: "Entregas em implementação" })).toBeInTheDocument();
     expect(screen.getByText("Em implementação")).toBeInTheDocument();
     expect(screen.getByText("Clareza de papéis")).toBeInTheDocument();
+  });
+
+  it("shows diagnostic trajectory without scheduling unauthorized reanalysis", () => {
+    render(<DiagnosticsOverview workspace={{ revisionId: "revision-1", executionId: null, status: "not_started", answers: {}, options: [], result: null, dimensions: [{ id: "dimension-1", code: "finance", label: "Financeiro", position: 1, questions: [] }] }} diagnosticContent={<p>Formulário</p>} />);
+    expect(screen.getByRole("heading", { name: "Diagnósticos" })).toBeInTheDocument();
+    expect(screen.getByText("Financeiro")).toBeInTheDocument();
+    expect(screen.getAllByText("Aguardando autorização metodológica.")).toHaveLength(3);
+    expect(screen.queryByText(/abre em \d+ dias/i)).not.toBeInTheDocument();
   });
 });
