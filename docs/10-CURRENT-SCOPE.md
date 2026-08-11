@@ -1,16 +1,19 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** GOV-2.4D — Diagnostic Foundation Definition & Alignment
-**Mode:** DEFINITION
+**Sprint:** DIA-2.5 — Diagnostic Foundation
+**Mode:** BUILD
 
 ## Authorized
 
-- Fechamento documental do smoke test autenticado do IAM-2.3.
-- Alignment Check e Pre-Flight do primeiro domínio do core loop.
-- Feature Spec preliminar para DIA-2.5 — Diagnostic Foundation.
-- Registro de decisões pendentes, critérios preliminares e limites.
-- Atualização de roadmap, backlog, rastreabilidade e Post-Flight.
+- Raio-X do Empresário somente no `Mês 0 — Entrada`.
+- Definição metodológica versionada com cinco dimensões, vinte perguntas e escala de 1 a 5 aprovadas.
+- Owner ativo inicia, salva, retoma e submete uma execução da própria organização.
+- Uma execução aberta por organização no Mês 0.
+- Resultado concluído imutável: IME, faixa, radar por dimensão e detalhamento.
+- Seed idempotente, migrations, grants explícitos, RLS, auditoria mínima e testes.
+- Experiência de próxima ação adaptada ao Design System, sem dashboard.
+- Documentação e Post-Flight DIA-2.5.
 
 ## Not Authorized
 
@@ -26,11 +29,13 @@
 - Login por senha, login social, MFA e SSO empresarial.
 - RBAC ou administração além de `owner` e `member` para acesso.
 - Múltiplas organizações por identidade.
-- Perfil empresarial e qualquer regra ou entidade metodológica.
+- Perfil empresarial além dos dados estritamente necessários ao diagnóstico.
 - Journey, TutorIA, Tools, Concierge, WhatsApp, dashboards de negócio, AI Tool Factory e white label.
-- Código, migration, alteração do Supabase/Netlify ou nova configuração externa.
-- Implementação de DIA-2.5 antes de Feature Spec aprovada e novo Current Scope em BUILD.
+- Mês 3, 6, 9 e 12, comparação longitudinal e qualquer mecanismo de Evolução.
+- Edição administrativa da metodologia.
+- Reabertura, invalidação ou sobrescrita de resultado concluído.
+- Participação colaborativa ou submissão por `member` neste primeiro incremento.
 
 ## Exit criteria
 
-IAM-2.3 encerrado documentalmente; Pre-Flight registrado; Feature Spec preliminar de DIA-2.5 criada; decisões obrigatórias explicitadas; documentos governados consistentes; Post-Flight entregue; nenhuma alteração de produto ou infraestrutura.
+Feature Spec aprovada; Pre-Flight registrado; definição versionada; rascunho retomável; submissão imutável; score aprovado; isolamento organizacional; acessibilidade e mobile; lint, typecheck, testes, build e testes de banco relevantes aprovados; migration remota e deploy somente após gates operacionais; Post-Flight entregue.

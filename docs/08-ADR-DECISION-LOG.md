@@ -41,3 +41,12 @@ O frontend usa somente publishable key. Chaves secret/service-role ficam exclusi
 - A primeira organização e seu primeiro vínculo `owner` são provisionados administrativamente.
 - Convites expiram em 72 horas.
 - Staging exige projeto Supabase separado antes de homologação persistente.
+
+## ADR-028 — Diagnostic definitions are versioned data
+
+**Status:** ACCEPTED
+
+- Perguntas, opções, ordem, pesos, fórmulas interpretáveis e textos do diagnóstico são dados versionados, não constantes de interface.
+- Uma execução concluída preserva a revisão metodológica utilizada e não pode ser sobrescrita.
+- O primeiro release implementa somente `Mês 0`; reaplicação e evolução longitudinal exigem incremento próprio.
+- A primeira definição é provisionada por seed idempotente e versionado, sem interface administrativa.

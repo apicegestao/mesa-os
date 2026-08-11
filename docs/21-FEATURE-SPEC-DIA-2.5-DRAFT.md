@@ -1,6 +1,8 @@
 # DIA-2.5 — Diagnostic Foundation
 
-**Status:** DRAFT — NOT AUTHORIZED FOR BUILD
+**Status:** APPROVED FOR BUILD
+
+**Aprovação:** Rafael Portela Martins, 2026-08-11.
 
 **Fonte candidata recebida:** `raio-x-mesa-dos-donos.jsx`, analisada em `23-SOURCE-ANALYSIS-RAIO-X.md`. O arquivo é referência de conteúdo e comportamento; não é base de código nem autoridade visual.
 
@@ -100,7 +102,7 @@ Cada dimensão contém quatro perguntas, totalizando vinte perguntas.
 - 60–79: Em Maturação.
 - 80–100: Autogerenciável.
 
-As perguntas completas e os achados de adaptação estão registrados na análise da fonte. Fórmulas, faixas e nomenclaturas continuam pendentes de aprovação de produto.
+As perguntas completas e os achados de adaptação estão registrados na análise da fonte. Fórmulas, faixas e nomenclaturas foram aprovadas para este BUILD.
 
 ## UX
 
@@ -125,18 +127,18 @@ As perguntas completas e os achados de adaptação estão registrados na anális
 - Nenhuma etapa posterior do core loop é criada.
 - Lint, typecheck, testes, build, banco e E2E relevantes são aprovados.
 
-## Decisões obrigatórias antes do BUILD
+## Decisões aprovadas para o BUILD
 
-1. Aprovar o nome `Raio-X do Empresário` e o objetivo de medir maturidade empresarial na entrada.
-2. Confirmar que o JSX recebido é a fonte metodológica inicial aprovada por Rafael Portela Martins.
-3. Aprovar as cinco dimensões, as vinte perguntas e a escala obrigatória de 1 a 5 sem alteração textual.
-4. Aprovar as fórmulas, o arredondamento inteiro e as quatro faixas de maturidade candidatas.
-5. Aprovar como resultado mínimo: IME, faixa, radar por dimensão e detalhamento das respostas.
-6. Aprovar o recorte de uma única execução aberta por organização no Mês 0; colaboração entre membros permanece fora do escopo.
-7. Definir se qualquer `member` ativo pode iniciar e submeter ou se a ação fica limitada ao `owner` neste primeiro incremento.
-8. Confirmar classificação e retenção das respostas; proposta: dado organizacional confidencial, retenção enquanto houver vínculo contratual e exclusão por processo administrativo futuro.
-9. Aprovar provisionamento da primeira definição via seed versionado e idempotente, sem interface administrativa.
-10. Aprovar que a submissão concluída encerra apenas o Diagnóstico; nenhuma etapa de Prioridade será habilitada neste BUILD.
+1. Nome `Raio-X do Empresário`; objetivo: medir maturidade empresarial na entrada.
+2. JSX recebido como fonte metodológica inicial aprovada por Rafael Portela Martins.
+3. Cinco dimensões, vinte perguntas e escala obrigatória de 1 a 5 sem alteração textual.
+4. Fórmulas, arredondamento inteiro e quatro faixas candidatas aprovados.
+5. Resultado mínimo: IME, faixa, radar por dimensão e detalhamento das respostas.
+6. Uma única execução aberta por organização no Mês 0; sem colaboração neste incremento.
+7. Somente `owner` ativo pode iniciar, alterar e submeter; membros permanecem sem permissão de escrita neste incremento.
+8. Respostas classificadas como dado organizacional confidencial; retenção durante o vínculo contratual e exclusão por processo administrativo futuro.
+9. Primeira definição via seed versionado e idempotente, sem interface administrativa.
+10. Submissão encerra somente o Diagnóstico; nenhuma etapa de Prioridade é habilitada.
 
 ## Testes necessários
 
