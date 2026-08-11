@@ -2,7 +2,7 @@
 
 ## Fase atual
 
-Sprint DIA-2.5 — Diagnostic Foundation concluído e publicado. Próximo incremento depende de Definition & Alignment próprio.
+Sprint GOV-2.6D — Priority Foundation Definition & Alignment: definição governada do segundo passo do core loop, sem implementação.
 
 ## Fases concluídas
 
@@ -12,9 +12,9 @@ Sprint DIA-2.5 — Diagnostic Foundation concluído e publicado. Próximo increm
 - Sprint GOV-2.4D — Diagnostic Foundation Definition & Alignment: definição governada do primeiro domínio do core loop.
 - Sprint DIA-2.5 — Diagnostic Foundation: Raio-X do Empresário no Mês 0, com definição versionada, rascunho, submissão e resultado rastreável.
 
-## Próximo incremento
+## Próximo incremento proposto, não autorizado para BUILD
 
-Não definido. Reaplicações, evolução longitudinal e Prioridade continuam sem autorização para BUILD.
+PRI-2.7 — Priority Foundation. O sistema apresenta a menor dimensão do Raio-X como candidata e o owner confirma uma única prioridade. Empates exigem escolha humana. O BUILD depende da aprovação da Feature Spec e de novo Current Scope.
 
 ## Sequenciamento governado
 

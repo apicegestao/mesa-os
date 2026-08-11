@@ -69,3 +69,29 @@ Objetivo: estabelecer autenticação por magic link, sessão segura e vínculo o
 **Status:** COMPLETE — PRODUCTION RELEASED
 
 Objetivo proposto: permitir que um membro autorizado execute o primeiro passo do core loop por meio de uma definição metodológica versionada, produzindo um resultado rastreável sem antecipar Prioridade ou qualquer etapa posterior.
+
+## GOV-2.6D — Priority Foundation Definition & Alignment
+
+**Status:** COMPLETE
+
+### Entregáveis autorizados
+
+- Alignment Check após a homologação do DIA-2.5.
+- Pre-Flight documental do segundo passo do core loop.
+- Feature Spec preliminar para PRI-2.7 — Priority Foundation.
+- Registro das regras e decisões pendentes.
+- Atualização de roadmap, backlog, rastreabilidade e Current Scope.
+- Post-Flight documental.
+
+### Restrições
+
+- Nenhum código, migration, configuração externa ou deploy funcional.
+- Nenhuma prioridade criada automaticamente.
+- Nenhum Ciclo, Missão, Ferramenta ou recomendação de execução.
+- PRI-2.7 não está autorizado para BUILD até aprovação explícita.
+
+## PRI-2.7 — Priority Foundation
+
+**Status:** PROPOSAL — NOT AUTHORIZED FOR BUILD
+
+Objetivo proposto: transformar um diagnóstico concluído em uma única prioridade organizacional confirmada pelo owner, rastreável à dimensão e à execução de origem, sem antecipar Ciclo ou Missão.

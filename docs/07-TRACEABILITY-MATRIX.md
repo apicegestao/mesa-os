@@ -28,3 +28,7 @@
 | DIA-2.5 | Persistência e ações | `src/modules/diagnostic/data`, `src/modules/diagnostic/actions` | typecheck + teste transacional remoto |
 | DIA-2.5 | Experiência Mês 0 | `src/modules/diagnostic/ui`, `src/app/app/page.tsx` | testes de componente + build |
 | DIA-2.5 | Encerramento | `docs/25-POST-FLIGHT-DIA-2.5.md` | Post-Flight review |
+| GOV-2.6D | Alignment e Pre-Flight | `docs/26-PRE-FLIGHT-2.6D.md` | revisão documental |
+| GOV-2.6D | Proposta Priority Foundation | `docs/27-FEATURE-SPEC-PRI-2.7-DRAFT.md` | decisões pendentes explícitas |
+| GOV-2.6D | Governança atualizada | `docs/03-ROADMAP.md`, `docs/06-BACKLOG-MASTER.md`, `docs/10-CURRENT-SCOPE.md` | consistência entre documentos |
+| GOV-2.6D | Encerramento | `docs/28-POST-FLIGHT-2.6D.md` | Post-Flight review |

@@ -1,20 +1,17 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** DIA-2.5 — Diagnostic Foundation
-**Mode:** BUILD
-**Status:** COMPLETE — PRODUCTION RELEASED
+**Sprint:** GOV-2.6D — Priority Foundation Definition & Alignment
+**Mode:** DEFINITION
+**Status:** COMPLETE
 
 ## Authorized
 
-- Raio-X do Empresário somente no `Mês 0 — Entrada`.
-- Definição metodológica versionada com cinco dimensões, vinte perguntas e escala de 1 a 5 aprovadas.
-- Owner ativo inicia, salva, retoma e submete uma execução da própria organização.
-- Uma execução aberta por organização no Mês 0.
-- Resultado concluído imutável: IME, faixa, radar por dimensão e detalhamento.
-- Seed idempotente, migrations, grants explícitos, RLS, auditoria mínima e testes.
-- Experiência de próxima ação adaptada ao Design System, sem dashboard.
-- Documentação e Post-Flight DIA-2.5.
+- Alignment Check e Pre-Flight de Priority Foundation.
+- Feature Spec preliminar PRI-2.7.
+- Proposta de seleção humana assistida pelo menor score dimensional.
+- Critérios preliminares, decisões pendentes e limites explícitos.
+- Atualização de roadmap, backlog, rastreabilidade e Post-Flight.
 
 ## Not Authorized
 
@@ -36,7 +33,10 @@
 - Edição administrativa da metodologia.
 - Reabertura, invalidação ou sobrescrita de resultado concluído.
 - Participação colaborativa ou submissão por `member` neste primeiro incremento.
+- Código, migration, alteração de Supabase/Netlify ou configuração externa.
+- Criação, confirmação ou persistência de prioridade.
+- Implementação de PRI-2.7 antes de Feature Spec aprovada e novo Current Scope em BUILD.
 
 ## Exit criteria
 
-Feature Spec aprovada; Pre-Flight registrado; definição versionada; rascunho retomável; submissão imutável; score aprovado; isolamento organizacional; acessibilidade e mobile; lint, typecheck, testes, build e testes de banco relevantes aprovados; migration remota e deploy somente após gates operacionais; Post-Flight entregue.
+Pre-Flight registrado; Feature Spec preliminar PRI-2.7 criada; decisões obrigatórias explicitadas; documentos governados consistentes; Post-Flight entregue; nenhuma alteração de produto ou infraestrutura.
