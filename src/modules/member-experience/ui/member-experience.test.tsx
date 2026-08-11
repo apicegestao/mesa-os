@@ -20,7 +20,10 @@ describe("member experience foundations", () => {
   });
 
   it("labels the 4x4 map as methodology rather than personal progress", () => {
-    render(<MethodologyMap />);
+    render(<MethodologyMap map={{
+      stages: [{ id: "t1", code: "t1", label: "Fundamentos", position: 1 }, { id: "t2", code: "t2", label: "Controle", position: 2 }, { id: "t3", code: "t3", label: "Previsibilidade", position: 3 }, { id: "t4", code: "t4", label: "Autonomia", position: 4 }],
+      pillars: [{ id: "finance", code: "finance", label: "Financeiro e indicadores", position: 1, outcomes: [{ id: "dre", stageId: "t1", title: "DRE e painel mínimo" }] }],
+    }} />);
     expect(screen.getByRole("heading", { name: "O que evolui em cada trimestre" })).toBeInTheDocument();
     expect(screen.getByText("DRE e painel mínimo")).toBeInTheDocument();
     expect(screen.getByText(/não representa seu progresso individual/i)).toBeInTheDocument();
@@ -66,6 +69,15 @@ describe("member experience foundations", () => {
     expect(screen.getByText("Nenhum marco comprovado")).toBeInTheDocument();
   });
 
+  it("projects only validated measurements supplied by the measurement backbone", () => {
+    render(<EvolutionProjection diagnosticComplete completedSteps={3} totalSteps={8} evidenceSubmitted measurements={{ ime: { value: 52, effectiveOn: "2026-08-11" }, imeHistory: [{ value: 38, effectiveOn: "2026-07-01" }, { value: 52, effectiveOn: "2026-08-11" }], ownerOperationalHours: { value: 5, effectiveOn: "2026-08-11" }, ownerDecisionConcentration: { value: 17, effectiveOn: "2026-08-11" } }} />);
+    expect(screen.getByText("52")).toBeInTheDocument();
+    expect(screen.getByText(/5h\/semana do dono/i)).toBeInTheDocument();
+    expect(screen.getByText(/17% de decisões/i)).toBeInTheDocument();
+    expect(screen.getByText("IME 38")).toBeInTheDocument();
+    expect(screen.getByText("IME 52")).toBeInTheDocument();
+  });
+
   it("does not invent evidence approval states", () => {
     render(<EvidenceOverview implementation={null} evidenceSubmitted={false} />);
     expect(screen.getByRole("heading", { name: "Evidências" })).toBeInTheDocument();
@@ -74,6 +86,17 @@ describe("member experience foundations", () => {
     expect(screen.getByText("Para corrigir")).toBeInTheDocument();
     expect(screen.getByText("Nenhuma evidência registrada ainda")).toBeInTheDocument();
     expect(screen.queryByText("Aprovada")).not.toBeInTheDocument();
+  });
+
+  it("renders each canonical evidence status without collapsing the history", () => {
+    render(<EvidenceOverview implementation={null} evidenceSubmitted records={[
+      { id: "evidence-1", missionTitle: "DRE gerencial", status: "approved", reviewerKind: "tutoria", description: "DRE foi utilizado na reunião semanal de gestão.", occurredOn: "2026-08-11" },
+      { id: "evidence-2", missionTitle: "Ritual de liderança", status: "changes_requested", reviewerKind: "human", description: "Registro enviado sem a ata da reunião de liderança.", occurredOn: "2026-08-10" },
+    ]} />);
+    expect(screen.getByText("DRE gerencial")).toBeInTheDocument();
+    expect(screen.getByText("Ritual de liderança")).toBeInTheDocument();
+    expect(screen.getByText("Aprovada")).toBeInTheDocument();
+    expect(screen.getByText("Correção solicitada")).toBeInTheDocument();
   });
 
   it("summarizes only the canonical journey deliveries", () => {

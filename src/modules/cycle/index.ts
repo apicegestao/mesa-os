@@ -17,6 +17,7 @@ export async function loadCycle(
     .from("cycles")
     .select("id,title,starts_on,ends_on,status")
     .eq("organization_id", organizationId)
+    .eq("status", "active")
     .maybeSingle();
 
   return data as Cycle | null;

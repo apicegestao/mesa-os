@@ -140,3 +140,24 @@ O frontend usa somente publishable key. Chaves secret/service-role ficam exclusi
 - Automation Engine avalia contexto, regras, ator, canal, cooldown, escalonamento e resultado.
 - Communication Orchestrator coordena prioridades, frequência e consolidação de mensagens.
 - WhatsApp usa apenas API oficial, gateway controlado, webhooks, consentimento e opt-out rastreáveis.
+
+## ADR-038 — Development Map as methodological backbone
+
+**Status:** ACCEPTED
+
+- O Mapa de Desenvolvimento 4 × 4 é a espinha dorsal metodológica versionada da Jornada, não uma constante visual.
+- Seus quatro pilares e quatro estágios organizam Raio-X, ciclos, conteúdos, treinamentos, Missões, Ferramentas, Evidências, métricas e o contexto metodológico inicial do TutorIA.
+- Prioridade do ciclo, outcome ativo e outcomes de apoio permanecem conceitos distintos; o mapa não vira uma grade rígida de consumo de conteúdo.
+- Toda ligação entre um recurso e o mapa é versionada e rastreável; conteúdo ou ferramenta não aprovados não serão inventados pela implementação.
+- Execuções diagnósticas anteriores preservam integralmente sua revisão. Mudanças de taxonomia exigem mapa explícito de compatibilidade e nunca reescrevem scores históricos.
+- TutorIA recebe contexto metodológico por contratos de leitura; autonomia, raciocínio e ações continuam sujeitos a incrementos próprios.
+
+## ADR-039 — TutorIA context isolation and governed learning
+
+**Status:** ACCEPTED
+
+- TutorIA conhece profundamente a metodologia e o contexto autorizado da própria organização, sem acesso arbitrário ao banco.
+- Toda memória, recuperação e tool call operacional é escopada por organização, finalidade e identidade autorizada; informações de um membro ou empresa não transitam para outro membro ou empresa.
+- Chat bruto não constitui memória canônica. Memórias estruturadas preservam fonte, confiança, validade, escopo e histórico de correção.
+- Qualquer aprendizado coletivo exige agregação, desidentificação e aprovação explícita de governança; conteúdo bruto de clientes não é reutilizado como base de outra organização.
+- Proatividade e autonomia permanecem mediadas por política, consentimento, risco, confiança, canal e auditoria.
