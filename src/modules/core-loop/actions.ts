@@ -17,11 +17,17 @@ export async function saveImplementation(missionId: string, summary: string, imp
 }
 
 export async function submitEvidence(missionId: string, type: string, description: string, occurredOn: string) {
+  const allowedTypes = new Set(["decision_example", "operational_record", "meeting_routine", "observed_result"]);
+  const normalizedDescription = description.trim();
+  if (!allowedTypes.has(type)) return { ok: false, message: "Selecione um tipo de evidência válido." };
+  if (normalizedDescription.length < 20) return { ok: false, message: "Descreva a evidência com pelo menos 20 caracteres." };
+  if (normalizedDescription.length > 1000) return { ok: false, message: "A descrição deve ter no máximo 1.000 caracteres." };
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(occurredOn)) return { ok: false, message: "Informe uma data válida para a evidência." };
   const supabase = await createSupabaseServerClient();
   const { error } = await supabase.rpc("submit_mission_evidence_and_advance", {
     target_mission_id: missionId,
     submitted_evidence_type: type,
-    evidence_description: description,
+    evidence_description: normalizedDescription,
     evidence_date: occurredOn,
   });
   if (error) return { ok: false, message: "Não foi possível registrar a evidência. Confirme a implementação e revise os campos." };
