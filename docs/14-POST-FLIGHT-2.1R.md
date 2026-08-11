@@ -17,6 +17,7 @@
 - Governance Pack e documentação operacional em `/docs`.
 - Lockfile com versões fixadas.
 - Repositório Git inicializado na branch `main`.
+- Workspace vinculado ao site Netlify `mesa-os` (`828bc672-0a57-4e63-a9a9-03fa259a86b1`).
 
 ## Deliberadamente não implementado
 
@@ -40,6 +41,7 @@ Journey, TutorIA, Tools, Concierge, WhatsApp, dashboards de negócio, AI Tool Fa
 - Teste pgTAP está preparado, mas não executado porque a Supabase CLI/Docker local não estão disponíveis no runtime.
 - Staging requer um projeto Supabase dedicado antes de armazenar dados persistentes.
 - O artefato original do Governance Pack não foi sincronizado em `sources/`; os documentos foram materializados a partir das decisões e regras recuperadas da conversa de origem e do escopo explícito deste sprint.
+- O deploy draft pelo Netlify CLI foi interrompido: o adapter automático de Next.js falhou repetidamente ao instalar suas dependências em `.netlify/plugins`, antes do build/upload. Nenhum deploy foi publicado. A configuração oficial de hoisting para Next.js + pnpm foi preservada em `.npmrc`.
 
 ## Proposals
 

@@ -18,3 +18,5 @@ Valores reais ficam no provedor e em `.env.local`, nunca no Git. Deploy previews
 ## Deploy
 
 O repositório está preparado para vinculação ao site Netlify existente. Publicação de produção exige CI verde e autorização explícita do release; o bootstrap não publica automaticamente.
+
+O pnpm usa hoisting público (`.npmrc`) para compatibilidade com o adapter automático de Next.js da Netlify. O adapter não é fixado no projeto e permanece atualizado pela plataforma.
