@@ -4,6 +4,7 @@ import { MethodologyMap } from "./methodology-map";
 import { TutoriaPresence } from "./tutoria-presence";
 import { JourneyProgress } from "./journey-progress";
 import { MentorNote } from "./mentor-note";
+import { MemberHome } from "./member-home";
 
 describe("member experience foundations", () => {
   it("presents TutorIA honestly without an interactive fake capability", () => {
@@ -32,5 +33,13 @@ describe("member experience foundations", () => {
     expect(screen.getByText("Direção do Lula")).toBeInTheDocument();
     expect(screen.getByText(/o trimestre não termina/i)).toBeInTheDocument();
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
+  });
+
+  it("composes Hoje from canonical state without inventing missing metrics", () => {
+    render(<MemberHome memberName="Rafael Portela" nextAction={{ eyebrow: "Seu ponto de partida", title: "Continue o Raio-X", description: "Conclua o diagnóstico.", href: "#diagnostico", label: "Continuar diagnóstico" }} cycle={null} completedSteps={0} totalSteps={8} />);
+    expect(screen.getByRole("heading", { name: "Bom dia, Rafael." })).toBeInTheDocument();
+    expect(screen.getAllByText("0 de 8 etapas")).toHaveLength(2);
+    expect(screen.getByText("Ainda não medido")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Pedir ajuda à TutorIA" })).toBeDisabled();
   });
 });

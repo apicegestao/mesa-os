@@ -10,7 +10,7 @@ import { ToolPanel } from "@/modules/structured-tool/tool-panel";
 import { loadCoreLoopWorkspace } from "@/modules/core-loop";
 import { CoreLoopPanel } from "@/modules/core-loop/core-loop-panel";
 import { logout, PasswordSetup } from "@/modules/identity-access";
-import { AppChrome, deriveNextAction, JourneyProgress, MentorNote, MethodologyMap, type ProgressStep, TutoriaPresence } from "@/modules/member-experience";
+import { AppChrome, deriveNextAction, JourneyProgress, MemberHome, MentorNote, MethodologyMap, type ProgressStep } from "@/modules/member-experience";
 import { lowestCandidates } from "@/modules/priority/domain/priority";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 
@@ -21,6 +21,8 @@ export default async function AuthenticatedShellPage() {
   const { data } = await supabase.auth.getClaims();
   const subject = data?.claims?.sub;
   if (!subject) redirect("/login");
+  const metadata = data.claims.user_metadata as Record<string, unknown> | undefined;
+  const memberName = typeof metadata?.full_name === "string" ? metadata.full_name : typeof metadata?.name === "string" ? metadata.name : "Membro";
 
   const { data: membership } = await supabase
     .from("memberships")
@@ -43,11 +45,17 @@ export default async function AuthenticatedShellPage() {
   const coreLoopWorkspace = availableMission && toolWorkspace?.updatedAt ? await loadCoreLoopWorkspace(supabase, availableMission.id) : null;
   const organizationName = organization?.name ?? "Sua empresa";
 
-  if (!workspace) return <AppChrome organizationName={organizationName} logoutAction={logout}><section className="experience-card empty-experience"><p className="eyebrow">Mesa OS</p><h1>Diagnóstico indisponível</h1><p>Não foi possível carregar a definição neste momento. Tente novamente em instantes.</p></section></AppChrome>;
+  if (!workspace) return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout}><section className="experience-card empty-experience"><p className="eyebrow">Mesa OS</p><h1>Diagnóstico indisponível</h1><p>Não foi possível carregar a definição neste momento. Tente novamente em instantes.</p></section></AppChrome>;
 
   if (workspace.status !== "completed") {
     const nextAction = deriveNextAction({ diagnosticStatus: "draft", hasPriority: false, priorityTied: false, hasCycle: false, hasMissions: false, hasAvailableMission: false, hasToolDraft: false, implementationStatus: "none" });
-    return <AppChrome organizationName={organizationName} logoutAction={logout} nextAction={nextAction}><PasswordSetup /><section id="diagnostico" className="experience-section"><DiagnosticExperience initialWorkspace={workspace} /></section></AppChrome>;
+    return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout} progress={0}>
+      <MemberHome memberName={memberName} nextAction={nextAction} cycle={null} completedSteps={0} totalSteps={8} />
+      <MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} />
+      <section id="diagnostico" className="experience-section"><DiagnosticExperience initialWorkspace={workspace} /></section>
+      <div id="metodologia"><MethodologyMap /></div>
+      <details className="account-settings"><summary>Conta e segurança</summary><PasswordSetup /></details>
+    </AppChrome>;
   }
 
   const tied = workspace.result ? lowestCandidates(workspace.result).length > 1 : false;
@@ -71,10 +79,12 @@ export default async function AuthenticatedShellPage() {
     { label: "Evidência", complete: Boolean(coreLoopWorkspace?.evidenceSubmitted), tone: "plum" },
     { label: "Evolução", complete: false, tone: "green" },
   ];
+  const completedSteps = progressSteps.filter((step) => step.complete).length;
+  const progress = Math.round((completedSteps / progressSteps.length) * 100);
 
-  return <AppChrome organizationName={organizationName} logoutAction={logout} nextAction={nextAction}>
+  return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout} progress={progress}>
+    <MemberHome memberName={memberName} nextAction={nextAction} cycle={cycle} priorityLabel={priority?.dimension_label} missionTitle={availableMission?.title} completedSteps={completedSteps} totalSteps={progressSteps.length} />
     <JourneyProgress steps={progressSteps} />
-    <TutoriaPresence />
     <section id="jornada" className="experience-section journey-section" aria-labelledby="journey-title">
       <div className="section-heading"><div><p className="eyebrow">Minha jornada</p><h2 id="journey-title">Do diagnóstico à transformação</h2></div><span className="status-pill">Ciclo atual</span></div>
       <div className="journey-rail" aria-label="Etapas da jornada"><span className="done">Diagnóstico</span><span className={priority ? "done" : "current"}>Prioridade</span><span className={cycle ? "done" : priority ? "current" : "future"}>Ciclo</span><span className={availableMission ? "current" : "future"}>Missão</span><span className="future">Evolução</span></div>
@@ -84,6 +94,6 @@ export default async function AuthenticatedShellPage() {
     <section id="diagnostico" className="experience-section diagnostic-archive"><details><summary><span><small>Raio-X do Empresário · Mês 0</small><strong>Consultar diagnóstico de entrada</strong></span><span aria-hidden="true">+</span></summary><DiagnosticResult workspace={workspace} /></details></section>
     <MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} />
     <div id="metodologia"><MethodologyMap /></div>
-    <PasswordSetup />
+    <details className="account-settings"><summary>Conta e segurança</summary><PasswordSetup /></details>
   </AppChrome>;
 }
