@@ -2,7 +2,7 @@
 
 ## Fase atual
 
-GOV-2.14F — Governance Fast Track: adoção do Release Train seguro e cloud-first antes da conclusão do core loop.
+RT-2.15 — Core Loop Completion em definição. BUILD ainda não autorizado.
 
 ## Fases concluídas
 
@@ -19,6 +19,7 @@ GOV-2.14F — Governance Fast Track: adoção do Release Train seguro e cloud-fi
 - Sprint MIS-2.11 — Mission Foundation: três Missões versionadas, com primeira ação disponível, publicado e homologado em produção.
 - Sprint GOV-2.12D — Tool Foundation Definition & Alignment: primeira Ferramenta schema-driven delimitada e aprovada.
 - Sprint TOL-2.13 — Structured Tool Foundation: Mapa de Papéis e Decisões schema-driven, publicado e homologado em produção.
+- Sprint GOV-2.14F — Governance Fast Track: Release Train seguro e cloud-first adotado, com redução de builds documentais.
 
 ## Próximo Release Train proposto
 

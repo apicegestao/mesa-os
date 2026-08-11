@@ -3,7 +3,7 @@
 **Release:** V2.0  
 **Sprint:** GOV-2.14F — Governance Fast Track
 **Mode:** GOVERNANCE
-**Status:** IN PROGRESS
+**Status:** COMPLETE — PRODUCTION RELEASED
 
 ## Authorized
 
@@ -54,4 +54,4 @@
 
 ## Exit criteria
 
-Protocolo e ADR atualizados; CI aprovado no PR; configuração Netlify validada; merge único realizado; primeiro Definition Pack aberto sem feature antecipada.
+Atendidos em 2026-08-11. Evidências consolidadas em `docs/47-POST-FLIGHT-GOV-2.14F.md`. O RT-2.15 permanece como proposta sem autorização de BUILD.

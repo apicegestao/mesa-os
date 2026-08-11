@@ -172,7 +172,7 @@ Objetivo proposto: permitir que o owner estruture um `Mapa de Papéis e Decisõe
 
 ## GOV-2.14F — Governance Fast Track
 
-**Status:** IN PROGRESS
+**Status:** COMPLETE — PRODUCTION RELEASED
 
 ### Entregáveis autorizados
 
