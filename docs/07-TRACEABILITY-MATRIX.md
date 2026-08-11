@@ -69,3 +69,7 @@
 | STA-2.15D | Definição de estado | `docs/52-FEATURE-SPEC-STA-2.15D.md` | matriz de próxima ação |
 | RT-2.15 | Definition Pack | `docs/53-DEFINITION-PACK-RT-2.15.md` | aprovação explícita única |
 | RT-2.15 | Pre-Flight integrado | `docs/54-PRE-FLIGHT-RT-2.15.md` | GO para BUILD controlado |
+| IMP-2.15A | Implementação confirmável e Ferramenta congelada | `20260811160001_implementation_foundation.sql`, `src/modules/core-loop` | Vitest + pgTAP + transação |
+| EVD-2.15B | Evidência operacional imutável | `20260811160002_evidence_foundation.sql`, `src/modules/core-loop` | Vitest + pgTAP + RLS |
+| MTR-2.15C | Conclusão e desbloqueio atômicos | `20260811160003_mission_transition.sql` | pgTAP + rollback + idempotência |
+| STA-2.15D | Próxima ação derivada | `src/modules/core-loop`, `src/app/app/page.tsx` | Vitest + typecheck + build |

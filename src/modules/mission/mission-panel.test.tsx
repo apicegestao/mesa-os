@@ -24,6 +24,7 @@ describe("MissionPanel", () => {
             objective: "Tornar explícitas as responsabilidades essenciais.",
             rationale: "Clareza reduz dependência e retrabalho.",
             status: "available",
+            completed_at: null,
           },
           {
             id: "mission-2",
@@ -33,6 +34,7 @@ describe("MissionPanel", () => {
             objective: "Este conteúdo ainda não deve aparecer.",
             rationale: "A próxima missão permanece bloqueada.",
             status: "locked",
+            completed_at: null,
           },
         ]}
       />,
