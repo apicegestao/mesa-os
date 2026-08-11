@@ -4,3 +4,5 @@ export { estimateModelCostUsdMicros, orientationRequestBudgetAllowed, TUTORIA_MO
 export type { ModelRouteCode } from "./model-routes";
 export { summarizeAIUsage } from "./usage-metrics";
 export type { AIUsageEventMetric, AIUsageInternalSummary } from "./usage-metrics";
+export { evaluateTutorIAUsage, orientationRequestSchema } from "./usage-policy";
+export type { OrientationRequest, TutorIAUsageDecision } from "./usage-policy";

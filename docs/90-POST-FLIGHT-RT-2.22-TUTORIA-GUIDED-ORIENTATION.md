@@ -15,12 +15,13 @@
 - Agregação interna pronta para custo por membro, capacidade, modelo e resolução, incluindo custo médio por orientação servida; nenhuma métrica individual aparece na experiência do membro.
 - Guardrail de ativação: sem `TUTORIA_ORIENTATION_ENABLED=true` e as variáveis injetadas do Gateway, a rota devolve indisponibilidade e não chama modelo.
 - Guardrail financeiro: além da flag, a orientação exige teto explícito por chamada; sem ele, o bloqueio padrão é zero e nenhuma inferência ocorre.
+- Guardrail de abuso: não há prompt livre nem capacidade criativa. Somente os objetivos metodológicos fechados são aceitos; payload extra ou pedido fora de escopo é recusado antes de chegar ao provedor, sem registrar o conteúdo do pedido.
 
 ## Verificações
 
 - RLS da nova auditoria confirmado no branch de homologação.
 - Advisor de segurança do Supabase sem alertas.
-- `pnpm check`: lint, typecheck, 54 testes e build aprovados.
+- `pnpm check`: lint, typecheck, 61 testes e build aprovados.
 
 ## Não ativado
 

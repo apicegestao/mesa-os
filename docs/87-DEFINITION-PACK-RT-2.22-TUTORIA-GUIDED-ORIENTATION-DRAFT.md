@@ -52,6 +52,8 @@ Motivos:
 - RLS e gateway RT-2.21 continuam sendo a única origem de contexto; o modelo não acessa Supabase diretamente.
 - Nenhuma chave de provedor aparece em `NEXT_PUBLIC_*`, logs, Git, documentação ou chat.
 - Sem persistência de prompt/resposta integral; retenção e memória continuam fora do escopo.
+- O TutorIA não é chat geral nem mecanismo de criação livre: nesta capacidade, aceita exclusivamente os objetivos metodológicos fechados. Pedidos extras ou fora do escopo são recusados antes de qualquer chamada ao provedor, sem registrar o conteúdo do pedido.
+- Essa proteção é uma política determinística do produto, não treinamento, fine-tuning ou aprendizado com dados dos membros.
 - Testes de schema de saída, política, rate limit, isolamento organizacional, falha de provedor e não-exposição de segredo.
 - Limites iniciais só em homologação, com relatório de consumo antes de qualquer promoção.
 
