@@ -5,6 +5,7 @@ type PulseItem = { label: string; value: string; progress?: number; tone: "blue"
 export function MemberHome({
   memberName,
   nextAction,
+  additionalActions = [],
   cycle,
   priorityLabel,
   missionTitle,
@@ -13,6 +14,7 @@ export function MemberHome({
 }: {
   memberName: string;
   nextAction: NextAction;
+  additionalActions?: NextAction[];
   cycle: { title: string; starts_on: string; ends_on: string } | null;
   priorityLabel?: string;
   missionTitle?: string;
@@ -20,6 +22,7 @@ export function MemberHome({
   totalSteps: number;
 }) {
   const progress = Math.round((completedSteps / totalSteps) * 100);
+  const actions = [nextAction, ...additionalActions];
   const firstName = memberName.trim().split(/\s+/)[0] || "membro";
   const pulse: PulseItem[] = [
     { label: "Core loop", value: `${completedSteps} de ${totalSteps} etapas`, progress, tone: "blue" },
@@ -53,12 +56,12 @@ export function MemberHome({
 
     <div className="today-grid">
       <section className="actions-column" aria-labelledby="actions-title">
-        <div className="compact-heading"><div><p className="eyebrow">Próximas ações</p><h2 id="actions-title">O que precisa acontecer agora</h2></div><span>1 prioridade</span></div>
-        <article className="action-card">
-          <span className="action-number">01</span>
-          <div className="action-copy"><p className="eyebrow">{nextAction.eyebrow}</p><h3>{nextAction.title}</h3><p>{nextAction.description}</p><div className="action-meta"><span>Foco atual</span><span>Agora</span></div></div>
-          <div className="action-buttons"><button type="button" className="tutoria-help" disabled title="TutorIA será ativado em incremento próprio">Pedir ajuda à TutorIA</button><a href={nextAction.href}>{nextAction.label}<span aria-hidden="true">→</span></a></div>
-        </article>
+        <div className="compact-heading"><div><p className="eyebrow">Próximas ações</p><h2 id="actions-title">O que precisa acontecer agora</h2></div><span>{actions.length} {actions.length === 1 ? "pendência" : "pendências"}</span></div>
+        <div className="action-list">{actions.map((action, index) => <article className="action-card" key={`${action.href}-${action.title}`}>
+          <span className="action-number">{String(index + 1).padStart(2, "0")}</span>
+          <div className="action-copy"><p className="eyebrow">{action.eyebrow}</p><h3>{action.title}</h3><p>{action.description}</p><div className="action-meta"><span>{index === 0 ? "Foco atual" : "Pendente"}</span><span>{index === 0 ? "Agora" : "Na sequência"}</span></div></div>
+          <div className="action-buttons"><button type="button" className="tutoria-help" disabled title="TutorIA será ativado em incremento próprio">Pedir ajuda à TutorIA</button><a href={action.href}>{action.label}<span aria-hidden="true">→</span></a></div>
+        </article>)}</div>
       </section>
 
       <aside className="pulse-card" aria-labelledby="pulse-title">

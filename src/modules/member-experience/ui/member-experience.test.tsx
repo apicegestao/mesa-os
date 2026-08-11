@@ -45,6 +45,15 @@ describe("member experience foundations", () => {
     expect(screen.getByRole("button", { name: "Pedir ajuda à TutorIA" })).toBeDisabled();
   });
 
+  it("supports multiple real pending actions while preserving their order", () => {
+    const primary = { eyebrow: "Agora", title: "Concluir diagnóstico", description: "Finalize o Raio-X.", href: "#diagnostico", label: "Continuar" };
+    const secondary = { eyebrow: "Depois", title: "Revisar ciclo", description: "Confira o período.", href: "#ciclo", label: "Revisar" };
+    render(<MemberHome memberName="Rafael" nextAction={primary} additionalActions={[secondary]} cycle={null} completedSteps={0} totalSteps={8} />);
+    expect(screen.getByText("2 pendências")).toBeInTheDocument();
+    expect(screen.getByText("Concluir diagnóstico")).toBeInTheDocument();
+    expect(screen.getByText("Revisar ciclo")).toBeInTheDocument();
+  });
+
   it("keeps evolution honest until a valid comparison exists", () => {
     render(<EvolutionProjection diagnosticComplete={false} completedSteps={0} totalSteps={8} evidenceSubmitted={false} />);
     expect(screen.getByRole("heading", { name: "Evolução da empresa" })).toBeInTheDocument();
