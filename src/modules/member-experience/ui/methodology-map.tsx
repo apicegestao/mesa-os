@@ -4,7 +4,7 @@ const pillarTone: Record<string, string> = { finance: "blue", leadership: "gold"
 
 export function MethodologyMap({ map }: { map: PublishedMethodologyMap | null }) {
   if (!map) return <section className="experience-card methodology-card" aria-labelledby="methodology-title"><div className="section-heading"><div><p className="eyebrow">Mapa de desenvolvimento</p><h2 id="methodology-title">Metodologia indisponível</h2></div></div><p className="section-intro">A revisão metodológica publicada não pôde ser carregada agora.</p></section>;
-  return <section className="experience-card methodology-card" aria-labelledby="methodology-title">
+  return <section className="experience-card methodology-card" aria-labelledby="methodology-title" data-methodology-source="published-revision">
     <div className="section-heading"><div><p className="eyebrow">Mapa de desenvolvimento</p><h2 id="methodology-title">O que evolui em cada trimestre</h2></div><span className="methodology-note">Visão da metodologia</span></div>
     <p className="section-intro">Este mapa apresenta o caminho da Mesa dos Donos. Ele não representa seu progresso individual nem marca etapas como concluídas.</p>
     <div className="methodology-scroll" tabIndex={0} aria-label="Mapa metodológico com quatro pilares e quatro trimestres">
