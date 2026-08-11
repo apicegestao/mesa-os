@@ -1,7 +1,7 @@
 # Post-Flight — TOL-2.13 Structured Tool Foundation
 
 **Backlog:** TOL-2.13
-**Status:** READY FOR PRODUCTION RELEASE
+**Status:** COMPLETE — PRODUCTION RELEASED
 **Data:** 2026-08-11
 
 ## Implementado
@@ -31,6 +31,10 @@
 - Vitest: 8 arquivos e 15 testes aprovados.
 - Next.js build de produção aprovado.
 - pgTAP preparado para tabelas, RLS, função e unicidade.
+- Commit funcional: `14422163e12a2fe12cd002c0092bac29b9d44b89`.
+- Deploy Netlify: `6a7b37bfbec3df0008f9404d`, estado `ready`, sem erro ou segredo detectado.
+- Smoke test aceito pelo owner: rascunho salvo e retomado após atualizar a página.
+- A Missão permaneceu disponível e nenhuma Missão seguinte foi liberada.
 
 ## Segurança e desempenho
 
@@ -47,4 +51,4 @@
 
 ## Próximo gate
 
-Publicar e homologar em produção o salvamento e a retomada do rascunho. Nenhuma etapa posterior do core loop está autorizada.
+Publicação e homologação concluídas. O próximo gate permitido é Definition & Alignment de Implementação; nenhuma etapa posterior é autorizada por este documento.

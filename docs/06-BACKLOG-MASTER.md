@@ -166,6 +166,6 @@ Objetivo proposto: representar o trabalho orientado do ciclo por meio de Missõe
 
 ## TOL-2.13 — Structured Tool Foundation
 
-**Status:** BUILD IN PROGRESS
+**Status:** COMPLETE — PRODUCTION RELEASED
 
 Objetivo proposto: permitir que o owner estruture um `Mapa de Papéis e Decisões` como rascunho versionado da primeira Missão, sem tratar preenchimento como implementação comprovada.

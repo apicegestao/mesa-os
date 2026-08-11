@@ -2,7 +2,7 @@
 
 ## Fase atual
 
-Sprint TOL-2.13 — Structured Tool Foundation: implementação governada do Mapa de Papéis e Decisões.
+Próximo incremento ainda não autorizado. Deve ser definido após o fechamento do TOL-2.13.
 
 ## Fases concluídas
 
@@ -18,10 +18,11 @@ Sprint TOL-2.13 — Structured Tool Foundation: implementação governada do Map
 - Sprint GOV-2.10D — Mission Foundation Definition & Alignment: primeira metodologia de Missões delimitada e aprovada.
 - Sprint MIS-2.11 — Mission Foundation: três Missões versionadas, com primeira ação disponível, publicado e homologado em produção.
 - Sprint GOV-2.12D — Tool Foundation Definition & Alignment: primeira Ferramenta schema-driven delimitada e aprovada.
+- Sprint TOL-2.13 — Structured Tool Foundation: Mapa de Papéis e Decisões schema-driven, publicado e homologado em produção.
 
-## Incremento em construção
+## Próximo incremento
 
-TOL-2.13 — Structured Tool Foundation. `Mapa de Papéis e Decisões` schema-driven e retomável, sem antecipar Implementação, Evidência ou Evolução.
+Ainda não autorizado. Pela ordem canônica, o próximo candidato é a definição de Implementação, sem antecipar Evidência ou Evolução.
 
 ## Sequenciamento governado
 
