@@ -39,3 +39,7 @@
 | GOV-2.8D | Alignment e Pre-Flight | `docs/31-PRE-FLIGHT-2.8D.md` | revisão documental |
 | GOV-2.8D | Proposta Cycle Foundation | `docs/32-FEATURE-SPEC-CYC-2.9-DRAFT.md` | decisões pendentes explícitas |
 | GOV-2.8D | Encerramento | `docs/33-POST-FLIGHT-2.8D.md` | Post-Flight review |
+| CYC-2.9 | Schema, unicidade e isolamento | `supabase/migrations/20260811141017_cycle_foundation.sql` | pgTAP + advisors |
+| CYC-2.9 | Início transacional owner-only | `public.start_cycle(uuid)` | teste remoto com rollback |
+| CYC-2.9 | Experiência do ciclo | `src/modules/cycle`, `src/app/app/page.tsx` | lint + typecheck + testes + build |
+| CYC-2.9 | Governança e encerramento | `docs/34-PRE-FLIGHT-CYC-2.9.md`, `docs/35-POST-FLIGHT-CYC-2.9.md` | revisão documental |

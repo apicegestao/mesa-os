@@ -116,6 +116,6 @@ Objetivo proposto: transformar um diagnóstico concluído em uma única priorida
 
 ## CYC-2.9 — Cycle Foundation
 
-**Status:** PROPOSAL — NOT AUTHORIZED FOR BUILD
+**Status:** BUILD IN PROGRESS
 
-Objetivo proposto: criar um período operacional limitado e rastreável para a prioridade ativa, preparando o próximo passo do core loop sem antecipar Missões.
+Objetivo: criar um período operacional de 90 dias, único e rastreável para a prioridade ativa, sem antecipar Missões, metas, tarefas ou progresso.

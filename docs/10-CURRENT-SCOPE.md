@@ -1,16 +1,17 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** GOV-2.8D — Cycle Foundation Definition & Alignment
-**Mode:** DEFINITION
-**Status:** COMPLETE
+**Sprint:** CYC-2.9 — Cycle Foundation
+**Mode:** BUILD
+**Status:** BUILD IN PROGRESS
 
 ## Authorized
 
-- Registrar homologação da prioridade em produção.
-- Alignment Check, Pre-Flight e Feature Spec preliminar de Cycle Foundation.
-- Proposta de ciclo temporal vinculado à prioridade.
-- Decisões pendentes, limites, critérios e Post-Flight documental.
+- Criar um único ciclo ativo para a organização a partir da prioridade confirmada.
+- Iniciar imediatamente, com duração fixa de 90 dias corridos e término calculado automaticamente.
+- Usar o título `Ciclo — [Dimensão]` e permitir acesso somente ao `owner` ativo.
+- Exibir o ciclo ativo sem progresso, conclusão manual ou alteração posterior.
+- Migration versionada, RLS, operação transacional, testes e documentação de encerramento.
 
 ## Not Authorized
 
@@ -36,10 +37,11 @@
 - Escolha humana em caso de empate no menor score.
 - Seleção de dimensão diferente da única menor candidata.
 - Alteração, substituição, cancelamento ou segunda prioridade.
-- Prazo, meta, Ciclo, Missão, ferramenta, plano de ação ou recomendação.
-- Código, migration, configuração externa ou criação real de Ciclo.
-- Implementação de CYC-2.9 antes de Feature Spec aprovada e novo Current Scope em BUILD.
+- Meta, Missão, ferramenta, plano de ação ou recomendação.
+- Edição, cancelamento, substituição ou conclusão manual do ciclo.
+- Encerramento automático do ciclo ao ultrapassar a data final.
+- Segundo ciclo ou múltiplos ciclos por organização.
 
 ## Exit criteria
 
-Pre-Flight registrado; Feature Spec preliminar CYC-2.9 criada; decisões obrigatórias explicitadas; documentos consistentes; nenhuma alteração de produto ou infraestrutura; Post-Flight entregue.
+Migration remota aplicada; operação validada com rollback; lint, typecheck, testes e build aprovados; deploy de produção saudável; documentação canônica e Post-Flight atualizados.

@@ -2,7 +2,7 @@
 
 ## Fase atual
 
-Sprint GOV-2.8D — Cycle Foundation Definition & Alignment: definição governada do contêiner temporal da prioridade, sem implementação.
+Sprint CYC-2.9 — Cycle Foundation: implementação governada do ciclo inicial de 90 dias ligado à prioridade confirmada.
 
 ## Fases concluídas
 
@@ -13,10 +13,11 @@ Sprint GOV-2.8D — Cycle Foundation Definition & Alignment: definição governa
 - Sprint DIA-2.5 — Diagnostic Foundation: Raio-X do Empresário no Mês 0, com definição versionada, rascunho, submissão e resultado rastreável.
 - Sprint GOV-2.6D — Priority Foundation Definition & Alignment: definição governada do segundo passo do core loop.
 - Sprint PRI-2.7 — Priority Foundation: confirmação rastreável sem empate e espera segura para futuro desempate TutorIA.
+- Sprint GOV-2.8D — Cycle Foundation Definition & Alignment: decisões e limites do primeiro ciclo aprovados.
 
-## Próximo incremento proposto, não autorizado para BUILD
+## Próximo incremento
 
-CYC-2.9 — Cycle Foundation. Proposta de ciclo de 90 dias ligado à prioridade ativa, sem Missões ou execução antecipadas. BUILD depende da aprovação da Feature Spec.
+Ainda não autorizado. Deve ser definido somente após homologação do CYC-2.9, sem antecipar Missões, TutorIA ou progresso.
 
 ## Sequenciamento governado
 

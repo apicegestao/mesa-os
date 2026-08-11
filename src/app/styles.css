@@ -104,6 +104,7 @@ button:disabled { cursor: wait; opacity: 0.65; }
 .review-row small { color: var(--color-muted); }
 .answer-value { display: grid; flex: 0 0 auto; place-items: center; width: 2rem; height: 2rem; border-radius: 0.5rem; background: var(--color-accent-soft); color: var(--color-accent); font-weight: 800; }
 .priority-wrap { width: min(calc(100% - 2rem), 72rem); margin: -2.5rem auto 4rem; }
+.priority-wrap > .priority-card + .priority-card { margin-top: 1rem; }
 .priority-card { max-width: 48rem; margin: 0 auto; padding: clamp(1.5rem, 5vw, 3rem); border-top: 4px solid var(--color-warm); }
 .priority-card h2 { margin: 0 0 1rem; font-family: Georgia, serif; font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 500; }
 .priority-card > p { color: var(--color-muted); line-height: 1.65; }

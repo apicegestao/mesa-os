@@ -1,6 +1,8 @@
 # CYC-2.9 — Cycle Foundation
 
-**Status:** DRAFT — NOT AUTHORIZED FOR BUILD
+**Status:** APPROVED FOR BUILD
+
+**Aprovação:** Rafael Portela Martins, 2026-08-11.
 
 ## Objetivo
 
@@ -69,6 +71,8 @@ A prioridade define onde concentrar atenção, mas ainda não existe um interval
 - RLS, testes, lint, typecheck e build aprovados.
 
 ## Decisões obrigatórias antes do BUILD
+
+Decisões aprovadas: 90 dias corridos; início imediato; criação direta como `active`; sem conclusão manual; somente owner visualiza; título derivado; metas, Missões e progresso fora do escopo.
 
 1. Aprovar duração fixa de 90 dias ou permitir escolha controlada?
 2. O início é a data da confirmação ou pode ser agendado?

@@ -14,6 +14,64 @@ export type Database = {
   }
   public: {
     Tables: {
+      cycles: {
+        Row: {
+          created_at: string
+          created_by: string
+          ends_on: string
+          id: string
+          organization_id: string
+          priority_id: string
+          starts_on: string
+          status: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          ends_on: string
+          id?: string
+          organization_id: string
+          priority_id: string
+          starts_on?: string
+          status?: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          ends_on?: string
+          id?: string
+          organization_id?: string
+          priority_id?: string
+          starts_on?: string
+          status?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cycles_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "identities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cycles_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cycles_priority_id_fkey"
+            columns: ["priority_id"]
+            isOneToOne: true
+            referencedRelation: "priorities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       diagnostic_definitions: {
         Row: {
           code: string
@@ -527,6 +585,7 @@ export type Database = {
         Args: { submitted_answers: Json; target_execution_id: string }
         Returns: undefined
       }
+      start_cycle: { Args: { target_priority_id: string }; Returns: string }
       start_diagnostic: {
         Args: { target_revision_id: string }
         Returns: string

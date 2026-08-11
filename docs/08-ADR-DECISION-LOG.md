@@ -59,3 +59,13 @@ O frontend usa somente publishable key. Chaves secret/service-role ficam exclusi
 - Em empate no menor score, nenhuma escolha humana é aceita; o estado permanece aguardando futuro desempate TutorIA.
 - TutorIA não será improvisado no PRI-2.7, não acessará o banco diretamente e exigirá Feature Spec própria antes de decidir.
 - Confirmar prioridade não cria Ciclo, Missão, prazo, meta ou plano de ação.
+
+## ADR-030 — First cycle lifecycle
+
+**Status:** ACCEPTED
+
+- O primeiro ciclo começa imediatamente após comando explícito do owner e dura 90 dias corridos.
+- Título e data final são derivados da prioridade e da data inicial; não são editáveis neste incremento.
+- Existe no máximo um ciclo por organização e por prioridade.
+- O ciclo permanece ativo após a data final até que um incremento futuro defina a transição de estado.
+- Ciclo não cria Missões, metas, tarefas, ferramentas ou progresso.
