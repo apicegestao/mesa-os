@@ -84,3 +84,13 @@ Este registro dá visibilidade ao owner sem transformar cada commit em uma aprov
 **Evidência de validação:** 25 testes dos workbenches, typecheck, lint e build passaram. A migration foi aplicada somente no Supabase de homologação e o Security Advisor não reportou alertas.
 
 **Pendente para promoção:** smoke autenticado em preview, inspeção do arquivo baixado e revisão integrada de segurança/privacidade. Produção permanece sem alteração.
+
+## CP-07 — Próximo escopo: contexto longitudinal e memória governada
+
+**Estado:** AWAITING OWNER APPROVAL — 2026-08-12
+
+**Decisão reconciliada:** a conversa `Mesa OS V2` e ADR-039 exigem que o TutorIA se beneficie da trajetória do membro, mas determinam que chat bruto não é memória e que qualquer aprendizado coletivo é agregado, desidentificado e aprovado.
+
+**Proposta:** RT-2.26 cria continuidade entre ciclos, memória estruturada confirmável/corrigível pelo membro e recuperação contextual mínima. Mesa OS Intelligence fica em plano separado e agregado; não terá acesso operacional a dados identificáveis neste incremento.
+
+**Gate:** a implementação só começa após aprovação do Definition Pack RT-2.26 e definição formal de retenção, direitos do membro, consentimento e papel interno.
