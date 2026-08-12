@@ -106,3 +106,15 @@ Este registro dá visibilidade ao owner sem transformar cada commit em uma aprov
 **Decisão:** o owner propôs eliminar confirmações por evento para o empresário. O produto pode automatizar contexto derivado de registros canônicos, mas aceite genérico não autoriza coleta ilimitada, retenção indefinida, chat bruto, dados sensíveis, treinamento ou decisão automática.
 
 **Gate:** antes de BUILD, o texto e a base legal precisam de revisão jurídica brasileira; o backoffice requer Definition Pack próprio de RBAC/MFA/auditoria. O RT-2.26 atual permanece somente com memória explicitamente confirmada.
+
+## CP-09 — RT-2.26E: fundação de aceite e gate automático
+
+**Estado:** PASS EM HOMOLOGAÇÃO — 2026-08-12
+
+**Construído:** documentos jurídicos versionados, hash de conteúdo, recibos de aceite autenticado e política por organização. Conteúdo publicado torna-se imutável; o recibo vincula o membro à versão e ao hash vistos no aceite.
+
+**Proteção-chave:** a elegibilidade para derivação automática exige simultaneamente política organizacional ativa e aceite da versão jurídica correspondente. A policy inicia desabilitada e não há documento jurídico publicado, captura automática, backoffice ou produção nesta entrega.
+
+**Evidência de validação:** migration aplicada somente na homologação; RLS ativo nas três tabelas e Security Advisor sem alertas. Testes do gate, typecheck, lint e build passaram.
+
+**Gate seguinte:** revisão jurídica brasileira do texto, base legal, retenção, direitos do titular e evidência de aceite; Definition Pack de backoffice com RBAC/MFA/auditoria; só então ativação controlada da primeira fonte automática.
