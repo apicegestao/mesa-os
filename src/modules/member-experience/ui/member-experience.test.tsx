@@ -43,11 +43,11 @@ describe("member experience foundations", () => {
   });
 
   it("composes Hoje from canonical state without inventing missing metrics", () => {
-    render(<MemberHome memberName="Rafael Portela" nextAction={{ eyebrow: "Seu ponto de partida", title: "Continue o Raio-X", description: "Conclua o diagnóstico.", href: "#diagnostico", label: "Continuar diagnóstico" }} cycle={null} completedSteps={0} totalSteps={8} />);
+    render(<MemberHome memberName="Rafael Portela" localHour={9} nextAction={{ eyebrow: "Seu ponto de partida", title: "Continue o Raio-X", description: "Conclua o diagnóstico.", href: "#diagnostico", label: "Continuar diagnóstico" }} cycle={null} completedSteps={0} totalSteps={8} />);
     expect(screen.getByRole("heading", { name: "Bom dia, Rafael." })).toBeInTheDocument();
     expect(screen.getAllByText("0 de 8 etapas")).toHaveLength(2);
     expect(screen.getByText("Ainda não medido")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Pedir ajuda à TutorIA" })).toBeDisabled();
+    expect(screen.queryByRole("button", { name: "Pedir ajuda à TutorIA" })).not.toBeInTheDocument();
   });
 
   it("supports multiple real pending actions while preserving their order", () => {

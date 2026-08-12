@@ -2,7 +2,7 @@ import { z } from "zod";
 import { orientationObjectiveSchema } from "./orientation";
 
 export const orientationRequestSchema = z.object({
-  objective: orientationObjectiveSchema,
+  objective: orientationObjectiveSchema.default("understand_next_step"),
   question: z.string().trim().min(4).max(1_200).optional(),
 }).strict();
 export type OrientationRequest = z.infer<typeof orientationRequestSchema>;
