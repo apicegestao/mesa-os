@@ -55,6 +55,7 @@
 - TCM-2.26B — memória estruturada, confirmável e versionada do TutorIA; sem chat bruto.
 - TCM-2.26C — recuperação mínima, auditável e transparência/correção pelo membro.
 - TCM-2.26F — aviso específico v1, escolha no primeiro acesso, recibo verificável e política de elegibilidade por organização para contexto longitudinal do TutorIA.
+- TCM-2.26G — adaptador mínimo do diagnóstico concluído, idempotente e condicionado à elegibilidade vigente do sujeito.
 
 ## Not Authorized
 

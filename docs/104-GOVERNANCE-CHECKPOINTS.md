@@ -132,3 +132,15 @@ Este registro dá visibilidade ao owner sem transformar cada commit em uma aprov
 **Evidência de validação:** migration aplicada exclusivamente em homologação, hash publicado conferido, privilégios limitados a `authenticated`, Security Advisor sem alertas e testes/lint/typecheck/build passaram.
 
 **Próximo recorte permitido:** implementar um adaptador de fonte canônica por vez, iniciando por diagnóstico concluído, sob contrato de origem, minimização, idempotência, auditoria e testes específicos. Promoção continua dependente de revisão consolidada e aprovação de deploy.
+
+## CP-11 — RT-2.26G: adaptador de diagnóstico concluído
+
+**Estado:** PASS EM HOMOLOGAÇÃO — 2026-08-12
+
+**Construído:** a transição imutável de um diagnóstico de `draft` para `completed` pode criar um único fato mínimo no contexto do TutorIA: episódio, IME e estágio. A memória conserva a referência do diagnóstico e uma revisão inicial auditável.
+
+**Proteções preservadas:** a trigger só executa se a política da organização estiver ativa e o último evento da identidade que concluiu o diagnóstico for `accepted`. Sem essas duas condições, ela não grava nada. Respostas individuais, dimensões, texto livre, chat bruto e dados sensíveis não são projetados.
+
+**Evidência de validação:** trigger conferida no banco de homologação, Security Advisor sem alertas e 93 testes, lint, typecheck e build passaram.
+
+**Próximo recorte permitido:** avaliar um adaptador equivalente para ciclo e Missão somente após a inspeção autenticada deste primeiro fluxo em preview. Não promover produção sem smoke e aprovação consolidada.
