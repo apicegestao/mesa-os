@@ -1,7 +1,7 @@
 # Definition Pack IAM-2.28 — Onboarding controlado e acesso sem senha
 
-**Status:** DRAFT — não autorizado para BUILD  
-**Dependência:** aprovação do checkpoint `147-GOVERNANCE-CHECKPOINT-IAM-2.28.md`.
+**Status:** FOUNDATION BUILT — operação externa pendente  
+**Dependência:** checkpoint `147-GOVERNANCE-CHECKPOINT-IAM-2.28.md` aprovado pelo owner em 2026-08-12.
 
 ## Problema que resolve
 

@@ -1,6 +1,6 @@
 # Governance Checkpoint — IAM-2.28 Onboarding controlado
 
-**Status:** PROPOSAL — aguardando aprovação explícita do owner  
+**Status:** APPROVED FOR BUILD — owner aprovou em 2026-08-12  
 **Gatilho:** o teste de GitHub OAuth na homologação confirmou que o provedor funciona, mas a ausência de uma identidade já provisionada resulta em `signup_disabled`. A tentativa de habilitar cadastro público foi interrompida.
 
 ## Objetivo concreto
