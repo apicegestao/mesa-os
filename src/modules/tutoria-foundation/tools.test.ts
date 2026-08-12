@@ -3,7 +3,8 @@ import { buildTutorIAMemberState, buildTutorIAMethodologySummary, isTutorIATool,
 
 describe("TutorIA read tool catalogue", () => {
   it("contains only the approved read tools", () => {
-    expect(Object.keys(TUTORIA_READ_TOOL_CATALOG)).toEqual(["read_member_state", "read_methodology_map"]);
+    expect(Object.keys(TUTORIA_READ_TOOL_CATALOG)).toEqual(["read_member_state", "read_methodology_map", "read_workbench_tool"]);
+    expect(isTutorIATool("read_workbench_tool")).toBe(true);
     expect(isTutorIATool("write_evidence")).toBe(false);
   });
 

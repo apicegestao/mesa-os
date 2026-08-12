@@ -16,6 +16,11 @@ export const TUTORIA_READ_TOOL_CATALOG = {
     purpose: "Situar a orientação no mapa metodológico publicado.",
     output: "TutorIAMethodologySummary",
   },
+  read_workbench_tool: {
+    risk: "moderate",
+    purpose: "Analisar apenas os dados estruturados da ferramenta do próprio membro.",
+    output: "TutorIAWorkbenchContext",
+  },
 } as const;
 
 export type TutorIATool = keyof typeof TUTORIA_READ_TOOL_CATALOG;
