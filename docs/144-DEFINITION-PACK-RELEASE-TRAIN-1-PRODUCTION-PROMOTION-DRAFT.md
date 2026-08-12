@@ -1,6 +1,6 @@
 # Definition Pack — Release Train 1: promoção de produção
 
-**Status:** DRAFT — requer aprovação explícita para execução
+**Status:** APPROVED BY OWNER — execução bloqueada até confirmação operacional de restauração
 
 ## Objetivo
 
@@ -42,4 +42,4 @@ Parar imediatamente, sem deploy da aplicação, se houver migration ausente, err
 
 ## Decisão requerida
 
-Este pack não autoriza alteração em produção. Após revisão, ele exige uma aprovação explícita do owner para executar banco, configuração Auth, deploy único e smoke pós-release como uma única janela controlada.
+O owner aprovou este pack em 2026-08-12. Antes da primeira migration, a janela ainda exige a confirmação operacional de um ponto de restauração utilizável da produção. O conector atual não expõe esse estado; sem essa confirmação, nenhuma alteração de banco, Auth ou deploy será iniciada.
