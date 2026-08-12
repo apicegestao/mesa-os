@@ -1,7 +1,7 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** RT-2.26 — Contexto Longitudinal do Membro
+**Sprint:** RT-2.26–RT-2.27A — Release Train 1
 **Mode:** BUILD
 **Status:** IN PROGRESS — APPROVED FOR BUILD
 
