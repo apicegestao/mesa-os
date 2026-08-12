@@ -10,6 +10,6 @@ export async function loadMyTutorIAMemories(supabase: SupabaseClient<Database>):
 /** Only system-derived, low-detail facts can reach the guidance prompt. */
 export async function loadTutorIAOrientationContext(supabase: SupabaseClient<Database>, enabled: boolean): Promise<string[]> {
   if (!enabled) return [];
-  const { data } = await supabase.from("tutoria_member_memories").select("content,source_kind").eq("state", "active").in("source_kind", ["diagnostic_completed", "cycle_started"]).order("updated_at", { ascending: false }).limit(8);
+  const { data } = await supabase.from("tutoria_member_memories").select("content,source_kind").eq("state", "active").in("source_kind", ["diagnostic_completed", "cycle_started", "evidence_approved"]).order("updated_at", { ascending: false }).limit(8);
   return (data ?? []).map((memory) => memory.content);
 }
