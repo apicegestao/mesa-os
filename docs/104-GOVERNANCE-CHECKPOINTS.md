@@ -8,6 +8,16 @@
 
 Este registro dá visibilidade ao owner sem transformar cada commit em uma aprovação manual. Cada checkpoint informa onde estamos, o que foi conferido e o próximo recorte seguro. Um checkpoint de escopo, custo, risco ou promoção solicita decisão explícita; os demais permitem BUILD contínuo dentro do pacote aprovado.
 
+## CP-16 — Release Train 1: revisão integrada
+
+**Estado:** BLOCKED — 2026-08-12
+
+**Objetivo:** preparar uma única promoção segura da base RT-2.20–RT-2.27A, sem criar previews ou deploys adicionais.
+
+**Evidência:** homologação contém a pilha completa e Security Advisor sem alertas; produção continua na baseline RT-2.15 e apresentou nove RPCs `SECURITY DEFINER` expostas, além da proteção contra senhas vazadas desabilitada.
+
+**Decisão:** não promover. O único caminho autorizado é fixture sintética em homologação, smoke autenticado, revisão dos avisos produtivos e aprovação explícita de um pacote único de promoção.
+
 ## CP-01 — RT-2.25: Base factual da DRE
 
 **Estado:** PASS — 2026-08-12  
