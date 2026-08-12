@@ -70,12 +70,13 @@ describe("member experience foundations", () => {
   });
 
   it("projects only validated measurements supplied by the measurement backbone", () => {
-    render(<EvolutionProjection diagnosticComplete completedSteps={3} totalSteps={8} evidenceSubmitted measurements={{ ime: { value: 52, effectiveOn: "2026-08-11" }, imeHistory: [{ value: 38, effectiveOn: "2026-07-01" }, { value: 52, effectiveOn: "2026-08-11" }], ownerOperationalHours: { value: 5, effectiveOn: "2026-08-11" }, ownerDecisionConcentration: { value: 17, effectiveOn: "2026-08-11" } }} />);
+    render(<EvolutionProjection diagnosticComplete completedSteps={3} totalSteps={8} evidenceSubmitted measurements={{ ime: { value: 52, effectiveOn: "2026-08-11" }, imeHistory: [{ value: 38, effectiveOn: "2026-07-01" }, { value: 52, effectiveOn: "2026-08-11" }], ownerOperationalHours: { value: 5, effectiveOn: "2026-08-11" }, ownerDecisionConcentration: { value: 17, effectiveOn: "2026-08-11" }, dimensionComparison: [{ code: "finance", label: "Financeiro", baseline: 38, current: 52, effectiveOn: "2026-08-11" }] }} />);
     expect(screen.getByText("52")).toBeInTheDocument();
     expect(screen.getByText(/5h\/semana do dono/i)).toBeInTheDocument();
     expect(screen.getByText(/17% de decisões/i)).toBeInTheDocument();
     expect(screen.getByText("IME 38")).toBeInTheDocument();
     expect(screen.getByText("IME 52")).toBeInTheDocument();
+    expect(screen.getByText("Entrada 38 · Atual 52")).toBeInTheDocument();
   });
 
   it("does not invent evidence approval states", () => {
