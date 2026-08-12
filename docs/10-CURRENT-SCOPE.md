@@ -62,6 +62,7 @@
 - TCM-2.26K — consulta do próprio histórico de recibos de Termos, com versão, hash e temporalidade.
 - TCM-2.26L — download privado de recibo PDF dos Termos, preservado inclusive após atualizações de versão.
 - TCM-2.26M — adaptador mínimo e temporal de evidência aprovada para o contexto autorizado do TutorIA.
+- TCM-2.26N — adaptador mínimo de implementação confirmada para o contexto autorizado do TutorIA.
 
 ## Not Authorized
 
