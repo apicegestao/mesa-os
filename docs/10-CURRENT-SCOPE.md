@@ -65,6 +65,7 @@
 - TCM-2.26N — adaptador mínimo de implementação confirmada para o contexto autorizado do TutorIA.
 - TCM-2.26O — adaptador mínimo de prioridade estratégica confirmada para o contexto autorizado do TutorIA.
 - TCM-2.26P — proteção de proveniência: fatos automáticos não são reescritos manualmente.
+- TCM-2.26Q — adaptador mínimo da Missão atualmente disponível para o contexto autorizado do TutorIA.
 
 ## Not Authorized
 

@@ -37,7 +37,7 @@ export async function POST(request: Request) {
   const policy = await recordTutorIAReadGateway({ supabase, authenticatedIdentityId: actorIdentityId, organizationId: membership.organization_id, membershipActive: membership.status === "active", requestedTool: usage.request.objective === "understand_next_step" ? "read_member_state" : "read_methodology_map", sourceCodes: ["member_state", "methodology_summary"], absentFields: methodology.status === "absent" ? ["published_methodology"] : [] });
   if (policy.outcome !== "allow") return NextResponse.json({ code: "orientation_escalated" }, { status: 409 });
   if (longitudinalContext.length) {
-    const contextPolicy = await recordTutorIAReadGateway({ supabase, authenticatedIdentityId: actorIdentityId, organizationId: membership.organization_id, membershipActive: true, requestedTool: "read_longitudinal_context", sourceCodes: ["diagnostic_completed", "priority_confirmed", "cycle_started", "implementation_confirmed", "evidence_approved"], absentFields: [] });
+    const contextPolicy = await recordTutorIAReadGateway({ supabase, authenticatedIdentityId: actorIdentityId, organizationId: membership.organization_id, membershipActive: true, requestedTool: "read_longitudinal_context", sourceCodes: ["diagnostic_completed", "priority_confirmed", "cycle_started", "mission_available", "implementation_confirmed", "evidence_approved"], absentFields: [] });
     if (contextPolicy.outcome !== "allow") return NextResponse.json({ code: "orientation_escalated" }, { status: 409 });
   }
 
