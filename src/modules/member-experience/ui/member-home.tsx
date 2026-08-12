@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { NextAction } from "../domain/next-action";
+import { memberGreeting } from "../domain/greeting";
 
 type PulseItem = { label: string; value: string; progress?: number; tone: "blue" | "gold" | "plum" | "green" };
 
@@ -13,6 +14,7 @@ export function MemberHome({
   missionTitle,
   completedSteps,
   totalSteps,
+  localHour,
 }: {
   memberName: string;
   nextAction: NextAction;
@@ -23,10 +25,12 @@ export function MemberHome({
   missionTitle?: string;
   completedSteps: number;
   totalSteps: number;
+  localHour?: number;
 }) {
   const progress = Math.round((completedSteps / totalSteps) * 100);
   const actions = [nextAction, ...additionalActions];
   const firstName = memberName.trim().split(/\s+/)[0] || "membro";
+  const greeting = memberGreeting(localHour ?? new Date().getHours());
   const pulse: PulseItem[] = [
     { label: "Core loop", value: `${completedSteps} de ${totalSteps} etapas`, progress, tone: "blue" },
     { label: "Prioridade", value: priorityLabel ?? "Aguardando diagnóstico", tone: "gold" },
@@ -36,7 +40,7 @@ export function MemberHome({
   return <section id="hoje" className="member-today" aria-labelledby="today-title">
     <header className="today-greeting">
       <p className="eyebrow">Hoje</p>
-      <h1 id="today-title">Bom dia, {firstName}.</h1>
+      <h1 id="today-title">{greeting}, {firstName}.</h1>
       <p>Seu foco está organizado abaixo: contexto, próxima ação e o que já avançou.</p>
     </header>
 
@@ -63,7 +67,7 @@ export function MemberHome({
         <div className="action-list">{actions.map((action, index) => <article className="action-card" key={`${action.href}-${action.title}`}>
           <span className="action-number">{String(index + 1).padStart(2, "0")}</span>
           <div className="action-copy"><p className="eyebrow">{action.eyebrow}</p><h3>{action.title}</h3><p>{action.description}</p><div className="action-meta"><span>{index === 0 ? "Foco atual" : "Pendente"}</span><span>{index === 0 ? "Agora" : "Na sequência"}</span></div></div>
-          <div className="action-buttons"><button type="button" className="tutoria-help" disabled title="TutorIA será ativado em incremento próprio">Pedir ajuda à TutorIA</button><a href={action.href}>{action.label}<span aria-hidden="true">→</span></a></div>
+          <div className="action-buttons"><a href={action.href}>{action.label}<span aria-hidden="true">→</span></a></div>
         </article>)}</div>
       </section>
 
