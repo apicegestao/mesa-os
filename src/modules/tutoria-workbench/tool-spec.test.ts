@@ -1,9 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { DRE_WORKBENCH_SPEC, validateWorkbenchPayload, validateWorkbenchToolSpec } from "./tool-spec";
+import { DRE_WORKBENCH_SPEC, RACI_WORKBENCH_SPEC, validateWorkbenchPayload, validateWorkbenchToolSpec } from "./tool-spec";
 
 describe("TutorIA workbench tool specification", () => {
   it("defines a versioned DRE with structured inputs and exports", () => {
     expect(validateWorkbenchToolSpec(DRE_WORKBENCH_SPEC)).toEqual({ valid: true, spec: DRE_WORKBENCH_SPEC });
+  });
+
+  it("defines RACI as a bounded repeatable workspace", () => {
+    expect(validateWorkbenchToolSpec(RACI_WORKBENCH_SPEC)).toEqual({ valid: true, spec: RACI_WORKBENCH_SPEC });
+    expect(validateWorkbenchPayload(RACI_WORKBENCH_SPEC, { roles: [{ role_name: "Operações", expected_result: "Entregar no prazo", responsibilities: "Coordenar rotina", decision_rights: "Reorganizar agenda" }] }).valid).toBe(true);
+    expect(validateWorkbenchPayload(RACI_WORKBENCH_SPEC, { roles: [] })).toEqual({ valid: false, reason: "entries_count_required:roles" });
   });
 
   it("rejects a definition that would make tool data ambiguous", () => {
