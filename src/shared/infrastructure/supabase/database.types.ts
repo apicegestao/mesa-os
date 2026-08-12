@@ -1803,6 +1803,14 @@ export type Database = {
       }
     }
     Functions: {
+      get_my_mesa_os_terms_receipt: {
+        Args: { target_receipt_id: string }
+        Returns: { receipt_id: string; event: "accepted" | "withdrawn"; occurred_at: string; document_sha256: string; document_title: string; document_version: number }[]
+      }
+      list_my_mesa_os_terms_receipts: {
+        Args: Record<PropertyKey, never>
+        Returns: { receipt_id: string; event: "accepted" | "withdrawn"; occurred_at: string; document_sha256: string; document_title: string; document_version: number }[]
+      }
       accept_my_mesa_os_terms: {
         Args: { target_document_version_id: string }
         Returns: string
