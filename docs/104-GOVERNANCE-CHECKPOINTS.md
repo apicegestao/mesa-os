@@ -46,3 +46,5 @@ Este registro dá visibilidade ao owner sem transformar cada commit em uma aprov
 **Ações concluídas:** a branch de homologação recebeu o trem consolidado; `TUTORIA_DRE_ANALYSIS_ENABLED=true` e teto de `2790` micros de dólar por chamada foram configurados exclusivamente em `deploy-preview`, com escopo de função/runtime. Produção não recebeu estas variáveis.
 
 **Pendente e obrigatório:** o preview deve concluir o build e receber smoke autenticado com DRE de teste. A validação confirmará retorno útil ou escalonamento seguro, auditoria sem conteúdo e reserva/liquidação de custo. Sem esse smoke, o checkpoint não é aprovado e não há promoção.
+
+**Tentativa de smoke:** o preview abriu e confirmou a proteção de acesso da equipe, mas não havia sessão autenticada disponível. Nenhuma credencial foi enviada ou alterada; o smoke funcional permanece pendente.
