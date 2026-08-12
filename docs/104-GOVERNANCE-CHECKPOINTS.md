@@ -158,3 +158,15 @@ Este registro dá visibilidade ao owner sem transformar cada commit em uma aprov
 **Proteções preservadas:** não existe editor livre de Termos, alteração silenciosa, chat bruto, dados sensíveis, treinamento de modelo, dados entre organizações ou alteração de produção.
 
 **Evidência de validação:** hash do Termo v1 conferido no banco, Security Advisor sem alertas e 94 testes, lint, typecheck e build passaram.
+
+## CP-13 — RT-2.26I: adaptador de ciclo ativo
+
+**Estado:** PASS EM HOMOLOGAÇÃO — 2026-08-12
+
+**Construído:** ao criar um ciclo ativo, o sistema pode registrar para a identidade que o criou um fato mínimo contendo título, período e sequência T. A memória é vinculada ao identificador do ciclo e não pode duplicar.
+
+**Proteções preservadas:** sem Termos atuais aceitos e política organizacional ativa, a trigger não grava. Nenhuma prioridade detalhada, Missão, ferramenta, evidência, conversa ou dado sensível é projetado.
+
+**Evidência de validação:** trigger conferida no banco, Security Advisor sem alertas e 94 testes, lint, typecheck e build passaram. Produção não foi alterada.
+
+**Próximo recorte permitido:** adaptador de Missão disponível somente após inspeção autenticada consolidada dos fluxos de Termos, diagnóstico e ciclo em preview.
