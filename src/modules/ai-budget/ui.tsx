@@ -1,0 +1,10 @@
+"use client";
+import { useActionState } from "react";
+import { saveMemberAIBudgetPolicy } from "./actions";
+import type { AIBudgetFormState } from "./domain";
+const initialState: AIBudgetFormState = { status: "idle" };
+type Policy = { id: string; monthly_limit_brl_cents: number; usd_micros_per_brl: number; effective_at: string };
+export function AIBudgetGovernance({ policies }: { policies: Policy[] }) {
+  const [state, action, pending] = useActionState(saveMemberAIBudgetPolicy, initialState); const current = policies[0];
+  return <section className="ai-budget-card" aria-labelledby="ai-budget-title"><div><p className="eyebrow">Governança de IA</p><h2 id="ai-budget-title">Limite mensal por membro</h2><p>O TutorIA só poderá usar IA quando houver política ativa e saldo disponível. Alterar este valor não ativa a IA.</p></div><form action={action} className="ai-budget-form"><label htmlFor="ai-budget-limit">Limite por membro (R$)</label><input id="ai-budget-limit" name="monthlyLimitBrl" type="number" min="0" max="1000000" step="0.01" defaultValue={current ? (current.monthly_limit_brl_cents / 100).toFixed(2) : "100.00"} required /><label htmlFor="ai-budget-rate">Cotação de referência (USD por R$1)</label><input id="ai-budget-rate" name="usdPerBrl" type="number" min="0.000001" max="10" step="0.000001" defaultValue={current ? (current.usd_micros_per_brl / 1_000_000).toFixed(6) : "0.180000"} required /><button type="submit" disabled={pending}>{pending ? "Salvando…" : "Salvar política"}</button>{state.message && <p className={`feedback feedback-${state.status}`} role="status">{state.message}</p>}</form><div className="ai-budget-history"><strong>Histórico</strong>{policies.length ? <ul>{policies.slice(0, 5).map((policy) => <li key={policy.id}>R$ {(policy.monthly_limit_brl_cents / 100).toFixed(2)} por membro · USD {(policy.usd_micros_per_brl / 1_000_000).toFixed(6)} por R$1</li>)}</ul> : <p>Nenhuma política ativa. O TutorIA permanece bloqueado até a primeira configuração.</p>}</div></section>;
+}

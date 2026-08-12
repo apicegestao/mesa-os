@@ -55,6 +55,21 @@ Uma entrega só termina após lint, typecheck, testes relevantes e build. Testes
 
 Registrar implementado, deliberadamente não implementado, testes, migrations, documentação, dívida técnica, proposals e rastreabilidade.
 
+## Checkpoints de Governança
+
+Checkpoints são gates curtos e obrigatórios para manter a execução alinhada à conversa fonte `Mesa OS V2` e ao contrato operacional do repositório. Eles não substituem Definition Pack, Pre-Flight ou Post-Flight.
+
+Um checkpoint ocorre antes de cada incremento material, antes de qualquer promoção e imediatamente quando houver dúvida de escopo. Seu registro deve declarar:
+
+1. objetivo concreto e requisito da conversa fonte recuperado;
+2. autoridades e decisões consultadas;
+3. o que será alterado e o que continua explicitamente fora do escopo;
+4. dados, segurança, migrations, IA e impacto de custo envolvidos;
+5. critérios objetivos de validação e condição de parada;
+6. decisão do owner necessária, quando houver mudança material de escopo, risco ou custo.
+
+O agente deve parar para reconciliação — e não continuar por inferência — diante de conflito de autoridade, lacuna material da conversa fonte, decisão `FROZEN`, risco de isolamento, ação destrutiva, nova dependência/custo ou pedido que extrapole o Current Scope. Checkpoints internos de BUILD não consomem aprovação do owner quando o incremento já estiver autorizado; checkpoints de escopo ou promoção exigem aprovação explícita.
+
 ## Release Train seguro
 
 O Fast Track reduz esperas e deploys, nunca controles. Pode agrupar de dois a quatro incrementos consecutivos do core loop quando formarem uma única entrega vertical homologável.

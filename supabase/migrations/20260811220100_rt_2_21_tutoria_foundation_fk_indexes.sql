@@ -1,0 +1,5 @@
+create index tutoria_context_audits_actor_idx on public.tutoria_context_audits (actor_identity_id);
+create index tutoria_policy_decisions_actor_idx on public.tutoria_policy_decisions (actor_identity_id);
+create index tutoria_policy_decisions_context_idx on public.tutoria_policy_decisions (context_audit_id);
+create index tutoria_tool_audits_actor_idx on public.tutoria_tool_audits (actor_identity_id);
+create index tutoria_tool_audits_policy_idx on public.tutoria_tool_audits (policy_decision_id);

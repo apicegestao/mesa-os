@@ -16,6 +16,7 @@ export function DiagnosticExperience({ initialWorkspace }: { initialWorkspace: D
   const total = workspace.dimensions.reduce((sum, dimension) => sum + dimension.questions.length, 0);
   const progress = Math.round((count / total) * 100);
   const complete = isDiagnosticComplete(workspace);
+  const tones = ["blue", "gold", "plum", "green", "blue"] as const;
 
   const optionLabel = useMemo(() => Object.fromEntries(workspace.options.map((option) => [option.value, option.label])), [workspace.options]);
 
@@ -62,10 +63,14 @@ export function DiagnosticExperience({ initialWorkspace }: { initialWorkspace: D
   if (!activeDimension) return <p className="feedback feedback-error">O diagnóstico não está disponível.</p>;
 
   return <section className="diagnostic-layout" aria-labelledby="diagnostic-title">
-    <header className="diagnostic-heading"><div><p className="eyebrow">Raio-X do Empresário · Mês 0</p><h1 id="diagnostic-title">{activeDimension.label}</h1></div><span className="status-pill">Rascunho</span></header>
+    <header className="diagnostic-heading"><div><p className="eyebrow">Raio-X do Empresário · Mês 0</p><h1 id="diagnostic-title">Enxergue a empresa com clareza</h1><p>Responda com base na realidade atual. Seu progresso fica visível em cada pilar.</p></div><div className="diagnostic-heading-actions"><button type="button" className="diagnostic-tutoria" disabled title="TutorIA será ativado em incremento próprio">Pedir ajuda à TutorIA</button><span className="status-pill">Rascunho</span></div></header>
     <div className="progress-wrap" aria-label={`${progress}% concluído`}><div><span>{count} de {total} respostas</span><strong>{progress}%</strong></div><div className="progress-track"><span style={{ width: `${progress}%` }} /></div></div>
     <nav className="dimension-nav" aria-label="Dimensões do diagnóstico">
-      {workspace.dimensions.map((dimension, index) => <button key={dimension.id} className={index === activeIndex ? "active" : ""} aria-current={index === activeIndex ? "step" : undefined} onClick={() => setActiveIndex(index)}><span>{index + 1}</span>{dimension.label}</button>)}
+      {workspace.dimensions.map((dimension, index) => {
+        const dimensionCount = dimension.questions.filter((question) => workspace.answers[question.id] !== undefined).length;
+        const dimensionProgress = Math.round((dimensionCount / dimension.questions.length) * 100);
+        return <button key={dimension.id} className={index === activeIndex ? "active" : ""} aria-current={index === activeIndex ? "step" : undefined} onClick={() => setActiveIndex(index)}><span>{index + 1}</span><span className="dimension-nav-copy"><strong>{dimension.label}</strong><small>{dimensionCount} de {dimension.questions.length}</small><i className={`dimension-mini-track ${tones[index]}`}><b style={{ width: `${dimensionProgress}%` }} /></i></span></button>;
+      })}
     </nav>
     <div className="question-card card">
       <p className="dimension-counter">Dimensão {activeIndex + 1} de {workspace.dimensions.length}</p>
