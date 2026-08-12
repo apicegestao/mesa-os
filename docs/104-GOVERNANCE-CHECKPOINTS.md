@@ -37,3 +37,12 @@ Este registro dá visibilidade ao owner sem transformar cada commit em uma aprov
 **Evidência de validação:** migration aplicada somente no Supabase de homologação; RLS ativo e leitura anônima bloqueada; Security Advisor sem alertas; lint, typecheck e 80 testes passaram.
 
 **Condição de ativação:** configurar exclusivamente no preview/homologação a flag da capacidade e um teto por chamada suficiente; executar smoke autenticado com dados de teste e conferir auditoria/custo. Isso exige checkpoint de ativação, não promoção de produção.
+
+## CP-03 — RT-2.25: Ativação controlada em preview
+
+**Estado:** IN PROGRESS — 2026-08-12
+**Objetivo:** habilitar a explicação especializada apenas na homologação, sob o custo e isolamento aprovados.
+
+**Ações concluídas:** a branch de homologação recebeu o trem consolidado; `TUTORIA_DRE_ANALYSIS_ENABLED=true` e teto de `2790` micros de dólar por chamada foram configurados exclusivamente em `deploy-preview`, com escopo de função/runtime. Produção não recebeu estas variáveis.
+
+**Pendente e obrigatório:** o preview deve concluir o build e receber smoke autenticado com DRE de teste. A validação confirmará retorno útil ou escalonamento seguro, auditoria sem conteúdo e reserva/liquidação de custo. Sem esse smoke, o checkpoint não é aprovado e não há promoção.
