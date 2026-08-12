@@ -8,6 +8,7 @@ describe("DRE workbench", () => {
     render(<DreWorkbench workspace={{ revisionId: "revision-1", spec: DRE_WORKBENCH_SPEC, payload: {}, updatedAt: null }} />);
     expect(screen.getByRole("heading", { name: "DRE gerencial" })).toBeInTheDocument();
     expect(screen.getByText("Receita líquida *")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Salvar rascunho para análise" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Salvar rascunho" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Analisar DRE com a TutorIA" })).toBeInTheDocument();
   });
 });
