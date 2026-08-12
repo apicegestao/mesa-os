@@ -67,6 +67,7 @@
 - TCM-2.26P — proteção de proveniência: fatos automáticos não são reescritos manualmente.
 - TCM-2.26Q — adaptador mínimo da Missão atualmente disponível para o contexto autorizado do TutorIA.
 - RT-2.27A — Bloco Evolução confiável: IME, comparação dimensional e marcos derivados exclusivamente de fontes validadas.
+- IAM-2.28 — matrícula prévia, provisionamento server-side auditado e fundação de entrada sem senha para identidades autorizadas.
 
 ## Not Authorized
 
@@ -79,6 +80,7 @@
 - AI Tool Factory.
 - White label.
 - Cadastro público e criação automática de vínculo.
+- Cadastro público, criação automática de vínculo ou configuração de provedor externo fora do contrato IAM-2.28.
 - Login por senha, login social, MFA e SSO empresarial.
 - RBAC ou administração além de `owner` e `member` para acesso.
 - Múltiplas organizações por identidade.
