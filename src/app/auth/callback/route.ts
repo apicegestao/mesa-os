@@ -5,6 +5,7 @@ import { safeNextPath } from "@/modules/identity-access/domain/auth";
 export async function GET(request: NextRequest) {
   const code = request.nextUrl.searchParams.get("code");
   const next = safeNextPath(request.nextUrl.searchParams.get("next"));
+  const providerError = request.nextUrl.searchParams.get("error_code");
 
   if (code) {
     const supabase = await createSupabaseServerClient();
@@ -12,5 +13,6 @@ export async function GET(request: NextRequest) {
     if (!error) return NextResponse.redirect(new URL(next, request.url));
   }
 
-  return NextResponse.redirect(new URL("/login?error=invalid-link", request.url));
+  const loginError = providerError === "signup_disabled" ? "signup-disabled" : "invalid-link";
+  return NextResponse.redirect(new URL(`/login?error=${loginError}`, request.url));
 }
