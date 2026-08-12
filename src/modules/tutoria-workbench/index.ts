@@ -7,5 +7,6 @@ export type { WorkbenchEntry, WorkbenchPayload, WorkbenchToolSpec } from "./tool
 export { loadWorkbenchWorkspace, parseWorkbenchSpec } from "./data";
 export type { WorkbenchWorkspace } from "./data";
 export { DreWorkbench } from "./dre-workbench";
+export { RaciWorkbench } from "./raci-workbench";
 export { buildDreExpertDelivery } from "./dre-delivery";
 export { buildDreExplanationPrompt, parseDreExplanation } from "./dre-explanation";
