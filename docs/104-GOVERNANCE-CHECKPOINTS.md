@@ -98,3 +98,11 @@ Este registro dá visibilidade ao owner sem transformar cada commit em uma aprov
 **Evidência de validação:** migration aplicada somente na homologação, presença das duas tabelas confirmada por consulta, Security Advisor sem alertas; 91 testes, lint, typecheck e build passaram.
 
 **Próximo recorte autorizado:** recuperação contextual mínima e auditável para uma finalidade específica do TutorIA, seguida de subpack próprio de retenção/direitos antes de qualquer memória derivada de conversa.
+
+## CP-08 — Proposta: contexto automático e aceite rastreável
+
+**Estado:** LEGAL REVIEW REQUIRED — 2026-08-12
+
+**Decisão:** o owner propôs eliminar confirmações por evento para o empresário. O produto pode automatizar contexto derivado de registros canônicos, mas aceite genérico não autoriza coleta ilimitada, retenção indefinida, chat bruto, dados sensíveis, treinamento ou decisão automática.
+
+**Gate:** antes de BUILD, o texto e a base legal precisam de revisão jurídica brasileira; o backoffice requer Definition Pack próprio de RBAC/MFA/auditoria. O RT-2.26 atual permanece somente com memória explicitamente confirmada.
