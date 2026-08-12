@@ -72,3 +72,15 @@ Este registro dá visibilidade ao owner sem transformar cada commit em uma aprov
 **Evidência de validação:** 24 testes dos workbenches passaram, assim como typecheck, lint do escopo e verificação de whitespace do diff.
 
 **Próximo recorte autorizado:** implementar a solicitação confirmada de exportação, geradores PDF/XLSX com identidade visual da Mesa dos Donos, armazenamento privado e trilha de auditoria; manter produção sem alteração até validação específica.
+
+## CP-06 — RT-2.25C: Exportação direta e auditável
+
+**Estado:** PASS EM HOMOLOGAÇÃO — 2026-08-12
+
+**Construído:** DRE, Mapa de Papéis e Decisões e Leitura SWOT podem gerar PDF ou XLSX somente após confirmação explícita. A rota exige sessão e vínculo ativo, valida o rascunho salvo e entrega o arquivo diretamente com `private, no-store`.
+
+**Privacidade e retenção:** o binário não é persistido, publicado ou compartilhado; sua retenção no servidor é zero. A auditoria guarda apenas organização, ferramenta, formato, resultado, tamanho e data — nunca o conteúdo da ferramenta.
+
+**Evidência de validação:** 25 testes dos workbenches, typecheck, lint e build passaram. A migration foi aplicada somente no Supabase de homologação e o Security Advisor não reportou alertas.
+
+**Pendente para promoção:** smoke autenticado em preview, inspeção do arquivo baixado e revisão integrada de segurança/privacidade. Produção permanece sem alteração.
