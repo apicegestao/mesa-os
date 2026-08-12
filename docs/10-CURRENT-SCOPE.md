@@ -56,6 +56,7 @@
 - TCM-2.26C — recuperação mínima, auditável e transparência/correção pelo membro.
 - TCM-2.26F — aviso específico v1, escolha no primeiro acesso, recibo verificável e política de elegibilidade por organização para contexto longitudinal do TutorIA.
 - TCM-2.26G — adaptador mínimo do diagnóstico concluído, idempotente e condicionado à elegibilidade vigente do sujeito.
+- TCM-2.26H — Termos de Uso únicos, versionados, com reaceite obrigatório e contexto longitudinal do TutorIA incorporado.
 
 ## Not Authorized
 

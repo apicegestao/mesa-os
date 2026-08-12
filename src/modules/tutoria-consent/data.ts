@@ -1,7 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/shared/infrastructure/supabase/database.types";
 
-export type TutorIAContextConsentState = {
+export type MesaOSTermsState = {
   documentVersionId: string;
   title: string;
   bodyMarkdown: string;
@@ -10,8 +10,8 @@ export type TutorIAContextConsentState = {
   automationEnabled: boolean;
 };
 
-export async function loadTutorIAContextConsentState(supabase: SupabaseClient<Database>): Promise<TutorIAContextConsentState | null> {
-  const { data, error } = await supabase.rpc("get_my_tutoria_context_consent_state");
+export async function loadMesaOSTermsState(supabase: SupabaseClient<Database>): Promise<MesaOSTermsState | null> {
+  const { data, error } = await supabase.rpc("get_my_mesa_os_terms_state");
   if (error || !data?.[0]) return null;
   const state = data[0];
   return {

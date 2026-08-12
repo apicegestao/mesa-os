@@ -1,4 +1,4 @@
 export { canDeriveTutorIAContext } from "./domain";
 export type { AutoContextEligibility } from "./domain";
-export { loadTutorIAContextConsentState, type TutorIAContextConsentState } from "./data";
-export { TutorIAContextConsentGate, TutorIAContextConsentPanel } from "./ui";
+export { loadMesaOSTermsState, type MesaOSTermsState } from "./data";
+export { MesaOSTermsGate, MesaOSTermsPanel } from "./ui";

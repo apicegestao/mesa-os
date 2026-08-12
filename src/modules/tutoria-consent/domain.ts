@@ -4,3 +4,7 @@ export function canDeriveTutorIAContext(input: AutoContextEligibility) { return 
 export function requiresTutorIAContextChoice(latestEvent: "accepted" | "withdrawn" | null) {
   return latestEvent === null;
 }
+
+export function requiresCurrentTermsAcceptance(latestEvent: "accepted" | "withdrawn" | null) {
+  return latestEvent !== "accepted";
+}

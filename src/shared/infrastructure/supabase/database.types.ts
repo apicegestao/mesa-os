@@ -1791,6 +1791,10 @@ export type Database = {
       }
     }
     Functions: {
+      accept_my_mesa_os_terms: {
+        Args: { target_document_version_id: string }
+        Returns: string
+      }
       activate_my_organization_tutoria_context: {
         Args: { target_document_version_id: string }
         Returns: string
@@ -1848,6 +1852,17 @@ export type Database = {
           title: string
         }[]
       }
+      get_my_mesa_os_terms_state: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          automation_enabled: boolean
+          body_markdown: string
+          content_sha256: string
+          document_version_id: string
+          latest_event: "accepted" | "withdrawn" | null
+          title: string
+        }[]
+      }
       start_cycle: { Args: { target_priority_id: string }; Returns: string }
       start_diagnostic: {
         Args: { target_revision_id: string }
@@ -1885,6 +1900,10 @@ export type Database = {
         Returns: Json
       }
       withdraw_my_tutoria_context_consent: {
+        Args: { target_document_version_id: string }
+        Returns: string
+      }
+      withdraw_my_mesa_os_tutoria_context: {
         Args: { target_document_version_id: string }
         Returns: string
       }

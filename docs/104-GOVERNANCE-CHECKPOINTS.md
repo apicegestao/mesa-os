@@ -144,3 +144,17 @@ Este registro dá visibilidade ao owner sem transformar cada commit em uma aprov
 **Evidência de validação:** trigger conferida no banco de homologação, Security Advisor sem alertas e 93 testes, lint, typecheck e build passaram.
 
 **Próximo recorte permitido:** avaliar um adaptador equivalente para ciclo e Missão somente após a inspeção autenticada deste primeiro fluxo em preview. Não promover produção sem smoke e aprovação consolidada.
+
+## CP-12 — RT-2.26H: Termos únicos e reaceite temporal
+
+**Estado:** PASS EM HOMOLOGAÇÃO — 2026-08-12
+
+**Decisão:** o controlador autorizou um único Termo de Uso no primeiro acesso. A seção de contexto longitudinal do TutorIA é parte do mesmo texto e do mesmo recibo de aceite.
+
+**Construído:** `mesa_os_terms` v1 foi publicado com hash verificável. A área autenticada só é liberada para quem aceitou a versão atual. O aceite do owner ativa a política organizacional correspondente; a retirada mantém o acesso aos registros, mas interrompe novas derivações automáticas.
+
+**Atualizações seguras:** uma nova versão recebe outro número, conteúdo e hash, enquanto a anterior é retirada de publicação. O carregamento sempre consulta a versão publicada; por isso um aceite anterior não libera a versão nova. Todos os recibos anteriores permanecem no histórico.
+
+**Proteções preservadas:** não existe editor livre de Termos, alteração silenciosa, chat bruto, dados sensíveis, treinamento de modelo, dados entre organizações ou alteração de produção.
+
+**Evidência de validação:** hash do Termo v1 conferido no banco, Security Advisor sem alertas e 94 testes, lint, typecheck e build passaram.
