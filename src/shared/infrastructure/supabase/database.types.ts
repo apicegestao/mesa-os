@@ -14,6 +14,18 @@ export type Database = {
   }
   public: {
     Tables: {
+      legal_document_acceptances: {
+        Row: { created_at: string; document_sha256: string; document_version_id: string; event: "accepted" | "withdrawn"; id: string; identity_id: string; organization_id: string }
+        Insert: { created_at?: string; document_sha256: string; document_version_id: string; event: "accepted" | "withdrawn"; id?: string; identity_id: string; organization_id: string }
+        Update: { created_at?: string; document_sha256?: string; document_version_id?: string; event?: "accepted" | "withdrawn"; id?: string; identity_id?: string; organization_id?: string }
+        Relationships: []
+      }
+      legal_document_versions: {
+        Row: { body_markdown: string; code: string; content_sha256: string; created_at: string; id: string; locale: string; published_at: string | null; status: "draft" | "published" | "retired"; title: string; version: number }
+        Insert: { body_markdown: string; code: string; content_sha256: string; created_at?: string; id?: string; locale?: string; published_at?: string | null; status?: "draft" | "published" | "retired"; title: string; version: number }
+        Update: { body_markdown?: string; code?: string; content_sha256?: string; created_at?: string; id?: string; locale?: string; published_at?: string | null; status?: "draft" | "published" | "retired"; title?: string; version?: number }
+        Relationships: []
+      }
       cycles: {
         Row: {
           completed_at: string | null

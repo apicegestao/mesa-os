@@ -180,3 +180,11 @@ Este registro dá visibilidade ao owner sem transformar cada commit em uma aprov
 **Proteções preservadas:** memórias livres do membro, chat bruto, ferramentas, evidências, dados sensíveis e dados de outra organização não entram no prompt. A nova leitura é somente de consulta e não escreve nem altera a jornada.
 
 **Evidência de validação:** catálogo de tools ampliado de modo explícito, enum de banco conferido, Security Advisor sem alertas e 94 testes, lint, typecheck e build passaram.
+
+## CP-15 — RT-2.26K: recibos visíveis ao membro
+
+**Estado:** PASS LOCAL — 2026-08-12
+
+**Construído:** em Conta e segurança, o membro visualiza seu próprio histórico de aceite e retirada: evento, título, versão, data/hora e hash do documento. A leitura usa as políticas RLS existentes e não inclui recibos de outra identidade.
+
+**Evidência de validação:** typecheck, lint, 94 testes e build passaram. Não houve migration, deploy ou alteração de produção.
