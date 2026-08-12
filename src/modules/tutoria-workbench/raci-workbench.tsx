@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { saveWorkbenchDraft } from "./actions";
 import type { WorkbenchEntry, WorkbenchPayload } from "./tool-spec";
 import type { WorkbenchWorkspace } from "./data";
+import { DocumentPreviewCard } from "./document-preview-card";
 
 const emptyRole = (): WorkbenchEntry => ({ role_name: "", expected_result: "", responsibilities: "", decision_rights: "" });
 
@@ -27,5 +28,6 @@ export function RaciWorkbench({ workspace }: { workspace: WorkbenchWorkspace }) 
     <div className="raci-role-list">{roles.map((role, index) => <fieldset key={index} className="raci-role-card"><legend>Papel {index + 1}</legend>{entryFields.map((entryField) => <label key={entryField.code}><span>{entryField.label} *</span><textarea value={role[entryField.code] ?? ""} maxLength={entryField.maxLength} onChange={(event) => update(index, entryField.code, event.target.value)} /></label>)}<button type="button" className="button-secondary" onClick={() => remove(index)} disabled={pending || roles.length === 1}>Remover papel</button></fieldset>)}</div>
     <div className="tutoria-workbench-actions"><button type="button" className="button-secondary" onClick={() => setRoles((current) => current.length < (field.maxEntries ?? 20) ? [...current, emptyRole()] : current)} disabled={pending || roles.length >= (field.maxEntries ?? 20)}>Adicionar papel</button><button type="button" onClick={save} disabled={pending}>{pending ? "Salvando…" : "Salvar mapa de papéis"}</button></div>
     {message && <p className="tutoria-state" role="status">{message}</p>}
+    <DocumentPreviewCard workspace={{ ...workspace, payload: { roles } }} />
   </section>;
 }

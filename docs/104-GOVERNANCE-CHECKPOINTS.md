@@ -58,3 +58,17 @@ Este registro dá visibilidade ao owner sem transformar cada commit em uma aprov
 **Aplicação inicial:** a análise especializada de DRE passa a suportar até 1.200 tokens de saída, com custo máximo estimado de US$ 0,00372 por chamada em homologação. Quando a profundidade necessária superar a capacidade autorizada, a resposta deve preservar a camada factual, pedir contexto, oferecer aprofundamento posterior ou escalar — nunca improvisar uma conclusão.
 
 **Proteções preservadas:** o orçamento mensal do membro continua sendo a principal barreira; rate limit continua voltado a abuso/uso massivo; pedidos empresariais legítimos não são bloqueados por conteúdo.
+
+## CP-05 — RT-2.25: Prévia canônica de documentos
+
+**Estado:** PASS — 2026-08-12
+
+**Objetivo:** permitir que cada ferramenta apresente ao membro a origem e o conteúdo resumido do seu documento antes de qualquer exportação.
+
+**Construído:** DRE, Mapa de Papéis e Decisões (RACI) e Leitura SWOT agora exibem uma prévia canônica com marca Mesa dos Donos, versão da ferramenta, resultado metodológico de origem, estado de rascunho e seções que comporão PDF/XLSX.
+
+**Garantias:** a prévia é derivada exclusivamente do rascunho isolado da organização e não cria arquivo, link público, retenção ou compartilhamento. A exportação ainda exigirá confirmação explícita, auditoria e controles de acesso próprios.
+
+**Evidência de validação:** 24 testes dos workbenches passaram, assim como typecheck, lint do escopo e verificação de whitespace do diff.
+
+**Próximo recorte autorizado:** implementar a solicitação confirmada de exportação, geradores PDF/XLSX com identidade visual da Mesa dos Donos, armazenamento privado e trilha de auditoria; manter produção sem alteração até validação específica.

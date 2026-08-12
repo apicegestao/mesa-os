@@ -11,5 +11,6 @@ export { RaciWorkbench } from "./raci-workbench";
 export { SwotWorkbench } from "./swot-workbench";
 export { buildMesaDocumentPreview } from "./document-preview";
 export type { MesaDocumentPreview } from "./document-preview";
+export { DocumentPreviewCard } from "./document-preview-card";
 export { buildDreExpertDelivery } from "./dre-delivery";
 export { buildDreExplanationPrompt, parseDreExplanation } from "./dre-explanation";
