@@ -1664,6 +1664,23 @@ export type Database = {
           },
         ]
       }
+      workbench_tool_instances: {
+        Row: { created_at: string; created_by: string; id: string; organization_id: string; payload: Json; status: string; tool_revision_id: string; updated_at: string; updated_by: string }
+        Insert: { created_at?: string; created_by: string; id?: string; organization_id: string; payload: Json; status?: string; tool_revision_id: string; updated_at?: string; updated_by: string }
+        Update: { created_at?: string; created_by?: string; id?: string; organization_id?: string; payload?: Json; status?: string; tool_revision_id?: string; updated_at?: string; updated_by?: string }
+        Relationships: [
+          { foreignKeyName: "workbench_tool_instances_created_by_fkey"; columns: ["created_by"]; isOneToOne: false; referencedRelation: "identities"; referencedColumns: ["id"] },
+          { foreignKeyName: "workbench_tool_instances_organization_id_fkey"; columns: ["organization_id"]; isOneToOne: false; referencedRelation: "organizations"; referencedColumns: ["id"] },
+          { foreignKeyName: "workbench_tool_instances_tool_revision_id_fkey"; columns: ["tool_revision_id"]; isOneToOne: false; referencedRelation: "workbench_tool_revisions"; referencedColumns: ["id"] },
+          { foreignKeyName: "workbench_tool_instances_updated_by_fkey"; columns: ["updated_by"]; isOneToOne: false; referencedRelation: "identities"; referencedColumns: ["id"] },
+        ]
+      }
+      workbench_tool_revisions: {
+        Row: { code: string; created_at: string; id: string; methodology_outcome_id: string; spec: Json; status: string; title: string; version: number }
+        Insert: { code: string; created_at?: string; id?: string; methodology_outcome_id: string; spec: Json; status: string; title: string; version: number }
+        Update: { code?: string; created_at?: string; id?: string; methodology_outcome_id?: string; spec?: Json; status?: string; title?: string; version?: number }
+        Relationships: [{ foreignKeyName: "workbench_tool_revisions_methodology_outcome_id_fkey"; columns: ["methodology_outcome_id"]; isOneToOne: false; referencedRelation: "development_outcomes"; referencedColumns: ["id"] }]
+      }
       tutoria_context_audits: {
         Row: { absent_fields: string[]; actor_identity_id: string; created_at: string; id: string; organization_id: string; purpose: Database["public"]["Enums"]["tutoria_context_purpose"]; source_codes: string[] }
         Insert: { absent_fields?: string[]; actor_identity_id: string; created_at?: string; id?: string; organization_id: string; purpose: Database["public"]["Enums"]["tutoria_context_purpose"]; source_codes?: string[] }
@@ -1787,6 +1804,10 @@ export type Database = {
       }
       save_mission_tool_draft: {
         Args: { submitted_payload: Json; target_mission_id: string }
+        Returns: string
+      }
+      save_workbench_tool_draft: {
+        Args: { submitted_payload: Json; target_tool_revision_id: string }
         Returns: string
       }
       start_cycle: { Args: { target_priority_id: string }; Returns: string }

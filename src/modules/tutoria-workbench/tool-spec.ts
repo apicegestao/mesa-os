@@ -25,6 +25,7 @@ export const workbenchToolSpecSchema = z.object({
 });
 
 export type WorkbenchToolSpec = z.infer<typeof workbenchToolSpecSchema>;
+export type WorkbenchPayload = Record<string, string | number | null>;
 
 export const DRE_WORKBENCH_SPEC: WorkbenchToolSpec = {
   code: "dre_management_v1",
@@ -47,4 +48,20 @@ export const DRE_WORKBENCH_SPEC: WorkbenchToolSpec = {
 export function validateWorkbenchToolSpec(input: unknown): { valid: true; spec: WorkbenchToolSpec } | { valid: false; reason: string } {
   const parsed = workbenchToolSpecSchema.safeParse(input);
   return parsed.success ? { valid: true, spec: parsed.data } : { valid: false, reason: parsed.error.issues[0]?.message ?? "invalid_tool_spec" };
+}
+
+export function validateWorkbenchPayload(spec: WorkbenchToolSpec, input: unknown): { valid: true; payload: WorkbenchPayload } | { valid: false; reason: string } {
+  if (!input || typeof input !== "object" || Array.isArray(input)) return { valid: false, reason: "invalid_payload" };
+  const payload = input as Record<string, unknown>;
+  const allowed = new Map(spec.fields.map((field) => [field.code, field]));
+  for (const [code, value] of Object.entries(payload)) {
+    const field = allowed.get(code);
+    if (!field) return { valid: false, reason: `unsupported_field:${code}` };
+    if (value !== null && typeof value !== "string" && typeof value !== "number") return { valid: false, reason: `invalid_value:${code}` };
+    if (["money", "percentage", "number"].includes(field.kind) && value !== null && (typeof value !== "number" || !Number.isFinite(value))) return { valid: false, reason: `numeric_value_required:${code}` };
+    if (field.kind === "date" && value !== null && (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value))) return { valid: false, reason: `date_value_required:${code}` };
+    if (field.kind === "choice" && value !== null && (typeof value !== "string" || !field.choices?.includes(value))) return { valid: false, reason: `choice_value_required:${code}` };
+  }
+  for (const field of spec.fields) if (field.required && (payload[field.code] === undefined || payload[field.code] === null || payload[field.code] === "")) return { valid: false, reason: `required_field:${field.code}` };
+  return { valid: true, payload: payload as WorkbenchPayload };
 }

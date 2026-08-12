@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DRE_WORKBENCH_SPEC, validateWorkbenchToolSpec } from "./tool-spec";
+import { DRE_WORKBENCH_SPEC, validateWorkbenchPayload, validateWorkbenchToolSpec } from "./tool-spec";
 
 describe("TutorIA workbench tool specification", () => {
   it("defines a versioned DRE with structured inputs and exports", () => {
@@ -12,5 +12,10 @@ describe("TutorIA workbench tool specification", () => {
 
   it("requires options for a selectable field", () => {
     expect(validateWorkbenchToolSpec({ ...DRE_WORKBENCH_SPEC, fields: [{ code: "priority", label: "Prioridade", kind: "choice", required: true }] })).toEqual({ valid: false, reason: "choice_requires_options" });
+  });
+
+  it("accepts only structured values compatible with the published tool", () => {
+    expect(validateWorkbenchPayload(DRE_WORKBENCH_SPEC, { period: "2026-08-01", revenue: 100_000, variable_costs: 40_000, fixed_costs: 20_000, operating_expenses: 30_000 })).toEqual({ valid: true, payload: { period: "2026-08-01", revenue: 100_000, variable_costs: 40_000, fixed_costs: 20_000, operating_expenses: 30_000 } });
+    expect(validateWorkbenchPayload(DRE_WORKBENCH_SPEC, { period: "agosto", revenue: 100_000, variable_costs: 40_000, fixed_costs: 20_000, operating_expenses: 30_000 })).toEqual({ valid: false, reason: "date_value_required:period" });
   });
 });
