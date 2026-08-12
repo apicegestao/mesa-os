@@ -9,6 +9,7 @@ describe("DRE workbench", () => {
     expect(screen.getByRole("heading", { name: "DRE gerencial" })).toBeInTheDocument();
     expect(screen.getByText("Receita líquida *")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Salvar rascunho" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Analisar DRE com a TutorIA" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Ver leitura verificável" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Aprofundar com a TutorIA" })).toBeInTheDocument();
   });
 });

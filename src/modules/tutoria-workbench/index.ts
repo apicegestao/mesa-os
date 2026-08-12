@@ -8,3 +8,4 @@ export { loadWorkbenchWorkspace, parseWorkbenchSpec } from "./data";
 export type { WorkbenchWorkspace } from "./data";
 export { DreWorkbench } from "./dre-workbench";
 export { buildDreExpertDelivery } from "./dre-delivery";
+export { buildDreExplanationPrompt, parseDreExplanation } from "./dre-explanation";
