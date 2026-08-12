@@ -77,7 +77,7 @@ Este registro dá visibilidade ao owner sem transformar cada commit em uma aprov
 
 **Estado:** PASS EM HOMOLOGAÇÃO — 2026-08-12
 
-**Construído:** DRE, Mapa de Papéis e Decisões e Leitura SWOT podem gerar PDF ou XLSX somente após confirmação explícita. A rota exige sessão e vínculo ativo, valida o rascunho salvo e entrega o arquivo diretamente com `private, no-store`.
+**Construído:** DRE, Mapa de Papéis e Decisões e Leitura SWOT podem gerar PDF ou XLSX somente após confirmação explícita. A rota exige sessão e vínculo ativo, valida o rascunho salvo e entrega o arquivo diretamente com `private, no-store`. Todos os campos estruturados são carregados no arquivo; uma nova geração sempre reflete o rascunho atual.
 
 **Privacidade e retenção:** o binário não é persistido, publicado ou compartilhado; sua retenção no servidor é zero. A auditoria guarda apenas organização, ferramenta, formato, resultado, tamanho e data — nunca o conteúdo da ferramenta.
 
