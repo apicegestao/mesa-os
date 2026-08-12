@@ -161,3 +161,12 @@ O frontend usa somente publishable key. Chaves secret/service-role ficam exclusi
 - Chat bruto não constitui memória canônica. Memórias estruturadas preservam fonte, confiança, validade, escopo e histórico de correção.
 - Qualquer aprendizado coletivo exige agregação, desidentificação e aprovação explícita de governança; conteúdo bruto de clientes não é reutilizado como base de outra organização.
 - Proatividade e autonomia permanecem mediadas por política, consentimento, risco, confiança, canal e auditoria.
+
+## ADR-040 — Governed delivery checkpoints
+
+**Status:** ACCEPTED
+
+- Todo incremento material passa por checkpoint registrado antes do BUILD, promoção ou decisão de escopo.
+- O checkpoint reconcilia a conversa fonte `Mesa OS V2` com Constitution, Scope, ADRs, Definition Pack e estado real do repositório.
+- Checkpoints de execução não criam aprovações artificiais; decisões de escopo, risco, custo ou promoção continuam exigindo autorização explícita do owner.
+- Conflito, lacuna material, decisão `FROZEN` ou risco de isolamento interrompem o BUILD para reconciliação documentada.
