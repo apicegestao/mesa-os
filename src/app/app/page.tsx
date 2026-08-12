@@ -17,6 +17,7 @@ import { lowestCandidates } from "@/modules/priority/domain/priority";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 import { buildTutorIAMemberState, buildTutorIAMethodologySummary, recordTutorIAReadGateway } from "@/modules/tutoria-foundation";
 import { AIBudgetGovernance, loadMemberAIBudgetPolicy } from "@/modules/ai-budget";
+import { DreWorkbench, loadWorkbenchWorkspace } from "@/modules/tutoria-workbench";
 
 export const dynamic = "force-dynamic";
 
@@ -52,6 +53,7 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
   const evidenceRecords = await loadEvidenceRecords(supabase, membership.organization_id, cycle?.id);
   const measurements = await loadMeasurementProjection(supabase, membership.organization_id);
   const methodologyMap = await loadPublishedMethodologyMap(supabase);
+  const dreWorkbench = await loadWorkbenchWorkspace(supabase, "dre_management_v1");
   const organizationName = organization?.name ?? "Sua empresa";
   const aiBudgetPolicies = activeView === "account" ? await loadMemberAIBudgetPolicy(supabase, membership.organization_id) : [];
   if (activeView === "today") {
@@ -107,7 +109,7 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
   const completedSteps = progressSteps.filter((step) => step.complete).length;
   const progress = Math.round((completedSteps / progressSteps.length) * 100);
 
-  return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout} progress={progress} activeView={activeView}>
+  return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout} progress={progress} activeView={activeView} tutoriaWorkbench={dreWorkbench ? <DreWorkbench workspace={dreWorkbench} /> : undefined}>
     {activeView === "today" && <><MemberHome memberName={memberName} nextAction={nextAction} cycle={cycle} priorityLabel={priority?.dimension_label} missionTitle={availableMission?.title} completedSteps={completedSteps} totalSteps={progressSteps.length} /><MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} /></>}
     {activeView === "journey" && <><JourneyProgress steps={progressSteps} />
     <section id="jornada" className="experience-section journey-section" aria-labelledby="journey-title">

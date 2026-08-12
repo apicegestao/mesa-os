@@ -3,7 +3,7 @@ import { TutorIAAssistant } from "@/modules/tutoria-guidance";
 
 export type MemberView = "today" | "journey" | "diagnostics" | "evidence" | "evolution" | "account";
 
-export function AppChrome({ organizationName, memberName, logoutAction, progress = 0, activeView = "today", children }: { organizationName: string; memberName?: string; logoutAction: () => Promise<void>; progress?: number; activeView?: MemberView; children: ReactNode }) {
+export function AppChrome({ organizationName, memberName, logoutAction, progress = 0, activeView = "today", children, tutoriaWorkbench }: { organizationName: string; memberName?: string; logoutAction: () => Promise<void>; progress?: number; activeView?: MemberView; children: ReactNode; tutoriaWorkbench?: ReactNode }) {
   const initials = (memberName ?? "Membro").split(/\s+/).slice(0, 2).map((part) => part[0]).join("").toUpperCase();
   return <div className="experience-shell">
     <aside className="experience-sidebar">
@@ -18,7 +18,7 @@ export function AppChrome({ organizationName, memberName, logoutAction, progress
     <div className="experience-main">
       <header className="experience-topbar"><div><small>{organizationName.toUpperCase()} · TRIMESTRE 01</small><strong>{{ today: "Visão de hoje", journey: "Jornada", diagnostics: "Diagnósticos", evidence: "Evidências", evolution: "Evolução", account: "Conta e segurança" }[activeView]}</strong></div><div className="topbar-account"><span className="member-chip">Membro</span><form action={logoutAction}><button type="submit" className="header-action">Sair</button></form><a className="topbar-avatar" href="/app?view=account" aria-label="Abrir conta e segurança">{initials}</a></div></header>
       <main className="experience-content">{children}</main>
-      <a className="floating-tutoria" href="#tutoria-assistant"><span>T</span><strong>TutorIA</strong></a><TutorIAAssistant />
+      <a className="floating-tutoria" href="#tutoria-assistant"><span>T</span><strong>TutorIA</strong></a><TutorIAAssistant workbench={tutoriaWorkbench} />
     </div>
   </div>;
 }

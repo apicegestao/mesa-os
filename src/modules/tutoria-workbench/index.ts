@@ -6,3 +6,4 @@ export { DRE_WORKBENCH_SPEC, validateWorkbenchPayload, validateWorkbenchToolSpec
 export type { WorkbenchPayload, WorkbenchToolSpec } from "./tool-spec";
 export { loadWorkbenchWorkspace, parseWorkbenchSpec } from "./data";
 export type { WorkbenchWorkspace } from "./data";
+export { DreWorkbench } from "./dre-workbench";
