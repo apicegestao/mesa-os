@@ -2,7 +2,7 @@ export { analyzeDre } from "./dre-analysis";
 export type { DreFinding, DrePeriod, DreSpecialistAnalysis } from "./dre-analysis";
 export { expertDeliverySchema, validateExpertDelivery } from "./expert-delivery";
 export type { ExpertDelivery } from "./expert-delivery";
-export { DRE_WORKBENCH_SPEC, RACI_WORKBENCH_SPEC, validateWorkbenchPayload, validateWorkbenchToolSpec, workbenchToolSpecSchema } from "./tool-spec";
+export { DRE_WORKBENCH_SPEC, RACI_WORKBENCH_SPEC, SWOT_WORKBENCH_SPEC, validateWorkbenchPayload, validateWorkbenchToolSpec, workbenchToolSpecSchema } from "./tool-spec";
 export type { WorkbenchEntry, WorkbenchPayload, WorkbenchToolSpec } from "./tool-spec";
 export { loadWorkbenchWorkspace, parseWorkbenchSpec } from "./data";
 export type { WorkbenchWorkspace } from "./data";

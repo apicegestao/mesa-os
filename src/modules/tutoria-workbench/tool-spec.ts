@@ -67,6 +67,16 @@ export const RACI_WORKBENCH_SPEC: WorkbenchToolSpec = {
   analysisDimensions: ["clareza de papéis", "responsabilidade", "direitos de decisão", "dependência do dono"], exportFormats: ["pdf", "xlsx"],
 };
 
+export const SWOT_WORKBENCH_SPEC: WorkbenchToolSpec = {
+  code: "swot_strategic_reading_v1", version: 1, title: "Leitura estratégica SWOT", methodologyOutcomeCode: "t1_marketing_sales_funnel_value",
+  fields: [
+    { code: "strengths", label: "Forças", kind: "entries", required: true, minEntries: 1, maxEntries: 12, entryFields: [{ code: "insight", label: "Força observável", required: true, maxLength: 300 }, { code: "evidence", label: "Evidência ou exemplo", required: true, maxLength: 600 }] },
+    { code: "weaknesses", label: "Fraquezas", kind: "entries", required: true, minEntries: 1, maxEntries: 12, entryFields: [{ code: "insight", label: "Fragilidade observável", required: true, maxLength: 300 }, { code: "evidence", label: "Evidência ou exemplo", required: true, maxLength: 600 }] },
+    { code: "opportunities", label: "Oportunidades", kind: "entries", required: true, minEntries: 1, maxEntries: 12, entryFields: [{ code: "insight", label: "Oportunidade concreta", required: true, maxLength: 300 }, { code: "evidence", label: "Sinal ou fonte", required: true, maxLength: 600 }] },
+    { code: "threats", label: "Ameaças", kind: "entries", required: true, minEntries: 1, maxEntries: 12, entryFields: [{ code: "insight", label: "Risco externo", required: true, maxLength: 300 }, { code: "evidence", label: "Sinal ou fonte", required: true, maxLength: 600 }] },
+  ], analysisDimensions: ["ambiente interno", "ambiente externo", "prioridades estratégicas", "riscos"], exportFormats: ["pdf", "xlsx"],
+};
+
 export function validateWorkbenchToolSpec(input: unknown): { valid: true; spec: WorkbenchToolSpec } | { valid: false; reason: string } {
   const parsed = workbenchToolSpecSchema.safeParse(input);
   return parsed.success ? { valid: true, spec: parsed.data } : { valid: false, reason: parsed.error.issues[0]?.message ?? "invalid_tool_spec" };
