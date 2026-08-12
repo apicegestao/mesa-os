@@ -18,6 +18,7 @@ import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/ser
 import { buildTutorIAMemberState, buildTutorIAMethodologySummary, recordTutorIAReadGateway } from "@/modules/tutoria-foundation";
 import { AIBudgetGovernance, loadMemberAIBudgetPolicy } from "@/modules/ai-budget";
 import { DreWorkbench, loadWorkbenchWorkspace, RaciWorkbench, SwotWorkbench } from "@/modules/tutoria-workbench";
+import { loadMyTutorIAMemories, TutorIAMemoryPanel } from "@/modules/tutoria-memory";
 
 export const dynamic = "force-dynamic";
 
@@ -58,6 +59,7 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
   const swotWorkbench = await loadWorkbenchWorkspace(supabase, "swot_strategic_reading_v1");
   const organizationName = organization?.name ?? "Sua empresa";
   const aiBudgetPolicies = activeView === "account" ? await loadMemberAIBudgetPolicy(supabase, membership.organization_id) : [];
+  const tutorMemories = activeView === "account" ? await loadMyTutorIAMemories(supabase) : [];
   if (activeView === "today") {
     const tutorMemberState = buildTutorIAMemberState({
       hasDiagnosticWorkspace: Boolean(workspace), hasPriority: Boolean(priority), hasActiveCycle: Boolean(cycle), hasAvailableMission: Boolean(availableMission), hasSubmittedEvidence: evidenceRecords.length > 0,
@@ -83,7 +85,7 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
       {activeView === "diagnostics" && <DiagnosticsOverview workspace={workspace} diagnosticContent={<DiagnosticExperience initialWorkspace={workspace} />} />}
       {activeView === "evidence" && <EvidenceOverview implementation={null} evidenceSubmitted={false} />}
       {activeView === "evolution" && <EvolutionProjection diagnosticComplete={false} result={null} completedSteps={0} totalSteps={8} evidenceSubmitted={false} />}
-      {activeView === "account" && <section className="account-page"><header className="records-heading"><p className="eyebrow">Sistema</p><h1>Conta e segurança</h1><p>Gerencie sua forma de acesso ao Mesa OS.</p></header><PasswordSetup /><AIBudgetGovernance policies={aiBudgetPolicies} /></section>}
+      {activeView === "account" && <section className="account-page"><header className="records-heading"><p className="eyebrow">Sistema</p><h1>Conta e segurança</h1><p>Gerencie sua forma de acesso ao Mesa OS.</p></header><PasswordSetup /><TutorIAMemoryPanel memories={tutorMemories} /><AIBudgetGovernance policies={aiBudgetPolicies} /></section>}
     </AppChrome>;
   }
 
@@ -124,7 +126,7 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
     {activeView === "evidence" && <EvidenceOverview implementation={coreLoopWorkspace?.implementation ?? null} evidenceSubmitted={Boolean(coreLoopWorkspace?.evidenceSubmitted)} evidenceStatus={coreLoopWorkspace?.evidenceStatus} records={evidenceRecords} missionTitle={availableMission?.title} pillarLabel={priority?.dimension_label} />}
     {activeView === "diagnostics" && <DiagnosticsOverview workspace={workspace} diagnosticContent={<DiagnosticResult workspace={workspace} />} />}
     {activeView === "evolution" && <EvolutionProjection diagnosticComplete result={workspace.result} completedSteps={completedSteps} totalSteps={progressSteps.length} evidenceSubmitted={Boolean(coreLoopWorkspace?.evidenceSubmitted)} measurements={measurements} />}
-    {activeView === "account" && <section className="account-page"><header className="records-heading"><p className="eyebrow">Sistema</p><h1>Conta e segurança</h1><p>Gerencie sua forma de acesso ao Mesa OS.</p></header><PasswordSetup /><AIBudgetGovernance policies={aiBudgetPolicies} /></section>}
+    {activeView === "account" && <section className="account-page"><header className="records-heading"><p className="eyebrow">Sistema</p><h1>Conta e segurança</h1><p>Gerencie sua forma de acesso ao Mesa OS.</p></header><PasswordSetup /><TutorIAMemoryPanel memories={tutorMemories} /><AIBudgetGovernance policies={aiBudgetPolicies} /></section>}
   </AppChrome>;
 }
 

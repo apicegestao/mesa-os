@@ -87,10 +87,14 @@ Este registro dá visibilidade ao owner sem transformar cada commit em uma aprov
 
 ## CP-07 — Próximo escopo: contexto longitudinal e memória governada
 
-**Estado:** AWAITING OWNER APPROVAL — 2026-08-12
+**Estado:** PASS — PRIMEIRA FATIA EM HOMOLOGAÇÃO — 2026-08-12
 
 **Decisão reconciliada:** a conversa `Mesa OS V2` e ADR-039 exigem que o TutorIA se beneficie da trajetória do membro, mas determinam que chat bruto não é memória e que qualquer aprendizado coletivo é agregado, desidentificado e aprovado.
 
-**Proposta:** RT-2.26 cria continuidade entre ciclos, memória estruturada confirmável/corrigível pelo membro e recuperação contextual mínima. Mesa OS Intelligence fica em plano separado e agregado; não terá acesso operacional a dados identificáveis neste incremento.
+**Construído:** a primeira fatia do RT-2.26 cria memória explicitamente confirmada pelo membro, isolada por organização e sujeito, com tipo, confiança, validade, estado, origem e revisões imutáveis. Em Conta e segurança, o membro pode registrar, corrigir e invalidar seu próprio contexto.
 
-**Gate:** a implementação só começa após aprovação do Definition Pack RT-2.26 e definição formal de retenção, direitos do membro, consentimento e papel interno.
+**Proteções preservadas:** chat bruto não é persistido, não há extração automática de memória, a IA ainda não recupera essas memórias em chamadas, e Mesa OS Intelligence não recebeu acesso a dados identificáveis.
+
+**Evidência de validação:** migration aplicada somente na homologação, presença das duas tabelas confirmada por consulta, Security Advisor sem alertas; 91 testes, lint, typecheck e build passaram.
+
+**Próximo recorte autorizado:** recuperação contextual mínima e auditável para uma finalidade específica do TutorIA, seguida de subpack próprio de retenção/direitos antes de qualquer memória derivada de conversa.

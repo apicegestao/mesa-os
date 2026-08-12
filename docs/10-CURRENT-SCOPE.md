@@ -1,7 +1,7 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** RT-2.25 — TutorIA Workbench e Documentos
+**Sprint:** RT-2.26 — Contexto Longitudinal do Membro
 **Mode:** BUILD
 **Status:** IN PROGRESS — APPROVED FOR BUILD
 
@@ -51,6 +51,9 @@
 - TWR-2.25B — workbench estruturado para ferramentas explicitamente autorizadas pelo Mapa de Desenvolvimento.
 - TWR-2.25C — prévia e exportação governada de PDF/XLSX com identidade Mesa dos Donos.
 - TWR-2.25D — roteamento server-side de modelos com custo, retenção, isolamento e auditoria.
+- TCM-2.26A — fonte de verdade longitudinal por organização e ciclo, sem reescrita de histórico.
+- TCM-2.26B — memória estruturada, confirmável e versionada do TutorIA; sem chat bruto.
+- TCM-2.26C — recuperação mínima, auditável e transparência/correção pelo membro.
 
 ## Not Authorized
 
@@ -72,7 +75,7 @@
 - Edição administrativa da metodologia.
 - Reabertura, invalidação ou sobrescrita de resultado concluído.
 - Participação colaborativa ou submissão por `member` neste primeiro incremento.
-- Modelo, provedor, prompt, chat, memória conversacional, RAG, autonomia decisória ou desempate automático do TutorIA.
+- Chat bruto, memória automática derivada de conversa, RAG, embeddings, fine-tuning, autonomia decisória ou desempate automático do TutorIA.
 - Escolha humana em caso de empate no menor score.
 - Seleção de dimensão diferente da única menor candidata.
 - Alteração, substituição, cancelamento ou segunda prioridade.

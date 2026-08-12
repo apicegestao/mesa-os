@@ -1,6 +1,6 @@
 # Definition Pack — RT-2.26 Contexto Longitudinal do Membro
 
-**Status:** DRAFT — requer aprovação explícita antes de BUILD
+**Status:** APPROVED — owner approval recorded on 2026-08-12
 
 ## Decisão de produto recuperada
 
@@ -71,6 +71,6 @@ Não haverá fine-tuning com dados de membros na primeira fase. Melhorias do Tut
 5. Mesa OS Intelligence só trabalha com dados agregados, desidentificados e sujeitos a supressão de grupos pequenos.
 6. Testes provam isolamento, autorização, versionamento, expiração, correção e ausência de vazamento entre organizações.
 
-## Decisão solicitada
+## Autorização de BUILD
 
-Aprovar o RT-2.26 para detalhar o modelo de dados, retenção, direitos do membro, política de consentimento e primeiro incremento de contexto longitudinal em homologação — sem ativar memória automática, inteligência interna ou produção.
+O BUILD inicia pela fonte de verdade longitudinal e pelo contrato de memória confirmável. Ativação de memória automática, inteligência interna, comunicação externa e produção continuam bloqueadas.

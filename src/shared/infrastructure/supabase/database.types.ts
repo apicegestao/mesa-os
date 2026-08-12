@@ -1687,6 +1687,18 @@ export type Database = {
         Update: { absent_fields?: string[]; actor_identity_id?: string; created_at?: string; id?: string; organization_id?: string; purpose?: Database["public"]["Enums"]["tutoria_context_purpose"]; source_codes?: string[] }
         Relationships: []
       }
+      tutoria_member_memories: {
+        Row: { confidence: number; content: string; created_at: string; created_by: string; id: string; kind: Database["public"]["Enums"]["tutoria_memory_kind"]; organization_id: string; source_kind: string; state: Database["public"]["Enums"]["tutoria_memory_state"]; subject_identity_id: string; updated_at: string; updated_by: string; valid_from: string; valid_until: string | null; version: number }
+        Insert: { confidence?: number; content: string; created_at?: string; created_by: string; id?: string; kind: Database["public"]["Enums"]["tutoria_memory_kind"]; organization_id: string; source_kind?: string; state?: Database["public"]["Enums"]["tutoria_memory_state"]; subject_identity_id: string; updated_at?: string; updated_by: string; valid_from?: string; valid_until?: string | null; version?: number }
+        Update: { confidence?: number; content?: string; created_at?: string; created_by?: string; id?: string; kind?: Database["public"]["Enums"]["tutoria_memory_kind"]; organization_id?: string; source_kind?: string; state?: Database["public"]["Enums"]["tutoria_memory_state"]; subject_identity_id?: string; updated_at?: string; updated_by?: string; valid_from?: string; valid_until?: string | null; version?: number }
+        Relationships: []
+      }
+      tutoria_member_memory_revisions: {
+        Row: { change_kind: string; changed_by: string; confidence: number; content: string; created_at: string; id: string; kind: Database["public"]["Enums"]["tutoria_memory_kind"]; memory_id: string; organization_id: string; state: Database["public"]["Enums"]["tutoria_memory_state"]; subject_identity_id: string; valid_until: string | null; version: number }
+        Insert: { change_kind: string; changed_by: string; confidence: number; content: string; created_at?: string; id?: string; kind: Database["public"]["Enums"]["tutoria_memory_kind"]; memory_id: string; organization_id: string; state: Database["public"]["Enums"]["tutoria_memory_state"]; subject_identity_id: string; valid_until?: string | null; version: number }
+        Update: { change_kind?: string; changed_by?: string; confidence?: number; content?: string; created_at?: string; id?: string; kind?: Database["public"]["Enums"]["tutoria_memory_kind"]; memory_id?: string; organization_id?: string; state?: Database["public"]["Enums"]["tutoria_memory_state"]; subject_identity_id?: string; valid_until?: string | null; version?: number }
+        Relationships: []
+      }
       tutoria_orientation_audits: {
         Row: { actor_identity_id: string; created_at: string; duration_ms: number; event_kind: string; failure_code: string | null; id: string; input_token_estimate: number | null; model_code: string | null; objective: Database["public"]["Enums"]["tutoria_orientation_objective"]; organization_id: string; outcome: Database["public"]["Enums"]["tutoria_orientation_outcome"]; output_token_estimate: number | null; policy_decision_id: string | null; provider_code: string; response_schema_valid: boolean }
         Insert: { actor_identity_id: string; created_at?: string; duration_ms?: number; event_kind?: string; failure_code?: string | null; id?: string; input_token_estimate?: number | null; model_code?: string | null; objective: Database["public"]["Enums"]["tutoria_orientation_objective"]; organization_id: string; outcome: Database["public"]["Enums"]["tutoria_orientation_outcome"]; output_token_estimate?: number | null; policy_decision_id?: string | null; provider_code: string; response_schema_valid?: boolean }
@@ -1816,6 +1828,11 @@ export type Database = {
         Args: { submitted_payload: Json; target_tool_revision_id: string }
         Returns: string
       }
+      save_my_tutoria_memory: {
+        Args: { submitted_confidence: number; submitted_content: string; submitted_kind: Database["public"]["Enums"]["tutoria_memory_kind"]; submitted_valid_until: string | null; target_memory_id: string | null }
+        Returns: string
+      }
+      invalidate_my_tutoria_memory: { Args: { target_memory_id: string }; Returns: undefined }
       start_cycle: { Args: { target_priority_id: string }; Returns: string }
       start_diagnostic: {
         Args: { target_revision_id: string }
@@ -1862,6 +1879,8 @@ export type Database = {
       membership_role: "owner" | "member"
       membership_status: "active" | "revoked"
       tutoria_context_purpose: "screen_presence" | "read_member_state" | "read_methodology"
+      tutoria_memory_kind: "organization_fact" | "decision" | "commitment" | "learning_gap" | "guidance_preference"
+      tutoria_memory_state: "active" | "contested" | "superseded" | "expired"
       tutoria_orientation_objective: "understand_next_step" | "understand_methodology"
       tutoria_orientation_outcome: "served" | "unavailable" | "escalated"
       tutoria_policy_outcome: "allow" | "deny" | "escalate"
@@ -2002,6 +2021,8 @@ export const Constants = {
       membership_role: ["owner", "member"],
       membership_status: ["active", "revoked"],
       tutoria_context_purpose: ["screen_presence", "read_member_state", "read_methodology"],
+      tutoria_memory_kind: ["organization_fact", "decision", "commitment", "learning_gap", "guidance_preference"],
+      tutoria_memory_state: ["active", "contested", "superseded", "expired"],
       tutoria_orientation_objective: ["understand_next_step", "understand_methodology"],
       tutoria_orientation_outcome: ["served", "unavailable", "escalated"],
       tutoria_policy_outcome: ["allow", "deny", "escalate"],
