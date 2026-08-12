@@ -54,6 +54,7 @@
 - TCM-2.26A — fonte de verdade longitudinal por organização e ciclo, sem reescrita de histórico.
 - TCM-2.26B — memória estruturada, confirmável e versionada do TutorIA; sem chat bruto.
 - TCM-2.26C — recuperação mínima, auditável e transparência/correção pelo membro.
+- TCM-2.26F — aviso específico v1, escolha no primeiro acesso, recibo verificável e política de elegibilidade por organização para contexto longitudinal do TutorIA.
 
 ## Not Authorized
 
@@ -76,6 +77,7 @@
 - Reabertura, invalidação ou sobrescrita de resultado concluído.
 - Participação colaborativa ou submissão por `member` neste primeiro incremento.
 - Chat bruto, memória automática derivada de conversa, RAG, embeddings, fine-tuning, autonomia decisória ou desempate automático do TutorIA.
+- Derivação automática a partir de fontes canônicas antes de um incremento próprio com adaptadores, observabilidade e testes de cada fonte.
 - Escolha humana em caso de empate no menor score.
 - Seleção de dimensão diferente da única menor candidata.
 - Alteração, substituição, cancelamento ou segunda prioridade.

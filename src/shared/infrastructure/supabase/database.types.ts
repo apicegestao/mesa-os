@@ -1791,6 +1791,10 @@ export type Database = {
       }
     }
     Functions: {
+      activate_my_organization_tutoria_context: {
+        Args: { target_document_version_id: string }
+        Returns: string
+      }
       reserve_tutoria_member_budget: {
         Args: { maximum_cost_usd_micros: number; requested_capability_code: string }
         Returns: { allowed: boolean; denial_code: string | null; reservation_id: string | null }[]
@@ -1833,6 +1837,17 @@ export type Database = {
         Returns: string
       }
       invalidate_my_tutoria_memory: { Args: { target_memory_id: string }; Returns: undefined }
+      get_my_tutoria_context_consent_state: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          automation_enabled: boolean
+          body_markdown: string
+          content_sha256: string
+          document_version_id: string
+          latest_event: "accepted" | "withdrawn" | null
+          title: string
+        }[]
+      }
       start_cycle: { Args: { target_priority_id: string }; Returns: string }
       start_diagnostic: {
         Args: { target_revision_id: string }
@@ -1868,6 +1883,10 @@ export type Database = {
           target_mission_id: string
         }
         Returns: Json
+      }
+      withdraw_my_tutoria_context_consent: {
+        Args: { target_document_version_id: string }
+        Returns: string
       }
     }
     Enums: {

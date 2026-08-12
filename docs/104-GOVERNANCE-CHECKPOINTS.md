@@ -118,3 +118,17 @@ Este registro dá visibilidade ao owner sem transformar cada commit em uma aprov
 **Evidência de validação:** migration aplicada somente na homologação; RLS ativo nas três tabelas e Security Advisor sem alertas. Testes do gate, typecheck, lint e build passaram.
 
 **Gate seguinte:** revisão jurídica brasileira do texto, base legal, retenção, direitos do titular e evidência de aceite; Definition Pack de backoffice com RBAC/MFA/auditoria; só então ativação controlada da primeira fonte automática.
+
+## CP-10 — RT-2.26F: aviso v1 e escolha de contexto no primeiro acesso
+
+**Estado:** PASS EM HOMOLOGAÇÃO — 2026-08-12
+
+**Decisão:** o controlador autorizou a publicação do aviso específico v1 para personalização longitudinal opcional. Termos gerais e política de privacidade integral continuam sujeitos a versionamento posterior; este recorte não os substitui.
+
+**Construído:** o aviso `tutoria_longitudinal_context` v1 é publicado com hash verificável e imutabilidade após publicação. No primeiro acesso, o owner escolhe ativar o contexto automático ou continuar sem ele. A ativação cria recibo autenticado e política organizacional; a retirada cria recibo de revogação. Cada identidade só é elegível quando seu último evento é `accepted` e a política organizacional correspondente está ativa.
+
+**Proteções preservadas:** nenhuma fonte canônica é derivada automaticamente ainda; a entrega habilita apenas a escolha e o gate. Chat bruto, dados sensíveis, treinamento/fine-tuning, dados entre organizações, backoffice identificável e produção permanecem fora do incremento.
+
+**Evidência de validação:** migration aplicada exclusivamente em homologação, hash publicado conferido, privilégios limitados a `authenticated`, Security Advisor sem alertas e testes/lint/typecheck/build passaram.
+
+**Próximo recorte permitido:** implementar um adaptador de fonte canônica por vez, iniciando por diagnóstico concluído, sob contrato de origem, minimização, idempotência, auditoria e testes específicos. Promoção continua dependente de revisão consolidada e aprovação de deploy.
