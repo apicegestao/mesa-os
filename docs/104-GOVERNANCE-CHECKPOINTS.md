@@ -48,3 +48,13 @@ Este registro dá visibilidade ao owner sem transformar cada commit em uma aprov
 **Pendente e obrigatório:** o preview deve concluir o build e receber smoke autenticado com DRE de teste. A validação confirmará retorno útil ou escalonamento seguro, auditoria sem conteúdo e reserva/liquidação de custo. Sem esse smoke, o checkpoint não é aprovado e não há promoção.
 
 **Tentativa de smoke:** o preview abriu e confirmou a proteção de acesso da equipe, mas não havia sessão autenticada disponível. Nenhuma credencial foi enviada ou alterada; o smoke funcional permanece pendente.
+
+## CP-04 — TutorIA: qualidade acima de compressão artificial
+
+**Estado:** PASS — 2026-08-12
+
+**Decisão:** o teto por chamada controla consumo excepcional, não a qualidade da resposta. Cada capacidade terá perfil de profundidade, piso de qualidade, orçamento e estratégia explícita para falta de contexto. A TutorIA não pode cortar rigor, ocultar limitação ou inventar dados para caber no limite.
+
+**Aplicação inicial:** a análise especializada de DRE passa a suportar até 1.200 tokens de saída, com custo máximo estimado de US$ 0,00372 por chamada em homologação. Quando a profundidade necessária superar a capacidade autorizada, a resposta deve preservar a camada factual, pedir contexto, oferecer aprofundamento posterior ou escalar — nunca improvisar uma conclusão.
+
+**Proteções preservadas:** o orçamento mensal do membro continua sendo a principal barreira; rate limit continua voltado a abuso/uso massivo; pedidos empresariais legítimos não são bloqueados por conteúdo.

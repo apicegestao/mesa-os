@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { dreRequestBudgetAllowed, estimateModelCostUsdMicros, orientationRequestBudgetAllowed, TUTORIA_DRE_MAX_COST_USD_MICROS, TUTORIA_MODEL_ROUTES } from "./model-routes";
+import { dreRequestBudgetAllowed, estimateModelCostUsdMicros, orientationRequestBudgetAllowed, TUTORIA_DRE_MAX_COST_USD_MICROS, TUTORIA_MODEL_ROUTES, TUTORIA_QUALITY_PROFILES } from "./model-routes";
 
 describe("TutorIA model routes", () => {
   it("keeps one primary route and prepares alternatives without invoking them", () => {
@@ -22,5 +22,10 @@ describe("TutorIA model routes", () => {
     expect(dreRequestBudgetAllowed()).toBe(false);
     expect(dreRequestBudgetAllowed({ TUTORIA_DRE_MAX_COST_USD_MICROS_PER_REQUEST: String(TUTORIA_DRE_MAX_COST_USD_MICROS - 1) })).toBe(false);
     expect(dreRequestBudgetAllowed({ TUTORIA_DRE_MAX_COST_USD_MICROS_PER_REQUEST: String(TUTORIA_DRE_MAX_COST_USD_MICROS) })).toBe(true);
+  });
+
+  it("defines a quality floor independently from cost ceilings", () => {
+    expect(TUTORIA_QUALITY_PROFILES.dre_specialist.depth).toBe("professional");
+    expect(TUTORIA_QUALITY_PROFILES.dre_specialist.qualityFloor).toContain("fatos e cálculos");
   });
 });

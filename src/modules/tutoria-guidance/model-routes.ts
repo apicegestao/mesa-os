@@ -16,8 +16,13 @@ export const TUTORIA_ORIENTATION_MAX_OUTPUT_TOKENS = 360;
 
 export const TUTORIA_ORIENTATION_MAX_COST_USD_MICROS = estimateModelCostUsdMicros("gemini_flash", TUTORIA_ORIENTATION_MAX_INPUT_TOKENS, TUTORIA_ORIENTATION_MAX_OUTPUT_TOKENS);
 export const TUTORIA_DRE_MAX_INPUT_TOKENS = 1_800;
-export const TUTORIA_DRE_MAX_OUTPUT_TOKENS = 900;
+export const TUTORIA_DRE_MAX_OUTPUT_TOKENS = 1_200;
 export const TUTORIA_DRE_MAX_COST_USD_MICROS = estimateModelCostUsdMicros("gemini_flash", TUTORIA_DRE_MAX_INPUT_TOKENS, TUTORIA_DRE_MAX_OUTPUT_TOKENS);
+
+export const TUTORIA_QUALITY_PROFILES = {
+  orientation: { depth: "direct", qualityFloor: "resposta útil e contextual, ou pergunta/escalonamento honesto", capability: "tutoria_orientation" },
+  dre_specialist: { depth: "professional", qualityFloor: "fatos e cálculos preservados, recomendações acionáveis e limites explícitos", capability: "tutoria_dre_analysis" },
+} as const;
 
 export function orientationRequestBudgetAllowed(env: Partial<Record<"TUTORIA_ORIENTATION_MAX_COST_USD_MICROS_PER_REQUEST", string | undefined>> = process.env as Partial<Record<"TUTORIA_ORIENTATION_MAX_COST_USD_MICROS_PER_REQUEST", string | undefined>>) {
   const limit = Number(env.TUTORIA_ORIENTATION_MAX_COST_USD_MICROS_PER_REQUEST ?? "0");

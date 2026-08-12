@@ -8,7 +8,7 @@ import { validateWorkbenchPayload, type WorkbenchPayload } from "./tool-spec";
 import { recordTutorIAReadGateway } from "@/modules/tutoria-foundation";
 import { buildDreExpertDelivery } from "./dre-delivery";
 import { buildDreExplanationPrompt, parseDreExplanation } from "./dre-explanation";
-import { dreRequestBudgetAllowed, estimateModelCostUsdMicros, orientationGatewayEnabled, TUTORIA_DRE_MAX_COST_USD_MICROS } from "@/modules/tutoria-guidance";
+import { dreRequestBudgetAllowed, estimateModelCostUsdMicros, orientationGatewayEnabled, TUTORIA_DRE_MAX_COST_USD_MICROS, TUTORIA_DRE_MAX_OUTPUT_TOKENS } from "@/modules/tutoria-guidance";
 
 const MODEL = "gemini-2.5-flash";
 
@@ -69,7 +69,7 @@ export async function explainSavedDre() {
   if (reservationError || !reservation?.allowed || !reservation.reservation_id) { await audit("unavailable", { failureCode: reservation?.denial_code ?? "budget_reservation_failed" }); return { ok: false as const, message: "A análise não está disponível dentro do orçamento configurado." }; }
   const startedAt = Date.now();
   try {
-    const response = await new GoogleGenAI({}).models.generateContent({ model: MODEL, contents: buildDreExplanationPrompt({ factualDelivery }), config: { responseMimeType: "application/json", maxOutputTokens: 900, temperature: 0.2, httpOptions: { timeout: 20_000 } } });
+    const response = await new GoogleGenAI({}).models.generateContent({ model: MODEL, contents: buildDreExplanationPrompt({ factualDelivery }), config: { responseMimeType: "application/json", maxOutputTokens: TUTORIA_DRE_MAX_OUTPUT_TOKENS, temperature: 0.2, httpOptions: { timeout: 20_000 } } });
     const delivery = parseDreExplanation(response.text ?? "", factualDelivery);
     const inputTokens = Math.max(0, response.usageMetadata?.promptTokenCount ?? 0);
     const outputTokens = Math.max(0, response.usageMetadata?.candidatesTokenCount ?? 0);
