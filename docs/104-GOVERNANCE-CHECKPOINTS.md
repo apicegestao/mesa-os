@@ -170,3 +170,13 @@ Este registro dá visibilidade ao owner sem transformar cada commit em uma aprov
 **Evidência de validação:** trigger conferida no banco, Security Advisor sem alertas e 94 testes, lint, typecheck e build passaram. Produção não foi alterada.
 
 **Próximo recorte permitido:** adaptador de Missão disponível somente após inspeção autenticada consolidada dos fluxos de Termos, diagnóstico e ciclo em preview.
+
+## CP-14 — RT-2.26J: recuperação mínima para orientação
+
+**Estado:** PASS EM HOMOLOGAÇÃO — 2026-08-12
+
+**Construído:** a orientação do TutorIA pode receber até oito fatos automáticos ativos da própria identidade, limitados a diagnóstico concluído e ciclo ativo. A leitura só acontece após verificar Termos atuais aceitos e política organizacional ativa; cada leitura é auditada com códigos de fonte.
+
+**Proteções preservadas:** memórias livres do membro, chat bruto, ferramentas, evidências, dados sensíveis e dados de outra organização não entram no prompt. A nova leitura é somente de consulta e não escreve nem altera a jornada.
+
+**Evidência de validação:** catálogo de tools ampliado de modo explícito, enum de banco conferido, Security Advisor sem alertas e 94 testes, lint, typecheck e build passaram.

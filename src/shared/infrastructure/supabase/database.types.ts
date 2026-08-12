@@ -1922,7 +1922,7 @@ export type Database = {
       tutoria_orientation_objective: "understand_next_step" | "understand_methodology"
       tutoria_orientation_outcome: "served" | "unavailable" | "escalated"
       tutoria_policy_outcome: "allow" | "deny" | "escalate"
-      tutoria_tool_name: "read_member_state" | "read_methodology_map" | "read_workbench_tool"
+      tutoria_tool_name: "read_member_state" | "read_methodology_map" | "read_workbench_tool" | "read_longitudinal_context"
       tutoria_workbench_analysis_outcome: "served" | "unavailable" | "escalated"
       tutoria_tool_outcome: "success" | "denied" | "failed"
     }
@@ -2064,7 +2064,7 @@ export const Constants = {
       tutoria_orientation_objective: ["understand_next_step", "understand_methodology"],
       tutoria_orientation_outcome: ["served", "unavailable", "escalated"],
       tutoria_policy_outcome: ["allow", "deny", "escalate"],
-      tutoria_tool_name: ["read_member_state", "read_methodology_map", "read_workbench_tool"],
+      tutoria_tool_name: ["read_member_state", "read_methodology_map", "read_workbench_tool", "read_longitudinal_context"],
       tutoria_workbench_analysis_outcome: ["served", "unavailable", "escalated"],
       tutoria_tool_outcome: ["success", "denied", "failed"],
     },

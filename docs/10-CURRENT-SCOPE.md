@@ -58,6 +58,7 @@
 - TCM-2.26G — adaptador mínimo do diagnóstico concluído, idempotente e condicionado à elegibilidade vigente do sujeito.
 - TCM-2.26H — Termos de Uso únicos, versionados, com reaceite obrigatório e contexto longitudinal do TutorIA incorporado.
 - TCM-2.26I — adaptador mínimo do ciclo ativo, idempotente e condicionado à elegibilidade vigente do sujeito.
+- TCM-2.26J — recuperação mínima e auditada de fatos automáticos autorizados para a orientação do TutorIA.
 
 ## Not Authorized
 

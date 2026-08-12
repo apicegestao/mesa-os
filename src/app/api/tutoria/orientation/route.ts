@@ -8,6 +8,8 @@ import { loadPriority } from "@/modules/priority";
 import { buildTutorIAMemberState, buildTutorIAMethodologySummary, recordTutorIAReadGateway } from "@/modules/tutoria-foundation";
 import { buildOrientationPrompt, estimateModelCostUsdMicros, evaluateTutorIAUsage, orientationGatewayEnabled, orientationRequestBudgetAllowed, parseOrientationOutput, TUTORIA_ORIENTATION_MAX_COST_USD_MICROS } from "@/modules/tutoria-guidance";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
+import { loadMesaOSTermsState } from "@/modules/tutoria-consent";
+import { loadTutorIAOrientationContext } from "@/modules/tutoria-memory/data";
 
 export const dynamic = "force-dynamic";
 
@@ -30,8 +32,14 @@ export async function POST(request: Request) {
   const missions = cycle ? await loadMissions(supabase, cycle.id) : [];
   const memberState = buildTutorIAMemberState({ hasDiagnosticWorkspace: Boolean(workspace), hasPriority: Boolean(priority), hasActiveCycle: Boolean(cycle), hasAvailableMission: missions.some((mission) => mission.status === "available"), hasSubmittedEvidence: false });
   const methodology = buildTutorIAMethodologySummary(await loadPublishedMethodologyMap(supabase));
+  const terms = await loadMesaOSTermsState(supabase);
+  const longitudinalContext = await loadTutorIAOrientationContext(supabase, terms?.latestEvent === "accepted" && terms.automationEnabled);
   const policy = await recordTutorIAReadGateway({ supabase, authenticatedIdentityId: actorIdentityId, organizationId: membership.organization_id, membershipActive: membership.status === "active", requestedTool: usage.request.objective === "understand_next_step" ? "read_member_state" : "read_methodology_map", sourceCodes: ["member_state", "methodology_summary"], absentFields: methodology.status === "absent" ? ["published_methodology"] : [] });
   if (policy.outcome !== "allow") return NextResponse.json({ code: "orientation_escalated" }, { status: 409 });
+  if (longitudinalContext.length) {
+    const contextPolicy = await recordTutorIAReadGateway({ supabase, authenticatedIdentityId: actorIdentityId, organizationId: membership.organization_id, membershipActive: true, requestedTool: "read_longitudinal_context", sourceCodes: ["diagnostic_completed", "cycle_started"], absentFields: [] });
+    if (contextPolicy.outcome !== "allow") return NextResponse.json({ code: "orientation_escalated" }, { status: 409 });
+  }
 
   const audit = (event_kind: "invocation_started" | "invocation_finished", outcome: "served" | "unavailable" | "escalated", options: { duration_ms?: number; response_schema_valid?: boolean; failure_code?: string; provider_code?: "netlify_ai_gateway" | "none" } = {}) => supabase.from("tutoria_orientation_audits").insert({ organization_id: membership.organization_id, actor_identity_id: actorIdentityId, objective: usage.request.objective, event_kind, outcome, provider_code: options.provider_code ?? "none", model_code: options.provider_code === "netlify_ai_gateway" ? MODEL : null, response_schema_valid: options.response_schema_valid ?? false, duration_ms: options.duration_ms ?? 0, failure_code: options.failure_code ?? null });
 
@@ -57,7 +65,7 @@ export async function POST(request: Request) {
   const startedAt = Date.now();
   try {
     const genAI = new GoogleGenAI({});
-    const response = await genAI.models.generateContent({ model: MODEL, contents: buildOrientationPrompt({ objective: usage.request.objective, question: usage.request.question, memberState, methodology }), config: { responseMimeType: "application/json", maxOutputTokens: 360, temperature: 0.2, httpOptions: { timeout: 12_000 } } });
+    const response = await genAI.models.generateContent({ model: MODEL, contents: buildOrientationPrompt({ objective: usage.request.objective, question: usage.request.question, memberState, methodology, longitudinalContext }), config: { responseMimeType: "application/json", maxOutputTokens: 360, temperature: 0.2, httpOptions: { timeout: 12_000 } } });
     const orientation = parseOrientationOutput(response.text ?? "");
     const inputTokens = Math.max(0, response.usageMetadata?.promptTokenCount ?? 0);
     const outputTokens = Math.max(0, response.usageMetadata?.candidatesTokenCount ?? 0);

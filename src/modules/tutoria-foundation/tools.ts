@@ -21,6 +21,11 @@ export const TUTORIA_READ_TOOL_CATALOG = {
     purpose: "Analisar apenas os dados estruturados da ferramenta do próprio membro.",
     output: "TutorIAWorkbenchContext",
   },
+  read_longitudinal_context: {
+    risk: "low",
+    purpose: "Situar a orientação em fatos automáticos autorizados da própria jornada.",
+    output: "TutorIALongitudinalContext",
+  },
 } as const;
 
 export type TutorIATool = keyof typeof TUTORIA_READ_TOOL_CATALOG;
