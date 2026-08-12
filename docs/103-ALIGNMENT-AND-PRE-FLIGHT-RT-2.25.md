@@ -5,7 +5,7 @@
 ## Alinhamento
 
 - Definition Pack 102 foi aprovado pelo owner.
-- TutorIA é produto central: conversa de gestão ampla, análise especializada e ferramentas estruturadas; não um FAQ nem um gerador recreativo.
+- TutorIA é produto central: conversa de gestão ampla, análise especializada e ferramentas estruturadas; não um FAQ nem um gerador recreativo. O padrão especialista se aplica a toda dúvida, ferramenta, análise, documento e treinamento, e não somente à DRE.
 - A profundidade será baseada em dados estruturados, metodologia publicada e premissas explícitas. Ausência de dado produz pergunta ou ressalva honesta, nunca conclusão inventada.
 - A política atual já aceita perguntas empresariais abertas e bloqueia somente abuso evidente; qualquer ajuste posterior deve preservar esse princípio.
 

@@ -11,6 +11,8 @@ Pedidos claramente recreativos ou alheios ao propósito empresarial (por exemplo
 
 TutorIA não é um analisador superficial. Para DRE e demais ferramentas, ele atua como especialista: valida coerência dos dados disponíveis, explicita premissas e lacunas, identifica sinais de atenção, compara períodos quando houver base válida e transforma a leitura em orientação executável. Ele não inventa números, não apresenta hipótese como fato, nem substitui a decisão do membro ou uma revisão humana necessária.
 
+Esse padrão vale para **toda** interação do TutorIA: toda dúvida de membro, análise, ferramenta, documento, treinamento ou orientação deve buscar o nível técnico e prático de uma entrega especializada. A resposta deve adaptar a profundidade ao contexto do membro, mas nunca reduzir rigor, método, rastreabilidade ou utilidade por ser uma ferramenta diferente de DRE.
+
 ## Escopo proposto
 
 ### TWR-2.25A — conversa de gestão ampliada
@@ -47,6 +49,17 @@ TutorIA não é um analisador superficial. Para DRE e demais ferramentas, ele at
 - Rate limits protegem abuso sem bloquear perguntas empresariais legítimas.
 - Auditoria registra decisão, rota, custo e metadados; não registra prompt ou resposta integrais.
 - Validação de schema e revisão humana/escalonamento para baixa confiança ou ações de alto impacto.
+
+## Padrão de excelência TutorIA
+
+Cada capacidade deve declarar, testar e entregar:
+
+1. **Contexto correto:** leitura apenas dos dados autorizados da própria organização e da metodologia publicada aplicável.
+2. **Raciocínio disciplinado:** distinção entre dado, cálculo, inferência, recomendação e pergunta em aberto.
+3. **Entrega acionável:** próxima ação, estrutura de ferramenta ou documento que o membro consiga revisar e utilizar.
+4. **Profundidade proporcional:** explicação acessível para quem está começando e análise avançada quando houver dados e necessidade.
+5. **Honestidade operacional:** ausência de dado, baixa confiança ou impacto alto interrompem conclusões e orientam a coleta de contexto ou revisão humana.
+6. **Qualidade verificável:** contratos tipados, testes de cenários, validação de saída e rastreabilidade de versão/custo/rota.
 
 ## Fora do escopo deste incremento
 
