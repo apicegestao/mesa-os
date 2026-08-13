@@ -45,8 +45,8 @@ export function EmailCodeLogin({ nextPath = "/app" }: { nextPath?: "/app" | "/op
 
   async function verifyCode(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!/^\d{6}$/.test(token.trim())) {
-      setMessage("Informe o código recebido por e-mail.");
+    if (!/^\d+$/.test(token.trim())) {
+      setMessage("Informe somente os algarismos do código recebido por e-mail.");
       return;
     }
 
@@ -70,7 +70,7 @@ export function EmailCodeLogin({ nextPath = "/app" }: { nextPath?: "/app" | "/op
     return <form className="auth-form" onSubmit={verifyCode}>
       <p className="auth-code-context">Enviamos um código para <strong>{email}</strong>.</p>
       <label htmlFor="access-code">Código de acesso</label>
-      <input id="access-code" name="code" inputMode="numeric" autoComplete="one-time-code" pattern="[0-9]*" maxLength={8} value={token} onChange={(event) => setToken(event.target.value.replace(/\D/g, ""))} required />
+      <input id="access-code" name="code" inputMode="numeric" autoComplete="one-time-code" pattern="[0-9]*" value={token} onChange={(event) => setToken(event.target.value.replace(/\D/g, ""))} required />
       <button type="submit" disabled={pending}>{pending ? "Confirmando…" : "Entrar"}</button>
       <button type="button" className="button-quiet" onClick={() => { setStep("request"); setToken(""); setMessage(null); }} disabled={pending}>Usar outro e-mail</button>
       {message && <p className="feedback feedback-error" role="status">{message}</p>}

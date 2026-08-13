@@ -40,11 +40,11 @@ describe("email code login", () => {
     expect(screen.getByText(/Se este e-mail estiver autorizado/)).toBeInTheDocument();
   });
 
-  it("refuses malformed codes before calling Supabase", async () => {
+  it("refuses a code that contains no digits before calling Supabase", async () => {
     render(<EmailCodeLogin />);
     fireEvent.change(screen.getByLabelText("Seu e-mail"), { target: { value: "rafael@mesa.example" } });
     fireEvent.click(screen.getByRole("button", { name: "Receber código de acesso" }));
-    fireEvent.change(await screen.findByLabelText("Código de acesso"), { target: { value: "12" } });
+    fireEvent.change(await screen.findByLabelText("Código de acesso"), { target: { value: "" } });
     fireEvent.click(screen.getByRole("button", { name: "Entrar" }));
     expect(verifyOtp).not.toHaveBeenCalled();
   });
@@ -57,5 +57,14 @@ describe("email code login", () => {
     fireEvent.click(screen.getByRole("button", { name: "Entrar" }));
     await vi.waitFor(() => expect(push).toHaveBeenCalledWith("/ops"));
     expect(verifyOtp).toHaveBeenCalledWith({ email: "operacao@mesa.example", token: "123456", type: "email" });
+  });
+
+  it("delegates the configured numeric OTP length to Supabase", async () => {
+    render(<EmailCodeLogin />);
+    fireEvent.change(screen.getByLabelText("Seu e-mail"), { target: { value: "rafael@mesa.example" } });
+    fireEvent.click(screen.getByRole("button", { name: "Receber código de acesso" }));
+    fireEvent.change(await screen.findByLabelText("Código de acesso"), { target: { value: "12345678" } });
+    fireEvent.click(screen.getByRole("button", { name: "Entrar" }));
+    await vi.waitFor(() => expect(verifyOtp).toHaveBeenCalledWith({ email: "rafael@mesa.example", token: "12345678", type: "email" }));
   });
 });
