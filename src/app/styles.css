@@ -315,16 +315,7 @@ h1 { font-size: clamp(1.75rem, 4vw, 2.7rem); line-height: 1.08; }
 .shell { padding: 1rem; }
 .status { width: min(100%, 31rem); padding: clamp(1.25rem, 4vw, 2rem); border-radius: 0.85rem; }
 .login-card .summary { margin-top: 0.65rem; }
-.login-options { margin-top: 1.25rem; }
 .auth-form { margin-top: 0; }
-.magic-link-option { margin-top: 1rem; border-top: 1px solid var(--color-border); padding-top: 0.9rem; }
-.magic-link-option summary { color: var(--color-accent); cursor: pointer; font-size: 0.82rem; font-weight: 700; }
-.magic-link-option .auth-form { margin-top: 0.9rem; }
-.oauth-access { display: grid; gap: 0.5rem; }
-.github-login { width: 100%; align-items: center; gap: 0.65rem; background: #10243d; }
-.github-login span { display: grid; width: 1.7rem; height: 1.7rem; place-items: center; border-radius: 50%; background: white; color: #10243d; font-size: 0.62rem; font-weight: 900; }
-.login-divider { display: flex; align-items: center; gap: 0.7rem; margin: 1rem 0; color: var(--color-muted); font-size: 0.72rem; }
-.login-divider::before, .login-divider::after { height: 1px; flex: 1; background: var(--color-border); content: ""; }
 
 .experience-sidebar { width: 14rem; padding: 1.1rem 0.8rem; }
 .experience-main { padding-left: 14rem; }
@@ -380,11 +371,6 @@ h1 { font-size: clamp(1.75rem, 4vw, 2.7rem); line-height: 1.08; }
 .security-card { display: grid; grid-template-columns: 1fr minmax(17rem, 0.8fr); gap: 1.25rem; margin-top: 0.85rem; padding: 1rem 1.1rem; border: 1px solid var(--exp-line); border-radius: 0.8rem; background: white; }
 .security-card h2 { margin: 0; font-size: 1.2rem; }
 .security-card > div > p:last-child { margin: 0.4rem 0 0; color: var(--exp-muted); font-size: 0.84rem; line-height: 1.4; }
-.password-setup-form { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem 0.65rem; }
-.password-setup-form label { font-size: 0.72rem; font-weight: 700; }
-.password-setup-form input { width: 100%; border: 1px solid var(--exp-line); border-radius: 0.45rem; padding: 0.62rem; }
-.password-setup-form button, .password-setup-form .feedback { grid-column: 1 / -1; }
-.password-setup-form button { padding: 0.62rem 0.8rem; }
 
 @media (max-width: 1040px) {
   .experience-main { padding-left: 0; }
@@ -393,9 +379,7 @@ h1 { font-size: clamp(1.75rem, 4vw, 2.7rem); line-height: 1.08; }
   .progress-labels { display: none; }
   .mentor-note, .security-card { grid-template-columns: auto 1fr; }
   .mentor-note .ghost-light { grid-column: 2; justify-self: start; }
-  .security-card > div, .password-setup-form { grid-column: 1 / -1; }
-  .password-setup-form { grid-template-columns: 1fr; }
-  .password-setup-form button, .password-setup-form .feedback { grid-column: auto; }
+  .security-card > div { grid-column: 1 / -1; }
 }
 
 /* RT-2.19 precedence guard: must remain after the earlier release styles. */

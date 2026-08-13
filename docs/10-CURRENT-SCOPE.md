@@ -25,8 +25,7 @@
 - Vínculos versionados do mapa com diagnóstico, conteúdo, treinamento, Missão, Ferramenta, Evidência, métrica e contexto inicial de leitura do TutorIA.
 
 - Visual fidelity correction using the approved HTML: Arial, compact density, colored canonical progress and Lula contextual card.
-- Authenticated password creation and direct email/password sign-in.
-- GitHub OAuth sign-in with verified-email identity linking and existing membership authorization.
+- IAM-2.29 usa exclusivamente e-mail previamente autorizado + código temporário; sem senha, link mágico ou login social.
 - One-time reset of methodological execution data for Grupo Ápice, preserving identity, organization and membership.
 - DSX-2.18A — Design System & Responsive App Shell.
 - IAX-2.18B — Member Information Architecture & Next Action.

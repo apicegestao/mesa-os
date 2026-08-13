@@ -26,25 +26,26 @@ export function EmailCodeLogin({ nextPath = "/app" }: { nextPath?: "/app" | "/op
       return;
     }
 
+    setEmail(parsed.data.email);
     setPending(true);
     setMessage(null);
-    const { error } = await createSupabaseBrowserClient().auth.signInWithOtp({
-      email: parsed.data.email,
-      options: { shouldCreateUser: false },
-    });
-    setEmail(parsed.data.email);
-    setPending(false);
-    if (error) {
+    try {
+      await createSupabaseBrowserClient().auth.signInWithOtp({
+        email: parsed.data.email,
+        options: { shouldCreateUser: false },
+      });
+    } catch {
+      // A resposta continua neutra para não enumerar e-mails autorizados.
+    } finally {
+      setPending(false);
+      setStep("verify");
       setMessage(neutralRequestMessage);
-      return;
     }
-    setStep("verify");
-    setMessage(neutralRequestMessage);
   }
 
   async function verifyCode(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!/^\d{6,8}$/.test(token.trim())) {
+    if (!/^\d{6}$/.test(token.trim())) {
       setMessage("Informe o código recebido por e-mail.");
       return;
     }

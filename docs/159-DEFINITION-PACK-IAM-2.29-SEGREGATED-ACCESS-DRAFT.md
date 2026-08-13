@@ -29,7 +29,7 @@ flowchart LR
 - `/login` permanece a única porta do membro: e-mail autorizado, código temporário e resposta não enumerável.
 - O código não cria usuário, organização, membership ou matrícula.
 - Após sessão válida, a aplicação identifica o membership ativo e entrega somente `/app` no escopo daquela organização.
-- O login mantém fallback seguro enquanto a entrega de e-mail estiver em homologação; senha, cadastro público e login social continuam fora deste incremento.
+- O login usa exclusivamente código temporário por e-mail; senha, link mágico, cadastro público e login social não fazem parte deste incremento.
 
 ### 2. Área interna da Mesa
 

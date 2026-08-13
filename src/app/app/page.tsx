@@ -11,7 +11,7 @@ import { loadCoreLoopWorkspace, loadEvidenceRecords } from "@/modules/core-loop"
 import { loadMeasurementProjection } from "@/modules/measurement";
 import { loadPublishedMethodologyMap } from "@/modules/methodology";
 import { CoreLoopPanel } from "@/modules/core-loop/core-loop-panel";
-import { logout, PasswordSetup } from "@/modules/identity-access";
+import { logout } from "@/modules/identity-access";
 import { AppChrome, deriveNextAction, DiagnosticsOverview, EvidenceOverview, EvolutionProjection, JourneyDeliveries, JourneyProgress, MemberHome, MentorNote, MethodologyMap, type MemberView, type ProgressStep } from "@/modules/member-experience";
 import { lowestCandidates } from "@/modules/priority/domain/priority";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
@@ -87,7 +87,7 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
       {activeView === "diagnostics" && <DiagnosticsOverview workspace={workspace} diagnosticContent={<DiagnosticExperience initialWorkspace={workspace} />} />}
       {activeView === "evidence" && <EvidenceOverview implementation={null} evidenceSubmitted={false} />}
       {activeView === "evolution" && <EvolutionProjection diagnosticComplete={false} result={null} completedSteps={0} totalSteps={8} evidenceSubmitted={false} />}
-      {activeView === "account" && <section className="account-page"><header className="records-heading"><p className="eyebrow">Sistema</p><h1>Conta e segurança</h1><p>Gerencie sua forma de acesso, Termos e preferências de contexto do Mesa OS.</p></header><PasswordSetup /><MesaOSTermsPanel state={mesaOSTerms} /><TermsReceipts receipts={termsReceipts} /><TutorIAMemoryPanel memories={tutorMemories} /></section>}
+      {activeView === "account" && <section className="account-page"><header className="records-heading"><p className="eyebrow">Sistema</p><h1>Conta e segurança</h1><p>O acesso é protegido por código temporário enviado ao e-mail autorizado.</p></header><MesaOSTermsPanel state={mesaOSTerms} /><TermsReceipts receipts={termsReceipts} /><TutorIAMemoryPanel memories={tutorMemories} /></section>}
     </AppChrome>;
   }
 
@@ -128,7 +128,7 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
     {activeView === "evidence" && <EvidenceOverview implementation={coreLoopWorkspace?.implementation ?? null} evidenceSubmitted={Boolean(coreLoopWorkspace?.evidenceSubmitted)} evidenceStatus={coreLoopWorkspace?.evidenceStatus} records={evidenceRecords} missionTitle={availableMission?.title} pillarLabel={priority?.dimension_label} />}
     {activeView === "diagnostics" && <DiagnosticsOverview workspace={workspace} diagnosticContent={<DiagnosticResult workspace={workspace} />} />}
     {activeView === "evolution" && <EvolutionProjection diagnosticComplete result={workspace.result} completedSteps={completedSteps} totalSteps={progressSteps.length} evidenceSubmitted={Boolean(coreLoopWorkspace?.evidenceSubmitted)} measurements={measurements} evidenceRecords={evidenceRecords} />}
-    {activeView === "account" && <section className="account-page"><header className="records-heading"><p className="eyebrow">Sistema</p><h1>Conta e segurança</h1><p>Gerencie sua forma de acesso, Termos e preferências de contexto do Mesa OS.</p></header><PasswordSetup /><MesaOSTermsPanel state={mesaOSTerms} /><TermsReceipts receipts={termsReceipts} /><TutorIAMemoryPanel memories={tutorMemories} /></section>}
+    {activeView === "account" && <section className="account-page"><header className="records-heading"><p className="eyebrow">Sistema</p><h1>Conta e segurança</h1><p>O acesso é protegido por código temporário enviado ao e-mail autorizado.</p></header><MesaOSTermsPanel state={mesaOSTerms} /><TermsReceipts receipts={termsReceipts} /><TutorIAMemoryPanel memories={tutorMemories} /></section>}
   </AppChrome>;
 }
 

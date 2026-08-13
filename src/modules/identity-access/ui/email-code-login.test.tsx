@@ -31,6 +31,15 @@ describe("email code login", () => {
     expect(await screen.findByLabelText("Código de acesso")).toBeInTheDocument();
   });
 
+  it("keeps the code field available when the request has a transient failure", async () => {
+    signInWithOtp.mockRejectedValueOnce(new Error("network"));
+    render(<EmailCodeLogin />);
+    fireEvent.change(screen.getByLabelText("Seu e-mail"), { target: { value: "rafael@mesa.example" } });
+    fireEvent.click(screen.getByRole("button", { name: "Receber código de acesso" }));
+    expect(await screen.findByLabelText("Código de acesso")).toBeInTheDocument();
+    expect(screen.getByText(/Se este e-mail estiver autorizado/)).toBeInTheDocument();
+  });
+
   it("refuses malformed codes before calling Supabase", async () => {
     render(<EmailCodeLogin />);
     fireEvent.change(screen.getByLabelText("Seu e-mail"), { target: { value: "rafael@mesa.example" } });
