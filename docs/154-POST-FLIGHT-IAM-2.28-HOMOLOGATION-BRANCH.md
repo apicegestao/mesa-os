@@ -10,6 +10,7 @@
 - Aplicada a migration de matrícula de acesso IAM-2.28 somente na branch.
 - O primeiro Advisor identificou duas tabelas internas com RLS sem política e índices faltantes para FKs de auditoria.
 - Foi adicionada migration de hardening com políticas explícitas de negação e índices para FKs da nova superfície.
+- A migration-base foi alinhada para não repetir essas policies em ambientes levantados do zero; a negação explícita permanece somente na migration incremental de hardening.
 - Security Advisor da branch ficou sem alertas após o hardening.
 - Confirmação direta: `access_enrollments = 0` e `access_enrollment_audits = 0`.
 

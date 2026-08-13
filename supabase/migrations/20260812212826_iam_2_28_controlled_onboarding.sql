@@ -54,11 +54,4 @@ create index access_enrollment_audits_actor_identity_idx
 alter table public.access_enrollments enable row level security;
 alter table public.access_enrollment_audits enable row level security;
 
-create policy "access enrollments deny direct access"
-  on public.access_enrollments for all to anon, authenticated
-  using (false) with check (false);
-create policy "access enrollment audits deny direct access"
-  on public.access_enrollment_audits for all to anon, authenticated
-  using (false) with check (false);
-
 revoke all on public.access_enrollments, public.access_enrollment_audits from anon, authenticated;
