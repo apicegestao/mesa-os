@@ -31,6 +31,7 @@ button:disabled { cursor: wait; opacity: 0.65; }
 .auth-form label { font-weight: 700; }
 .auth-form input { width: 100%; border: 1px solid var(--color-border); border-radius: 0.5rem; padding: 0.75rem; background: white; color: var(--color-text); font: inherit; }
 .auth-form input:focus-visible, button:focus-visible, .access-link:focus-visible { outline: 3px solid color-mix(in srgb, var(--color-accent) 35%, transparent); outline-offset: 2px; }
+.auth-form select { width: 100%; border: 1px solid var(--color-border); border-radius: 0.5rem; padding: 0.75rem; background: white; color: var(--color-text); font: inherit; }
 .feedback { margin: 0; color: var(--color-muted); line-height: 1.5; }
 .feedback-error { color: #8a2d22; }
 .button-secondary { background: transparent; color: var(--color-accent); border: 1px solid var(--color-accent); }
@@ -83,6 +84,9 @@ button:disabled { cursor: wait; opacity: 0.65; }
 .feedback-success { color: var(--color-success); }
 .auth-code-context { margin: 0; color: var(--color-muted); font-size: .9rem; line-height: 1.5; }
 .auth-form > .button-quiet { margin-top: -.25rem; }
+.ops-enrollment-list { display: grid; gap: .75rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border); }
+.ops-enrollment-list h3, .ops-enrollment-list p { margin: 0; }
+.ops-enrollment-list article { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .85rem 0; border-top: 1px solid var(--color-border); }
 .diagnostic-actions + .feedback { margin-top: 1rem; text-align: center; }
 .result-hero { display: grid; place-items: center; padding: clamp(2rem, 6vw, 4rem); text-align: center; border-top: 4px solid var(--color-accent); }
 .result-label { margin: 0; color: var(--color-muted); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }

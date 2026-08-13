@@ -66,3 +66,17 @@ export async function POST(request: Request) {
 
   return NextResponse.json({ status: "provisioned" }, { status: 201 });
 }
+
+export async function DELETE(request: Request) {
+  const supabase = await getOperatorClient();
+  if (!supabase) return NextResponse.json({ error: "forbidden" }, { status: 403 });
+
+  const parsed = z.object({ enrollmentId: z.string().uuid() }).safeParse(await request.json().catch(() => null));
+  if (!parsed.success) return NextResponse.json({ error: "invalid_request" }, { status: 400 });
+
+  const { error } = await supabase.rpc("revoke_internal_access_enrollment", {
+    target_enrollment_id: parsed.data.enrollmentId,
+  });
+  if (error) return NextResponse.json({ error: "revocation_unavailable" }, { status: 422 });
+  return NextResponse.json({ status: "revoked" }, { headers: { "Cache-Control": "no-store" } });
+}
