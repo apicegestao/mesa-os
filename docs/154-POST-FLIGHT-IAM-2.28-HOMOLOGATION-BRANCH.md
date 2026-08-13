@@ -21,7 +21,7 @@
 
 ## Pendências para smoke
 
-1. O deploy preview foi apontado para a branch isolada via variáveis públicas do Netlify; a flag de código permaneceu desligada (`false`).
+1. O deploy preview foi apontado para a branch isolada via variáveis públicas do Netlify; a flag de código permaneceu desligada (`false`). O rebuild do PR #13 concluiu com êxito e secret scan sem ocorrências.
 2. Configurar o template de e-mail para `{{ .Token }}` e limites no projeto isolado.
 3. Habilitar `NEXT_PUBLIC_EMAIL_CODE_LOGIN_ENABLED` somente no deploy preview correspondente.
 4. Criar uma única identidade de teste autorizada, executar login por OTP, validar Terms e logout, e revogar ao fim.
