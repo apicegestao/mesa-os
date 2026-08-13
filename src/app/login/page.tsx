@@ -15,5 +15,5 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
       ? "Não foi possível concluir o acesso. Tente novamente ou use outra forma de entrada."
       : null;
 
-  return <main className="shell"><section className="status login-card"><p className="eyebrow">Acesso seguro</p><h1>Entrar no Mesa OS</h1><p className="summary">Entre diretamente com sua senha. O link por e-mail permanece como alternativa de recuperação.</p>{feedback && <p className="feedback feedback-error" role="alert">{feedback}</p>}<LoginForm /></section></main>;
+  return <main className="shell"><section className="status login-card"><p className="eyebrow">Acesso seguro</p><h1>Entrar no Mesa OS</h1><p className="summary">Informe seu e-mail para receber um código de acesso. Senha e link permanecem como alternativas.</p>{feedback && <p className="feedback feedback-error" role="alert">{feedback}</p>}<LoginForm /></section></main>;
 }

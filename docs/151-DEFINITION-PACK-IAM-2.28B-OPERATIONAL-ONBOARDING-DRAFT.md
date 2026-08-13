@@ -1,6 +1,6 @@
 # Definition Pack IAM-2.28B — Operação segura de onboarding
 
-**Status:** DRAFT — requer aprovação explícita para BUILD**
+**Status:** APPROVED FOR BUILD — owner aprovou em 2026-08-12**
 
 ## Objetivo
 
