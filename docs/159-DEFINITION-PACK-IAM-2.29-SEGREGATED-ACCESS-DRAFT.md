@@ -1,6 +1,6 @@
 # Definition Pack IAM-2.29 — Acesso simples do membro e backoffice segregado
 
-**Status:** PROPOSAL — requer aprovação explícita antes de BUILD.
+**Status:** APPROVED FOR BUILD — owner aprovou em 2026-08-13.
 
 ## Problema
 

@@ -10,7 +10,7 @@ type Step = "request" | "verify";
 const neutralRequestMessage = "Se este e-mail estiver autorizado, enviaremos um código de acesso em instantes.";
 const neutralVerifyMessage = "Não foi possível confirmar o código. Solicite um novo e tente novamente.";
 
-export function EmailCodeLogin() {
+export function EmailCodeLogin({ nextPath = "/app" }: { nextPath?: "/app" | "/ops" }) {
   const router = useRouter();
   const [step, setStep] = useState<Step>("request");
   const [email, setEmail] = useState("");
@@ -61,7 +61,7 @@ export function EmailCodeLogin() {
       setMessage(neutralVerifyMessage);
       return;
     }
-    router.push("/app");
+    router.push(nextPath);
     router.refresh();
   }
 

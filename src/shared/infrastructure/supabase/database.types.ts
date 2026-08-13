@@ -1803,6 +1803,35 @@ export type Database = {
       }
     }
     Functions: {
+      get_my_internal_operator_state: {
+        Args: Record<PropertyKey, never>
+        Returns: { active: boolean }[]
+      }
+      create_internal_access_enrollment: {
+        Args: {
+          target_email: string
+          target_organization_id: string
+          target_role: Database["public"]["Enums"]["membership_role"]
+          target_valid_for_hours?: number
+        }
+        Returns: string
+      }
+      revoke_internal_access_enrollment: {
+        Args: { target_enrollment_id: string }
+        Returns: undefined
+      }
+      list_my_internal_access_enrollments: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          created_at: string
+          email: string
+          expires_at: string
+          id: string
+          organization_id: string
+          role: Database["public"]["Enums"]["membership_role"]
+          status: "pending" | "provisioned" | "revoked" | "expired"
+        }[]
+      }
       get_my_mesa_os_terms_receipt: {
         Args: { target_receipt_id: string }
         Returns: { receipt_id: string; event: "accepted" | "withdrawn"; occurred_at: string; document_sha256: string; document_title: string; document_version: number }[]

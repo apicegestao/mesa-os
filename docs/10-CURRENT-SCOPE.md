@@ -68,6 +68,7 @@
 - TCM-2.26Q — adaptador mínimo da Missão atualmente disponível para o contexto autorizado do TutorIA.
 - RT-2.27A — Bloco Evolução confiável: IME, comparação dimensional e marcos derivados exclusivamente de fontes validadas.
 - IAM-2.28 — matrícula prévia, provisionamento server-side auditado e fundação de entrada sem senha para identidades autorizadas.
+- IAM-2.29 — acesso sem senha do membro e backoffice mínimo segregado da Mesa, limitado a `internal_operator`, matrícula/revogação e auditoria; sem acesso global automático aos dados dos membros.
 
 ## Not Authorized
 
