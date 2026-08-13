@@ -9,13 +9,13 @@ import { EmailCodeLogin } from "./email-code-login";
 
 const initialState: LoginState = { status: "idle" };
 
-export function LoginForm() {
+export function LoginForm({ emailCodeEnabled = false }: { emailCodeEnabled?: boolean }) {
   const [passwordState, passwordAction, passwordPending] = useActionState(signInWithPassword, initialState);
   const [linkState, linkAction, linkPending] = useActionState(requestMagicLink, initialState);
 
   return (
     <div className="login-options">
-      <EmailCodeLogin />
+      {emailCodeEnabled && <EmailCodeLogin />}
       <GitHubLoginButton />
       <details className="password-option"><summary>Entrar com senha</summary><form action={passwordAction} className="auth-form">
         <label htmlFor="email">E-mail</label>

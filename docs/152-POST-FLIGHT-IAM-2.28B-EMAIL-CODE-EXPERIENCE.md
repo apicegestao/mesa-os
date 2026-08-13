@@ -9,6 +9,7 @@
 - A confirmação exige código numérico de seis a oito dígitos e usa `verifyOtp` com tipo `email`.
 - Respostas de solicitação e confirmação são neutras, evitando enumeração de e-mail ou organização.
 - GitHub, senha e link por e-mail permanecem alternativas secundárias enquanto a operação completa não é promovida.
+- O fluxo de código é protegido por `NEXT_PUBLIC_EMAIL_CODE_LOGIN_ENABLED=false` por padrão; ele só aparece no ambiente em que o template OTP já estiver configurado.
 
 ## Deliberadamente não implementado
 
