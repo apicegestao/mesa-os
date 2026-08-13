@@ -16,3 +16,6 @@ enabled = true
 site_url = "http://localhost:3000"
 additional_redirect_urls = ["http://localhost:3000/auth/callback"]
 enable_signup = false
+
+[functions.provision-authorized-enrollment]
+verify_jwt = true

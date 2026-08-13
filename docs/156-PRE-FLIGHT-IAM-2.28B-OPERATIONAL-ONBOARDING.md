@@ -15,10 +15,10 @@ O requisito aprovado é matrícula prévia e entrada sem senha para identidades 
 
 ## Escopo deste incremento
 
-1. Um comando operacional restrito por `workflow_dispatch`, executado em ambiente GitHub `homologation` e acionado apenas por `enrollment_id`.
+1. Uma Edge Function interna na branch Supabase `homologation-onboarding-iam-228`, acionada apenas por `enrollment_id` e por uma credencial administrativa válida do próprio ambiente.
 2. O comando localiza a matrícula já existente, rejeita estado inválido ou vencido, cria ou reaproveita somente a identidade prevista e cria o membership ativo previsto.
 3. Atualiza a matrícula e grava auditoria sem expor e-mail, token ou segredo nos logs.
-4. Documenta a criação manual e segura da matrícula exclusivamente no SQL Editor do Supabase de homologação e a configuração de secrets no ambiente GitHub.
+4. Documenta a criação manual e segura da matrícula exclusivamente no SQL Editor e a invocação controlada no Dashboard do Supabase de homologação.
 
 ## Fora do escopo
 
@@ -29,10 +29,10 @@ O requisito aprovado é matrícula prévia e entrada sem senha para identidades 
 
 ## Arquivos previstos
 
-- `scripts/provision-authorized-enrollment.mjs`
-- `.github/workflows/provision-authorized-enrollment.yml`
+- `supabase/functions/provision-authorized-enrollment/index.ts`
+- `supabase/config.toml`
 - `docs/157-RUNBOOK-IAM-2.28B-HOMOLOGATION-ONBOARDING.md`
-- testes unitários de decisão/contrato, se a extração exigir código de aplicação.
+- `docs/158-GOVERNANCE-CHECKPOINT-IAM-2.28B-SUPABASE-EXECUTION.md`
 
 ## Riscos e controles
 
@@ -47,6 +47,6 @@ O requisito aprovado é matrícula prévia e entrada sem senha para identidades 
 ## Verificação e parada
 
 - Testes, lint, typecheck e build devem passar.
-- O script não deve executar sem secrets/UUID ou contra produção por configuração padrão.
+- A função só pode executar com JWT administrativo `service_role` válido da própria branch e UUID de matrícula válido.
 - A execução real exige secrets no ambiente `homologation`, matrícula exclusiva de teste e o Post-Flight de smoke.
 - Ao primeiro indício de vazamento de segredo, cruzamento de organização ou erro de provisionamento, parar e revogar a identidade de teste.
