@@ -22,6 +22,10 @@ export type AsaasCheckoutRequest = {
 
 export type AsaasCheckout = { id: string; link: string; status: string };
 
+const activePixKeysSchema = z.object({
+  data: z.array(z.object({ status: z.literal("ACTIVE") })).max(1),
+});
+
 export class AsaasCheckoutError extends Error {
   constructor(
     public readonly status: number,
@@ -93,6 +97,25 @@ export function createCheckoutPayload(input: Omit<AsaasCheckoutRequest, "apiKey"
       value: input.amount,
     }],
   };
+}
+
+export function hasActiveAsaasPixKey(payload: unknown) {
+  const parsed = activePixKeysSchema.safeParse(payload);
+  return parsed.success && parsed.data.data.length > 0;
+}
+
+export async function hasActiveSandboxPixKey(apiKey: string) {
+  if (!isSandboxAsaasKey(apiKey)) throw new Error("sandbox_key_required");
+  const response = await fetch(`${apiBaseUrl}/pix/addressKeys?status=ACTIVE&limit=1`, {
+    headers: {
+      Accept: "application/json",
+      "User-Agent": "MesaOS/FIN-3.1B (sandbox)",
+      access_token: apiKey,
+    },
+    cache: "no-store",
+  });
+  if (!response.ok) throw new Error(`asaas_pix_keys_${response.status}`);
+  return hasActiveAsaasPixKey(await response.json().catch(() => null));
 }
 
 export async function createAsaasSandboxCheckout(input: AsaasCheckoutRequest): Promise<AsaasCheckout> {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { createCheckoutPayload, getAsaasValidationCodes, getAsaasValidationFields, getAsaasValidationMessage, isSandboxAsaasKey } from "./adapter";
+import { createCheckoutPayload, getAsaasValidationCodes, getAsaasValidationFields, getAsaasValidationMessage, hasActiveAsaasPixKey, isSandboxAsaasKey } from "./adapter";
 
 describe("Asaas Sandbox adapter", () => {
   it("accepts sandbox and legacy sandbox keys, never a production key", () => {
@@ -40,5 +40,11 @@ describe("Asaas Sandbox adapter", () => {
     expect(getAsaasValidationMessage({ errors: [{ description: "O campo items deve ser informado." }] })).toBe("O campo items deve ser informado.");
     expect(getAsaasValidationMessage({ errors: [{ description: "Envie para pessoa@example.com" }] })).toBeNull();
     expect(getAsaasValidationMessage({ errors: [{ description: "Documento 123456789 deve ser revisado" }] })).toBeNull();
+  });
+
+  it("recognizes only an active Pix key without retaining the key itself", () => {
+    expect(hasActiveAsaasPixKey({ data: [{ status: "ACTIVE", key: "must-not-be-used" }] })).toBe(true);
+    expect(hasActiveAsaasPixKey({ data: [] })).toBe(false);
+    expect(hasActiveAsaasPixKey({ data: [{ status: "ERROR" }] })).toBe(false);
   });
 });

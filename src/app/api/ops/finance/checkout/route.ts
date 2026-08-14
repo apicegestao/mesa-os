@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { AsaasCheckoutError, createAsaasSandboxCheckout, isSandboxAsaasKey } from "@/modules/finance/asaas/adapter";
+import { AsaasCheckoutError, createAsaasSandboxCheckout, hasActiveSandboxPixKey, isSandboxAsaasKey } from "@/modules/finance/asaas/adapter";
 import { getPublicEnv } from "@/shared/config/env";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 import { log } from "@/shared/observability/logger";
@@ -22,6 +22,16 @@ export async function POST(request: Request) {
   if (!apiKey || !isSandboxAsaasKey(apiKey)) {
     log("warn", "finance_asaas_checkout_configuration_unavailable", { hasApiKey: Boolean(apiKey) });
     return NextResponse.json({ error: "checkout_unavailable" }, { status: 503 });
+  }
+
+  try {
+    if (!await hasActiveSandboxPixKey(apiKey)) {
+      log("warn", "finance_asaas_checkout_pix_key_required");
+      return NextResponse.json({ error: "checkout_unavailable", reason: "pix_key_required" }, { status: 422 });
+    }
+  } catch (error) {
+    log("warn", "finance_asaas_checkout_pix_preflight_failed", { reason: error instanceof Error ? error.message : "unknown" });
+    return NextResponse.json({ error: "checkout_unavailable", reason: "provider_unavailable" }, { status: 503 });
   }
 
   const supabase = await createSupabaseServerClient();
