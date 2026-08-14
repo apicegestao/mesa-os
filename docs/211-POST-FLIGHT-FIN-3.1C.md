@@ -18,7 +18,7 @@
 | --- | --- |
 | Typecheck | aprovado |
 | Lint | aprovado |
-| Testes automatizados | 122 aprovados |
+| Testes automatizados | 124 aprovados |
 | Build de produção | aprovado |
 | Migration aplicada na homologação | aprovada |
 | Edge Function v3 ativa, com JWT obrigatório | aprovada |
