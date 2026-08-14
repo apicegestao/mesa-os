@@ -62,6 +62,28 @@ export async function POST(request: Request) {
     log("error", "finance_asaas_webhook_reconciliation_failed", { databaseCode: error.code ?? null });
     return NextResponse.json({ error: "unavailable" }, { status: 503 });
   }
+  const checkoutSessionId = payload.data.payment.checkoutSession;
+  if (data === "reconciled" && checkoutSessionId) {
+    const { data: enrollmentId, error: enrollmentError } = await supabase.rpc("prepare_finance_access_provisioning", {
+      target_checkout_session_id: checkoutSessionId,
+    });
+    if (enrollmentError) {
+      log("error", "finance_asaas_access_preparation_failed", { databaseCode: enrollmentError.code ?? null });
+      return NextResponse.json({ error: "unavailable" }, { status: 503 });
+    }
+    if (enrollmentId) {
+      const response = await fetch(`${env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/provision-authorized-enrollment`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${serviceRoleKey}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ enrollment_id: enrollmentId }),
+        cache: "no-store",
+      });
+      if (!response.ok) {
+        log("error", "finance_asaas_access_provisioning_failed");
+        return NextResponse.json({ error: "unavailable" }, { status: 503 });
+      }
+    }
+  }
   log("info", "finance_asaas_webhook_reconciled", { outcome: data });
   return NextResponse.json({ status: "ok" }, { status: 200 });
 }

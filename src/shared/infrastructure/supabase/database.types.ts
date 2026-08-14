@@ -1848,6 +1848,7 @@ export type Database = {
         Args: { target_proposal_id: string }
         Returns: { checkout_id: string; external_reference: string; offer_name: string; amount: number; currency_code: string; payer_name: string; payer_email: string }[]
       }
+      prepare_finance_access_provisioning: { Args: { target_checkout_session_id: string }; Returns: string | null }
       get_asaas_checkout_for_reissue: {
         Args: { target_proposal_id: string }
         Returns: { checkout_id: string; provider_checkout_id: string; external_reference: string; offer_name: string; amount: number; currency_code: string; payer_name: string; payer_email: string }[]
