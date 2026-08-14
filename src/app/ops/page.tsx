@@ -22,15 +22,17 @@ export default async function OpsPage() {
   }
 
   const roles = opsState[0].roles as InternalRole[];
-  if (roles.length === 0) return <main className="shell"><OpsCrmConsole initialWorkspace={{ opportunities: [], handoffs: [] }} isBootstrap operators={[]} roles={[]} /></main>;
+  if (roles.length === 0) return <main className="shell"><OpsCrmConsole concierges={[]} initialWorkspace={{ opportunities: [], handoffs: [] }} isBootstrap operators={[]} roles={[]} /></main>;
 
-  const [{ data: workspaceData }, { data: operatorsData }, { data: enrollments }] = await Promise.all([
+  const [{ data: workspaceData }, { data: operatorsData }, { data: conciergesData }, { data: enrollments }] = await Promise.all([
     supabase.rpc("get_my_crm_workspace"),
     supabase.rpc("list_active_internal_operators"),
+    supabase.rpc("list_available_concierges"),
     roles.includes("admin") || roles.includes("concierge") ? supabase.rpc("list_my_internal_access_enrollments") : Promise.resolve({ data: [] }),
   ]);
 
   const workspace = (workspaceData ?? { opportunities: [], handoffs: [] }) as CrmWorkspace;
   const operators = (operatorsData ?? []) as { email: string; identity_id: string; roles: InternalRole[] }[];
-  return <main className="shell"><OpsCrmConsole initialWorkspace={workspace} isBootstrap={false} operators={operators} roles={roles} />{(roles.includes("admin") || roles.includes("concierge")) && <OpsEnrollmentPanel initialEnrollments={enrollments ?? []} />}</main>;
+  const concierges = (conciergesData ?? []) as { email: string; identity_id: string }[];
+  return <main className="shell"><OpsCrmConsole concierges={concierges} initialWorkspace={workspace} isBootstrap={false} operators={operators} roles={roles} />{(roles.includes("admin") || roles.includes("concierge")) && <OpsEnrollmentPanel initialEnrollments={enrollments ?? []} />}</main>;
 }

@@ -1828,6 +1828,10 @@ export type Database = {
         }
         Returns: string
       }
+      create_crm_handoff: {
+        Args: { target_opportunity_id: string; target_concierge_identity_id: string; target_checklist?: Json }
+        Returns: string
+      }
       get_my_crm_workspace: {
         Args: Record<PropertyKey, never>
         Returns: Json
@@ -1843,6 +1847,14 @@ export type Database = {
       list_active_internal_operators: {
         Args: Record<PropertyKey, never>
         Returns: { identity_id: string; email: string; roles: ("admin" | "commercial" | "concierge")[] }[]
+      }
+      list_available_concierges: {
+        Args: Record<PropertyKey, never>
+        Returns: { identity_id: string; email: string }[]
+      }
+      update_crm_opportunity_stage: {
+        Args: { target_opportunity_id: string; target_stage: "new" | "qualified" | "proposal" | "negotiation" | "won" | "lost"; target_next_action: string; target_next_action_due_on?: string | null; target_lost_reason?: string | null }
+        Returns: undefined
       }
       create_internal_access_enrollment: {
         Args: {

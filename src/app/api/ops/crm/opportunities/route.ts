@@ -19,3 +19,15 @@ export async function POST(request: Request) {
   });
   return error || !data ? NextResponse.json({ error: "unavailable" }, { status: 422 }) : NextResponse.json({ opportunityId: data }, { status: 201, headers: { "Cache-Control": "no-store" } });
 }
+
+const stageSchema = z.object({ opportunityId: z.string().uuid(), stage: z.enum(["new", "qualified", "proposal", "negotiation", "won", "lost"]), nextAction: z.string().trim().min(2).max(500), nextActionDueOn: z.string().date().nullable().optional(), lostReason: z.string().trim().max(500).nullable().optional() });
+
+export async function PATCH(request: Request) {
+  const parsed = stageSchema.safeParse(await request.json().catch(() => null));
+  if (!parsed.success) return NextResponse.json({ error: "invalid_request" }, { status: 400 });
+  const supabase = await createSupabaseServerClient();
+  const { data: claims } = await supabase.auth.getClaims();
+  if (!claims?.claims?.sub) return NextResponse.json({ error: "forbidden" }, { status: 403 });
+  const { error } = await supabase.rpc("update_crm_opportunity_stage", { target_opportunity_id: parsed.data.opportunityId, target_stage: parsed.data.stage, target_next_action: parsed.data.nextAction, target_next_action_due_on: parsed.data.nextActionDueOn ?? null, target_lost_reason: parsed.data.lostReason ?? null });
+  return error ? NextResponse.json({ error: "unavailable" }, { status: 422 }) : NextResponse.json({ status: "updated" }, { headers: { "Cache-Control": "no-store" } });
+}
