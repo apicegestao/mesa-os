@@ -28,6 +28,26 @@ async function getOperatorClient() {
   return supabase;
 }
 
+async function provisionEnrollment(supabase: Awaited<ReturnType<typeof getOperatorClient>>, enrollmentId: string) {
+  if (!supabase) return false;
+  const { data: sessionData } = await supabase.auth.getSession();
+  const accessToken = sessionData.session?.access_token;
+  if (!accessToken) return false;
+
+  const env = getPublicEnv();
+  try {
+    const response = await fetch(`${env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/provision-authorized-enrollment`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ enrollment_id: enrollmentId }),
+      cache: "no-store",
+    });
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
+
 export async function GET() {
   const supabase = await getOperatorClient();
   if (!supabase) return NextResponse.json({ error: "forbidden" }, { status: 403 });
@@ -52,22 +72,7 @@ export async function POST(request: Request) {
   });
   if (enrollmentError || !enrollmentId) return NextResponse.json({ error: "enrollment_unavailable" }, { status: 422 });
 
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!serviceRoleKey) {
-    await supabase.rpc("revoke_internal_access_enrollment", { target_enrollment_id: enrollmentId });
-    return NextResponse.json({ error: "provisioning_unavailable" }, { status: 503 });
-  }
-
-  const env = getPublicEnv();
-  try {
-    const response = await fetch(`${env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/provision-authorized-enrollment`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${serviceRoleKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ enrollment_id: enrollmentId }),
-      cache: "no-store",
-    });
-    if (!response.ok) throw new Error("provisioning_failed");
-  } catch {
+  if (!await provisionEnrollment(supabase, enrollmentId)) {
     await supabase.rpc("revoke_internal_access_enrollment", { target_enrollment_id: enrollmentId });
     return NextResponse.json({ error: "provisioning_unavailable" }, { status: 503 });
   }
@@ -92,22 +97,7 @@ export async function PUT(request: Request) {
   });
   if (enrollmentError || !enrollmentId) return NextResponse.json({ error: "staff_enrollment_unavailable" }, { status: 422 });
 
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!serviceRoleKey) {
-    await supabase.rpc("revoke_internal_access_enrollment", { target_enrollment_id: enrollmentId });
-    return NextResponse.json({ error: "provisioning_unavailable" }, { status: 503 });
-  }
-
-  const env = getPublicEnv();
-  try {
-    const response = await fetch(`${env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/provision-authorized-enrollment`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${serviceRoleKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ enrollment_id: enrollmentId }),
-      cache: "no-store",
-    });
-    if (!response.ok) throw new Error("provisioning_failed");
-  } catch {
+  if (!await provisionEnrollment(supabase, enrollmentId)) {
     await supabase.rpc("revoke_internal_access_enrollment", { target_enrollment_id: enrollmentId });
     return NextResponse.json({ error: "provisioning_unavailable" }, { status: 503 });
   }

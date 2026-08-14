@@ -15,24 +15,29 @@ function json(status: number, body: Record<string, string>) {
   return Response.json(body, { status, headers: { "Cache-Control": "no-store" } });
 }
 
-function getVerifiedCallerRole(request: Request) {
+type VerifiedCaller = { role: string | null; subject: string | null };
+
+function getVerifiedCaller(request: Request): VerifiedCaller {
   const token = request.headers.get("authorization")?.replace(/^Bearer\s+/i, "");
-  if (!token) return null;
+  if (!token) return { role: null, subject: null };
 
   try {
     // The platform validates the JWT before this handler runs (verify_jwt=true).
     const encodedPayload = token.split(".")[1];
-    if (!encodedPayload) return null;
+    if (!encodedPayload) return { role: null, subject: null };
     const payload = JSON.parse(atob(encodedPayload.replace(/-/g, "+").replace(/_/g, "/")));
-    return typeof payload.role === "string" ? payload.role : null;
+    return {
+      role: typeof payload.role === "string" ? payload.role : null,
+      subject: typeof payload.sub === "string" && uuidPattern.test(payload.sub) ? payload.sub : null,
+    };
   } catch {
-    return null;
+    return { role: null, subject: null };
   }
 }
 
 Deno.serve(async (request) => {
   if (request.method !== "POST") return json(405, { error: "method_not_allowed" });
-  if (getVerifiedCallerRole(request) !== "service_role") return json(403, { error: "forbidden" });
+  const caller = getVerifiedCaller(request);
 
   let enrollmentId: string;
   try {
@@ -49,6 +54,25 @@ Deno.serve(async (request) => {
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
     { auth: { autoRefreshToken: false, persistSession: false } },
   );
+
+  if (caller.role !== "service_role") {
+    if (!caller.subject) return json(403, { error: "forbidden" });
+    const [{ data: access }, { data: assignment }] = await Promise.all([
+      supabase.from("internal_staff_access")
+        .select("identity_id")
+        .eq("identity_id", caller.subject)
+        .eq("capability", "internal_operator")
+        .eq("status", "active")
+        .maybeSingle(),
+      supabase.from("internal_staff_role_assignments")
+        .select("identity_id")
+        .eq("identity_id", caller.subject)
+        .in("role", ["admin", "concierge"])
+        .eq("status", "active")
+        .maybeSingle(),
+    ]);
+    if (!access || !assignment) return json(403, { error: "forbidden" });
+  }
 
   const { data: enrollment, error: enrollmentError } = await supabase
     .from("access_enrollments")
