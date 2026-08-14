@@ -22,6 +22,7 @@
 | Build de produção | aprovado |
 | Migration aplicada na homologação | aprovada |
 | Edge Function v3 ativa, com JWT obrigatório | aprovada |
+| Endpoint de webhook rejeita chamada externa sem token | aprovado (`401`) |
 | Pagamento sandbox já confirmado preservado | aprovado |
 | Preparação de organização e matrícula de proprietário | aprovada |
 
