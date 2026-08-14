@@ -69,6 +69,7 @@
 - IAM-2.28 — matrícula prévia, provisionamento server-side auditado e fundação de entrada sem senha para identidades autorizadas.
 - IAM-2.29 — acesso sem senha do membro e backoffice mínimo segregado da Mesa, limitado a `internal_operator`, matrícula/revogação e auditoria; sem acesso global automático aos dados dos membros.
 - OPS-3.0A R2 — CRM comercial de leads, contas, contatos, oportunidades, atividades, tarefas, carteira e handoff auditável; RBAC interno por capability; Concierge com onboarding e matrícula/revogação previamente autorizadas. BUILD ocorre apenas em homologação.
+- FIN-3.1A — fundação canônica e portátil de receita: catálogo/preço versionado, proposta, contrato, cobrança, pagamento confirmado, entitlement e auditoria; RBAC Financeiro; BUILD ocorre apenas em homologação, sem provedor ou checkout.
 
 ## Not Authorized
 
@@ -77,7 +78,7 @@
 - Tools ou ferramentas metodológicas.
 - Concierge fora do handoff, onboarding e matrícula/revogação explicitamente autorizados pelo OPS-3.0A R2.
 - Mentor, carteira de acompanhamento e qualquer acesso a dados metodológicos de membros.
-- Financeiro, catálogo, contratos, checkout, cobrança, pagamento, conciliação ou entitlement.
+- Checkout, provedor, cartão, PIX, webhook, cobrança automática, comunicação externa, contabilidade/fiscal, estorno automatizado ou múltiplos provedores financeiros.
 - Mesa OS Intelligence operacional, dados agregados, propostas de metodologia ou qualquer atualização automatizada.
 - WhatsApp, Instagram, e-mail transacional, webhook, comunicação externa ou automação proativa.
 - WhatsApp.

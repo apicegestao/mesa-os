@@ -1808,7 +1808,7 @@ export type Database = {
         Returns: undefined
       }
       assign_internal_staff_role: {
-        Args: { target_identity_id: string; target_role: "admin" | "commercial" | "concierge" }
+        Args: { target_identity_id: string; target_role: "admin" | "commercial" | "concierge" | "finance" }
         Returns: string
       }
       bootstrap_first_internal_admin: {
@@ -1832,13 +1832,26 @@ export type Database = {
         Args: { target_opportunity_id: string; target_concierge_identity_id: string; target_checklist?: Json }
         Returns: string
       }
+      create_finance_offer: {
+        Args: { target_amount: number; target_code: string; target_currency?: string; target_name: string }
+        Returns: string
+      }
+      create_finance_proposal: {
+        Args: { target_crm_opportunity_id: string; target_expires_on?: string | null; target_price_version_id: string }
+        Returns: string
+      }
+      confirm_finance_payment: {
+        Args: { target_due_on?: string | null; target_external_reference?: string | null; target_method_label?: string | null; target_proposal_id: string }
+        Returns: string
+      }
+      get_my_finance_workspace: { Args: Record<PropertyKey, never>; Returns: Json }
       get_my_crm_workspace: {
         Args: Record<PropertyKey, never>
         Returns: Json
       }
       get_my_internal_ops_state: {
         Args: Record<PropertyKey, never>
-        Returns: { active: boolean; roles: ("admin" | "commercial" | "concierge")[] }[]
+        Returns: { active: boolean; roles: ("admin" | "commercial" | "concierge" | "finance")[] }[]
       }
       get_my_internal_operator_state: {
         Args: Record<PropertyKey, never>
@@ -1846,7 +1859,7 @@ export type Database = {
       }
       list_active_internal_operators: {
         Args: Record<PropertyKey, never>
-        Returns: { identity_id: string; email: string; roles: ("admin" | "commercial" | "concierge")[] }[]
+        Returns: { identity_id: string; email: string; roles: ("admin" | "commercial" | "concierge" | "finance")[] }[]
       }
       list_available_concierges: {
         Args: Record<PropertyKey, never>
