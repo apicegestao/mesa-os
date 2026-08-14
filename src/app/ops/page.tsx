@@ -3,6 +3,7 @@ import { OpsEnrollmentPanel } from "@/modules/identity-access";
 import { OpsCrmConsole } from "@/modules/crm";
 import { OpsFinanceConsole } from "@/modules/finance/ui/ops-finance-console";
 import { OpsPortfolioConsole } from "@/modules/operations/ui/ops-portfolio-console";
+import { OpsSupportConsole } from "@/modules/operations/ui/ops-support-console";
 import { OpsIntelligenceConsole } from "@/modules/intelligence/ui/ops-intelligence-console";
 import type { CrmWorkspace, InternalRole } from "@/modules/crm/domain";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
@@ -44,5 +45,5 @@ export default async function OpsPage() {
   const financeWorkspace = (financeWorkspaceData ?? { offers: [], proposals: [] }) as { offers: { id: string; code: string; name: string; price_version_id: string; amount: number; currency_code: string }[]; proposals: { id: string; status: string; amount: number; currency_code: string; expires_on: string | null; opportunity_title: string; account_name: string }[] };
   const operators = (operatorsData ?? []) as { email: string; identity_id: string; roles: InternalRole[] }[];
   const concierges = (conciergesData ?? []) as { email: string; identity_id: string }[];
-  return <main className="shell"><OpsCrmConsole concierges={concierges} initialWorkspace={workspace} isBootstrap={false} operators={operators} roles={roles} /><OpsPortfolioConsole globalMentor={(globalMentorData ?? []) as never[]} managed={(managedPortfoliosData ?? []) as never[]} operators={operators} organizations={(organizationsData ?? []) as never[]} portfolios={(portfoliosData ?? []) as never[]} roles={roles} />{roles.includes("admin") && <OpsIntelligenceConsole workspace={(intelligenceWorkspaceData ?? { snapshots: [], proposals: [] }) as never} />}<OpsFinanceConsole opportunities={workspace.opportunities} roles={roles} workspace={financeWorkspace} />{(roles.includes("admin") || roles.includes("concierge")) && <OpsEnrollmentPanel initialEnrollments={enrollments ?? []} />}</main>;
+  return <main className="shell"><OpsCrmConsole concierges={concierges} initialWorkspace={workspace} isBootstrap={false} operators={operators} roles={roles} /><OpsPortfolioConsole globalMentor={(globalMentorData ?? []) as never[]} managed={(managedPortfoliosData ?? []) as never[]} operators={operators} organizations={(organizationsData ?? []) as never[]} portfolios={(portfoliosData ?? []) as never[]} roles={roles} />{(roles.includes("admin") || roles.includes("concierge") || roles.includes("mentor")) && <OpsSupportConsole />}{roles.includes("admin") && <OpsIntelligenceConsole workspace={(intelligenceWorkspaceData ?? { snapshots: [], proposals: [] }) as never} />}<OpsFinanceConsole opportunities={workspace.opportunities} roles={roles} workspace={financeWorkspace} />{(roles.includes("admin") || roles.includes("concierge")) && <OpsEnrollmentPanel initialEnrollments={enrollments ?? []} />}</main>;
 }
