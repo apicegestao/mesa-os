@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { createAsaasSandboxCheckout, isSandboxAsaasKey } from "@/modules/finance/asaas/adapter";
+import { AsaasCheckoutError, createAsaasSandboxCheckout, isSandboxAsaasKey } from "@/modules/finance/asaas/adapter";
 import { getPublicEnv } from "@/shared/config/env";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 import { log } from "@/shared/observability/logger";
@@ -66,7 +66,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ checkoutUrl: asaas.link }, { status: 201, headers: { "Cache-Control": "no-store" } });
   } catch (error) {
     await supabase.rpc("fail_asaas_checkout", { target_checkout_id: checkout.checkout_id });
-    log("warn", "finance_asaas_checkout_failed", { reason: error instanceof Error ? error.message : "unknown" });
-    return NextResponse.json({ error: "checkout_unavailable" }, { status: 422 });
+    const providerCodes = error instanceof AsaasCheckoutError ? error.validationCodes : [];
+    log("warn", "finance_asaas_checkout_failed", {
+      reason: error instanceof Error ? error.message : "unknown",
+      providerCodes: providerCodes.join(",") || null,
+    });
+    return NextResponse.json({
+      error: "checkout_unavailable",
+      reason: error instanceof AsaasCheckoutError ? "provider_rejected" : "unavailable",
+    }, { status: 422 });
   }
 }

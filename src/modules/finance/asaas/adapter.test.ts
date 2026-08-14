@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { createCheckoutPayload, isSandboxAsaasKey } from "./adapter";
+import { createCheckoutPayload, getAsaasValidationCodes, isSandboxAsaasKey } from "./adapter";
 
 describe("Asaas Sandbox adapter", () => {
   it("accepts sandbox and legacy sandbox keys, never a production key", () => {
@@ -14,5 +14,15 @@ describe("Asaas Sandbox adapter", () => {
     expect(payload).toMatchObject({ billingTypes: ["PIX", "CREDIT_CARD"], chargeTypes: ["DETACHED"], externalReference: "mesa-fin-123" });
     expect(payload.callback.successUrl).toBe("https://preview.example.com/ops?checkout=success");
     expect(JSON.stringify(payload)).not.toContain("access_token");
+  });
+
+  it("keeps only safe provider validation codes for protected diagnostics", () => {
+    expect(getAsaasValidationCodes({ errors: [
+      { code: "invalid_customer_data" },
+      { code: "INVALID_CUSTOMER_DATA" },
+      { code: "unsafe code with spaces" },
+      { code: "external_reference_invalid" },
+    ] })).toEqual(["invalid_customer_data", "external_reference_invalid"]);
+    expect(getAsaasValidationCodes({ errors: "unexpected" })).toEqual([]);
   });
 });

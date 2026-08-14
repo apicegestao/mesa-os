@@ -22,6 +22,26 @@ export type AsaasCheckoutRequest = {
 
 export type AsaasCheckout = { id: string; link: string; status: string };
 
+export class AsaasCheckoutError extends Error {
+  constructor(
+    public readonly status: number,
+    public readonly validationCodes: string[],
+  ) {
+    super(`asaas_checkout_${status}`);
+  }
+}
+
+export function getAsaasValidationCodes(payload: unknown) {
+  const parsed = z.object({
+    errors: z.array(z.object({ code: z.string().trim() })).max(10).optional(),
+  }).safeParse(payload);
+
+  if (!parsed.success) return [];
+  return [...new Set((parsed.data.errors ?? [])
+    .map(({ code }) => code.toLowerCase())
+    .filter((code) => /^[a-z0-9_]{1,80}$/.test(code)))];
+}
+
 export function isSandboxAsaasKey(value: string | undefined) {
   if (typeof value !== "string") return false;
   const key = value.trim();
@@ -71,6 +91,6 @@ export async function createAsaasSandboxCheckout(input: AsaasCheckoutRequest): P
     cache: "no-store",
   });
   const payload: unknown = await response.json().catch(() => null);
-  if (!response.ok) throw new Error(`asaas_checkout_${response.status}`);
+  if (!response.ok) throw new AsaasCheckoutError(response.status, getAsaasValidationCodes(payload));
   return responseSchema.parse(payload);
 }
