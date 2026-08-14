@@ -10,7 +10,7 @@ type Step = "request" | "verify";
 const neutralRequestMessage = "Se este e-mail estiver autorizado, enviaremos um código de acesso em instantes.";
 const neutralVerifyMessage = "Não foi possível confirmar o código. Solicite um novo e tente novamente.";
 
-export function EmailCodeLogin({ nextPath = "/app" }: { nextPath?: "/app" | "/ops" }) {
+export function EmailCodeLogin() {
   const router = useRouter();
   const [step, setStep] = useState<Step>("request");
   const [email, setEmail] = useState("");
@@ -62,7 +62,8 @@ export function EmailCodeLogin({ nextPath = "/app" }: { nextPath?: "/app" | "/op
       setMessage(neutralVerifyMessage);
       return;
     }
-    router.push(nextPath);
+    const { data: internalAccess } = await createSupabaseBrowserClient().rpc("get_my_internal_operator_state");
+    router.replace(internalAccess?.[0]?.active ? "/ops" : "/app");
     router.refresh();
   }
 

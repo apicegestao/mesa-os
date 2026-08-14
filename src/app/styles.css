@@ -1,12 +1,12 @@
 :root {
-  --color-bg: #f4f1ea;
-  --color-surface: #fffdf8;
-  --color-text: #1d2623;
-  --color-muted: #64706b;
-  --color-border: #d9ded9;
-  --color-accent: #285c4d;
-  --color-accent-strong: #173f35;
-  --color-accent-soft: #e3ede8;
+  --color-bg: #f3f7fa;
+  --color-surface: #ffffff;
+  --color-text: #101d37;
+  --color-muted: #64798c;
+  --color-border: #d7e2eb;
+  --color-accent: #397fba;
+  --color-accent-strong: #101d37;
+  --color-accent-soft: #eaf3fa;
   --color-warm: #b7873f;
   --color-success: #246b4f;
   --radius-md: 0.75rem;
@@ -15,7 +15,7 @@
   --space-2: 1rem;
   --space-3: 1.5rem;
   --space-4: 2rem;
-  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: Arial, Helvetica, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -86,6 +86,7 @@ button:disabled { cursor: wait; opacity: 0.65; }
 .auth-form > .button-quiet { margin-top: -.25rem; }
 .ops-console { width: min(100% - 2rem, 100rem); margin: 2rem auto; display: grid; gap: 1rem; }
 .ops-header, .ops-navigation, .ops-module { width: min(100% - 2rem, 100rem); margin-inline: auto; }
+.ops-shell { min-height: 100svh; padding: 0 0 3rem; background: #f3f7fa; color: #101d37; }
 .ops-header { display:flex; align-items:end; justify-content:space-between; gap:1rem; padding:1.5rem 0 1rem; border-bottom:1px solid var(--color-border); }
 .ops-header h1 { margin:.2rem 0 0; color:#101d37; font-size:1.4rem; }
 .ops-header a { color:#397fba; font-size:.82rem; font-weight:800; text-decoration:none; }
@@ -93,6 +94,9 @@ button:disabled { cursor: wait; opacity: 0.65; }
 .ops-navigation a { flex:0 0 auto; border:1px solid var(--color-border); border-radius:999px; padding:.5rem .8rem; color:var(--color-muted); font-size:.78rem; font-weight:800; text-decoration:none; }
 .ops-navigation a.active { border-color:#101d37; background:#101d37; color:white; }
 .ops-module { margin-top:1.25rem; }
+.ops-shell .status, .ops-shell .ops-finance, .ops-shell .ops-create, .ops-shell .ops-kanban-column { box-shadow: 0 0.6rem 1.8rem rgb(16 29 55 / 6%); }
+.mesa-login-shell { background: radial-gradient(circle at top right, #e3f0f9, transparent 38%), #f3f7fa; }
+.mesa-login-shell .login-card { max-width: 29rem; border-top: 4px solid #101d37; }
 .ops-console > header { padding: 1rem 0; }.ops-console h1 { font-size: clamp(2rem, 4vw, 3.6rem); }.ops-admin { width: 100%; }.ops-create { padding: 1rem 1.2rem; border: 1px solid var(--color-border); border-radius: .85rem; background: var(--color-surface); }.ops-create summary { cursor: pointer; color: var(--color-accent-strong); font-weight: 800; }
 .ops-kanban { display: grid; grid-template-columns: repeat(5, minmax(15rem, 1fr)); gap: .8rem; overflow-x: auto; align-items: start; padding-bottom: .5rem; }.ops-kanban-column { min-height: 22rem; padding: .75rem; border: 1px solid var(--color-border); border-radius: .85rem; background: #edf1f4; }.ops-kanban-column > header { display: flex; align-items: center; justify-content: space-between; margin-bottom: .75rem; }.ops-kanban-column h2 { margin: 0; color: #101d37; font-size: 1rem; }.ops-kanban-column > header span { display: grid; place-items: center; min-width: 1.5rem; height: 1.5rem; border-radius: 999px; background: white; color: var(--color-muted); font-size: .72rem; font-weight: 800; }
 .ops-client-card { width: 100%; display: grid; gap: .45rem; margin-bottom: .65rem; padding: .9rem; border: 1px solid #dce3e8; border-radius: .7rem; background: white; color: #101d37; text-align: left; box-shadow: 0 2px 8px rgb(16 29 55 / 6%); }.ops-client-card:hover { border-color: #397fba; }.ops-client-card > strong { font-size: .95rem; }.ops-client-card > span, .ops-client-card small { color: #607589; font-size: .75rem; line-height: 1.35; }.ops-client-card b { font-size: .78rem; }.ops-client-card footer { display: flex; justify-content: space-between; gap: .35rem; color: #397fba; font-size: .68rem; font-weight: 800; }.ops-overdue { color: #a2473d !important; font-weight: 800; }

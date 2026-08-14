@@ -4,22 +4,22 @@ import { EmailCodeLogin } from "./email-code-login";
 
 const signInWithOtp = vi.fn();
 const verifyOtp = vi.fn();
-const push = vi.fn();
+const replace = vi.fn();
 const refresh = vi.fn();
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push, refresh }),
+  useRouter: () => ({ replace, refresh }),
 }));
 
 vi.mock("@/shared/infrastructure/supabase/browser", () => ({
-  createSupabaseBrowserClient: () => ({ auth: { signInWithOtp, verifyOtp } }),
+  createSupabaseBrowserClient: () => ({ auth: { signInWithOtp, verifyOtp }, rpc: vi.fn().mockResolvedValue({ data: [{ active: true }] }) }),
 }));
 
 describe("email code login", () => {
   beforeEach(() => {
     signInWithOtp.mockReset().mockResolvedValue({ error: null });
     verifyOtp.mockReset().mockResolvedValue({ error: null });
-    push.mockReset();
+    replace.mockReset();
     refresh.mockReset();
   });
 
@@ -49,13 +49,13 @@ describe("email code login", () => {
     expect(verifyOtp).not.toHaveBeenCalled();
   });
 
-  it("keeps internal code entry separate from the member destination", async () => {
-    render(<EmailCodeLogin nextPath="/ops" />);
+  it("routes an authorized internal user to the backoffice after OTP", async () => {
+    render(<EmailCodeLogin />);
     fireEvent.change(screen.getByLabelText("Seu e-mail"), { target: { value: "operacao@mesa.example" } });
     fireEvent.click(screen.getByRole("button", { name: "Receber código de acesso" }));
     fireEvent.change(await screen.findByLabelText("Código de acesso"), { target: { value: "123456" } });
     fireEvent.click(screen.getByRole("button", { name: "Entrar" }));
-    await vi.waitFor(() => expect(push).toHaveBeenCalledWith("/ops"));
+    await vi.waitFor(() => expect(replace).toHaveBeenCalledWith("/ops"));
     expect(verifyOtp).toHaveBeenCalledWith({ email: "operacao@mesa.example", token: "123456", type: "email" });
   });
 

@@ -3,5 +3,5 @@
 import { EmailCodeLogin } from "./email-code-login";
 
 export function OpsLoginForm() {
-  return <EmailCodeLogin nextPath="/ops" />;
+  return <EmailCodeLogin />;
 }

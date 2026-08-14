@@ -39,7 +39,7 @@ function OpsNavigation({ activeView, roles }: { activeView: OpsView; roles: Inte
 export default async function OpsPage({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
   const supabase = await createSupabaseServerClient();
   const { data: claimsData } = await supabase.auth.getClaims();
-  if (!claimsData?.claims?.sub) redirect("/ops/login");
+  if (!claimsData?.claims?.sub) redirect("/login");
 
   const { data, error } = await supabase.rpc("get_my_internal_operator_state");
   if (error || !data?.[0]?.active) {
@@ -89,5 +89,5 @@ export default async function OpsPage({ searchParams }: { searchParams: Promise<
     content = <main className="ops-module"><OpsPortfolioConsole globalMentor={(globalMentorData ?? []) as never[]} managed={(managedPortfoliosData ?? []) as never[]} operators={(operatorsData ?? []) as never[]} organizations={(organizationsData ?? []) as never[]} portfolios={(myPortfoliosData ?? []) as never[]} roles={roles} />{roles.includes("admin") && <OpsConciergeCapacity concierges={concierges} />}</main>;
   }
 
-  return <main className="shell"><header className="ops-header"><div><p className="eyebrow">Mesa dos Donos · operação interna</p><h1>Backoffice</h1></div><a href="/app">Ver ambiente do membro</a></header><OpsNavigation activeView={activeView} roles={roles} />{content}</main>;
+  return <main className="ops-shell"><header className="ops-header"><div><p className="eyebrow">Mesa dos Donos · operação interna</p><h1>Backoffice</h1></div><a href="/app">Ver ambiente do membro</a></header><OpsNavigation activeView={activeView} roles={roles} />{content}</main>;
 }

@@ -7,14 +7,17 @@ export const dynamic = "force-dynamic";
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const supabase = await createSupabaseServerClient();
   const { data } = await supabase.auth.getClaims();
-  if (data?.claims) redirect("/app");
+  if (data?.claims?.sub) {
+    const { data: internalAccess } = await supabase.rpc("get_my_internal_operator_state");
+    redirect(internalAccess?.[0]?.active ? "/ops" : "/app");
+  }
   const error = (await searchParams).error;
   const feedback = error === "signup-disabled"
     ? "Este acesso ainda não está liberado para teste. Solicite a criação do seu acesso na homologação."
     : error === "invalid-link"
       ? "Não foi possível concluir o acesso. Tente novamente ou use outra forma de entrada."
       : null;
-  const summary = "Informe seu e-mail para receber um código de acesso. Não usamos senha, link de redirecionamento ou login social.";
+  const summary = "Informe seu e-mail para receber um código de acesso. O Mesa OS identifica seu acesso e direciona você automaticamente.";
 
-  return <main className="shell"><section className="status login-card"><p className="eyebrow">Acesso seguro</p><h1>Entrar no Mesa OS</h1><p className="summary">{summary}</p>{feedback && <p className="feedback feedback-error" role="alert">{feedback}</p>}<LoginForm /></section></main>;
+  return <main className="shell mesa-login-shell"><section className="status login-card"><p className="eyebrow">Mesa dos Donos</p><h1>Entrar no Mesa OS</h1><p className="summary">{summary}</p>{feedback && <p className="feedback feedback-error" role="alert">{feedback}</p>}<LoginForm /></section></main>;
 }
