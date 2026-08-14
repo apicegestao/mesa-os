@@ -28,7 +28,7 @@ function hasValidToken(received: string | null, expected: string | undefined) {
 }
 
 export async function POST(request: Request) {
-  // The endpoint is intentionally redeployed whenever its protected configuration changes.
+  // Redeploy after protected configuration changes so the runtime receives the current secret set.
   if (!hasValidToken(request.headers.get("asaas-access-token"), process.env.ASAAS_WEBHOOK_TOKEN)) {
     log("warn", "finance_asaas_webhook_unauthorized");
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
