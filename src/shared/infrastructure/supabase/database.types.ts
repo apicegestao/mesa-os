@@ -1845,6 +1845,10 @@ export type Database = {
         Returns: string
       }
       get_my_finance_workspace: { Args: Record<PropertyKey, never>; Returns: Json }
+      get_intelligence_workspace: { Args: Record<PropertyKey, never>; Returns: Json }
+      generate_intelligence_aggregate_snapshot: { Args: Record<PropertyKey, never>; Returns: string }
+      create_intelligence_proposal: { Args: { target_snapshot_id: string | null; target_type: string; target_title: string; target_summary: string; target_rationale: string; target_confidence: number | null; target_limitations: string }; Returns: string }
+      review_intelligence_proposal: { Args: { target_proposal_id: string; target_status: "accepted" | "rejected"; target_note: string }; Returns: undefined }
       get_my_internal_portfolios: {
         Args: Record<PropertyKey, never>
         Returns: { assignment_id: string; kind: "concierge" | "mentor"; organization_id: string; organization_name: string; assigned_at: string; active_cycle_title: string | null; active_cycle_ends_on: string | null; next_action_label: string | null; approved_milestone_count: number; onboarding_pending_enrollments: number }[]

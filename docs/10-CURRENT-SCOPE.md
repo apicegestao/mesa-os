@@ -71,6 +71,7 @@
 - OPS-3.0A R2 — CRM comercial de leads, contas, contatos, oportunidades, atividades, tarefas, carteira e handoff auditável; RBAC interno por capability; Concierge com onboarding e matrícula/revogação previamente autorizadas. BUILD ocorre apenas em homologação.
 - FIN-3.1A — fundação canônica e portátil de receita: catálogo/preço versionado, proposta, contrato, cobrança, pagamento confirmado, entitlement e auditoria; RBAC Financeiro; BUILD ocorre apenas em homologação, sem provedor ou checkout.
 - OPS-3.0B — carteira interna atribuída de Concierge e Mentor: atribuição temporal/auditável, envelope mínimo por finalidade, isolamento por carteira, revogação imediata em leituras futuras e interface interna mínima; BUILD ocorre apenas em homologação.
+- INT-3.2A — Mesa OS Intelligence: conjuntos agregados com supressão de coortes pequenas, insights e propostas internas rastreáveis para Admin; BUILD ocorre apenas em homologação, sem modelo ativo, dados brutos ou execução automática.
 
 ## Not Authorized
 
@@ -81,6 +82,7 @@
 - Mentor fora da carteira estritamente atribuída, sem conteúdo bruto e sem qualquer poder de alteração metodológica.
 - Checkout, provedor, cartão, PIX, webhook, cobrança automática, comunicação externa, contabilidade/fiscal, estorno automatizado ou múltiplos provedores financeiros.
 - Mesa OS Intelligence operacional, dados agregados, propostas de metodologia ou qualquer atualização automatizada.
+- Modelo ativo, dados identificáveis amplos, treinamento/fine-tuning, alteração técnica do acesso global de Mentor, publicação automática ou execução de proposta pela Mesa OS Intelligence.
 - WhatsApp, Instagram, e-mail transacional, webhook, comunicação externa ou automação proativa.
 - WhatsApp.
 - Dashboards de negócio.
