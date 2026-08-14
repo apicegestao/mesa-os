@@ -1,6 +1,6 @@
 # Definition Pack — Backoffice, CRM e Canais Oficiais
 
-**Status:** DRAFT — proposta para aprovação explícita; não autoriza BUILD
+**Status:** APPROVED FOR DEFINITION/DISCOVERY — owner autorizou o avanço em 2026-08-13; não autoriza BUILD
 
 ## Objetivo
 
@@ -123,6 +123,6 @@ Mesa OS Intelligence poderá produzir análises agregadas e desidentificadas par
 6. Testes comprovam isolamento, revogação, auditoria, falhas, opt-out e rollback de canal.
 7. Jurídico/privacidade aprova os textos e a finalidade antes de qualquer comunicação externa em produção.
 
-## Decisão solicitada ao owner
+## Próxima decisão necessária ao owner
 
-Uma aprovação posterior deste pack deverá definir se autoriza apenas o **Definition/Discovery** detalhado ou o primeiro **BUILD em homologação**. Mesmo com aprovação, WhatsApp e Instagram exigirão gate separado de configuração Meta, privacidade, testes de webhook e promoção explícita.
+Esta aprovação autoriza apenas o detalhamento de arquitetura, riscos, dados, compliance e critérios de aceite. Um pedido futuro deverá autorizar explicitamente o primeiro **BUILD em homologação**. Mesmo com essa autorização, WhatsApp e Instagram exigirão gate separado de configuração Meta, privacidade, testes de webhook e promoção explícita.
