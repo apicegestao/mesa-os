@@ -96,7 +96,7 @@ export function createCheckoutPayload(input: Omit<AsaasCheckoutRequest, "apiKey"
       expiredUrl: new URL("/ops?checkout=expired", callbackBaseUrl).toString(),
     },
     items: [{
-      name: input.offerName,
+      name: input.offerName.slice(0, 30),
       description: "Mesa dos Donos",
       quantity: 1,
       value: input.amount,

@@ -18,6 +18,11 @@ describe("Asaas Sandbox adapter", () => {
     expect(payload).not.toHaveProperty("customerData");
   });
 
+  it("limits the provider-facing item name without changing the internal offer", () => {
+    const payload = createCheckoutPayload({ amount: 5, currencyCode: "BRL", externalReference: "mesa-fin-123", offerName: "Uma oferta de validação Asaas que passa do limite", payerEmail: "membro@example.com", payerName: "Membro", callbackBaseUrl: "https://preview.example.com" });
+    expect(payload.items[0]?.name).toHaveLength(30);
+  });
+
   it("keeps only safe provider validation codes for protected diagnostics", () => {
     expect(getAsaasValidationCodes({ errors: [
       { code: "invalid_customer_data" },
