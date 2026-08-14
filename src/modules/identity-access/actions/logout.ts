@@ -8,3 +8,9 @@ export async function logout() {
   await supabase.auth.signOut();
   redirect("/login");
 }
+
+export async function logoutToOpsLogin() {
+  const supabase = await createSupabaseServerClient();
+  await supabase.auth.signOut();
+  redirect("/ops/login");
+}
