@@ -19,7 +19,7 @@ O membro continua fora do backoffice. Nenhum dos três domínios se torna fonte 
 | Donos/Admins | governança, estratégia, responsáveis, exceções e aprovações | atribuir funções, aprovar mudanças, revisar indicadores e exceções | ver conteúdos sensíveis ou agir como membro sem justificativa/auditoria |
 | Comercial | aquisição e fechamento | leads, contas, contatos, oportunidades, atividades, proposta e handoff | acessar contexto metodológico, TutorIA ou evolução do membro |
 | Concierge | entrada e sucesso operacional inicial; incorpora a rotina antes chamada de Operador | handoff, matrícula/revogação autorizada, onboarding, pendências e encaminhamentos | mudar metodologia, ciclo, avaliação ou memória TutorIA |
-| Mentor | apoio humano à evolução da carteira atribuída | envelope autorizado, pedidos de orientação e escalonamentos | acesso global, dados comerciais irrelevantes, chat bruto ou decisões autônomas |
+| Mentor | apoio humano à evolução da comunidade de membros | visão metodológica global mínima, pedidos de orientação e escalonamentos | dados comerciais irrelevantes, chat bruto ou decisões autônomas |
 | Financeiro | receita, contratos, cobranças, conciliação e exceções financeiras | catálogo comercial, contrato, status financeiro, estorno/reembolso conforme alçada | dados de pagamento sensíveis, evolução metodológica ou contexto TutorIA |
 | Metodologia & Conteúdo | qualidade da Jornada, ferramentas, ciclos e materiais | elaborar rascunhos versionados, revisar propostas e publicar após aprovação | reescrever histórico, alterar produção sem governança ou usar dados identificáveis livremente |
 | Intelligence | análises agregadas, hipóteses e recomendações para a Mesa | consultar conjuntos aprovados e desidentificados, gerar relatórios e propostas | identificar membros, alterar conteúdo/metodologia, executar ações ou treinar modelos implicitamente |
@@ -137,7 +137,7 @@ flowchart LR
 | OPS-3.0A | CRM comercial, handoff e Concierge com matrícula/onboarding | dados metodológicos, canais externos |
 | FIN-3.1A | contratos, catálogo, cobrança e entitlement sem provedor | checkout real, cartão, webhook |
 | FIN-3.1B | primeiro checkout oficial e conciliação em homologação | contabilidade/fiscal, múltiplos provedores |
-| OPS-3.0B | carteira de Concierge/Mentor com envelope autorizado | chat bruto, acesso global |
+| OPS-3.0B | carteira de Concierge com envelope autorizado; base de Mentor sujeita a adendo próprio | chat bruto, acesso global técnico antes de adendo |
 | INT-3.2A | camada agregada de Intelligence e propostas internas | atualização automática, dados identificáveis livres |
 | COM-3.3A | WhatsApp/Instagram oficiais por adaptador | automação sem consentimento, disparo em massa |
 
