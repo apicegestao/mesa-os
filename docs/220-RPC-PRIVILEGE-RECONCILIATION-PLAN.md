@@ -52,3 +52,10 @@ Aplicar em homologação uma migração aditiva e revisável que:
 ## Relação com o plano mestre
 
 Este é o primeiro gate do **Bloco A — Consolidação de homologação**. Até ele ser concluído, não há promoção, deploy de produção nem smoke financeiro final.
+
+## Pre-Flight executado
+
+- a migration versionada foi simulada dentro de uma transação descartável na homologação;
+- resultado da simulação: `0` funções públicas privilegiadas executáveis por `authenticated` e `0` funções `private` amplamente executáveis;
+- a transação foi revertida: nenhum objeto ou dado de homologação foi alterado nesse teste;
+- a aplicação persistente continua pendente de autorização explícita do owner, pois a alteração alcança simultaneamente CRM, Financeiro, suporte, acesso interno e Intelligence.
