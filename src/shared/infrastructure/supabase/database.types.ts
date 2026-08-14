@@ -1808,7 +1808,7 @@ export type Database = {
         Returns: undefined
       }
       assign_internal_staff_role: {
-        Args: { target_identity_id: string; target_role: "admin" | "commercial" | "concierge" | "finance" }
+        Args: { target_identity_id: string; target_role: "admin" | "commercial" | "concierge" | "finance" | "mentor" }
         Returns: string
       }
       bootstrap_first_internal_admin: {
@@ -1845,13 +1845,17 @@ export type Database = {
         Returns: string
       }
       get_my_finance_workspace: { Args: Record<PropertyKey, never>; Returns: Json }
+      get_my_internal_portfolios: {
+        Args: Record<PropertyKey, never>
+        Returns: { assignment_id: string; kind: "concierge" | "mentor"; organization_id: string; organization_name: string; assigned_at: string; active_cycle_title: string | null; active_cycle_ends_on: string | null; next_action_label: string | null; approved_milestone_count: number; onboarding_pending_enrollments: number }[]
+      }
       get_my_crm_workspace: {
         Args: Record<PropertyKey, never>
         Returns: Json
       }
       get_my_internal_ops_state: {
         Args: Record<PropertyKey, never>
-        Returns: { active: boolean; roles: ("admin" | "commercial" | "concierge" | "finance")[] }[]
+        Returns: { active: boolean; roles: ("admin" | "commercial" | "concierge" | "finance" | "mentor")[] }[]
       }
       get_my_internal_operator_state: {
         Args: Record<PropertyKey, never>
@@ -1859,12 +1863,25 @@ export type Database = {
       }
       list_active_internal_operators: {
         Args: Record<PropertyKey, never>
-        Returns: { identity_id: string; email: string; roles: ("admin" | "commercial" | "concierge" | "finance")[] }[]
+        Returns: { identity_id: string; email: string; roles: ("admin" | "commercial" | "concierge" | "finance" | "mentor")[] }[]
       }
       list_available_concierges: {
         Args: Record<PropertyKey, never>
         Returns: { identity_id: string; email: string }[]
       }
+      list_portfolio_organizations: {
+        Args: Record<PropertyKey, never>
+        Returns: { organization_id: string; organization_name: string }[]
+      }
+      list_managed_internal_portfolios: {
+        Args: Record<PropertyKey, never>
+        Returns: { assignment_id: string; organization_id: string; organization_name: string; assignee_identity_id: string; assignee_email: string; kind: "concierge" | "mentor"; assigned_at: string }[]
+      }
+      assign_internal_portfolio: {
+        Args: { target_organization_id: string; target_assignee_identity_id: string; target_kind: "concierge" | "mentor"; target_reason?: string | null }
+        Returns: string
+      }
+      revoke_internal_portfolio: { Args: { target_assignment_id: string }; Returns: undefined }
       update_crm_opportunity_stage: {
         Args: { target_opportunity_id: string; target_stage: "new" | "qualified" | "proposal" | "negotiation" | "won" | "lost"; target_next_action: string; target_next_action_due_on?: string | null; target_lost_reason?: string | null }
         Returns: undefined

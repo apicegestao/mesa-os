@@ -70,14 +70,15 @@
 - IAM-2.29 — acesso sem senha do membro e backoffice mínimo segregado da Mesa, limitado a `internal_operator`, matrícula/revogação e auditoria; sem acesso global automático aos dados dos membros.
 - OPS-3.0A R2 — CRM comercial de leads, contas, contatos, oportunidades, atividades, tarefas, carteira e handoff auditável; RBAC interno por capability; Concierge com onboarding e matrícula/revogação previamente autorizadas. BUILD ocorre apenas em homologação.
 - FIN-3.1A — fundação canônica e portátil de receita: catálogo/preço versionado, proposta, contrato, cobrança, pagamento confirmado, entitlement e auditoria; RBAC Financeiro; BUILD ocorre apenas em homologação, sem provedor ou checkout.
+- OPS-3.0B — carteira interna atribuída de Concierge e Mentor: atribuição temporal/auditável, envelope mínimo por finalidade, isolamento por carteira, revogação imediata em leituras futuras e interface interna mínima; BUILD ocorre apenas em homologação.
 
 ## Not Authorized
 
 - Journey ou jornada do membro.
 - TutorIA fora dos contratos TCF-2.21A a TCF-2.21D.
 - Tools ou ferramentas metodológicas.
-- Concierge fora do handoff, onboarding e matrícula/revogação explicitamente autorizados pelo OPS-3.0A R2.
-- Mentor, carteira de acompanhamento e qualquer acesso a dados metodológicos de membros.
+- Concierge fora do handoff, onboarding, matrícula/revogação e carteira estritamente atribuída explicitamente autorizados pelo OPS-3.0A R2/OPS-3.0B.
+- Mentor fora da carteira estritamente atribuída, sem conteúdo bruto e sem qualquer poder de alteração metodológica.
 - Checkout, provedor, cartão, PIX, webhook, cobrança automática, comunicação externa, contabilidade/fiscal, estorno automatizado ou múltiplos provedores financeiros.
 - Mesa OS Intelligence operacional, dados agregados, propostas de metodologia ou qualquer atualização automatizada.
 - WhatsApp, Instagram, e-mail transacional, webhook, comunicação externa ou automação proativa.

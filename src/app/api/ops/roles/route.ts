@@ -4,7 +4,7 @@ import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/ser
 
 const requestSchema = z.discriminatedUnion("action", [
   z.object({ action: z.literal("bootstrap") }),
-  z.object({ action: z.literal("assign"), identityId: z.string().uuid(), role: z.enum(["admin", "commercial", "concierge"]) }),
+  z.object({ action: z.literal("assign"), identityId: z.string().uuid(), role: z.enum(["admin", "commercial", "concierge", "finance", "mentor"]) }),
 ]);
 
 async function getOperatorClient() {

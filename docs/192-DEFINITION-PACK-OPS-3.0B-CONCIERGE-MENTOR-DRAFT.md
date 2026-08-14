@@ -1,6 +1,6 @@
 # Definition Pack — OPS-3.0B Carteira de Concierge e Mentor
 
-**Status:** DRAFT — requer aprovação explícita para BUILD em homologação
+**Status:** APPROVED — owner aprovou BUILD em homologação em 2026-08-14
 
 ## Objetivo
 

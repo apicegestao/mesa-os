@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { OpsEnrollmentPanel } from "@/modules/identity-access";
 import { OpsCrmConsole } from "@/modules/crm";
 import { OpsFinanceConsole } from "@/modules/finance/ui/ops-finance-console";
+import { OpsPortfolioConsole } from "@/modules/operations/ui/ops-portfolio-console";
 import type { CrmWorkspace, InternalRole } from "@/modules/crm/domain";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 
@@ -25,17 +26,20 @@ export default async function OpsPage() {
   const roles = opsState[0].roles as InternalRole[];
   if (roles.length === 0) return <main className="shell"><OpsCrmConsole concierges={[]} initialWorkspace={{ opportunities: [], handoffs: [] }} isBootstrap operators={[]} roles={[]} /></main>;
 
-  const [{ data: workspaceData }, { data: financeWorkspaceData }, { data: operatorsData }, { data: conciergesData }, { data: enrollments }] = await Promise.all([
+  const [{ data: workspaceData }, { data: financeWorkspaceData }, { data: operatorsData }, { data: conciergesData }, { data: enrollments }, { data: portfoliosData }, { data: organizationsData }, { data: managedPortfoliosData }] = await Promise.all([
     supabase.rpc("get_my_crm_workspace"),
     supabase.rpc("get_my_finance_workspace"),
     supabase.rpc("list_active_internal_operators"),
     supabase.rpc("list_available_concierges"),
     roles.includes("admin") || roles.includes("concierge") ? supabase.rpc("list_my_internal_access_enrollments") : Promise.resolve({ data: [] }),
+    roles.includes("mentor") || roles.includes("concierge") ? supabase.rpc("get_my_internal_portfolios") : Promise.resolve({ data: [] }),
+    roles.includes("admin") ? supabase.rpc("list_portfolio_organizations") : Promise.resolve({ data: [] }),
+    roles.includes("admin") ? supabase.rpc("list_managed_internal_portfolios") : Promise.resolve({ data: [] }),
   ]);
 
   const workspace = (workspaceData ?? { opportunities: [], handoffs: [] }) as CrmWorkspace;
   const financeWorkspace = (financeWorkspaceData ?? { offers: [], proposals: [] }) as { offers: { id: string; code: string; name: string; price_version_id: string; amount: number; currency_code: string }[]; proposals: { id: string; status: string; amount: number; currency_code: string; expires_on: string | null; opportunity_title: string; account_name: string }[] };
   const operators = (operatorsData ?? []) as { email: string; identity_id: string; roles: InternalRole[] }[];
   const concierges = (conciergesData ?? []) as { email: string; identity_id: string }[];
-  return <main className="shell"><OpsCrmConsole concierges={concierges} initialWorkspace={workspace} isBootstrap={false} operators={operators} roles={roles} /><OpsFinanceConsole opportunities={workspace.opportunities} roles={roles} workspace={financeWorkspace} />{(roles.includes("admin") || roles.includes("concierge")) && <OpsEnrollmentPanel initialEnrollments={enrollments ?? []} />}</main>;
+  return <main className="shell"><OpsCrmConsole concierges={concierges} initialWorkspace={workspace} isBootstrap={false} operators={operators} roles={roles} /><OpsPortfolioConsole managed={(managedPortfoliosData ?? []) as never[]} operators={operators} organizations={(organizationsData ?? []) as never[]} portfolios={(portfoliosData ?? []) as never[]} roles={roles} /><OpsFinanceConsole opportunities={workspace.opportunities} roles={roles} workspace={financeWorkspace} />{(roles.includes("admin") || roles.includes("concierge")) && <OpsEnrollmentPanel initialEnrollments={enrollments ?? []} />}</main>;
 }

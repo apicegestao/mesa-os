@@ -1,4 +1,4 @@
-export const internalRoles = ["admin", "commercial", "concierge", "finance"] as const;
+export const internalRoles = ["admin", "commercial", "concierge", "finance", "mentor"] as const;
 export type InternalRole = (typeof internalRoles)[number];
 
 export type CrmOpportunity = {
