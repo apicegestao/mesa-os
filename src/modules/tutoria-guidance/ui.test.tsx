@@ -8,4 +8,9 @@ describe("TutorIA floating conversation", () => {
     expect(screen.getByRole("button", { name: "TutorIA" })).toHaveAttribute("aria-expanded", "false");
     expect(screen.queryByLabelText("Como posso ajudar?")).not.toBeInTheDocument();
   });
+
+  it("keeps human support out of the page until TutorIA asks for escalation", () => {
+    render(<TutorIAAssistant />);
+    expect(screen.queryByRole("button", { name: "Falar com a equipe" })).not.toBeInTheDocument();
+  });
 });
