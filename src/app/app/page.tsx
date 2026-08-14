@@ -113,7 +113,7 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
   const completedSteps = progressSteps.filter((step) => step.complete).length;
   const progress = Math.round((completedSteps / progressSteps.length) * 100);
 
-  return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout} progress={progress} activeView={activeView} tutoriaWorkbench={<>{dreWorkbench && <DreWorkbench workspace={dreWorkbench} />}{raciWorkbench && <RaciWorkbench workspace={raciWorkbench} />}{swotWorkbench && <SwotWorkbench workspace={swotWorkbench} />}</>}>
+  return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout} progress={progress} activeView={activeView} cycleLabel={cycle?.title} tutoriaWorkbench={<>{dreWorkbench && <DreWorkbench workspace={dreWorkbench} />}{raciWorkbench && <RaciWorkbench workspace={raciWorkbench} />}{swotWorkbench && <SwotWorkbench workspace={swotWorkbench} />}</>}>
     {activeView === "today" && <><MemberHome memberName={memberName} nextAction={nextAction} cycle={cycle} priorityLabel={priority?.dimension_label} missionTitle={availableMission?.title} completedSteps={completedSteps} totalSteps={progressSteps.length} /><MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} /></>}
     {activeView === "journey" && <><JourneyProgress steps={progressSteps} />
     <section id="jornada" className="experience-section journey-section" aria-labelledby="journey-title">

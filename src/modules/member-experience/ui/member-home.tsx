@@ -46,7 +46,7 @@ export function MemberHome({
 
     <div className="cycle-overview">
       <div className="cycle-column"><article className="cycle-card">
-        <div><p className="eyebrow light">Ciclo atual · T1</p><span className="cycle-status">{cycle ? "Em andamento" : "Preparação"}</span></div>
+        <div><p className="eyebrow light">Ciclo atual</p><span className="cycle-status">{cycle ? "Em andamento" : "Preparação"}</span></div>
         <h2>{cycle?.title ?? "Fundamentos de gestão"}</h2>
         <p>{cycle ? `${formatDate(cycle.starts_on)} até ${formatDate(cycle.ends_on)}` : "O ciclo começa depois da confirmação da prioridade."}</p>
         <div className="cycle-progress"><i style={{ width: `${progress}%` }} /></div>
