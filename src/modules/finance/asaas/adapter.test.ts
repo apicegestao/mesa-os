@@ -9,11 +9,13 @@ describe("Asaas Sandbox adapter", () => {
     expect(isSandboxAsaasKey(undefined)).toBe(false);
   });
 
-  it("builds a detached BRL checkout without payment data", () => {
+  it("builds a minimal detached BRL checkout without transmitting payer data", () => {
     const payload = createCheckoutPayload({ amount: 1000, currencyCode: "BRL", externalReference: "mesa-fin-123", offerName: "Mesa anual", payerEmail: "membro@example.com", payerName: "Membro", callbackBaseUrl: "https://preview.example.com" });
     expect(payload).toMatchObject({ billingTypes: ["PIX", "CREDIT_CARD"], chargeTypes: ["DETACHED"], externalReference: "mesa-fin-123" });
     expect(payload.callback.successUrl).toBe("https://preview.example.com/ops?checkout=success");
     expect(JSON.stringify(payload)).not.toContain("access_token");
+    expect(JSON.stringify(payload)).not.toContain("membro@example.com");
+    expect(payload).not.toHaveProperty("customerData");
   });
 
   it("keeps only safe provider validation codes for protected diagnostics", () => {

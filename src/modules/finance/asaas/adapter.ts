@@ -67,13 +67,11 @@ export function createCheckoutPayload(input: Omit<AsaasCheckoutRequest, "apiKey"
       expiredUrl: new URL("/ops?checkout=expired", callbackBaseUrl).toString(),
     },
     items: [{
-      externalReference: input.externalReference,
       name: input.offerName,
       description: "Mesa dos Donos",
       quantity: 1,
       value: input.amount,
     }],
-    customerData: { name: input.payerName, email: input.payerEmail },
   };
 }
 
