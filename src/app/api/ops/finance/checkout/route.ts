@@ -9,22 +9,40 @@ const schema = z.object({ proposalId: z.string().uuid() });
 
 export async function POST(request: Request) {
   const parsed = schema.safeParse(await request.json().catch(() => null));
-  if (!parsed.success) return NextResponse.json({ error: "invalid_request" }, { status: 400 });
+  if (!parsed.success) {
+    log("warn", "finance_asaas_checkout_invalid_request");
+    return NextResponse.json({ error: "invalid_request" }, { status: 400 });
+  }
   const env = getPublicEnv();
-  if (env.NEXT_PUBLIC_APP_ENV !== "staging") return NextResponse.json({ error: "sandbox_only" }, { status: 403 });
+  if (env.NEXT_PUBLIC_APP_ENV !== "staging") {
+    log("warn", "finance_asaas_checkout_wrong_environment");
+    return NextResponse.json({ error: "sandbox_only" }, { status: 403 });
+  }
   const apiKey = process.env.ASAAS_API_KEY;
-  if (!apiKey || !isSandboxAsaasKey(apiKey)) return NextResponse.json({ error: "checkout_unavailable" }, { status: 503 });
+  if (!apiKey || !isSandboxAsaasKey(apiKey)) {
+    log("warn", "finance_asaas_checkout_configuration_unavailable", { hasApiKey: Boolean(apiKey) });
+    return NextResponse.json({ error: "checkout_unavailable" }, { status: 503 });
+  }
 
   const supabase = await createSupabaseServerClient();
   const { data: claims } = await supabase.auth.getClaims();
-  if (!claims?.claims?.sub) return NextResponse.json({ error: "forbidden" }, { status: 403 });
+  if (!claims?.claims?.sub) {
+    log("warn", "finance_asaas_checkout_forbidden");
+    return NextResponse.json({ error: "forbidden" }, { status: 403 });
+  }
 
   const { data: prepared, error: prepareError } = await supabase.rpc("prepare_asaas_checkout", { target_proposal_id: parsed.data.proposalId });
   const checkout = prepared?.[0];
-  if (prepareError || !checkout) return NextResponse.json({ error: "checkout_unavailable" }, { status: 422 });
+  if (prepareError || !checkout) {
+    log("warn", "finance_asaas_checkout_preparation_failed", { databaseCode: prepareError?.code ?? null });
+    return NextResponse.json({ error: "checkout_unavailable" }, { status: 422 });
+  }
 
   const { data: claimed, error: claimError } = await supabase.rpc("claim_asaas_checkout", { target_checkout_id: checkout.checkout_id });
-  if (claimError || !claimed) return NextResponse.json({ error: "checkout_in_progress" }, { status: 409 });
+  if (claimError || !claimed) {
+    log("warn", "finance_asaas_checkout_claim_unavailable", { databaseCode: claimError?.code ?? null });
+    return NextResponse.json({ error: "checkout_in_progress" }, { status: 409 });
+  }
 
   try {
     const asaas = await createAsaasSandboxCheckout({
@@ -47,7 +65,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ checkoutUrl: asaas.link }, { status: 201, headers: { "Cache-Control": "no-store" } });
   } catch (error) {
     await supabase.rpc("fail_asaas_checkout", { target_checkout_id: checkout.checkout_id });
-    log("warn", "finance_asaas_checkout_failed", { proposalId: parsed.data.proposalId, reason: error instanceof Error ? error.message : "unknown" });
+    log("warn", "finance_asaas_checkout_failed", { reason: error instanceof Error ? error.message : "unknown" });
     return NextResponse.json({ error: "checkout_unavailable" }, { status: 422 });
   }
 }
