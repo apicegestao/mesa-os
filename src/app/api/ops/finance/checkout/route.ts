@@ -74,6 +74,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       error: "checkout_unavailable",
       reason: error instanceof AsaasCheckoutError ? "provider_rejected" : "unavailable",
+      providerCodes,
     }, { status: 422 });
   }
 }
