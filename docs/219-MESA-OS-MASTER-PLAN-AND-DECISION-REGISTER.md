@@ -145,6 +145,15 @@ O acesso interno usa o mesmo princípio simples de e-mail + código, mas é segr
 
 Concierge também exerce a função operacional; não é necessário um cargo paralelo chamado “operador”.
 
+### Admin Master para homologação e revisão
+
+Decisão do owner: `mesadosdonos@gmail.com` será o usuário de revisão administrativa. Ele receberá o papel existente **Admin** — que já reúne as capabilities internas autorizadas — e não uma identidade que burle RLS, auditoria ou menor privilégio.
+
+- um único e-mail basta para navegar Admin, CRM/Comercial, Concierge, Mentor, Financeiro, Intelligence e TI/Plataforma conforme as superfícies já autorizadas;
+- a visão de membro será feita por uma organização de demonstração e matrícula própria, sem personificar ou ler a conta de um membro real;
+- toda atribuição, acesso de teste e revogação deve ser auditável;
+- a ativação ocorrerá primeiro em homologação. Produção só recebe o perfil após o pacote consolidado, smoke e promoção explicitamente aprovados.
+
 ## 8. Backoffice, CRM e financeiro
 
 ### CRM
@@ -273,4 +282,3 @@ Estes itens não devem ser “resolvidos por interpretação”:
 - `181-OPERATING-MODEL-TEAM-CRM-INTELLIGENCE.md`
 - `212-ACCELERATED-HOMOLOGATION-CHECKPOINT.md`
 - `217-DEFINITION-PACK-CRM-EXPERIENCE-CONCIERGE-ALLOCATION.md`
-
