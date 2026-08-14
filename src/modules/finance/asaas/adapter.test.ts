@@ -18,6 +18,11 @@ describe("Asaas Sandbox adapter", () => {
     expect(payload).not.toHaveProperty("customerData");
   });
 
+  it("can create a card-only checkout when a Pix session must be reissued", () => {
+    const payload = createCheckoutPayload({ amount: 5, currencyCode: "BRL", externalReference: "mesa-fin-123", offerName: "Mesa anual", payerEmail: "membro@example.com", payerName: "Membro", callbackBaseUrl: "https://preview.example.com", paymentMethods: ["CREDIT_CARD"] });
+    expect(payload.billingTypes).toEqual(["CREDIT_CARD"]);
+  });
+
   it("limits the provider-facing item name without changing the internal offer", () => {
     const payload = createCheckoutPayload({ amount: 5, currencyCode: "BRL", externalReference: "mesa-fin-123", offerName: "Uma oferta de validação Asaas que passa do limite", payerEmail: "membro@example.com", payerName: "Membro", callbackBaseUrl: "https://preview.example.com" });
     expect(payload.items[0]?.name).toHaveLength(30);

@@ -18,6 +18,7 @@ export type AsaasCheckoutRequest = {
   payerEmail: string;
   payerName: string;
   callbackBaseUrl: string;
+  paymentMethods?: ("PIX" | "CREDIT_CARD")[];
 };
 
 export type AsaasCheckout = { id: string; link: string; status: string };
@@ -86,7 +87,7 @@ export function createCheckoutPayload(input: Omit<AsaasCheckoutRequest, "apiKey"
   if (input.currencyCode !== "BRL") throw new Error("unsupported_currency");
   const callbackBaseUrl = new URL(input.callbackBaseUrl);
   return {
-    billingTypes: ["PIX", "CREDIT_CARD"],
+    billingTypes: input.paymentMethods ?? ["PIX", "CREDIT_CARD"],
     chargeTypes: ["DETACHED"],
     minutesToExpire: 60,
     externalReference: input.externalReference,
@@ -102,6 +103,22 @@ export function createCheckoutPayload(input: Omit<AsaasCheckoutRequest, "apiKey"
       value: input.amount,
     }],
   };
+}
+
+export async function cancelAsaasSandboxCheckout(apiKey: string, providerCheckoutId: string) {
+  if (!isSandboxAsaasKey(apiKey)) throw new Error("sandbox_key_required");
+  if (!/^[a-zA-Z0-9-]{2,160}$/.test(providerCheckoutId)) throw new Error("invalid_provider_checkout_id");
+  const response = await fetch(`${apiBaseUrl}/checkouts/${encodeURIComponent(providerCheckoutId)}/cancel`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "User-Agent": "MesaOS/FIN-3.1B (sandbox)",
+      access_token: apiKey,
+    },
+    cache: "no-store",
+  });
+  if (!response.ok) throw new Error(`asaas_checkout_cancel_${response.status}`);
 }
 
 export function hasActiveAsaasPixKey(payload: unknown) {
