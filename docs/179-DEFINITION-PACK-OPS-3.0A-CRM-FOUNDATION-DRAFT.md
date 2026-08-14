@@ -1,6 +1,6 @@
 # Definition Pack — OPS-3.0A Fundação de Backoffice e CRM
 
-**Status:** DRAFT — requer aprovação explícita para BUILD em homologação
+**Status:** DRAFT R1 — requer aprovação explícita da revisão para BUILD em homologação
 
 ## Decisão de fatiamento
 
@@ -10,7 +10,7 @@ Essa fatia reduz risco e custo: valida o modelo de acesso, a auditoria e o núcl
 
 ## Objetivo
 
-Disponibilizar, exclusivamente em homologação, um backoffice segregado com RBAC mínimo e um CRM comercial de leads e oportunidades. A equipe interna poderá registrar e acompanhar relacionamento pré-matrícula, atribuir responsáveis e manter próximas ações auditáveis.
+Disponibilizar, exclusivamente em homologação, um backoffice segregado com RBAC mínimo e um CRM comercial de leads e oportunidades. A equipe interna poderá registrar e acompanhar relacionamento pré-matrícula, atribuir responsáveis e manter próximas ações auditáveis. O modelo operacional completo de funções, handoffs e fronteiras desta revisão está em `docs/180-CRM-OPERATING-MODEL-R1.md` e é parte integrante deste pack.
 
 ## Fonte e autoridades
 
@@ -113,4 +113,4 @@ WhatsApp Business oficial e Instagram profissional permanecem para o próximo pa
 
 ## Decisão solicitada ao owner
 
-**“Aprovo o Definition Pack OPS-3.0A”** autoriza um Change Request do Current Scope, Alignment/Pre-Flight e BUILD exclusivamente em homologação. Não autoriza WhatsApp, Instagram, CRM de membros, dados TutorIA, automação, produção ou promoção automática.
+**“Aprovo o Definition Pack OPS-3.0A R1”** autoriza um Change Request do Current Scope, Alignment/Pre-Flight e BUILD exclusivamente em homologação. Não autoriza WhatsApp, Instagram, CRM de membros, dados TutorIA, automação, produção ou promoção automática.
