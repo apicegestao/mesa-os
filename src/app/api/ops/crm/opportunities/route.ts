@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
+import { log } from "@/shared/observability/logger";
 
 const schema = z.object({
   accountName: z.string().trim().min(2).max(180), source: z.string().trim().min(2).max(80), contactName: z.string().trim().max(180).nullable().optional(), contactEmail: z.string().email().max(254).nullable().optional(),
@@ -9,15 +10,26 @@ const schema = z.object({
 
 export async function POST(request: Request) {
   const parsed = schema.safeParse(await request.json().catch(() => null));
-  if (!parsed.success) return NextResponse.json({ error: "invalid_request" }, { status: 400 });
+  if (!parsed.success) {
+    log("warn", "crm_opportunity_invalid_request");
+    return NextResponse.json({ error: "invalid_request" }, { status: 400 });
+  }
   const supabase = await createSupabaseServerClient();
   const { data: claims } = await supabase.auth.getClaims();
-  if (!claims?.claims?.sub) return NextResponse.json({ error: "forbidden" }, { status: 403 });
+  if (!claims?.claims?.sub) {
+    log("warn", "crm_opportunity_forbidden");
+    return NextResponse.json({ error: "forbidden" }, { status: 403 });
+  }
   const { data, error } = await supabase.rpc("create_crm_opportunity", {
     target_account_name: parsed.data.accountName, target_source: parsed.data.source, target_contact_name: parsed.data.contactName ?? null, target_contact_email: parsed.data.contactEmail ?? null,
     target_title: parsed.data.title, target_expected_value: parsed.data.expectedValue ?? null, target_next_action: parsed.data.nextAction, target_next_action_due_on: parsed.data.nextActionDueOn ?? null,
   });
-  return error || !data ? NextResponse.json({ error: "unavailable" }, { status: 422 }) : NextResponse.json({ opportunityId: data }, { status: 201, headers: { "Cache-Control": "no-store" } });
+  if (error || !data) {
+    log("warn", "crm_opportunity_write_failed", { databaseCode: error?.code ?? "no_result" });
+    return NextResponse.json({ error: "unavailable" }, { status: 422 });
+  }
+  log("info", "crm_opportunity_created");
+  return NextResponse.json({ opportunityId: data }, { status: 201, headers: { "Cache-Control": "no-store" } });
 }
 
 const stageSchema = z.object({ opportunityId: z.string().uuid(), stage: z.enum(["new", "qualified", "proposal", "negotiation", "won", "lost"]), nextAction: z.string().trim().min(2).max(500), nextActionDueOn: z.string().date().nullable().optional(), lostReason: z.string().trim().max(500).nullable().optional() });
