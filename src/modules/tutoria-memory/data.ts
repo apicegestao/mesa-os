@@ -11,5 +11,9 @@ export async function loadMyTutorIAMemories(supabase: SupabaseClient<Database>):
 export async function loadTutorIAOrientationContext(supabase: SupabaseClient<Database>, enabled: boolean): Promise<string[]> {
   if (!enabled) return [];
   const { data } = await supabase.from("tutoria_member_memories").select("content,source_kind").eq("state", "active").in("source_kind", ["diagnostic_completed", "priority_confirmed", "cycle_started", "mission_available", "implementation_confirmed", "evidence_approved"]).order("updated_at", { ascending: false }).limit(8);
-  return (data ?? []).map((memory) => memory.content);
+  const structuredContext = (data ?? []).map((memory) => memory.content);
+  const rpc = supabase.rpc as unknown as (name: string) => Promise<{ data: Array<{ role: string; content: string }> | null; error: unknown }>;
+  const { data: conversation } = await rpc("get_my_tutoria_conversation");
+  const conversationContext = (conversation ?? []).slice(-8).map((message) => `${message.role === "member" ? "Membro" : "TutorIA"}: ${message.content}`);
+  return [...structuredContext, ...conversationContext];
 }

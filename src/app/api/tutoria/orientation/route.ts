@@ -81,6 +81,8 @@ export async function POST(request: Request) {
     await audit("invocation_finished", "served", { provider_code: "netlify_ai_gateway", duration_ms: Date.now() - startedAt, response_schema_valid: true });
     await settleBudget(observedCost);
     await recordUsage("served");
+    const persistedResponse = [orientation.resumo, orientation.proxima_acao, orientation.justificativa_metodologica].join("\n\n");
+    await (supabase.rpc as unknown as (name: string, args: Record<string, unknown>) => Promise<{ error: unknown }>)("persist_my_tutoria_conversation_exchange", { submitted_question: usage.request.question ?? "Orientação solicitada pelo membro.", submitted_response: persistedResponse });
     return NextResponse.json({ orientation });
   } catch {
     await supabase.rpc("settle_tutoria_member_budget", { target_reservation_id: reservationId, observed_cost_usd_micros: 0 });
