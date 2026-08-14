@@ -27,7 +27,7 @@ export default async function OpsPage() {
   const roles = opsState[0].roles as InternalRole[];
   if (roles.length === 0) return <main className="shell"><OpsCrmConsole concierges={[]} initialWorkspace={{ opportunities: [], handoffs: [] }} isBootstrap operators={[]} roles={[]} /></main>;
 
-  const [{ data: workspaceData }, { data: financeWorkspaceData }, { data: operatorsData }, { data: conciergesData }, { data: enrollments }, { data: portfoliosData }, { data: organizationsData }, { data: managedPortfoliosData }, { data: intelligenceWorkspaceData }] = await Promise.all([
+  const [{ data: workspaceData }, { data: financeWorkspaceData }, { data: operatorsData }, { data: conciergesData }, { data: enrollments }, { data: portfoliosData }, { data: organizationsData }, { data: managedPortfoliosData }, { data: intelligenceWorkspaceData }, { data: globalMentorData }] = await Promise.all([
     supabase.rpc("get_my_crm_workspace"),
     supabase.rpc("get_my_finance_workspace"),
     supabase.rpc("list_active_internal_operators"),
@@ -37,11 +37,12 @@ export default async function OpsPage() {
     roles.includes("admin") ? supabase.rpc("list_portfolio_organizations") : Promise.resolve({ data: [] }),
     roles.includes("admin") ? supabase.rpc("list_managed_internal_portfolios") : Promise.resolve({ data: [] }),
     roles.includes("admin") ? supabase.rpc("get_intelligence_workspace") : Promise.resolve({ data: { snapshots: [], proposals: [] } }),
+    roles.includes("mentor") ? supabase.rpc("get_global_mentor_workspace") : Promise.resolve({ data: [] }),
   ]);
 
   const workspace = (workspaceData ?? { opportunities: [], handoffs: [] }) as CrmWorkspace;
   const financeWorkspace = (financeWorkspaceData ?? { offers: [], proposals: [] }) as { offers: { id: string; code: string; name: string; price_version_id: string; amount: number; currency_code: string }[]; proposals: { id: string; status: string; amount: number; currency_code: string; expires_on: string | null; opportunity_title: string; account_name: string }[] };
   const operators = (operatorsData ?? []) as { email: string; identity_id: string; roles: InternalRole[] }[];
   const concierges = (conciergesData ?? []) as { email: string; identity_id: string }[];
-  return <main className="shell"><OpsCrmConsole concierges={concierges} initialWorkspace={workspace} isBootstrap={false} operators={operators} roles={roles} /><OpsPortfolioConsole managed={(managedPortfoliosData ?? []) as never[]} operators={operators} organizations={(organizationsData ?? []) as never[]} portfolios={(portfoliosData ?? []) as never[]} roles={roles} />{roles.includes("admin") && <OpsIntelligenceConsole workspace={(intelligenceWorkspaceData ?? { snapshots: [], proposals: [] }) as never} />}<OpsFinanceConsole opportunities={workspace.opportunities} roles={roles} workspace={financeWorkspace} />{(roles.includes("admin") || roles.includes("concierge")) && <OpsEnrollmentPanel initialEnrollments={enrollments ?? []} />}</main>;
+  return <main className="shell"><OpsCrmConsole concierges={concierges} initialWorkspace={workspace} isBootstrap={false} operators={operators} roles={roles} /><OpsPortfolioConsole globalMentor={(globalMentorData ?? []) as never[]} managed={(managedPortfoliosData ?? []) as never[]} operators={operators} organizations={(organizationsData ?? []) as never[]} portfolios={(portfoliosData ?? []) as never[]} roles={roles} />{roles.includes("admin") && <OpsIntelligenceConsole workspace={(intelligenceWorkspaceData ?? { snapshots: [], proposals: [] }) as never} />}<OpsFinanceConsole opportunities={workspace.opportunities} roles={roles} workspace={financeWorkspace} />{(roles.includes("admin") || roles.includes("concierge")) && <OpsEnrollmentPanel initialEnrollments={enrollments ?? []} />}</main>;
 }

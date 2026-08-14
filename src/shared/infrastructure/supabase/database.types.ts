@@ -1845,6 +1845,7 @@ export type Database = {
         Returns: string
       }
       get_my_finance_workspace: { Args: Record<PropertyKey, never>; Returns: Json }
+      get_global_mentor_workspace: { Args: Record<PropertyKey, never>; Returns: { organization_id: string; organization_name: string; active_cycle_title: string | null; active_cycle_ends_on: string | null; next_action_label: string | null; available_mission_count: number; approved_milestone_count: number }[] }
       get_intelligence_workspace: { Args: Record<PropertyKey, never>; Returns: Json }
       generate_intelligence_aggregate_snapshot: { Args: Record<PropertyKey, never>; Returns: string }
       create_intelligence_proposal: { Args: { target_snapshot_id: string | null; target_type: string; target_title: string; target_summary: string; target_rationale: string; target_confidence: number | null; target_limitations: string }; Returns: string }
