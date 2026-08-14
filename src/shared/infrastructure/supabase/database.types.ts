@@ -1803,9 +1803,46 @@ export type Database = {
       }
     }
     Functions: {
+      accept_crm_handoff: {
+        Args: { target_handoff_id: string }
+        Returns: undefined
+      }
+      assign_internal_staff_role: {
+        Args: { target_identity_id: string; target_role: "admin" | "commercial" | "concierge" }
+        Returns: string
+      }
+      bootstrap_first_internal_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      create_crm_opportunity: {
+        Args: {
+          target_account_name: string
+          target_contact_email: string | null
+          target_contact_name: string | null
+          target_expected_value: number | null
+          target_next_action: string
+          target_next_action_due_on: string | null
+          target_source: string
+          target_title: string
+        }
+        Returns: string
+      }
+      get_my_crm_workspace: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
+      get_my_internal_ops_state: {
+        Args: Record<PropertyKey, never>
+        Returns: { active: boolean; roles: ("admin" | "commercial" | "concierge")[] }[]
+      }
       get_my_internal_operator_state: {
         Args: Record<PropertyKey, never>
         Returns: { active: boolean }[]
+      }
+      list_active_internal_operators: {
+        Args: Record<PropertyKey, never>
+        Returns: { identity_id: string; email: string; roles: ("admin" | "commercial" | "concierge")[] }[]
       }
       create_internal_access_enrollment: {
         Args: {

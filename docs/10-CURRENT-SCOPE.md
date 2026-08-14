@@ -68,13 +68,18 @@
 - RT-2.27A — Bloco Evolução confiável: IME, comparação dimensional e marcos derivados exclusivamente de fontes validadas.
 - IAM-2.28 — matrícula prévia, provisionamento server-side auditado e fundação de entrada sem senha para identidades autorizadas.
 - IAM-2.29 — acesso sem senha do membro e backoffice mínimo segregado da Mesa, limitado a `internal_operator`, matrícula/revogação e auditoria; sem acesso global automático aos dados dos membros.
+- OPS-3.0A R2 — CRM comercial de leads, contas, contatos, oportunidades, atividades, tarefas, carteira e handoff auditável; RBAC interno por capability; Concierge com onboarding e matrícula/revogação previamente autorizadas. BUILD ocorre apenas em homologação.
 
 ## Not Authorized
 
 - Journey ou jornada do membro.
 - TutorIA fora dos contratos TCF-2.21A a TCF-2.21D.
 - Tools ou ferramentas metodológicas.
-- Concierge.
+- Concierge fora do handoff, onboarding e matrícula/revogação explicitamente autorizados pelo OPS-3.0A R2.
+- Mentor, carteira de acompanhamento e qualquer acesso a dados metodológicos de membros.
+- Financeiro, catálogo, contratos, checkout, cobrança, pagamento, conciliação ou entitlement.
+- Mesa OS Intelligence operacional, dados agregados, propostas de metodologia ou qualquer atualização automatizada.
+- WhatsApp, Instagram, e-mail transacional, webhook, comunicação externa ou automação proativa.
 - WhatsApp.
 - Dashboards de negócio.
 - AI Tool Factory.

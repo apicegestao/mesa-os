@@ -1,6 +1,6 @@
 # Definition Pack — OPS-3.0A Fundação de Backoffice e CRM
 
-**Status:** DRAFT R2 — requer aprovação explícita da revisão para BUILD em homologação
+**Status:** APPROVED FOR BUILD IN HOMOLOGATION — owner autorizou o avanço em 2026-08-14
 
 ## Decisão de fatiamento
 
