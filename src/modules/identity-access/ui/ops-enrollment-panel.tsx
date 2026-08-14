@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { createSupabaseBrowserClient } from "@/shared/infrastructure/supabase/browser";
 
 type Enrollment = {
   created_at: string;
@@ -23,9 +24,16 @@ export function OpsEnrollmentPanel({ initialEnrollments }: { initialEnrollments:
     const form = new FormData(event.currentTarget);
     setPending(true);
     setMessage(null);
+    const { data: sessionData } = await createSupabaseBrowserClient().auth.getSession();
+    const accessToken = sessionData.session?.access_token;
+    if (!accessToken) {
+      setPending(false);
+      setMessage("Sua sessão expirou. Entre novamente para continuar.");
+      return;
+    }
     const response = await fetch("/api/ops/enrollments", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         email: form.get("email"), organizationId: form.get("organizationId"), role: form.get("role"), validForHours: Number(form.get("validForHours")),
       }),
@@ -42,9 +50,16 @@ export function OpsEnrollmentPanel({ initialEnrollments }: { initialEnrollments:
   async function revokeEnrollment(enrollmentId: string) {
     setRevokingId(enrollmentId);
     setMessage(null);
+    const { data: sessionData } = await createSupabaseBrowserClient().auth.getSession();
+    const accessToken = sessionData.session?.access_token;
+    if (!accessToken) {
+      setRevokingId(null);
+      setMessage("Sua sessão expirou. Entre novamente para continuar.");
+      return;
+    }
     const response = await fetch("/api/ops/enrollments", {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
       body: JSON.stringify({ enrollmentId }),
     });
     setRevokingId(null);

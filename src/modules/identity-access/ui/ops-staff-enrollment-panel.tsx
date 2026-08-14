@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { createSupabaseBrowserClient } from "@/shared/infrastructure/supabase/browser";
 
 type Organization = { organization_id: string; organization_name: string };
 type InternalRole = "admin" | "commercial" | "concierge" | "finance" | "mentor";
@@ -22,9 +23,16 @@ export function OpsStaffEnrollmentPanel({ organizations }: { organizations: Orga
     const form = new FormData(event.currentTarget);
     setPending(true);
     setMessage(null);
+    const { data: sessionData } = await createSupabaseBrowserClient().auth.getSession();
+    const accessToken = sessionData.session?.access_token;
+    if (!accessToken) {
+      setPending(false);
+      setMessage("Sua sessão expirou. Entre novamente para continuar.");
+      return;
+    }
     const response = await fetch("/api/ops/enrollments", {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         email: form.get("email"),
         organizationId: form.get("organizationId"),

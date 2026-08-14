@@ -18,9 +18,15 @@ const staffEnrollmentSchema = z.object({
   validForHours: z.number().int().min(1).max(168).default(72),
 });
 
-async function getOperatorClient() {
-  const supabase = await createSupabaseServerClient();
-  const { data: claimsData } = await supabase.auth.getClaims();
+function readBearerToken(request?: Request) {
+  const value = request?.headers.get("authorization");
+  return value?.match(/^Bearer\s+(.+)$/i)?.[1];
+}
+
+async function getOperatorClient(request?: Request) {
+  const accessToken = readBearerToken(request);
+  const supabase = await createSupabaseServerClient(accessToken);
+  const { data: claimsData } = await supabase.auth.getClaims(accessToken);
   if (!claimsData?.claims?.sub) return null;
 
   const { data, error } = await supabase.rpc("get_my_internal_operator_state");
@@ -58,7 +64,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const supabase = await getOperatorClient();
+  const supabase = await getOperatorClient(request);
   if (!supabase) return NextResponse.json({ error: "forbidden" }, { status: 403 });
 
   const parsed = enrollmentSchema.safeParse(await request.json().catch(() => null));
@@ -81,7 +87,7 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
-  const supabase = await getOperatorClient();
+  const supabase = await getOperatorClient(request);
   if (!supabase) return NextResponse.json({ error: "forbidden" }, { status: 403 });
 
   const parsed = staffEnrollmentSchema.safeParse(await request.json().catch(() => null));
@@ -106,7 +112,7 @@ export async function PUT(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-  const supabase = await getOperatorClient();
+  const supabase = await getOperatorClient(request);
   if (!supabase) return NextResponse.json({ error: "forbidden" }, { status: 403 });
 
   const parsed = z.object({ enrollmentId: z.string().uuid() }).safeParse(await request.json().catch(() => null));
