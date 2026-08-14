@@ -62,8 +62,13 @@ export function getAsaasValidationMessage(payload: unknown) {
   const parsed = validationErrorSchema.safeParse(payload);
   const description = parsed.success ? parsed.data.errors?.[0]?.description?.trim() : null;
   if (!description || description.length > 240) return null;
-  if (/@|\b\d{8,}\b/.test(description)) return null;
-  return /^[\p{L}\p{N} .,:;_'-]+$/u.test(description) ? description : null;
+  if (/@|\b\d[\d .-]{7,}\d\b/.test(description)) return null;
+  const normalized = description
+    .replace(/[^\p{L}\p{N} .,:;_'-]/gu, " ")
+    .replace(/\s+/g, " ")
+    .replace(/\s+([.,:;])/g, "$1")
+    .trim();
+  return normalized || null;
 }
 
 export function isSandboxAsaasKey(value: string | undefined) {

@@ -39,7 +39,8 @@ describe("Asaas Sandbox adapter", () => {
   it("returns only a short non-sensitive provider validation message", () => {
     expect(getAsaasValidationMessage({ errors: [{ description: "O campo items deve ser informado." }] })).toBe("O campo items deve ser informado.");
     expect(getAsaasValidationMessage({ errors: [{ description: "Envie para pessoa@example.com" }] })).toBeNull();
-    expect(getAsaasValidationMessage({ errors: [{ description: "Documento 123456789 deve ser revisado" }] })).toBeNull();
+    expect(getAsaasValidationMessage({ errors: [{ description: "Documento 123.456.789-00 deve ser revisado" }] })).toBeNull();
+    expect(getAsaasValidationMessage({ errors: [{ description: "O campo billingTypes está inválido (PIX)." }] })).toBe("O campo billingTypes está inválido PIX.");
   });
 
   it("recognizes only an active Pix key without retaining the key itself", () => {
