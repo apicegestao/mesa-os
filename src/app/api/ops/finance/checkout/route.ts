@@ -35,7 +35,8 @@ export async function POST(request: Request) {
   const checkout = prepared?.[0];
   if (prepareError || !checkout) {
     log("warn", "finance_asaas_checkout_preparation_failed", { databaseCode: prepareError?.code ?? null });
-    return NextResponse.json({ error: "checkout_unavailable" }, { status: 422 });
+    const reason = prepareError?.code === "42501" ? "permission" : prepareError?.code === "22023" ? "contact" : "unavailable";
+    return NextResponse.json({ error: "checkout_unavailable", reason }, { status: 422 });
   }
 
   const { data: claimed, error: claimError } = await supabase.rpc("claim_asaas_checkout", { target_checkout_id: checkout.checkout_id });
