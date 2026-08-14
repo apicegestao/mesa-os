@@ -63,7 +63,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "unavailable" }, { status: 503 });
   }
   const checkoutSessionId = payload.data.payment.checkoutSession;
-  if (data === "reconciled" && checkoutSessionId) {
+  // A provider retry may arrive after finance reconciliation succeeded but before
+  // access provisioning completed.  Retrying the provisioning step is safe: the
+  // database function returns the existing enrollment instead of creating another.
+  if ((data === "reconciled" || data === "duplicate") && checkoutSessionId) {
     const { data: enrollmentId, error: enrollmentError } = await supabase.rpc("prepare_finance_access_provisioning", {
       target_checkout_session_id: checkoutSessionId,
     });

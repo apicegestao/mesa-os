@@ -57,6 +57,10 @@ Deno.serve(async (request) => {
     .maybeSingle<Enrollment>();
 
   if (enrollmentError || !enrollment) return json(404, { error: "not_found" });
+  // An upstream retry after a successful invocation must be harmless.
+  if (enrollment.status === "provisioned") {
+    return json(200, { status: "already_provisioned", enrollment_id: enrollment.id });
+  }
   if (enrollment.status !== "pending") return json(409, { error: "not_pending" });
 
   if (new Date(enrollment.expires_at).getTime() <= Date.now()) {
