@@ -1,6 +1,6 @@
 # Post-Flight — FIN-3.1C: Provisionamento automático de acesso
 
-**Status:** Homologação técnica concluída; validação externa do webhook pendente  
+**Status:** Pronto para homologação consolidada  
 **Ambiente:** homologação exclusivamente (`pjkfifjcaezspwessaem`)  
 **Produção:** não alterada
 
@@ -27,10 +27,10 @@
 | Pagamento sandbox já confirmado preservado | aprovado |
 | Preparação de organização e matrícula de proprietário | aprovada |
 
-## Limite conhecido e próximo controle
+## Controle externo consolidado
 
-A entrega real do Asaas para o endpoint Netlify ainda precisa ser reenviada no Sandbox após apontar o webhook para o alias estável da prévia:
+A entrega real do Asaas para o endpoint Netlify será executada no smoke consolidado da homologação, após o próximo lote coerente. O endpoint estável será:
 
 `https://deploy-preview-13--mesa-os.netlify.app/api/webhooks/asaas`
 
-Esse controle demonstra, sem nova cobrança, a última etapa integrada: evento do Asaas → conciliação → provisionamento da identidade → matrícula ativa. Nenhuma promoção para produção é permitida antes dessa confirmação e do post-flight final.
+Esse controle demonstra, sem nova cobrança, a última etapa integrada: evento do Asaas → conciliação → provisionamento da identidade → matrícula ativa. O adiamento reduz microdeploys e não libera produção: promoção continua bloqueada até essa confirmação e o Post-Flight consolidado.
