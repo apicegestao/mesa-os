@@ -25,6 +25,7 @@ Checkout, provedor, cartão, PIX, webhook, dado sensível de pagamento, comunica
 - as oito tabelas financeiras confirmadas com RLS ativo;
 - `anon` não executa RPC financeira e `authenticated` não lê faturas diretamente;
 - confirmação manual tem guarda contra pagamento repetido para a mesma proposta e contra referência externa duplicada.
+- smoke visual com sessão Admin na prévia consolidada: Kanban, atribuição de função Financeiro e área FIN-3.1A renderizaram corretamente, sem criação de dado financeiro.
 
 ## Segurança
 
@@ -32,4 +33,4 @@ O Security Advisor continua reportando as RPCs internas `SECURITY DEFINER` acess
 
 ## Gate remanescente
 
-Smoke com identidades reais de Admin, Comercial, Financeiro e Concierge em homologação. A conclusão do smoke não promove produção; FIN-3.1B continua exigindo pack próprio para escolher provedor, segredos, webhook e rollback.
+Smoke funcional com identidades reais de Comercial, Financeiro e Concierge em homologação. A visualização Admin foi verificada; ainda não foram criados dados de demonstração nem alteradas atribuições durante o smoke. A conclusão do smoke não promove produção; FIN-3.1B continua exigindo pack próprio para escolher provedor, segredos, webhook e rollback.
