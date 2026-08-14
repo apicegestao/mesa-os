@@ -74,6 +74,7 @@
 - INT-3.2A — Mesa OS Intelligence: conjuntos agregados com supressão de coortes pequenas, insights e propostas internas rastreáveis para Admin; BUILD ocorre apenas em homologação, sem modelo ativo, dados brutos ou execução automática.
 - OPS-3.0C — visão metodológica global mínima do Mentor, com leitura auditada e sem conteúdo bruto; Concierge permanece por carteira; BUILD ocorre apenas em homologação.
 - FIN-3.1B — adaptador Asaas Sandbox: checkout hospedado, evento de webhook idempotente, reconciliação para fatos financeiros canônicos e elegibilidade de acesso; BUILD ocorre apenas em homologação. Retorno do navegador não autoriza acesso e nenhum dado de cartão/PIX entra no Mesa OS.
+- FIN-3.1C — vínculo automático e idempotente de conta CRM à organização Mesa OS após pagamento confirmado; matrícula `owner` do pagador por OTP, com conflitos encaminhados à Concierge. BUILD ocorre apenas em homologação.
 
 ## Not Authorized
 

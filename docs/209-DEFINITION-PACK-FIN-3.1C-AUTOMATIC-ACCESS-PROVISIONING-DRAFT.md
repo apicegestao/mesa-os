@@ -1,6 +1,6 @@
 # Definition Pack — FIN-3.1C Matrícula Automática após Pagamento
 
-**Status:** DRAFT — requer aprovação explícita do owner.
+**Status:** APPROVED — owner aprovou em 2026-08-14.
 
 ## Decisão necessária
 
