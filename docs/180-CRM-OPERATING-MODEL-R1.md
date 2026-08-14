@@ -1,6 +1,6 @@
 # CRM Operating Model R1 — Equipe, Poderes e Fluxos
 
-**Status:** parte do Definition Pack OPS-3.0A R1; ainda sem autorização de BUILD
+**Status:** SUPERSEDED BY R2 — preservado como histórico; ainda sem autorização de BUILD
 
 ## Princípio de desenho
 
