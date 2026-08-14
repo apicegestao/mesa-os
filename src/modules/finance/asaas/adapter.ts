@@ -1,0 +1,69 @@
+import { z } from "zod";
+
+const sandboxKeyPrefix = "$aact_hmlg_";
+const apiBaseUrl = "https://api-sandbox.asaas.com/v3";
+
+const responseSchema = z.object({
+  id: z.string().min(2).max(160),
+  link: z.string().url().max(2048),
+  status: z.string().min(2).max(80),
+});
+
+export type AsaasCheckoutRequest = {
+  apiKey: string;
+  amount: number;
+  currencyCode: string;
+  externalReference: string;
+  offerName: string;
+  payerEmail: string;
+  payerName: string;
+  callbackBaseUrl: string;
+};
+
+export type AsaasCheckout = { id: string; link: string; status: string };
+
+export function isSandboxAsaasKey(value: string | undefined) {
+  return typeof value === "string" && value.startsWith(sandboxKeyPrefix) && value.length > sandboxKeyPrefix.length;
+}
+
+export function createCheckoutPayload(input: Omit<AsaasCheckoutRequest, "apiKey">) {
+  if (input.currencyCode !== "BRL") throw new Error("unsupported_currency");
+  const callbackBaseUrl = new URL(input.callbackBaseUrl);
+  return {
+    billingTypes: ["PIX", "CREDIT_CARD"],
+    chargeTypes: ["DETACHED"],
+    minutesToExpire: 60,
+    externalReference: input.externalReference,
+    callback: {
+      successUrl: new URL("/ops?checkout=success", callbackBaseUrl).toString(),
+      cancelUrl: new URL("/ops?checkout=cancel", callbackBaseUrl).toString(),
+      expiredUrl: new URL("/ops?checkout=expired", callbackBaseUrl).toString(),
+    },
+    items: [{
+      externalReference: input.externalReference,
+      name: input.offerName,
+      description: "Mesa dos Donos",
+      quantity: 1,
+      value: input.amount,
+    }],
+    customerData: { name: input.payerName, email: input.payerEmail },
+  };
+}
+
+export async function createAsaasSandboxCheckout(input: AsaasCheckoutRequest): Promise<AsaasCheckout> {
+  if (!isSandboxAsaasKey(input.apiKey)) throw new Error("sandbox_key_required");
+  const response = await fetch(`${apiBaseUrl}/checkouts`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "User-Agent": "MesaOS/FIN-3.1B (sandbox)",
+      access_token: input.apiKey,
+    },
+    body: JSON.stringify(createCheckoutPayload(input)),
+    cache: "no-store",
+  });
+  const payload: unknown = await response.json().catch(() => null);
+  if (!response.ok) throw new Error(`asaas_checkout_${response.status}`);
+  return responseSchema.parse(payload);
+}

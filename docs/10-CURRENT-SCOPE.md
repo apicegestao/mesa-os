@@ -73,6 +73,7 @@
 - OPS-3.0B — carteira interna atribuída de Concierge e Mentor: atribuição temporal/auditável, envelope mínimo por finalidade, isolamento por carteira, revogação imediata em leituras futuras e interface interna mínima; BUILD ocorre apenas em homologação.
 - INT-3.2A — Mesa OS Intelligence: conjuntos agregados com supressão de coortes pequenas, insights e propostas internas rastreáveis para Admin; BUILD ocorre apenas em homologação, sem modelo ativo, dados brutos ou execução automática.
 - OPS-3.0C — visão metodológica global mínima do Mentor, com leitura auditada e sem conteúdo bruto; Concierge permanece por carteira; BUILD ocorre apenas em homologação.
+- FIN-3.1B — adaptador Asaas Sandbox: checkout hospedado, evento de webhook idempotente, reconciliação para fatos financeiros canônicos e elegibilidade de acesso; BUILD ocorre apenas em homologação. Retorno do navegador não autoriza acesso e nenhum dado de cartão/PIX entra no Mesa OS.
 
 ## Not Authorized
 
@@ -81,7 +82,7 @@
 - Tools ou ferramentas metodológicas.
 - Concierge fora do handoff, onboarding, matrícula/revogação e carteira estritamente atribuída explicitamente autorizados pelo OPS-3.0A R2/OPS-3.0B.
 - Mentor fora da carteira estritamente atribuída, sem conteúdo bruto e sem qualquer poder de alteração metodológica.
-- Checkout, provedor, cartão, PIX, webhook, cobrança automática, comunicação externa, contabilidade/fiscal, estorno automatizado ou múltiplos provedores financeiros.
+- Checkout, provedor, cartão, PIX, webhook, cobrança automática, comunicação externa, contabilidade/fiscal, estorno automatizado ou múltiplos provedores financeiros, exceto o adaptador Asaas Sandbox estritamente definido no FIN-3.1B.
 - Mesa OS Intelligence operacional, dados agregados, propostas de metodologia ou qualquer atualização automatizada.
 - Modelo ativo, dados identificáveis amplos, treinamento/fine-tuning, publicação automática ou execução de proposta pela Mesa OS Intelligence.
 - WhatsApp, Instagram, e-mail transacional, webhook, comunicação externa ou automação proativa.

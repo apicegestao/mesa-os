@@ -1,0 +1,53 @@
+import { NextResponse } from "next/server";
+import { z } from "zod";
+import { createAsaasSandboxCheckout, isSandboxAsaasKey } from "@/modules/finance/asaas/adapter";
+import { getPublicEnv } from "@/shared/config/env";
+import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
+import { log } from "@/shared/observability/logger";
+
+const schema = z.object({ proposalId: z.string().uuid() });
+
+export async function POST(request: Request) {
+  const parsed = schema.safeParse(await request.json().catch(() => null));
+  if (!parsed.success) return NextResponse.json({ error: "invalid_request" }, { status: 400 });
+  const env = getPublicEnv();
+  if (env.NEXT_PUBLIC_APP_ENV !== "staging") return NextResponse.json({ error: "sandbox_only" }, { status: 403 });
+  const apiKey = process.env.ASAAS_API_KEY;
+  if (!apiKey || !isSandboxAsaasKey(apiKey)) return NextResponse.json({ error: "checkout_unavailable" }, { status: 503 });
+
+  const supabase = await createSupabaseServerClient();
+  const { data: claims } = await supabase.auth.getClaims();
+  if (!claims?.claims?.sub) return NextResponse.json({ error: "forbidden" }, { status: 403 });
+
+  const { data: prepared, error: prepareError } = await supabase.rpc("prepare_asaas_checkout", { target_proposal_id: parsed.data.proposalId });
+  const checkout = prepared?.[0];
+  if (prepareError || !checkout) return NextResponse.json({ error: "checkout_unavailable" }, { status: 422 });
+
+  const { data: claimed, error: claimError } = await supabase.rpc("claim_asaas_checkout", { target_checkout_id: checkout.checkout_id });
+  if (claimError || !claimed) return NextResponse.json({ error: "checkout_in_progress" }, { status: 409 });
+
+  try {
+    const asaas = await createAsaasSandboxCheckout({
+      apiKey,
+      amount: checkout.amount,
+      currencyCode: checkout.currency_code,
+      externalReference: checkout.external_reference,
+      offerName: checkout.offer_name,
+      payerEmail: checkout.payer_email,
+      payerName: checkout.payer_name,
+      callbackBaseUrl: request.url,
+    });
+    const { error: recordError } = await supabase.rpc("record_asaas_checkout", {
+      target_checkout_id: checkout.checkout_id,
+      target_provider_checkout_id: asaas.id,
+      target_checkout_link: asaas.link,
+      target_expires_at: null,
+    });
+    if (recordError) throw new Error("checkout_record_failed");
+    return NextResponse.json({ checkoutUrl: asaas.link }, { status: 201, headers: { "Cache-Control": "no-store" } });
+  } catch (error) {
+    await supabase.rpc("fail_asaas_checkout", { target_checkout_id: checkout.checkout_id });
+    log("warn", "finance_asaas_checkout_failed", { proposalId: parsed.data.proposalId, reason: error instanceof Error ? error.message : "unknown" });
+    return NextResponse.json({ error: "checkout_unavailable" }, { status: 422 });
+  }
+}
