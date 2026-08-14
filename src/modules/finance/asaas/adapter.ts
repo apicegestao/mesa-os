@@ -23,7 +23,14 @@ export type AsaasCheckoutRequest = {
 export type AsaasCheckout = { id: string; link: string; status: string };
 
 export function isSandboxAsaasKey(value: string | undefined) {
-  return typeof value === "string" && value.startsWith(sandboxKeyPrefix) && value.length > sandboxKeyPrefix.length;
+  if (typeof value !== "string") return false;
+  const key = value.trim();
+  if (key.startsWith("$aact_prod_")) return false;
+  if (key.startsWith(sandboxKeyPrefix)) return key.length > sandboxKeyPrefix.length;
+  // Asaas continues to support legacy API keys created before environment
+  // prefixes. They are only sent to the sandbox endpoint below, where Asaas
+  // validates their environment before any checkout can be created.
+  return key.length >= 20;
 }
 
 export function createCheckoutPayload(input: Omit<AsaasCheckoutRequest, "apiKey">) {

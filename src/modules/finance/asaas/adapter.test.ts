@@ -2,8 +2,9 @@ import { describe, expect, it } from "vitest";
 import { createCheckoutPayload, isSandboxAsaasKey } from "./adapter";
 
 describe("Asaas Sandbox adapter", () => {
-  it("accepts only a non-empty sandbox key", () => {
+  it("accepts sandbox and legacy sandbox keys, never a production key", () => {
     expect(isSandboxAsaasKey("$aact_hmlg_safe")) .toBe(true);
+    expect(isSandboxAsaasKey("legacy_sandbox_key_that_is_long_enough")).toBe(true);
     expect(isSandboxAsaasKey("$aact_prod_live")).toBe(false);
     expect(isSandboxAsaasKey(undefined)).toBe(false);
   });

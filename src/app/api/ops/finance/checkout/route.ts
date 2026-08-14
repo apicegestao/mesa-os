@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     log("warn", "finance_asaas_checkout_wrong_environment");
     return NextResponse.json({ error: "sandbox_only" }, { status: 403 });
   }
-  const apiKey = process.env.ASAAS_API_KEY;
+  const apiKey = process.env.ASAAS_API_KEY?.trim();
   if (!apiKey || !isSandboxAsaasKey(apiKey)) {
     log("warn", "finance_asaas_checkout_configuration_unavailable", { hasApiKey: Boolean(apiKey) });
     return NextResponse.json({ error: "checkout_unavailable" }, { status: 503 });
