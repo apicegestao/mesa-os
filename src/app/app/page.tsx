@@ -17,7 +17,6 @@ import { lowestCandidates } from "@/modules/priority/domain/priority";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 import { buildTutorIAMemberState, buildTutorIAMethodologySummary, recordTutorIAReadGateway } from "@/modules/tutoria-foundation";
 import { DreWorkbench, loadWorkbenchWorkspace, RaciWorkbench, SwotWorkbench } from "@/modules/tutoria-workbench";
-import { loadMyTutorIAMemories, TutorIAMemoryPanel } from "@/modules/tutoria-memory";
 import { loadMesaOSTermsState, loadMyTermsReceipts, MesaOSTermsGate, MesaOSTermsPanel, TermsReceipts } from "@/modules/tutoria-consent";
 import { MemberSupportPanel } from "@/modules/operations/ui/member-support-panel";
 
@@ -61,7 +60,6 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
   const organizationName = organization?.name ?? "Sua empresa";
   const mesaOSTerms = await loadMesaOSTermsState(supabase);
   if (mesaOSTerms?.latestEvent !== "accepted") return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout}><MesaOSTermsGate state={mesaOSTerms ?? { documentVersionId: "", title: "Termos de Uso", bodyMarkdown: "Os Termos de Uso estão sendo preparados. Tente novamente em instantes.", contentSha256: "", latestEvent: null, automationEnabled: false }} /></AppChrome>;
-  const tutorMemories = activeView === "account" ? await loadMyTutorIAMemories(supabase) : [];
   const termsReceipts = activeView === "account" ? await loadMyTermsReceipts(supabase) : [];
   if (activeView === "today") {
     const tutorMemberState = buildTutorIAMemberState({
@@ -88,7 +86,7 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
       {activeView === "diagnostics" && <DiagnosticsOverview workspace={workspace} diagnosticContent={<DiagnosticExperience initialWorkspace={workspace} />} />}
       {activeView === "evidence" && <EvidenceOverview implementation={null} evidenceSubmitted={false} />}
       {activeView === "evolution" && <EvolutionProjection diagnosticComplete={false} result={null} completedSteps={0} totalSteps={8} evidenceSubmitted={false} />}
-      {activeView === "account" && <section className="account-page"><header className="records-heading"><p className="eyebrow">Sistema</p><h1>Conta e segurança</h1><p>O acesso é protegido por código temporário enviado ao e-mail autorizado.</p></header><MesaOSTermsPanel state={mesaOSTerms} /><TermsReceipts receipts={termsReceipts} /><TutorIAMemoryPanel memories={tutorMemories} /></section>}
+      {activeView === "account" && <section className="account-page"><header className="records-heading"><p className="eyebrow">Sistema</p><h1>Conta e segurança</h1><p>Gerencie seus termos, privacidade e o acesso protegido por código temporário.</p></header><MesaOSTermsPanel state={mesaOSTerms} /><TermsReceipts receipts={termsReceipts} /></section>}
     </AppChrome>;
   }
 
@@ -129,7 +127,7 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
     {activeView === "evidence" && <EvidenceOverview implementation={coreLoopWorkspace?.implementation ?? null} evidenceSubmitted={Boolean(coreLoopWorkspace?.evidenceSubmitted)} evidenceStatus={coreLoopWorkspace?.evidenceStatus} records={evidenceRecords} missionTitle={availableMission?.title} pillarLabel={priority?.dimension_label} />}
     {activeView === "diagnostics" && <DiagnosticsOverview workspace={workspace} diagnosticContent={<DiagnosticResult workspace={workspace} />} />}
     {activeView === "evolution" && <EvolutionProjection diagnosticComplete result={workspace.result} completedSteps={completedSteps} totalSteps={progressSteps.length} evidenceSubmitted={Boolean(coreLoopWorkspace?.evidenceSubmitted)} measurements={measurements} evidenceRecords={evidenceRecords} />}
-    {activeView === "account" && <section className="account-page"><header className="records-heading"><p className="eyebrow">Sistema</p><h1>Conta e segurança</h1><p>O acesso é protegido por código temporário enviado ao e-mail autorizado.</p></header><MesaOSTermsPanel state={mesaOSTerms} /><TermsReceipts receipts={termsReceipts} /><TutorIAMemoryPanel memories={tutorMemories} /></section>}
+    {activeView === "account" && <section className="account-page"><header className="records-heading"><p className="eyebrow">Sistema</p><h1>Conta e segurança</h1><p>Gerencie seus termos, privacidade e o acesso protegido por código temporário.</p></header><MesaOSTermsPanel state={mesaOSTerms} /><TermsReceipts receipts={termsReceipts} /></section>}
   </AppChrome>;
 }
 
