@@ -33,7 +33,7 @@ function OpsNavigation({ activeView, roles }: { activeView: OpsView; roles: Inte
     { view: "access", label: "Acessos" },
   ];
 
-  return <nav className="ops-navigation" aria-label="Módulos internos">{items.filter((item) => canUseView(item.view, roles)).map((item) => <a key={item.view} href={`/ops?view=${item.view}`} className={item.view === activeView ? "active" : ""}>{item.label}</a>)}</nav>;
+  return <nav className="ops-navigation" aria-label="Módulos internos">{items.filter((item) => canUseView(item.view, roles)).map((item) => <a key={item.view} href={`/ops?view=${item.view}`} className={item.view === activeView ? "active" : ""}><span>{item.label}</span><b>→</b></a>)}</nav>;
 }
 
 export default async function OpsPage({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
@@ -89,5 +89,16 @@ export default async function OpsPage({ searchParams }: { searchParams: Promise<
     content = <main className="ops-module"><OpsPortfolioConsole globalMentor={(globalMentorData ?? []) as never[]} managed={(managedPortfoliosData ?? []) as never[]} operators={(operatorsData ?? []) as never[]} organizations={(organizationsData ?? []) as never[]} portfolios={(myPortfoliosData ?? []) as never[]} roles={roles} />{roles.includes("admin") && <OpsConciergeCapacity concierges={concierges} />}</main>;
   }
 
-  return <main className="ops-shell"><header className="ops-header"><div><p className="eyebrow">Mesa dos Donos · operação interna</p><h1>Backoffice</h1></div><a href="/app">Ver ambiente do membro</a></header><OpsNavigation activeView={activeView} roles={roles} />{content}</main>;
+  return <main className="ops-shell">
+    <aside className="ops-sidebar">
+      <a className="ops-brand" href="/ops"><span className="mesa-bars" aria-hidden="true"><i /><i /><i /></span><span><strong>MESA</strong><small>DOS DONOS</small></span></a>
+      <p className="ops-sidebar-label">Ambiente interno</p>
+      <OpsNavigation activeView={activeView} roles={roles} />
+      <div className="ops-sidebar-footer"><strong>Operação Mesa</strong><small>Permissões e dados isolados</small><a href="/app">Ver visão de membro</a></div>
+    </aside>
+    <section className="ops-main">
+      <header className="ops-header"><div><p className="eyebrow">Mesa dos Donos · operação interna</p><h1>Backoffice</h1></div><a href="/app">Ver ambiente do membro</a></header>
+      {content}
+    </section>
+  </main>;
 }

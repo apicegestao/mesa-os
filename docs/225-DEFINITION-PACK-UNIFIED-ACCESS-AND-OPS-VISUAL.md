@@ -22,6 +22,8 @@
 - navegação interna previsível e sem mistura de paletas verde/azul;
 - cartões apenas para resumo, decisão, métrica ou ação.
 
+**Decisão permanente do owner (2026-08-14):** toda nova tela e toda refatoração visual do Mesa OS devem seguir esta direção. Exceções só podem ocorrer quando um estado semântico exigir cor própria (sucesso, atenção, risco ou comparação de pilares).
+
 ## Limites
 
 - não altera RLS, papéis, dados de membros, regras metodológicas ou permissões;
