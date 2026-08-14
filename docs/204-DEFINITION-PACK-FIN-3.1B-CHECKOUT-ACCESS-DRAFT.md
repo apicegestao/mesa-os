@@ -1,6 +1,6 @@
 # Definition Pack — FIN‑3.1B Checkout, Entitlement e Entrada sem Senha
 
-**Status:** DRAFT — requer aprovação explícita e escolha posterior do primeiro provedor antes de BUILD de integração.
+**Status:** APPROVED — owner aprovou BUILD e Asaas como primeiro provedor em 2026-08-14.
 
 ## Objetivo
 
@@ -47,9 +47,9 @@ Conectar o domínio financeiro canônico ao primeiro checkout oficial sem tornar
 - login por senha, login social ou liberação por retorno de navegador;
 - criação pública de vínculo sem pagamento/entitlement autorizado.
 
-## Decisão pendente: provedor inicial
+## Provedor inicial: Asaas
 
-O provedor deve oferecer: checkout hospedado, webhooks assinados, reembolso/cancelamento, reconciliação, suporte brasileiro e exportação de dados. A decisão será registrada antes da configuração de segredos; o contrato do Mesa OS continuará independente por meio do adaptador.
+Asaas é o primeiro adaptador por oferecer checkout hospedado, Pix, cartão, recorrência, `externalReference` e webhooks. O contrato do Mesa OS continua independente por meio do adaptador; uma troca futura não altera os fatos canônicos.
 
 ## Critérios de aceite
 
