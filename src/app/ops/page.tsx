@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { OpsEnrollmentPanel } from "@/modules/identity-access";
+import { OpsEnrollmentPanel, OpsStaffEnrollmentPanel } from "@/modules/identity-access";
 import { OpsCrmConsole } from "@/modules/crm";
 import { OpsFinanceConsole } from "@/modules/finance/ui/ops-finance-console";
 import { OpsPortfolioConsole } from "@/modules/operations/ui/ops-portfolio-console";
@@ -73,8 +73,11 @@ export default async function OpsPage({ searchParams }: { searchParams: Promise<
     const { data: intelligenceData } = await supabase.rpc("get_intelligence_workspace");
     content = <main className="ops-module"><OpsIntelligenceConsole workspace={(intelligenceData ?? { snapshots: [], proposals: [] }) as never} /></main>;
   } else if (activeView === "access") {
-    const { data: enrollments } = await supabase.rpc("list_my_internal_access_enrollments");
-    content = <main className="ops-module"><OpsEnrollmentPanel initialEnrollments={enrollments ?? []} /></main>;
+    const [{ data: enrollments }, { data: organizations }] = await Promise.all([
+      supabase.rpc("list_my_internal_access_enrollments"),
+      roles.includes("admin") ? supabase.rpc("list_portfolio_organizations") : Promise.resolve({ data: [] }),
+    ]);
+    content = <main className="ops-module">{roles.includes("admin") && <OpsStaffEnrollmentPanel organizations={organizations ?? []} />}<OpsEnrollmentPanel initialEnrollments={enrollments ?? []} /></main>;
   } else {
     const [{ data: operatorsData }, { data: organizationsData }, { data: managedPortfoliosData }, { data: globalMentorData }, { data: myPortfoliosData }] = await Promise.all([
       supabase.rpc("list_active_internal_operators"),
