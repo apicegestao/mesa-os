@@ -82,8 +82,8 @@ export async function POST(request: Request) {
     await settleBudget(observedCost);
     await recordUsage("served");
     const persistedResponse = [orientation.resumo, orientation.proxima_acao, orientation.justificativa_metodologica].join("\n\n");
-    await (supabase.rpc as unknown as (name: string, args: Record<string, unknown>) => Promise<{ error: unknown }>)("persist_my_tutoria_conversation_exchange", { submitted_question: usage.request.question ?? "Orientação solicitada pelo membro.", submitted_response: persistedResponse });
-    return NextResponse.json({ orientation });
+    const { error: conversationPersistenceError } = await (supabase.rpc as unknown as (name: string, args: Record<string, unknown>) => Promise<{ error: unknown }>)("persist_my_tutoria_conversation_exchange", { submitted_question: usage.request.question ?? "Orientação solicitada pelo membro.", submitted_response: persistedResponse });
+    return NextResponse.json({ orientation, conversation_persistence: conversationPersistenceError ? "unavailable" : "saved" });
   } catch {
     await supabase.rpc("settle_tutoria_member_budget", { target_reservation_id: reservationId, observed_cost_usd_micros: 0 });
     await audit("invocation_finished", "unavailable", { provider_code: "netlify_ai_gateway", duration_ms: Date.now() - startedAt, failure_code: "provider_unavailable" });
