@@ -18,7 +18,6 @@ import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/ser
 import { buildTutorIAMemberState, buildTutorIAMethodologySummary, recordTutorIAReadGateway } from "@/modules/tutoria-foundation";
 import { DreWorkbench, loadWorkbenchWorkspace, RaciWorkbench, SwotWorkbench } from "@/modules/tutoria-workbench";
 import { loadMesaOSTermsState, loadMyTermsReceipts, MesaOSTermsGate, MesaOSTermsPanel, TermsReceipts } from "@/modules/tutoria-consent";
-import { MemberSupportPanel } from "@/modules/operations/ui/member-support-panel";
 
 export const dynamic = "force-dynamic";
 
@@ -115,7 +114,7 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
   const progress = Math.round((completedSteps / progressSteps.length) * 100);
 
   return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout} progress={progress} activeView={activeView} tutoriaWorkbench={<>{dreWorkbench && <DreWorkbench workspace={dreWorkbench} />}{raciWorkbench && <RaciWorkbench workspace={raciWorkbench} />}{swotWorkbench && <SwotWorkbench workspace={swotWorkbench} />}</>}>
-    {activeView === "today" && <><MemberHome memberName={memberName} nextAction={nextAction} cycle={cycle} priorityLabel={priority?.dimension_label} missionTitle={availableMission?.title} completedSteps={completedSteps} totalSteps={progressSteps.length} /><MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} /><MemberSupportPanel /></>}
+    {activeView === "today" && <><MemberHome memberName={memberName} nextAction={nextAction} cycle={cycle} priorityLabel={priority?.dimension_label} missionTitle={availableMission?.title} completedSteps={completedSteps} totalSteps={progressSteps.length} /><MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} /></>}
     {activeView === "journey" && <><JourneyProgress steps={progressSteps} />
     <section id="jornada" className="experience-section journey-section" aria-labelledby="journey-title">
       <div className="section-heading"><div><p className="eyebrow">Minha jornada</p><h2 id="journey-title">Do diagnóstico à transformação</h2></div><span className="status-pill">Ciclo atual</span></div>
