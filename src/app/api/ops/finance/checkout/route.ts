@@ -68,16 +68,19 @@ export async function POST(request: Request) {
     await supabase.rpc("fail_asaas_checkout", { target_checkout_id: checkout.checkout_id });
     const providerCodes = error instanceof AsaasCheckoutError ? error.validationCodes : [];
     const providerFields = error instanceof AsaasCheckoutError ? error.validationFields : [];
+    const providerMessage = error instanceof AsaasCheckoutError ? error.validationMessage : null;
     log("warn", "finance_asaas_checkout_failed", {
       reason: error instanceof Error ? error.message : "unknown",
       providerCodes: providerCodes.join(",") || null,
       providerFields: providerFields.join(",") || null,
+      hasProviderMessage: Boolean(providerMessage),
     });
     return NextResponse.json({
       error: "checkout_unavailable",
       reason: error instanceof AsaasCheckoutError ? "provider_rejected" : "unavailable",
       providerCodes,
       providerFields,
+      providerMessage,
     }, { status: 422 });
   }
 }

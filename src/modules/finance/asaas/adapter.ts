@@ -27,30 +27,39 @@ export class AsaasCheckoutError extends Error {
     public readonly status: number,
     public readonly validationCodes: string[],
     public readonly validationFields: string[],
+    public readonly validationMessage: string | null,
   ) {
     super(`asaas_checkout_${status}`);
   }
 }
 
+const validationErrorSchema = z.object({
+  errors: z.array(z.object({ code: z.string().trim().optional(), description: z.string().optional() })).max(10).optional(),
+});
+
 export function getAsaasValidationCodes(payload: unknown) {
-  const parsed = z.object({
-    errors: z.array(z.object({ code: z.string().trim(), description: z.string().optional() })).max(10).optional(),
-  }).safeParse(payload);
+  const parsed = validationErrorSchema.safeParse(payload);
 
   if (!parsed.success) return [];
   return [...new Set((parsed.data.errors ?? [])
-    .map(({ code }) => code.toLowerCase())
+    .flatMap(({ code }) => code ? [code.toLowerCase()] : [])
     .filter((code) => /^[a-z0-9_]{1,80}$/.test(code)))];
 }
 
 export function getAsaasValidationFields(payload: unknown) {
-  const parsed = z.object({
-    errors: z.array(z.object({ description: z.string().optional() })).max(10).optional(),
-  }).safeParse(payload);
+  const parsed = validationErrorSchema.safeParse(payload);
   if (!parsed.success) return [];
   const allowedFields = ["billingTypes", "chargeTypes", "minutesToExpire", "externalReference", "callback", "items", "customerData"];
   const descriptions = (parsed.data.errors ?? []).flatMap(({ description }) => description ? [description] : []);
   return allowedFields.filter((field) => descriptions.some((description) => new RegExp(`\\b${field}\\b`, "i").test(description)));
+}
+
+export function getAsaasValidationMessage(payload: unknown) {
+  const parsed = validationErrorSchema.safeParse(payload);
+  const description = parsed.success ? parsed.data.errors?.[0]?.description?.trim() : null;
+  if (!description || description.length > 240) return null;
+  if (/@|\b\d{8,}\b/.test(description)) return null;
+  return /^[\p{L}\p{N} .,:;_'-]+$/u.test(description) ? description : null;
 }
 
 export function isSandboxAsaasKey(value: string | undefined) {
@@ -100,6 +109,6 @@ export async function createAsaasSandboxCheckout(input: AsaasCheckoutRequest): P
     cache: "no-store",
   });
   const payload: unknown = await response.json().catch(() => null);
-  if (!response.ok) throw new AsaasCheckoutError(response.status, getAsaasValidationCodes(payload), getAsaasValidationFields(payload));
+  if (!response.ok) throw new AsaasCheckoutError(response.status, getAsaasValidationCodes(payload), getAsaasValidationFields(payload), getAsaasValidationMessage(payload));
   return responseSchema.parse(payload);
 }
