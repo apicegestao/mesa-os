@@ -11,9 +11,14 @@ const eventSchema = z.object({
   event: z.enum(["PAYMENT_RECEIVED", "PAYMENT_CONFIRMED", "PAYMENT_OVERDUE", "PAYMENT_REFUNDED", "PAYMENT_DELETED"]),
   payment: z.object({
     id: z.string().trim().min(2).max(160),
-    externalReference: z.string().trim().min(8).max(200),
+    externalReference: z.string().trim().min(8).max(200).nullable().optional(),
+    checkoutSession: z.string().trim().uuid().nullable().optional(),
     value: z.coerce.number().nonnegative().finite(),
   }),
+}).superRefine(({ payment }, context) => {
+  if (!payment.externalReference && !payment.checkoutSession) {
+    context.addIssue({ code: z.ZodIssueCode.custom, message: "missing_reconciliation_reference" });
+  }
 });
 
 function hasValidToken(received: string | null, expected: string | undefined) {
@@ -47,7 +52,8 @@ export async function POST(request: Request) {
   const { data, error } = await supabase.rpc("reconcile_asaas_payment_event", {
     target_provider_event_id: payload.data.id,
     target_event_type: payload.data.event,
-    target_external_reference: payload.data.payment.externalReference,
+    target_external_reference: payload.data.payment.externalReference ?? "",
+    target_checkout_session_id: payload.data.payment.checkoutSession ?? "",
     target_payment_reference: payload.data.payment.id,
     target_payload_sha256: createHash("sha256").update(rawBody).digest("hex"),
     target_amount: payload.data.payment.value,

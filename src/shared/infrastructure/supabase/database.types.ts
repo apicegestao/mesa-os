@@ -1856,7 +1856,7 @@ export type Database = {
       claim_asaas_checkout: { Args: { target_checkout_id: string }; Returns: boolean }
       record_asaas_checkout: { Args: { target_checkout_id: string; target_provider_checkout_id: string; target_checkout_link: string; target_expires_at?: string | null }; Returns: undefined }
       fail_asaas_checkout: { Args: { target_checkout_id: string }; Returns: undefined }
-      reconcile_asaas_payment_event: { Args: { target_provider_event_id: string; target_event_type: string; target_external_reference: string; target_payment_reference: string; target_payload_sha256: string; target_amount?: number | null }; Returns: string }
+      reconcile_asaas_payment_event: { Args: { target_provider_event_id: string; target_event_type: string; target_external_reference: string; target_checkout_session_id: string; target_payment_reference: string; target_payload_sha256: string; target_amount?: number | null }; Returns: string }
       get_my_finance_workspace: { Args: Record<PropertyKey, never>; Returns: Json }
       get_global_mentor_workspace: { Args: Record<PropertyKey, never>; Returns: { organization_id: string; organization_name: string; active_cycle_title: string | null; active_cycle_ends_on: string | null; next_action_label: string | null; available_mission_count: number; approved_milestone_count: number }[] }
       get_intelligence_workspace: { Args: Record<PropertyKey, never>; Returns: Json }
