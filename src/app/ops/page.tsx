@@ -11,7 +11,32 @@ import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/ser
 
 export const dynamic = "force-dynamic";
 
-export default async function OpsPage() {
+type OpsView = "crm" | "portfolio" | "support" | "finance" | "intelligence" | "access";
+const views: OpsView[] = ["crm", "portfolio", "support", "finance", "intelligence", "access"];
+
+function canUseView(view: OpsView, roles: InternalRole[]) {
+  if (view === "crm") return roles.includes("admin") || roles.includes("commercial") || roles.includes("concierge");
+  if (view === "portfolio") return roles.includes("admin") || roles.includes("concierge") || roles.includes("mentor");
+  if (view === "support") return roles.includes("admin") || roles.includes("concierge") || roles.includes("mentor");
+  if (view === "finance") return roles.includes("admin") || roles.includes("commercial") || roles.includes("finance");
+  if (view === "intelligence") return roles.includes("admin");
+  return roles.includes("admin") || roles.includes("concierge");
+}
+
+function OpsNavigation({ activeView, roles }: { activeView: OpsView; roles: InternalRole[] }) {
+  const items: { view: OpsView; label: string }[] = [
+    { view: "crm", label: "CRM" },
+    { view: "portfolio", label: "Carteira" },
+    { view: "support", label: "Suporte" },
+    { view: "finance", label: "Financeiro" },
+    { view: "intelligence", label: "Intelligence" },
+    { view: "access", label: "Acessos" },
+  ];
+
+  return <nav className="ops-navigation" aria-label="Módulos internos">{items.filter((item) => canUseView(item.view, roles)).map((item) => <a key={item.view} href={`/ops?view=${item.view}`} className={item.view === activeView ? "active" : ""}>{item.label}</a>)}</nav>;
+}
+
+export default async function OpsPage({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
   const supabase = await createSupabaseServerClient();
   const { data: claimsData } = await supabase.auth.getClaims();
   if (!claimsData?.claims?.sub) redirect("/ops/login");
@@ -29,22 +54,37 @@ export default async function OpsPage() {
   const roles = opsState[0].roles as InternalRole[];
   if (roles.length === 0) return <main className="shell"><OpsCrmConsole concierges={[]} initialWorkspace={{ opportunities: [], handoffs: [] }} isBootstrap roles={[]} /></main>;
 
-  const [{ data: workspaceData }, { data: financeWorkspaceData }, { data: operatorsData }, { data: conciergesData }, { data: enrollments }, { data: portfoliosData }, { data: organizationsData }, { data: managedPortfoliosData }, { data: intelligenceWorkspaceData }, { data: globalMentorData }] = await Promise.all([
-    supabase.rpc("get_my_crm_workspace"),
-    supabase.rpc("get_my_finance_workspace"),
-    supabase.rpc("list_active_internal_operators"),
-    supabase.rpc("list_available_concierges"),
-    roles.includes("admin") || roles.includes("concierge") ? supabase.rpc("list_my_internal_access_enrollments") : Promise.resolve({ data: [] }),
-    roles.includes("mentor") || roles.includes("concierge") ? supabase.rpc("get_my_internal_portfolios") : Promise.resolve({ data: [] }),
-    roles.includes("admin") ? supabase.rpc("list_portfolio_organizations") : Promise.resolve({ data: [] }),
-    roles.includes("admin") ? supabase.rpc("list_managed_internal_portfolios") : Promise.resolve({ data: [] }),
-    roles.includes("admin") ? supabase.rpc("get_intelligence_workspace") : Promise.resolve({ data: { snapshots: [], proposals: [] } }),
-    roles.includes("mentor") ? supabase.rpc("get_global_mentor_workspace") : Promise.resolve({ data: [] }),
-  ]);
+  const requestedView = (await searchParams).view;
+  const activeView = views.includes(requestedView as OpsView) && canUseView(requestedView as OpsView, roles) ? requestedView as OpsView : "crm";
+  const workspace = ((await supabase.rpc("get_my_crm_workspace")).data as CrmWorkspace | null) ?? { opportunities: [], handoffs: [] };
+  const concierges = activeView === "crm" || activeView === "portfolio"
+    ? (((await supabase.rpc("list_available_concierges")).data ?? []) as { email: string; identity_id: string }[])
+    : [];
 
-  const workspace = (workspaceData ?? { opportunities: [], handoffs: [] }) as CrmWorkspace;
-  const financeWorkspace = (financeWorkspaceData ?? { offers: [], proposals: [] }) as { offers: { id: string; code: string; name: string; price_version_id: string; amount: number; currency_code: string }[]; proposals: { id: string; status: string; amount: number; currency_code: string; expires_on: string | null; opportunity_title: string; account_name: string }[] };
-  const operators = (operatorsData ?? []) as { email: string; identity_id: string; roles: InternalRole[] }[];
-  const concierges = (conciergesData ?? []) as { email: string; identity_id: string }[];
-  return <main className="shell"><OpsCrmConsole concierges={concierges} initialWorkspace={workspace} isBootstrap={false} roles={roles} />{roles.includes("admin") && <OpsConciergeCapacity concierges={concierges} />}<OpsPortfolioConsole globalMentor={(globalMentorData ?? []) as never[]} managed={(managedPortfoliosData ?? []) as never[]} operators={operators} organizations={(organizationsData ?? []) as never[]} portfolios={(portfoliosData ?? []) as never[]} roles={roles} />{(roles.includes("admin") || roles.includes("concierge") || roles.includes("mentor")) && <OpsSupportConsole />}{roles.includes("admin") && <OpsIntelligenceConsole workspace={(intelligenceWorkspaceData ?? { snapshots: [], proposals: [] }) as never} />}<OpsFinanceConsole opportunities={workspace.opportunities} roles={roles} workspace={financeWorkspace} />{(roles.includes("admin") || roles.includes("concierge")) && <OpsEnrollmentPanel initialEnrollments={enrollments ?? []} />}</main>;
+  let content: React.ReactNode;
+  if (activeView === "crm") {
+    content = <OpsCrmConsole concierges={concierges} initialWorkspace={workspace} isBootstrap={false} roles={roles} />;
+  } else if (activeView === "finance") {
+    const { data: financeData } = await supabase.rpc("get_my_finance_workspace");
+    content = <OpsFinanceConsole opportunities={workspace.opportunities} roles={roles} workspace={(financeData ?? { offers: [], proposals: [] }) as never} />;
+  } else if (activeView === "support") {
+    content = <main className="ops-module"><OpsSupportConsole /></main>;
+  } else if (activeView === "intelligence") {
+    const { data: intelligenceData } = await supabase.rpc("get_intelligence_workspace");
+    content = <main className="ops-module"><OpsIntelligenceConsole workspace={(intelligenceData ?? { snapshots: [], proposals: [] }) as never} /></main>;
+  } else if (activeView === "access") {
+    const { data: enrollments } = await supabase.rpc("list_my_internal_access_enrollments");
+    content = <main className="ops-module"><OpsEnrollmentPanel initialEnrollments={enrollments ?? []} /></main>;
+  } else {
+    const [{ data: operatorsData }, { data: organizationsData }, { data: managedPortfoliosData }, { data: globalMentorData }, { data: myPortfoliosData }] = await Promise.all([
+      supabase.rpc("list_active_internal_operators"),
+      roles.includes("admin") ? supabase.rpc("list_portfolio_organizations") : Promise.resolve({ data: [] }),
+      roles.includes("admin") ? supabase.rpc("list_managed_internal_portfolios") : Promise.resolve({ data: [] }),
+      roles.includes("mentor") ? supabase.rpc("get_global_mentor_workspace") : Promise.resolve({ data: [] }),
+      roles.includes("mentor") || roles.includes("concierge") ? supabase.rpc("get_my_internal_portfolios") : Promise.resolve({ data: [] }),
+    ]);
+    content = <main className="ops-module"><OpsPortfolioConsole globalMentor={(globalMentorData ?? []) as never[]} managed={(managedPortfoliosData ?? []) as never[]} operators={(operatorsData ?? []) as never[]} organizations={(organizationsData ?? []) as never[]} portfolios={(myPortfoliosData ?? []) as never[]} roles={roles} />{roles.includes("admin") && <OpsConciergeCapacity concierges={concierges} />}</main>;
+  }
+
+  return <main className="shell"><header className="ops-header"><div><p className="eyebrow">Mesa dos Donos · operação interna</p><h1>Backoffice</h1></div><a href="/app">Ver ambiente do membro</a></header><OpsNavigation activeView={activeView} roles={roles} />{content}</main>;
 }
