@@ -1,7 +1,7 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** RT-2.26–RT-2.27A — Release Train 1
+**Sprint:** RT-2.26–RT-2.27B — Release Train 1
 **Mode:** BUILD
 **Status:** IN PROGRESS — APPROVED FOR BUILD
 
@@ -75,6 +75,7 @@
 - OPS-3.0C — visão metodológica global mínima do Mentor, com leitura auditada e sem conteúdo bruto; Concierge permanece por carteira; BUILD ocorre apenas em homologação.
 - FIN-3.1B — adaptador Asaas Sandbox: checkout hospedado, evento de webhook idempotente, reconciliação para fatos financeiros canônicos e elegibilidade de acesso; BUILD ocorre apenas em homologação. Retorno do navegador não autoriza acesso e nenhum dado de cartão/PIX entra no Mesa OS.
 - FIN-3.1C — vínculo automático e idempotente de conta CRM à organização Mesa OS após pagamento confirmado; matrícula `owner` do pagador por OTP, com conflitos encaminhados à Concierge. BUILD ocorre apenas em homologação.
+- GOV-CR-2.27B — reconciliação documentada para retenção longitudinal de conversas TutorIA sob Termos vigentes e visão metodológica global mínima do Mentor, com todos os limites descritos na Change Request correspondente.
 
 ## Not Authorized
 
@@ -82,7 +83,7 @@
 - TutorIA fora dos contratos TCF-2.21A a TCF-2.21D.
 - Tools ou ferramentas metodológicas.
 - Concierge fora do handoff, onboarding, matrícula/revogação e carteira estritamente atribuída explicitamente autorizados pelo OPS-3.0A R2/OPS-3.0B.
-- Mentor fora da carteira estritamente atribuída, sem conteúdo bruto e sem qualquer poder de alteração metodológica.
+- Mentor fora da visão metodológica global mínima autorizada pelo OPS-3.0C/GOV-CR-2.27B, sem conteúdo bruto e sem qualquer poder de alteração metodológica.
 - Checkout, provedor, cartão, PIX, webhook, cobrança automática, comunicação externa, contabilidade/fiscal, estorno automatizado ou múltiplos provedores financeiros, exceto o adaptador Asaas Sandbox estritamente definido no FIN-3.1B.
 - Mesa OS Intelligence operacional, dados agregados, propostas de metodologia ou qualquer atualização automatizada.
 - Modelo ativo, dados identificáveis amplos, treinamento/fine-tuning, publicação automática ou execução de proposta pela Mesa OS Intelligence.
@@ -102,7 +103,7 @@
 - Edição administrativa da metodologia.
 - Reabertura, invalidação ou sobrescrita de resultado concluído.
 - Participação colaborativa ou submissão por `member` neste primeiro incremento.
-- Chat bruto, memória automática derivada de conversa, RAG, embeddings, fine-tuning, autonomia decisória ou desempate automático do TutorIA.
+- Chat bruto, memória automática derivada de conversa, RAG, embeddings, fine-tuning, autonomia decisória ou desempate automático do TutorIA, exceto a retenção longitudinal explicitamente limitada pelo GOV-CR-2.27B.
 - Derivação automática a partir de fontes canônicas antes de um incremento próprio com adaptadores, observabilidade e testes de cada fonte.
 - Escolha humana em caso de empate no menor score.
 - Seleção de dimensão diferente da única menor candidata.
