@@ -14,6 +14,39 @@ export const dynamic = "force-dynamic";
 type OpsView = "crm" | "portfolio" | "support" | "finance" | "intelligence" | "access";
 const views: OpsView[] = ["crm", "portfolio", "support", "finance", "intelligence", "access"];
 
+const viewPresentation: Record<OpsView, { eyebrow: string; title: string; summary: string }> = {
+  crm: {
+    eyebrow: "Operação comercial",
+    title: "CRM",
+    summary: "Oportunidades, distribuição e acompanhamento desde o primeiro contato.",
+  },
+  portfolio: {
+    eyebrow: "Acompanhamento do membro",
+    title: "Carteira",
+    summary: "Visibilidade da condução e dos pontos de atenção de cada membro.",
+  },
+  support: {
+    eyebrow: "Condução do membro",
+    title: "Suporte",
+    summary: "Orientações e encaminhamentos que preservam o contexto do acompanhamento.",
+  },
+  finance: {
+    eyebrow: "Receita e permanência",
+    title: "Financeiro",
+    summary: "Propostas, faturamento e sinais de acesso vinculados ao relacionamento.",
+  },
+  intelligence: {
+    eyebrow: "Melhoria contínua",
+    title: "Intelligence",
+    summary: "Leituras agregadas para evoluir método, ferramentas e operação com responsabilidade.",
+  },
+  access: {
+    eyebrow: "Controle de acesso",
+    title: "Acessos",
+    summary: "Atribuições internas e matrículas autorizadas, com permissões isoladas.",
+  },
+};
+
 function canUseView(view: OpsView, roles: InternalRole[]) {
   if (view === "crm") return roles.includes("admin") || roles.includes("commercial") || roles.includes("concierge");
   if (view === "portfolio") return roles.includes("admin") || roles.includes("concierge") || roles.includes("mentor");
@@ -56,6 +89,7 @@ export default async function OpsPage({ searchParams }: { searchParams: Promise<
 
   const requestedView = (await searchParams).view;
   const activeView = views.includes(requestedView as OpsView) && canUseView(requestedView as OpsView, roles) ? requestedView as OpsView : "crm";
+  const presentation = viewPresentation[activeView];
   const workspace = ((await supabase.rpc("get_my_crm_workspace")).data as CrmWorkspace | null) ?? { opportunities: [], handoffs: [] };
   const concierges = activeView === "crm" || activeView === "portfolio"
     ? (((await supabase.rpc("list_available_concierges")).data ?? []) as { email: string; identity_id: string }[])
@@ -97,7 +131,7 @@ export default async function OpsPage({ searchParams }: { searchParams: Promise<
       <div className="ops-sidebar-footer"><strong>Operação Mesa</strong><small>Permissões e dados isolados</small><a href="/app">Ver visão de membro</a></div>
     </aside>
     <section className="ops-main">
-      <header className="ops-header"><div><p className="eyebrow">Mesa dos Donos · operação interna</p><h1>Backoffice</h1></div><a href="/app">Ver ambiente do membro</a></header>
+      <header className="ops-header"><div><p className="eyebrow">{presentation.eyebrow}</p><h1>{presentation.title}</h1><p className="ops-header-summary">{presentation.summary}</p></div><a href="/app">Ver ambiente do membro</a></header>
       {content}
     </section>
   </main>;
