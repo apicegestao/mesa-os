@@ -216,10 +216,10 @@ O desenho atual usa coortes agregadas e suprime grupos pequenos. A evolução de
 | Aplicação do membro e direção visual | parcialmente construída; requer reconciliação visual final com a referência aprovada |
 | TutorIA foundation, contexto e orçamento | fundação construída em homologação; capacidades autônomas e validação de evidências ainda não ativas |
 | Login OTP membro/equipe | fluxo homologado; precisa permanecer no smoke consolidado, não em ciclos de teste dispersos |
-| CRM, suporte e carteira | construídos em homologação; CRM visual/arquitetura ainda em consolidação |
+| CRM, suporte e carteira | construídos em homologação; CRM abre pelo Kanban, suporte/carteira são superfícies separadas e Mentor vê a comunidade enquanto Concierge atua por carteira |
 | Capacidade e distribuição Concierge | implementada em homologação, com configuração Admin e fila auditável |
-| Financeiro/Asaas Sandbox | adaptador e vínculo pós-pagamento preparados; falta smoke externo consolidado de webhook/entitlement |
-| Intelligence | fundação agregada e proposta interna; sem modelo ativo e sem ação automática |
+| Financeiro/Asaas Sandbox | adaptador e vínculo pós-pagamento preparados; checkout/webhook é o fluxo padrão e confirmação externa é exceção auditável; falta smoke externo consolidado de webhook/entitlement |
+| Intelligence | fundação agregada, leitura administrativa e proposta interna; sem modelo ativo e sem ação automática |
 | Produção | permanece protegida; nenhuma promoção automática |
 
 ## 12. Ordem de trabalho daqui em diante
@@ -235,6 +235,15 @@ O desenho atual usa coortes agregadas e suprime grupos pequenos. A evolução de
 1. separar no backoffice as superfícies CRM, suporte/carteira, financeiro, Intelligence e administração, sem uma página única poluída;
 2. concluir a experiência CRM Kanban aprovada e o detalhe de empresa;
 3. manter a inteligência comercial agregada e explicável.
+
+### Checkpoint visual interno — 2026-08-14
+
+- cada módulo interno passa a abrir com título, finalidade e resumo próprios, sem a camada genérica de “Backoffice”;
+- CRM: Kanban primeiro, inclusão de oportunidade em ação progressiva; fluxo comercial e leitura determinística permanecem abaixo;
+- Carteira: Mentor tem visão metodológica da comunidade; somente a Concierge trabalha por carteira e capacidade;
+- Intelligence: retratos são exibidos como métricas agregadas compreensíveis; propostas continuam dependentes de revisão humana e Definition Pack;
+- Financeiro: a elegibilidade segue o webhook confirmado do provedor. Registro de pagamento externo continua disponível apenas como exceção auditável, não como caminho padrão;
+- estas melhorias foram enviadas somente para homologação e aprovadas por lint, tipos, testes e build. Produção não foi promovida.
 
 ### Bloco C — Experiência do membro e fidelidade visual
 
