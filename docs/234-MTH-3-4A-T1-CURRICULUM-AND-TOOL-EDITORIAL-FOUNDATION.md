@@ -1,6 +1,6 @@
 # MTH-3.4A — Ementa interna T1 e fundação editorial de Ferramentas
 
-**Status:** DRAFT — sem BUILD até aprovação do owner  
+**Status:** APPROVED FOR BUILD — homologação somente
 **Objetivo:** transformar o Mapa de Desenvolvimento 4×4 em conteúdo, ferramentas e critérios versionados para o piloto T1.
 
 ## Resultado esperado

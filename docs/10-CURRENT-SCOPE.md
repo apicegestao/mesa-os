@@ -79,6 +79,7 @@
 - EVD-AI-3.3A / GOV-CR-2.27C — autonomia graduada do TutorIA para validar evidências elegíveis e liberar apenas a continuidade de Missão explicitamente autorizada; baixa confiança, risco, dúvida persistente ou pedido explícito escalam para humano. BUILD ocorre apenas em homologação.
 - EVD-AI-3.3B fase B1 — cada escalonamento de Evidência cria uma única fila humana auditada, com envelope mínimo e sem promover produção. Confirmação humana e reversão de progresso permanecem fora desta fase.
 - EVD-AI-3.3B fase B2 — Mentor ou Admin resolve apenas Evidência já escalada pelo TutorIA, validando ou solicitando complemento com justificativa imutável; a validação humana pode liberar a continuidade atômica da Missão. Reversão de decisão automática aprovada permanece fora desta fase.
+- MTH-3.4A — fundação editorial interna do piloto T1: ementa, critérios de implementação e Evidência, métricas, limites do TutorIA e vínculo versionado às Ferramentas. BUILD ocorre apenas em homologação; material novo permanece em rascunho interno até aprovação e publicação explícitas.
 
 ## Not Authorized
 
@@ -128,7 +129,7 @@
 - Inventar novamente decisões já aprovadas sem primeiro recuperar a fonte.
 - Alterar documentos `FROZEN` antes de Change Request explícito e rastreável.
 - Redução de testes, RLS, validação server-side ou rastreabilidade.
-- Conteúdo, treinamento, ferramenta, regra de progressão ou compatibilidade metodológica não aprovados e não descritos nos Definition Packs RT-2.20/RT-2.21.
+- Conteúdo, treinamento, ferramenta, regra de progressão ou compatibilidade metodológica não aprovados e não descritos nos Definition Packs RT-2.20/RT-2.21, EVD-AI-3.3 ou MTH-3.4A.
 
 ## Exit criteria dos RT-2.20 e RT-2.21
 
