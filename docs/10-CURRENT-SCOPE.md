@@ -76,6 +76,7 @@
 - FIN-3.1B — adaptador Asaas Sandbox: checkout hospedado, evento de webhook idempotente, reconciliação para fatos financeiros canônicos e elegibilidade de acesso; BUILD ocorre apenas em homologação. Retorno do navegador não autoriza acesso e nenhum dado de cartão/PIX entra no Mesa OS.
 - FIN-3.1C — vínculo automático e idempotente de conta CRM à organização Mesa OS após pagamento confirmado; matrícula `owner` do pagador por OTP, com conflitos encaminhados à Concierge. BUILD ocorre apenas em homologação.
 - GOV-CR-2.27B — reconciliação documentada para retenção longitudinal de conversas TutorIA sob Termos vigentes e visão metodológica global mínima do Mentor, com todos os limites descritos na Change Request correspondente.
+- EVD-AI-3.3A / GOV-CR-2.27C — autonomia graduada do TutorIA para validar evidências elegíveis e liberar apenas a continuidade de Missão explicitamente autorizada; baixa confiança, risco, dúvida persistente ou pedido explícito escalam para humano. BUILD ocorre apenas em homologação.
 
 ## Not Authorized
 
@@ -113,10 +114,10 @@
 - Encerramento automático do ciclo ao ultrapassar a data final.
 - Ciclos paralelos; RT-2.20 autoriza histórico sequencial, mantendo no máximo um ciclo ativo por organização.
 - Geração de Missão por TutorIA ou qualquer IA.
-- Ferramenta, Implementação, Evidência ou Evolução.
+- Ferramenta, Implementação, Evidência ou Evolução, exceto a decisão de evidência e continuidade limitada do EVD-AI-3.3A/GOV-CR-2.27C.
 - Conclusão, desbloqueio, reordenação, substituição ou edição de Missão.
 - Definições de Missão para dimensões diferentes de `Liderança & Equipe`.
-- Submissão final, aprovação ou mudança de estado da Missão.
+- Submissão final, aprovação ou mudança de estado da Missão, exceto a continuidade atômica e auditada autorizada pelo EVD-AI-3.3A/GOV-CR-2.27C.
 - Implementação, Evidência ou Evolução.
 - Exportação, anexos, comentários ou colaboração por `member`.
 - Feature de negócio, migration ou alteração de dados fora dos RT-2.20/RT-2.21; deploy manual continua proibido.

@@ -1,6 +1,6 @@
 # Definition Pack EVD-AI-3.3A — Autonomia graduada na revisão de Evidências
 
-**Status:** REVISED DRAFT — aguarda aprovação explícita antes de BUILD
+**Status:** APPROVED FOR BUILD — homologação somente
 **Ambiente de BUILD proposto:** homologação somente
 **Owner:** Mesa dos Donos
 **Base:** `00-CONSTITUTION.md`, `10-CURRENT-SCOPE.md`, GOV-CR-2.27B e conversa Mesa OS V2

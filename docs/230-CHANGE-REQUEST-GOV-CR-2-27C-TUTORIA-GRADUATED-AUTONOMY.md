@@ -1,6 +1,6 @@
 # GOV-CR-2.27C — Autonomia graduada do TutorIA em Evidências
 
-**Status:** PROPOSTO — aguarda aprovação explícita do owner
+**Status:** APROVADO PELO OWNER — homologação somente
 **Altera:** exceção à vedação de aprovação/desbloqueio automático em `10-CURRENT-SCOPE.md`
 **Não altera:** Constituição, produção, isolamento organizacional ou limites de ações críticas
 
