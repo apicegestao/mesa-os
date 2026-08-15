@@ -83,6 +83,7 @@
 - MTH-3.4B — workspace estruturado reutilizável para modelos editoriais T1 já versionados, com validação local/server-side e exportação PDF/XLSX existente. BUILD ocorre apenas em homologação; a interface somente carrega revisões explicitamente `published`.
 - MTH-3.4C — revisão e publicação editorial controlada por Admin para unidades T1 e seus vínculos de Ferramenta. BUILD ocorre apenas em homologação; sem publicação automática, edição livre ou execução pela Intelligence.
 - MTH-3.4D — guias editoriais internos completos do T1 para uso de equipe, Ferramenta, Evidência e orientação do TutorIA. Sem publicação de conteúdo, curso ou ferramenta por esta entrega.
+- MTH-3.4E — sincronização versionada dos guias editoriais T1 com a fonte interna do sistema, preservando a revisão inicial e mantendo a revisão completa em rascunho. BUILD ocorre somente em homologação e não publica unidades ou ferramentas.
 
 ## Not Authorized
 
