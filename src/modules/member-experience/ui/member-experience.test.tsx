@@ -99,6 +99,8 @@ describe("member experience foundations", () => {
     expect(screen.getByText("Aprovada")).toBeInTheDocument();
     expect(screen.getByText("Correção solicitada")).toBeInTheDocument();
     expect(screen.getByText("Histórico · Controle")).toBeInTheDocument();
+    expect(screen.getByText("Aprovadas")).toBeInTheDocument();
+    expect(screen.getByText("validadas no histórico")).toBeInTheDocument();
   });
 
   it("summarizes only the canonical journey deliveries", () => {
