@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { saveImplementation, submitEvidence } from "./actions";
+import { saveImplementation, submitEvidence, submitEvidenceRevision } from "./actions";
 import type { CoreLoopWorkspace } from "./index";
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -18,6 +18,8 @@ export function CoreLoopPanel({ missionId, workspace }: { missionId: string; wor
   const evidenceDescriptionLength = description.trim().length;
   const evidenceDateValid = Boolean(occurredOn) && occurredOn <= today() && occurredOn >= (workspace.implementation?.implementedOn ?? "");
   const evidenceValid = evidenceDescriptionLength >= 20 && evidenceDescriptionLength <= 1000 && evidenceDateValid;
+  const awaitingReview = workspace.evidenceStatus === "submitted" || workspace.evidenceStatus === "escalated";
+  const needsCorrection = workspace.evidenceStatus === "changes_requested" && Boolean(workspace.evidenceId);
 
   function implementation(confirm: boolean) {
     setMessage(null);
@@ -26,7 +28,7 @@ export function CoreLoopPanel({ missionId, workspace }: { missionId: string; wor
   function evidence() {
     setMessage(null);
     run(async () => {
-      const submitted = await submitEvidence(missionId, evidenceType, description, occurredOn);
+      const submitted = needsCorrection && workspace.evidenceId ? await submitEvidenceRevision(workspace.evidenceId, evidenceType, description, occurredOn) : await submitEvidence(missionId, evidenceType, description, occurredOn);
       if (!submitted.ok || !submitted.evidenceId) return setMessage(submitted.message);
       const response = await fetch("/api/tutoria/evidence-review", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ evidenceId: submitted.evidenceId }) });
       const decision = await response.json().catch(() => null) as { outcome?: "approved" | "changes_requested" | "escalated" } | null;
@@ -43,13 +45,16 @@ export function CoreLoopPanel({ missionId, workspace }: { missionId: string; wor
       <label><span>Como foi aplicado</span><textarea minLength={20} maxLength={1000} value={summary} onChange={(event) => setSummary(event.target.value)} /></label>
       <label><span>Data da aplicação</span><input type="date" max={today()} value={implementedOn} onChange={(event) => setImplementedOn(event.target.value)} /></label>
       <div className="tool-main-actions"><button type="button" className="button-secondary" disabled={pending} onClick={() => implementation(false)}>Salvar rascunho</button><button type="button" disabled={pending} onClick={() => implementation(true)}>Marcar como implementado</button></div>
+    </> : awaitingReview ? <>
+      <h2>{workspace.evidenceStatus === "escalated" ? "Evidência em revisão humana" : "Evidência em análise"}</h2>
+      <p>{workspace.evidenceStatus === "escalated" ? "A TutorIA encaminhou este caso para a equipe especializada. Você será avisado aqui quando houver uma decisão." : "A TutorIA está avaliando esta evidência. Não é necessário reenviar enquanto a análise estiver em andamento."}</p>
     </> : <>
-      <h2>Registre uma evidência</h2>
-      <p>Conte um fato observável que mostre o uso da implementação. A TutorIA analisará os critérios antes de validar a continuidade da Missão.</p>
+      <h2>{needsCorrection ? "Envie o complemento solicitado" : "Registre uma evidência"}</h2>
+      <p>{needsCorrection ? "Envie uma nova versão com o complemento pedido. O histórico anterior continuará preservado." : "Conte um fato observável que mostre o uso da implementação. A TutorIA analisará os critérios antes de validar a continuidade da Missão."}</p>
       <label><span>Tipo de evidência</span><select value={evidenceType} onChange={(event) => setEvidenceType(event.target.value)}><option value="decision_example">Exemplo de decisão</option><option value="operational_record">Registro operacional</option><option value="meeting_routine">Rotina de reunião</option><option value="observed_result">Resultado observado</option></select></label>
       <label><span>Descrição factual</span><small>Mínimo de 20 caracteres. {evidenceDescriptionLength}/1.000</small><textarea minLength={20} maxLength={1000} value={description} onChange={(event) => setDescription(event.target.value)} /></label>
       <label><span>Data da ocorrência</span><input type="date" min={workspace.implementation?.implementedOn} max={today()} value={occurredOn} onChange={(event) => setOccurredOn(event.target.value)} /></label>
-      <button type="button" disabled={pending || !evidenceValid} onClick={evidence}>Registrar evidência para análise</button>
+      <button type="button" disabled={pending || !evidenceValid} onClick={evidence}>{needsCorrection ? "Reenviar para análise" : "Registrar evidência para análise"}</button>
     </>}
     {message && <p className="feedback" role="status">{message}</p>}
   </section>;

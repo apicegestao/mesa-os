@@ -34,3 +34,14 @@ export async function submitEvidence(missionId: string, type: string, descriptio
   revalidatePath("/app");
   return { ok: true, evidenceId: data, message: "Evidência registrada. A TutorIA está preparando a decisão de validação." };
 }
+
+export async function submitEvidenceRevision(evidenceId: string, type: string, description: string, occurredOn: string) {
+  const allowedTypes = new Set(["decision_example", "operational_record", "meeting_routine", "observed_result"]);
+  const normalizedDescription = description.trim();
+  if (!allowedTypes.has(type) || normalizedDescription.length < 20 || normalizedDescription.length > 1000 || !/^\d{4}-\d{2}-\d{2}$/.test(occurredOn)) return { ok: false, message: "Revise os dados antes de reenviar a evidência." };
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase.rpc("submit_evidence_revision", { target_evidence_id: evidenceId, submitted_evidence_type: type, evidence_description: normalizedDescription, evidence_date: occurredOn });
+  if (error || !data) return { ok: false, message: "Não foi possível reenviar a evidência agora. Revise os campos e tente novamente." };
+  revalidatePath("/app");
+  return { ok: true, evidenceId: data, message: "Complemento registrado. A TutorIA está preparando uma nova decisão." };
+}
