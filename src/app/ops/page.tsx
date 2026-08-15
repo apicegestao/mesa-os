@@ -102,7 +102,7 @@ export default async function OpsPage({ searchParams }: { searchParams: Promise<
     const { data: financeData } = await supabase.rpc("get_my_finance_workspace");
     content = <OpsFinanceConsole opportunities={workspace.opportunities} roles={roles} workspace={(financeData ?? { offers: [], proposals: [] }) as never} />;
   } else if (activeView === "support") {
-    content = <main className="ops-module"><OpsSupportConsole /></main>;
+    content = <main className="ops-module"><OpsSupportConsole roles={roles} /></main>;
   } else if (activeView === "intelligence") {
     const { data: intelligenceData } = await supabase.rpc("get_intelligence_workspace");
     content = <main className="ops-module"><OpsIntelligenceConsole workspace={(intelligenceData ?? { snapshots: [], proposals: [] }) as never} /></main>;
