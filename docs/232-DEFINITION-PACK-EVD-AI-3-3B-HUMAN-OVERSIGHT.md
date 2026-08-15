@@ -1,6 +1,6 @@
 # Definition Pack EVD-AI-3.3B — Supervisão humana e reversão auditada de Evidências
 
-**Status:** DRAFT — sem autorização de BUILD  
+**Status:** APPROVED FOR BUILD — fase B1 em homologação
 **Ambiente proposto:** homologação somente  
 **Owner:** Mesa dos Donos  
 **Base:** `00-CONSTITUTION.md`, `08-ADR-DECISION-LOG.md`, `10-CURRENT-SCOPE.md`, GOV-CR-2.27C e EVD-AI-3.3A
@@ -84,6 +84,8 @@ se reversões excederem limite: critério é suspenso para decisão automática
 - anexos, OCR, imagens, áudio ou documentos externos;
 - promoção para produção.
 
-## 10. Decisão necessária
+## 10. Fase B1 entregue
 
-A autorização de BUILD deste pacote deve ser explícita porque introduz reversão de progresso e acesso humano a uma fila operacional, ainda que dentro de limites restritos.
+A primeira fase cria, de forma atômica com o escalonamento do TutorIA, um único caso de suporte por Evidência. O caso contém somente o envelope mínimo para triagem: Missão, motivo de escalonamento e referência auditável. Mentor possui leitura metodológica global; Concierge permanece limitada à própria carteira.
+
+Confirmação humana, pedido de complemento e reversão de decisão aprovada permanecem pendentes da fase B2, pois reversão de progresso exige bloqueio de dependências já iniciadas e testes de corrida próprios.
