@@ -6,13 +6,14 @@ import { OpsPortfolioConsole } from "@/modules/operations/ui/ops-portfolio-conso
 import { OpsSupportConsole } from "@/modules/operations/ui/ops-support-console";
 import { OpsConciergeCapacity } from "@/modules/operations/ui/ops-concierge-capacity";
 import { OpsIntelligenceConsole } from "@/modules/intelligence/ui/ops-intelligence-console";
+import { OpsEditorialConsole, type EditorialReleaseUnit } from "@/modules/methodology-editorial";
 import type { CrmWorkspace, InternalRole } from "@/modules/crm/domain";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 
 export const dynamic = "force-dynamic";
 
-type OpsView = "crm" | "portfolio" | "support" | "finance" | "intelligence" | "access";
-const views: OpsView[] = ["crm", "portfolio", "support", "finance", "intelligence", "access"];
+type OpsView = "crm" | "portfolio" | "support" | "finance" | "intelligence" | "editorial" | "access";
+const views: OpsView[] = ["crm", "portfolio", "support", "finance", "intelligence", "editorial", "access"];
 
 const viewPresentation: Record<OpsView, { eyebrow: string; title: string; summary: string }> = {
   crm: {
@@ -40,6 +41,7 @@ const viewPresentation: Record<OpsView, { eyebrow: string; title: string; summar
     title: "Intelligence",
     summary: "Leituras agregadas para evoluir método, ferramentas e operação com responsabilidade.",
   },
+  editorial: { eyebrow: "Método e ferramentas", title: "Editorial", summary: "Conteúdo e ferramentas T1 sob revisão e publicação controladas." },
   access: {
     eyebrow: "Controle de acesso",
     title: "Acessos",
@@ -52,7 +54,7 @@ function canUseView(view: OpsView, roles: InternalRole[]) {
   if (view === "portfolio") return roles.includes("admin") || roles.includes("concierge") || roles.includes("mentor");
   if (view === "support") return roles.includes("admin") || roles.includes("concierge") || roles.includes("mentor");
   if (view === "finance") return roles.includes("admin") || roles.includes("commercial") || roles.includes("finance");
-  if (view === "intelligence") return roles.includes("admin");
+  if (view === "intelligence" || view === "editorial") return roles.includes("admin");
   return roles.includes("admin") || roles.includes("concierge");
 }
 
@@ -63,6 +65,7 @@ function OpsNavigation({ activeView, roles }: { activeView: OpsView; roles: Inte
     { view: "support", label: "Suporte" },
     { view: "finance", label: "Financeiro" },
     { view: "intelligence", label: "Intelligence" },
+    { view: "editorial", label: "Editorial" },
     { view: "access", label: "Acessos" },
   ];
 
@@ -106,6 +109,9 @@ export default async function OpsPage({ searchParams }: { searchParams: Promise<
   } else if (activeView === "intelligence") {
     const { data: intelligenceData } = await supabase.rpc("get_intelligence_workspace");
     content = <main className="ops-module"><OpsIntelligenceConsole workspace={(intelligenceData ?? { snapshots: [], proposals: [] }) as never} /></main>;
+  } else if (activeView === "editorial") {
+    const { data: editorialData } = await supabase.rpc("get_my_methodology_editorial_release_workspace");
+    content = <main className="ops-module"><OpsEditorialConsole units={(Array.isArray(editorialData) ? editorialData : []) as EditorialReleaseUnit[]} /></main>;
   } else if (activeView === "access") {
     const [{ data: enrollments }, { data: organizations }] = await Promise.all([
       supabase.rpc("list_my_internal_access_enrollments"),

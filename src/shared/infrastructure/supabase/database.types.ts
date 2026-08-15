@@ -1876,6 +1876,7 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: { active: boolean; roles: ("admin" | "commercial" | "concierge" | "finance" | "mentor")[] }[]
       }
+      get_my_methodology_editorial_release_workspace: { Args: Record<PropertyKey, never>; Returns: Json }
       get_my_internal_operator_state: {
         Args: Record<PropertyKey, never>
         Returns: { active: boolean }[]
@@ -1983,6 +1984,7 @@ export type Database = {
         Args: { submitted_payload: Json; target_tool_revision_id: string }
         Returns: string
       }
+      publish_methodology_editorial_unit: { Args: { target_code: string; target_version: number }; Returns: string }
       save_my_tutoria_memory: {
         Args: { submitted_confidence: number; submitted_content: string; submitted_kind: Database["public"]["Enums"]["tutoria_memory_kind"]; submitted_valid_until: string | null; target_memory_id: string | null }
         Returns: string
