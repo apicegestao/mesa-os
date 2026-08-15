@@ -2046,6 +2046,15 @@ export type Database = {
         }
         Returns: Json
       }
+      submit_mission_evidence_for_tutoria_review: {
+        Args: {
+          evidence_date: string
+          evidence_description: string
+          submitted_evidence_type: string
+          target_mission_id: string
+        }
+        Returns: string
+      }
       withdraw_my_tutoria_context_consent: {
         Args: { target_document_version_id: string }
         Returns: string

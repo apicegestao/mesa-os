@@ -14,7 +14,7 @@ describe("CoreLoopPanel", () => {
   it("shows evidence only after implementation confirmation", () => {
     render(<CoreLoopPanel missionId="mission-1" workspace={{ implementation: { status: "implemented", summary: "Papéis comunicados e utilizados na operação.", implementedOn: "2026-08-11" }, evidenceSubmitted: false }} />);
     expect(screen.getByText("Registre uma evidência")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Registrar evidência e concluir Missão" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Registrar evidência para análise" })).toBeDisabled();
     expect(screen.getByText(/Mínimo de 20 caracteres/)).toBeInTheDocument();
   });
 });
