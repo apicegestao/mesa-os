@@ -80,6 +80,7 @@
 - EVD-AI-3.3B fase B1 — cada escalonamento de Evidência cria uma única fila humana auditada, com envelope mínimo e sem promover produção. Confirmação humana e reversão de progresso permanecem fora desta fase.
 - EVD-AI-3.3B fase B2 — Mentor ou Admin resolve apenas Evidência já escalada pelo TutorIA, validando ou solicitando complemento com justificativa imutável; a validação humana pode liberar a continuidade atômica da Missão. Reversão de decisão automática aprovada permanece fora desta fase.
 - MTH-3.4A — fundação editorial interna do piloto T1: ementa, critérios de implementação e Evidência, métricas, limites do TutorIA e vínculo versionado às Ferramentas. BUILD ocorre apenas em homologação; material novo permanece em rascunho interno até aprovação e publicação explícitas.
+- MTH-3.4B — workspace estruturado reutilizável para modelos editoriais T1 já versionados, com validação local/server-side e exportação PDF/XLSX existente. BUILD ocorre apenas em homologação; a interface somente carrega revisões explicitamente `published`.
 
 ## Not Authorized
 

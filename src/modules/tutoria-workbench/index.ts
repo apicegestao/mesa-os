@@ -9,6 +9,7 @@ export type { WorkbenchWorkspace } from "./data";
 export { DreWorkbench } from "./dre-workbench";
 export { RaciWorkbench } from "./raci-workbench";
 export { SwotWorkbench } from "./swot-workbench";
+export { StructuredWorkbench } from "./structured-workbench";
 export { buildMesaDocumentPreview } from "./document-preview";
 export type { MesaDocumentPreview } from "./document-preview";
 export { DocumentPreviewCard } from "./document-preview-card";

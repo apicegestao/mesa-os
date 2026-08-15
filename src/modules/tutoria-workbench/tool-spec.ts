@@ -77,6 +77,27 @@ export const SWOT_WORKBENCH_SPEC: WorkbenchToolSpec = {
   ], analysisDimensions: ["ambiente interno", "ambiente externo", "prioridades estratégicas", "riscos"], exportFormats: ["pdf", "xlsx"],
 };
 
+export const SALES_FUNNEL_WORKBENCH_SPEC: WorkbenchToolSpec = {
+  code: "sales_funnel_value_v1", version: 1, title: "Funil comercial e proposta", methodologyOutcomeCode: "t1_marketing_sales_funnel_value",
+  fields: [{ code: "opportunities", label: "Oportunidades reais", kind: "entries", required: true, minEntries: 1, maxEntries: 50, entryFields: [
+    { code: "company", label: "Empresa ou oportunidade", required: true, maxLength: 120 }, { code: "origin", label: "Origem", required: true, maxLength: 80 },
+    { code: "stage", label: "Etapa observável", required: true, maxLength: 80 }, { code: "estimated_value", label: "Valor estimado", required: false, maxLength: 40 },
+    { code: "next_action", label: "Próxima ação", required: true, maxLength: 300 }, { code: "owner", label: "Responsável", required: true, maxLength: 100 },
+  ] }], analysisDimensions: ["etapas do funil", "próxima ação", "proposta de valor", "conversão"], exportFormats: ["pdf", "xlsx"],
+};
+
+export const CRITICAL_PROCESS_MAP_WORKBENCH_SPEC: WorkbenchToolSpec = {
+  code: "critical_process_map_v1", version: 1, title: "Mapa de processo crítico", methodologyOutcomeCode: "t1_processes_map",
+  fields: [
+    { code: "process_name", label: "Processo crítico", kind: "text", required: true }, { code: "trigger", label: "Gatilho de início", kind: "text", required: true },
+    { code: "expected_output", label: "Saída esperada", kind: "text", required: true },
+    { code: "steps", label: "Etapas e controles", kind: "entries", required: true, minEntries: 1, maxEntries: 30, entryFields: [
+      { code: "step", label: "Etapa", required: true, maxLength: 200 }, { code: "owner", label: "Responsável", required: true, maxLength: 100 },
+      { code: "control", label: "Ponto de controle", required: true, maxLength: 300 }, { code: "risk", label: "Risco ou exceção", required: false, maxLength: 300 },
+    ] },
+  ], analysisDimensions: ["fluxo", "responsáveis", "controles", "riscos"], exportFormats: ["pdf", "xlsx"],
+};
+
 export function validateWorkbenchToolSpec(input: unknown): { valid: true; spec: WorkbenchToolSpec } | { valid: false; reason: string } {
   const parsed = workbenchToolSpecSchema.safeParse(input);
   return parsed.success ? { valid: true, spec: parsed.data } : { valid: false, reason: parsed.error.issues[0]?.message ?? "invalid_tool_spec" };

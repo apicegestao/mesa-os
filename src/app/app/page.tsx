@@ -16,7 +16,7 @@ import { AppChrome, deriveNextAction, DiagnosticsOverview, EvidenceOverview, Evo
 import { lowestCandidates } from "@/modules/priority/domain/priority";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 import { buildTutorIAMemberState, buildTutorIAMethodologySummary, recordTutorIAReadGateway } from "@/modules/tutoria-foundation";
-import { DreWorkbench, loadWorkbenchWorkspace, RaciWorkbench, SwotWorkbench } from "@/modules/tutoria-workbench";
+import { DreWorkbench, loadWorkbenchWorkspace, RaciWorkbench, StructuredWorkbench, SwotWorkbench } from "@/modules/tutoria-workbench";
 import { loadMesaOSTermsState, loadMyTermsReceipts, MesaOSTermsGate, MesaOSTermsPanel, TermsReceipts } from "@/modules/tutoria-consent";
 
 export const dynamic = "force-dynamic";
@@ -56,6 +56,8 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
   const dreWorkbench = await loadWorkbenchWorkspace(supabase, "dre_management_v1");
   const raciWorkbench = await loadWorkbenchWorkspace(supabase, "raci_roles_decisions_v1");
   const swotWorkbench = await loadWorkbenchWorkspace(supabase, "swot_strategic_reading_v1");
+  const salesWorkbench = await loadWorkbenchWorkspace(supabase, "sales_funnel_value_v1");
+  const processWorkbench = await loadWorkbenchWorkspace(supabase, "critical_process_map_v1");
   const organizationName = organization?.name ?? "Sua empresa";
   const mesaOSTerms = await loadMesaOSTermsState(supabase);
   if (mesaOSTerms?.latestEvent !== "accepted") return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout}><MesaOSTermsGate state={mesaOSTerms ?? { documentVersionId: "", title: "Termos de Uso", bodyMarkdown: "Os Termos de Uso estão sendo preparados. Tente novamente em instantes.", contentSha256: "", latestEvent: null, automationEnabled: false }} /></AppChrome>;
@@ -113,7 +115,7 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
   const completedSteps = progressSteps.filter((step) => step.complete).length;
   const progress = Math.round((completedSteps / progressSteps.length) * 100);
 
-  return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout} progress={progress} activeView={activeView} cycleLabel={cycle?.title} tutoriaWorkbench={<>{dreWorkbench && <DreWorkbench workspace={dreWorkbench} />}{raciWorkbench && <RaciWorkbench workspace={raciWorkbench} />}{swotWorkbench && <SwotWorkbench workspace={swotWorkbench} />}</>}>
+  return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout} progress={progress} activeView={activeView} cycleLabel={cycle?.title} tutoriaWorkbench={<>{dreWorkbench && <DreWorkbench workspace={dreWorkbench} />}{raciWorkbench && <RaciWorkbench workspace={raciWorkbench} />}{swotWorkbench && <SwotWorkbench workspace={swotWorkbench} />}{salesWorkbench && <StructuredWorkbench workspace={salesWorkbench} />}{processWorkbench && <StructuredWorkbench workspace={processWorkbench} />}</>}>
     {activeView === "today" && <><MemberHome memberName={memberName} nextAction={nextAction} cycle={cycle} priorityLabel={priority?.dimension_label} missionTitle={availableMission?.title} completedSteps={completedSteps} totalSteps={progressSteps.length} /><MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} message={`Seu próximo avanço é ${nextAction.title.toLocaleLowerCase()}. ${nextAction.description}`} materialTitle={availableMission ? "Como transformar a missão atual em rotina de gestão" : "Como transformar diagnóstico em decisão de gestão"} /></>}
     {activeView === "journey" && <><JourneyProgress steps={progressSteps} />
     <section id="jornada" className="experience-section journey-section" aria-labelledby="journey-title">
