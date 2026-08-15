@@ -1,6 +1,6 @@
 export { buildOrientationPrompt, orientationGatewayEnabled, orientationObjectiveSchema, orientationSchema, parseOrientationOutput } from "./orientation";
 export type { OrientationObjective, TutorIAOrientation } from "./orientation";
-export { dreRequestBudgetAllowed, estimateModelCostUsdMicros, orientationRequestBudgetAllowed, TUTORIA_DRE_MAX_COST_USD_MICROS, TUTORIA_DRE_MAX_OUTPUT_TOKENS, TUTORIA_MODEL_ROUTES, TUTORIA_ORIENTATION_MAX_COST_USD_MICROS, TUTORIA_QUALITY_PROFILES } from "./model-routes";
+export { dreRequestBudgetAllowed, estimateModelCostUsdMicros, evidenceReviewRequestBudgetAllowed, orientationRequestBudgetAllowed, TUTORIA_DRE_MAX_COST_USD_MICROS, TUTORIA_DRE_MAX_OUTPUT_TOKENS, TUTORIA_EVIDENCE_REVIEW_MAX_COST_USD_MICROS, TUTORIA_MODEL_ROUTES, TUTORIA_ORIENTATION_MAX_COST_USD_MICROS, TUTORIA_QUALITY_PROFILES } from "./model-routes";
 export type { ModelRouteCode } from "./model-routes";
 export { summarizeAIUsage } from "./usage-metrics";
 export type { AIUsageEventMetric, AIUsageInternalSummary } from "./usage-metrics";

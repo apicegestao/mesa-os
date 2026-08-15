@@ -7,6 +7,7 @@ export async function writeTrustedEvidenceDecision(input: { evidenceId: string; 
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!serviceRoleKey) return { ok: false as const, code: "service_unavailable" as const };
   const env = getPublicEnv();
+  if (env.NEXT_PUBLIC_APP_ENV !== "staging") return { ok: false as const, code: "review_not_enabled" as const };
   const service = createClient<Database>(env.NEXT_PUBLIC_SUPABASE_URL, serviceRoleKey, { auth: { persistSession: false, autoRefreshToken: false } });
   const { data, error } = await (service.rpc as unknown as (name: string, args: Record<string, unknown>) => Promise<{ data: { outcome?: string; next_mission_id?: string | null } | null; error: { code?: string } | null }>)("apply_tutoria_evidence_decision", {
     target_evidence_id: input.evidenceId,
