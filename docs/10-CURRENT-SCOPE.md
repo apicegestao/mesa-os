@@ -78,6 +78,7 @@
 - GOV-CR-2.27B — reconciliação documentada para retenção longitudinal de conversas TutorIA sob Termos vigentes e visão metodológica global mínima do Mentor, com todos os limites descritos na Change Request correspondente.
 - EVD-AI-3.3A / GOV-CR-2.27C — autonomia graduada do TutorIA para validar evidências elegíveis e liberar apenas a continuidade de Missão explicitamente autorizada; baixa confiança, risco, dúvida persistente ou pedido explícito escalam para humano. BUILD ocorre apenas em homologação.
 - EVD-AI-3.3B fase B1 — cada escalonamento de Evidência cria uma única fila humana auditada, com envelope mínimo e sem promover produção. Confirmação humana e reversão de progresso permanecem fora desta fase.
+- EVD-AI-3.3B fase B2 — Mentor ou Admin resolve apenas Evidência já escalada pelo TutorIA, validando ou solicitando complemento com justificativa imutável; a validação humana pode liberar a continuidade atômica da Missão. Reversão de decisão automática aprovada permanece fora desta fase.
 
 ## Not Authorized
 

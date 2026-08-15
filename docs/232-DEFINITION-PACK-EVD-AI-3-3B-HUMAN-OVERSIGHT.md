@@ -1,6 +1,6 @@
 # Definition Pack EVD-AI-3.3B — Supervisão humana e reversão auditada de Evidências
 
-**Status:** APPROVED FOR BUILD — fase B1 em homologação
+**Status:** APPROVED FOR BUILD — fases B1 e B2 em homologação
 **Ambiente proposto:** homologação somente  
 **Owner:** Mesa dos Donos  
 **Base:** `00-CONSTITUTION.md`, `08-ADR-DECISION-LOG.md`, `10-CURRENT-SCOPE.md`, GOV-CR-2.27C e EVD-AI-3.3A
@@ -84,8 +84,10 @@ se reversões excederem limite: critério é suspenso para decisão automática
 - anexos, OCR, imagens, áudio ou documentos externos;
 - promoção para produção.
 
-## 10. Fase B1 entregue
+## 10. Fases entregues
 
-A primeira fase cria, de forma atômica com o escalonamento do TutorIA, um único caso de suporte por Evidência. O caso contém somente o envelope mínimo para triagem: Missão, motivo de escalonamento e referência auditável. Mentor possui leitura metodológica global; Concierge permanece limitada à própria carteira.
+A fase B1 cria, de forma atômica com o escalonamento do TutorIA, um único caso de suporte por Evidência. O caso contém somente o envelope mínimo para triagem: Missão, motivo de escalonamento e referência auditável. Mentor possui leitura metodológica global; Concierge permanece limitada à própria carteira.
 
-Confirmação humana, pedido de complemento e reversão de decisão aprovada permanecem pendentes da fase B2, pois reversão de progresso exige bloqueio de dependências já iniciadas e testes de corrida próprios.
+A fase B2 permite a Mentor ou Admin decidir somente casos anteriormente escalados pelo TutorIA: validar a Evidência ou solicitar complemento. A decisão cria uma revisão humana imutável, comunica o membro na mesma fila e, somente em validação, conclui/libera a Missão de forma atômica.
+
+Reversão de decisão automática já aprovada permanece pendente de uma fase específica, pois exige bloqueio de dependências já iniciadas e testes de corrida próprios.
