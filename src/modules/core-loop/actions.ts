@@ -24,13 +24,13 @@ export async function submitEvidence(missionId: string, type: string, descriptio
   if (normalizedDescription.length > 1000) return { ok: false, message: "A descrição deve ter no máximo 1.000 caracteres." };
   if (!/^\d{4}-\d{2}-\d{2}$/.test(occurredOn)) return { ok: false, message: "Informe uma data válida para a evidência." };
   const supabase = await createSupabaseServerClient();
-  const { error } = await supabase.rpc("submit_mission_evidence_for_tutoria_review", {
+  const { data, error } = await supabase.rpc("submit_mission_evidence_for_tutoria_review", {
     target_mission_id: missionId,
     submitted_evidence_type: type,
     evidence_description: normalizedDescription,
     evidence_date: occurredOn,
   });
-  if (error) return { ok: false, message: "Não foi possível registrar a evidência. Confirme a implementação e revise os campos." };
+  if (error || !data) return { ok: false, message: "Não foi possível registrar a evidência. Confirme a implementação e revise os campos." };
   revalidatePath("/app");
-  return { ok: true, message: "Evidência registrada. A TutorIA está preparando a decisão de validação." };
+  return { ok: true, evidenceId: data, message: "Evidência registrada. A TutorIA está preparando a decisão de validação." };
 }

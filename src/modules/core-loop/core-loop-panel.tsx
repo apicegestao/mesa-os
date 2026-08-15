@@ -25,7 +25,14 @@ export function CoreLoopPanel({ missionId, workspace }: { missionId: string; wor
   }
   function evidence() {
     setMessage(null);
-    run(async () => setMessage((await submitEvidence(missionId, evidenceType, description, occurredOn)).message));
+    run(async () => {
+      const submitted = await submitEvidence(missionId, evidenceType, description, occurredOn);
+      if (!submitted.ok || !submitted.evidenceId) return setMessage(submitted.message);
+      const response = await fetch("/api/tutoria/evidence-review", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ evidenceId: submitted.evidenceId }) });
+      const decision = await response.json().catch(() => null) as { outcome?: "approved" | "changes_requested" | "escalated" } | null;
+      if (!response.ok || !decision?.outcome) return setMessage("Evidência registrada. A decisão da TutorIA ficará disponível assim que a análise for concluída.");
+      setMessage(decision.outcome === "approved" ? "Evidência validada pela TutorIA. A próxima Missão foi liberada." : decision.outcome === "changes_requested" ? "A TutorIA identificou pontos para complementar antes da validação." : "A evidência foi encaminhada para apoio humano especializado.");
+    });
   }
 
   return <section className="priority-card card core-loop-card">
