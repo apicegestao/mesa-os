@@ -170,3 +170,15 @@ O frontend usa somente publishable key. Chaves secret/service-role ficam exclusi
 - O checkpoint reconcilia a conversa fonte `Mesa OS V2` com Constitution, Scope, ADRs, Definition Pack e estado real do repositório.
 - Checkpoints de execução não criam aprovações artificiais; decisões de escopo, risco, custo ou promoção continuam exigindo autorização explícita do owner.
 - Conflito, lacuna material, decisão `FROZEN` ou risco de isolamento interrompem o BUILD para reconciliação documentada.
+
+## ADR-041 — Thor as the governed specialist orchestration experience
+
+**Status:** ACCEPTED
+
+- Thor é a experiência conversacional única do membro e o orquestrador de intenção; não é um agente novo que substitui o TutorIA.
+- TutorIA permanece a autoridade metodológica, longitudinal e contextual da organização, responsável por reconectar orientações à Jornada, aos ciclos, às ferramentas e às regras do Mesa OS.
+- Especialistas são capacidades de execução por domínio, invocadas apenas por Thor/TutorIA conforme intenção, contexto e política. Eles não alteram ciclo, metodologia, evidência, acesso ou dado crítico sem contrato de ação autorizado.
+- Conhecimento, instruções, prompts, ferramentas e critérios de cada especialista são artefatos versionados, avaliáveis, aprováveis e reversíveis. Dados brutos de membros não são usados para treinamento coletivo.
+- A conversa pode ser persistida sob os termos vigentes; memória canônica continua estruturada, escopada, corrigível e separada de chat bruto.
+- Mesa OS Intelligence recebe somente sinais governados, agregados e desidentificados quando aplicável. Ela pode propor melhorias, mas não publica conteúdo, altera prompts produtivos nem toma ações automaticamente.
+- A implementação exige Definition Pack próprio, contratos de contexto e ferramentas, avaliações de qualidade/segurança, orçamento e critérios de escalonamento. Esta ADR não autoriza BUILD por si só.

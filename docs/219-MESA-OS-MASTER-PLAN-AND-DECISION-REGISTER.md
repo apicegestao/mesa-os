@@ -256,6 +256,7 @@ O desenho atual usa coortes agregadas e suprime grupos pequenos. A evolução de
 - FIN: ciclo financeiro completo (inadimplência, cancelamento, reembolso, acesso e produção);
 - EVD-AI: avaliação de evidências com confiança e escalonamento humano;
 - TUTORIA: ativação de modelos, ferramentas e ações além da fundação homologada;
+- THR: experiência única Thor, orquestração TutorIA–especialistas, curadoria de conhecimento, avaliações e governança de evolução;
 - INT: Intelligence ativa, propostas editoriais e governança de publicação;
 - COM: WhatsApp/Instagram oficiais, consentimentos e orquestração;
 - MTH: editor e governança de metodologia/ferramentas versionadas.
