@@ -12,7 +12,7 @@ function NoticeSummary({ state }: { state: MesaOSTermsState }) {
 
 export function MesaOSTermsGate({ state }: { state: MesaOSTermsState }) {
   const [acceptance, accept] = useActionState(acceptMesaOSTerms, initialState);
-  return <section className="ai-budget-card tutoria-memory-card" aria-labelledby="mesa-os-terms-title"><p className="eyebrow">Mesa OS</p><h1 id="mesa-os-terms-title">Termos de Uso</h1><p>Antes de continuar, leia e aceite os Termos de Uso. Eles incluem como o TutorIA usará, de forma segura, o contexto estruturado da sua organização.</p><NoticeSummary state={state} /><form action={accept}><input type="hidden" name="documentVersionId" value={state.documentVersionId} /><label className="consent-check"><input type="checkbox" name="informed" value="yes" required /> Li e aceito esta versão dos Termos de Uso, incluindo o contexto longitudinal automático do TutorIA.</label><button type="submit">Aceitar e continuar</button>{acceptance.message && <p className={`feedback feedback-${acceptance.status}`} role="status">{acceptance.message}</p>}</form></section>;
+  return <section className="ai-budget-card tutoria-memory-card" aria-labelledby="mesa-os-terms-title"><p className="eyebrow">Mesa OS</p><h1 id="mesa-os-terms-title">Termos de Uso</h1><p>Este é o único aceite necessário para usar o Mesa OS. Ele será solicitado somente no primeiro acesso ou quando houver uma atualização material dos Termos.</p><NoticeSummary state={state} /><form action={accept}><input type="hidden" name="documentVersionId" value={state.documentVersionId} /><label className="consent-check"><input type="checkbox" name="informed" value="yes" required /> Li e aceito estes Termos de Uso.</label><button type="submit">Aceitar e continuar</button>{acceptance.message && <p className={`feedback feedback-${acceptance.status}`} role="status">{acceptance.message}</p>}</form></section>;
 }
 
 export function MesaOSTermsPanel({ state }: { state: MesaOSTermsState | null }) {
@@ -23,7 +23,7 @@ export function MesaOSTermsPanel({ state }: { state: MesaOSTermsState | null }) 
 
 function AcceptButton({ state }: { state: MesaOSTermsState }) {
   const [actionState, action] = useActionState(acceptMesaOSTerms, initialState);
-  return <form action={action}><input type="hidden" name="documentVersionId" value={state.documentVersionId} /><label className="consent-check"><input type="checkbox" name="informed" value="yes" required /> Li e aceito a versão atual dos Termos.</label><button type="submit">Aceitar Termos e ativar contexto</button>{actionState.message && <p className={`feedback feedback-${actionState.status}`} role="status">{actionState.message}</p>}</form>;
+  return <form action={action}><input type="hidden" name="documentVersionId" value={state.documentVersionId} /><label className="consent-check"><input type="checkbox" name="informed" value="yes" required /> Li e aceito estes Termos de Uso.</label><button type="submit">Aceitar e continuar</button>{actionState.message && <p className={`feedback feedback-${actionState.status}`} role="status">{actionState.message}</p>}</form>;
 }
 
 function WithdrawButton({ state }: { state: MesaOSTermsState }) {

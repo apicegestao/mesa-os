@@ -27,6 +27,9 @@
 | IAM-2.3 | Sessão SSR/PKCE | `src/proxy.ts`, `src/shared/infrastructure/supabase`, `src/app/auth/callback` | typecheck + build |
 | IAM-2.3 | Shell protegido e logout | `src/app/app`, `src/app/login` | lint + typecheck + build |
 | IAM-2.3 | Encerramento | `docs/19-POST-FLIGHT-IAM-2.3.md` | Post-Flight review |
+| IAM-2.28 | Matrícula controlada | `supabase/migrations/20260812212826_iam_2_28_controlled_onboarding.sql` | revisão SQL, RLS e grants antes de aplicação |
+| IAM-2.28 | Provisionamento por contrato | `src/modules/identity-access/onboarding-service.ts` | testes unitários de autorização, expiração e negação |
+| IAM-2.28 | Decisão auditável | `src/modules/identity-access/domain/onboarding.ts` | testes unitários |
 | GOV-2.4D | Alignment e Pre-Flight | `docs/20-PRE-FLIGHT-2.4D.md` | revisão documental |
 | GOV-2.4D | Proposta Diagnostic Foundation | `docs/21-FEATURE-SPEC-DIA-2.5-DRAFT.md` | decisões pendentes explícitas |
 | GOV-2.4D | Governança atualizada | `docs/03-ROADMAP.md`, `docs/06-BACKLOG-MASTER.md`, `docs/10-CURRENT-SCOPE.md` | consistência entre documentos |

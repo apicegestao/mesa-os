@@ -14,6 +14,7 @@ import { loadTutorIAOrientationContext } from "@/modules/tutoria-memory/data";
 export const dynamic = "force-dynamic";
 
 const MODEL = "gemini-2.5-flash";
+const PROVIDER_CODE = "gemini_direct" as const;
 
 export async function POST(request: Request) {
   const usage = evaluateTutorIAUsage(await request.json().catch(() => null));
@@ -41,7 +42,7 @@ export async function POST(request: Request) {
     if (contextPolicy.outcome !== "allow") return NextResponse.json({ code: "orientation_escalated" }, { status: 409 });
   }
 
-  const audit = (event_kind: "invocation_started" | "invocation_finished", outcome: "served" | "unavailable" | "escalated", options: { duration_ms?: number; response_schema_valid?: boolean; failure_code?: string; provider_code?: "netlify_ai_gateway" | "none" } = {}) => supabase.from("tutoria_orientation_audits").insert({ organization_id: membership.organization_id, actor_identity_id: actorIdentityId, objective: usage.request.objective, event_kind, outcome, provider_code: options.provider_code ?? "none", model_code: options.provider_code === "netlify_ai_gateway" ? MODEL : null, response_schema_valid: options.response_schema_valid ?? false, duration_ms: options.duration_ms ?? 0, failure_code: options.failure_code ?? null });
+  const audit = (event_kind: "invocation_started" | "invocation_finished", outcome: "served" | "unavailable" | "escalated", options: { duration_ms?: number; response_schema_valid?: boolean; failure_code?: string; provider_code?: typeof PROVIDER_CODE | "none" } = {}) => supabase.from("tutoria_orientation_audits").insert({ organization_id: membership.organization_id, actor_identity_id: actorIdentityId, objective: usage.request.objective, event_kind, outcome, provider_code: options.provider_code ?? "none", model_code: options.provider_code === PROVIDER_CODE ? MODEL : null, response_schema_valid: options.response_schema_valid ?? false, duration_ms: options.duration_ms ?? 0, failure_code: options.failure_code ?? null });
 
   if (!orientationGatewayEnabled() || !orientationRequestBudgetAllowed()) {
     await audit("invocation_finished", "unavailable", { failure_code: orientationGatewayEnabled() ? "budget_not_configured" : "orientation_not_enabled" });
@@ -52,19 +53,21 @@ export async function POST(request: Request) {
     await audit("invocation_finished", "escalated", { failure_code: "rate_limited" });
     return NextResponse.json({ code: "orientation_rate_limited" }, { status: 429 });
   }
-  const { error: startAuditError } = await audit("invocation_started", "unavailable", { provider_code: "netlify_ai_gateway", failure_code: "model_invocation_started" });
+  const { error: startAuditError } = await audit("invocation_started", "unavailable", { provider_code: PROVIDER_CODE, failure_code: "model_invocation_started" });
   if (startAuditError) return NextResponse.json({ code: "orientation_escalated" }, { status: 409 });
   const { data: reservationRows, error: reservationError } = await supabase.rpc("reserve_tutoria_member_budget", { requested_capability_code: "tutoria_orientation", maximum_cost_usd_micros: TUTORIA_ORIENTATION_MAX_COST_USD_MICROS });
   const reservation = reservationRows?.[0];
   const reservationId = reservation?.reservation_id;
   if (reservationError || !reservation?.allowed || !reservationId) {
-    await audit("invocation_finished", "unavailable", { provider_code: "netlify_ai_gateway", failure_code: reservation?.denial_code ?? "budget_reservation_failed" });
+    await audit("invocation_finished", "unavailable", { provider_code: PROVIDER_CODE, failure_code: reservation?.denial_code ?? "budget_reservation_failed" });
     return NextResponse.json({ code: "orientation_budget_unavailable" }, { status: 503 });
   }
 
   const startedAt = Date.now();
   try {
-    const genAI = new GoogleGenAI({});
+    const apiKey = process.env.GEMINI_API_KEY?.trim();
+    if (!apiKey) throw new Error("gemini_api_key_missing");
+    const genAI = new GoogleGenAI({ apiKey });
     const response = await genAI.models.generateContent({ model: MODEL, contents: buildOrientationPrompt({ objective: usage.request.objective, question: usage.request.question, memberState, methodology, longitudinalContext }), config: { responseMimeType: "application/json", maxOutputTokens: 360, temperature: 0.2, httpOptions: { timeout: 12_000 } } });
     const orientation = parseOrientationOutput(response.text ?? "");
     const inputTokens = Math.max(0, response.usageMetadata?.promptTokenCount ?? 0);
@@ -73,18 +76,20 @@ export async function POST(request: Request) {
     const settleBudget = (cost: number) => supabase.rpc("settle_tutoria_member_budget", { target_reservation_id: reservationId, observed_cost_usd_micros: cost });
     const recordUsage = (resolution: "served" | "unavailable" | "escalated") => supabase.from("ai_usage_events").insert({ organization_id: membership.organization_id, actor_identity_id: actorIdentityId, capability_code: "tutoria_orientation", model_route_code: "gemini_flash", resolution, input_tokens: inputTokens, output_tokens: outputTokens, estimated_cost_usd_micros: observedCost });
     if (!orientation || orientation.confidence_band === "low" || orientation.escalation_required) {
-      await audit("invocation_finished", "escalated", { provider_code: "netlify_ai_gateway", duration_ms: Date.now() - startedAt, failure_code: orientation ? "low_confidence" : "invalid_model_output" });
+      await audit("invocation_finished", "escalated", { provider_code: PROVIDER_CODE, duration_ms: Date.now() - startedAt, failure_code: orientation ? "low_confidence" : "invalid_model_output" });
       await settleBudget(observedCost);
       await recordUsage("escalated");
       return NextResponse.json({ code: "orientation_escalated" }, { status: 409 });
     }
-    await audit("invocation_finished", "served", { provider_code: "netlify_ai_gateway", duration_ms: Date.now() - startedAt, response_schema_valid: true });
+    await audit("invocation_finished", "served", { provider_code: PROVIDER_CODE, duration_ms: Date.now() - startedAt, response_schema_valid: true });
     await settleBudget(observedCost);
     await recordUsage("served");
-    return NextResponse.json({ orientation });
+    const persistedResponse = [orientation.resumo, orientation.proxima_acao, orientation.justificativa_metodologica].join("\n\n");
+    const { error: conversationPersistenceError } = await (supabase.rpc as unknown as (name: string, args: Record<string, unknown>) => Promise<{ error: unknown }>)("persist_my_tutoria_conversation_exchange", { submitted_question: usage.request.question ?? "Orientação solicitada pelo membro.", submitted_response: persistedResponse });
+    return NextResponse.json({ orientation, conversation_persistence: conversationPersistenceError ? "unavailable" : "saved" });
   } catch {
     await supabase.rpc("settle_tutoria_member_budget", { target_reservation_id: reservationId, observed_cost_usd_micros: 0 });
-    await audit("invocation_finished", "unavailable", { provider_code: "netlify_ai_gateway", duration_ms: Date.now() - startedAt, failure_code: "provider_unavailable" });
+    await audit("invocation_finished", "unavailable", { provider_code: PROVIDER_CODE, duration_ms: Date.now() - startedAt, failure_code: "provider_unavailable" });
     return NextResponse.json({ code: "orientation_unavailable" }, { status: 503 });
   }
 }

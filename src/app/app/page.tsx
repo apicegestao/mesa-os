@@ -11,14 +11,11 @@ import { loadCoreLoopWorkspace, loadEvidenceRecords } from "@/modules/core-loop"
 import { loadMeasurementProjection } from "@/modules/measurement";
 import { loadPublishedMethodologyMap } from "@/modules/methodology";
 import { CoreLoopPanel } from "@/modules/core-loop/core-loop-panel";
-import { logout, PasswordSetup } from "@/modules/identity-access";
+import { logout } from "@/modules/identity-access";
 import { AppChrome, deriveNextAction, DiagnosticsOverview, EvidenceOverview, EvolutionProjection, JourneyDeliveries, JourneyProgress, MemberHome, MentorNote, MethodologyMap, type MemberView, type ProgressStep } from "@/modules/member-experience";
 import { lowestCandidates } from "@/modules/priority/domain/priority";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
-import { buildTutorIAMemberState, buildTutorIAMethodologySummary, recordTutorIAReadGateway } from "@/modules/tutoria-foundation";
-import { AIBudgetGovernance, loadMemberAIBudgetPolicy } from "@/modules/ai-budget";
-import { DreWorkbench, loadWorkbenchWorkspace, RaciWorkbench, SwotWorkbench } from "@/modules/tutoria-workbench";
-import { loadMyTutorIAMemories, TutorIAMemoryPanel } from "@/modules/tutoria-memory";
+import { DreWorkbench, loadWorkbenchWorkspace, RaciWorkbench, StructuredWorkbench, SwotWorkbench } from "@/modules/tutoria-workbench";
 import { loadMesaOSTermsState, loadMyTermsReceipts, MesaOSTermsGate, MesaOSTermsPanel, TermsReceipts } from "@/modules/tutoria-consent";
 
 export const dynamic = "force-dynamic";
@@ -58,38 +55,23 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
   const dreWorkbench = await loadWorkbenchWorkspace(supabase, "dre_management_v1");
   const raciWorkbench = await loadWorkbenchWorkspace(supabase, "raci_roles_decisions_v1");
   const swotWorkbench = await loadWorkbenchWorkspace(supabase, "swot_strategic_reading_v1");
+  const salesWorkbench = await loadWorkbenchWorkspace(supabase, "sales_funnel_value_v1");
+  const processWorkbench = await loadWorkbenchWorkspace(supabase, "critical_process_map_v1");
   const organizationName = organization?.name ?? "Sua empresa";
   const mesaOSTerms = await loadMesaOSTermsState(supabase);
   if (mesaOSTerms?.latestEvent !== "accepted") return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout}><MesaOSTermsGate state={mesaOSTerms ?? { documentVersionId: "", title: "Termos de Uso", bodyMarkdown: "Os Termos de Uso estão sendo preparados. Tente novamente em instantes.", contentSha256: "", latestEvent: null, automationEnabled: false }} /></AppChrome>;
-  const aiBudgetPolicies = activeView === "account" ? await loadMemberAIBudgetPolicy(supabase, membership.organization_id) : [];
-  const tutorMemories = activeView === "account" ? await loadMyTutorIAMemories(supabase) : [];
   const termsReceipts = activeView === "account" ? await loadMyTermsReceipts(supabase) : [];
-  if (activeView === "today") {
-    const tutorMemberState = buildTutorIAMemberState({
-      hasDiagnosticWorkspace: Boolean(workspace), hasPriority: Boolean(priority), hasActiveCycle: Boolean(cycle), hasAvailableMission: Boolean(availableMission), hasSubmittedEvidence: evidenceRecords.length > 0,
-    });
-    const tutorMethodology = buildTutorIAMethodologySummary(methodologyMap);
-    await recordTutorIAReadGateway({
-      supabase, authenticatedIdentityId: subject, organizationId: membership.organization_id, membershipActive: membership.status === "active", requestedTool: "read_member_state",
-      sourceCodes: ["member_state", "methodology_summary"],
-      absentFields: [
-        ...(tutorMemberState.diagnosticWorkspace === "absent" ? ["diagnostic_workspace"] : []),
-        ...(tutorMethodology.status === "absent" ? ["published_methodology"] : []),
-      ],
-    });
-  }
-
   if (!workspace) return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout}><section className="experience-card empty-experience"><p className="eyebrow">Mesa OS</p><h1>Diagnóstico indisponível</h1><p>Não foi possível carregar a definição neste momento. Tente novamente em instantes.</p></section></AppChrome>;
 
   if (workspace.status !== "completed") {
     const nextAction = deriveNextAction({ diagnosticStatus: "draft", hasPriority: false, priorityTied: false, hasCycle: false, hasMissions: false, hasAvailableMission: false, hasToolDraft: false, implementationStatus: "none" });
     return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout} progress={0} activeView={activeView}>
-      {activeView === "today" && <><MemberHome memberName={memberName} nextAction={nextAction} cycle={null} completedSteps={0} totalSteps={8} highlightedPending={<section className="pending-diagnostic-card"><div><p className="eyebrow">Pendência prioritária</p><h2>Concluir o Raio-X do Empresário</h2><p>Finalize sua leitura de entrada para liberar a prioridade metodológica.</p></div><details><summary>Continuar Raio-X</summary><DiagnosticExperience initialWorkspace={workspace} /></details></section>} /><MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} /></>}
+      {activeView === "today" && <><MemberHome memberName={memberName} nextAction={nextAction} cycle={null} completedSteps={0} totalSteps={8} highlightedPending={<section className="pending-diagnostic-card"><div><p className="eyebrow">Pendência prioritária</p><h2>Concluir o Raio-X do Empresário</h2><p>Finalize sua leitura de entrada para liberar a prioridade metodológica.</p></div><details><summary>Continuar Raio-X</summary><DiagnosticExperience initialWorkspace={workspace} /></details></section>} /><MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} message="Antes de acelerar, conclua o Raio-X. Uma leitura honesta do ponto de partida evita que a empresa trate apenas os sintomas." materialTitle="Como transformar diagnóstico em decisão de gestão" /></>}
       {activeView === "journey" && <><JourneyProgress steps={draftProgressSteps} /><div id="metodologia"><MethodologyMap map={methodologyMap} /></div><JourneyDeliveries missions={[]} toolStarted={false} implementationStatus="none" evidenceSubmitted={false} /></>}
       {activeView === "diagnostics" && <DiagnosticsOverview workspace={workspace} diagnosticContent={<DiagnosticExperience initialWorkspace={workspace} />} />}
       {activeView === "evidence" && <EvidenceOverview implementation={null} evidenceSubmitted={false} />}
       {activeView === "evolution" && <EvolutionProjection diagnosticComplete={false} result={null} completedSteps={0} totalSteps={8} evidenceSubmitted={false} />}
-      {activeView === "account" && <section className="account-page"><header className="records-heading"><p className="eyebrow">Sistema</p><h1>Conta e segurança</h1><p>Gerencie sua forma de acesso ao Mesa OS.</p></header><PasswordSetup /><MesaOSTermsPanel state={mesaOSTerms} /><TermsReceipts receipts={termsReceipts} /><TutorIAMemoryPanel memories={tutorMemories} /><AIBudgetGovernance policies={aiBudgetPolicies} /></section>}
+      {activeView === "account" && <section className="account-page"><header className="records-heading"><p className="eyebrow">Sistema</p><h1>Conta e segurança</h1><p>Gerencie seus termos, privacidade e o acesso protegido por código temporário.</p></header><MesaOSTermsPanel state={mesaOSTerms} /><TermsReceipts receipts={termsReceipts} /></section>}
     </AppChrome>;
   }
 
@@ -117,8 +99,8 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
   const completedSteps = progressSteps.filter((step) => step.complete).length;
   const progress = Math.round((completedSteps / progressSteps.length) * 100);
 
-  return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout} progress={progress} activeView={activeView} tutoriaWorkbench={<>{dreWorkbench && <DreWorkbench workspace={dreWorkbench} />}{raciWorkbench && <RaciWorkbench workspace={raciWorkbench} />}{swotWorkbench && <SwotWorkbench workspace={swotWorkbench} />}</>}>
-    {activeView === "today" && <><MemberHome memberName={memberName} nextAction={nextAction} cycle={cycle} priorityLabel={priority?.dimension_label} missionTitle={availableMission?.title} completedSteps={completedSteps} totalSteps={progressSteps.length} /><MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} /></>}
+  return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout} progress={progress} activeView={activeView} cycleLabel={cycle?.title} tutoriaWorkbench={<>{dreWorkbench && <DreWorkbench workspace={dreWorkbench} />}{raciWorkbench && <RaciWorkbench workspace={raciWorkbench} />}{swotWorkbench && <SwotWorkbench workspace={swotWorkbench} />}{salesWorkbench && <StructuredWorkbench workspace={salesWorkbench} />}{processWorkbench && <StructuredWorkbench workspace={processWorkbench} />}</>}>
+    {activeView === "today" && <><MemberHome memberName={memberName} nextAction={nextAction} cycle={cycle} priorityLabel={priority?.dimension_label} missionTitle={availableMission?.title} completedSteps={completedSteps} totalSteps={progressSteps.length} /><MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} message={`Seu próximo avanço é ${nextAction.title.toLocaleLowerCase()}. ${nextAction.description}`} materialTitle={availableMission ? "Como transformar a missão atual em rotina de gestão" : "Como transformar diagnóstico em decisão de gestão"} /></>}
     {activeView === "journey" && <><JourneyProgress steps={progressSteps} />
     <section id="jornada" className="experience-section journey-section" aria-labelledby="journey-title">
       <div className="section-heading"><div><p className="eyebrow">Minha jornada</p><h2 id="journey-title">Do diagnóstico à transformação</h2></div><span className="status-pill">Ciclo atual</span></div>
@@ -126,11 +108,11 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
       {workspace.executionId && workspace.result && <div className="journey-panels"><div id="prioridade"><PriorityPanel executionId={workspace.executionId} result={workspace.result} priority={priority} /></div>{priority && <div id="ciclo"><CyclePanel priorityId={priority.id} cycle={cycle} /></div>}{cycle && <div id="missao"><MissionPanel cycleId={cycle.id} missions={missions} /></div>}</div>}
     </section>
     {availableMission && toolWorkspace && <section id="workspace" className="experience-section workspace-section" aria-labelledby="workspace-title"><div className="section-heading"><div><p className="eyebrow">Meu sistema de gestão</p><h2 id="workspace-title">Entender, construir e aplicar</h2></div></div><div className="workspace-steps"><span className="done">1 · Entender</span><span className={toolWorkspace.updatedAt ? "done" : "current"}>2 · Construir</span><span className={coreLoopWorkspace?.implementation ? "done" : "future"}>3 · Aplicar</span><span className={coreLoopWorkspace?.implementation?.status === "implemented" ? "current" : "future"}>4 · Evidenciar</span></div><ToolPanel missionId={availableMission.id} workspace={toolWorkspace} readOnly={coreLoopWorkspace?.implementation?.status === "implemented"}/>{coreLoopWorkspace && <div id="implementacao"><CoreLoopPanel missionId={availableMission.id} workspace={coreLoopWorkspace}/></div>}</section>}
-    <div id="metodologia"><MethodologyMap map={methodologyMap} /></div><JourneyDeliveries missions={missions} availableMissionId={availableMission?.id} toolStarted={Boolean(toolWorkspace?.updatedAt)} implementationStatus={coreLoopWorkspace?.implementation?.status ?? "none"} evidenceSubmitted={Boolean(coreLoopWorkspace?.evidenceSubmitted)} /></>}
-    {activeView === "evidence" && <EvidenceOverview implementation={coreLoopWorkspace?.implementation ?? null} evidenceSubmitted={Boolean(coreLoopWorkspace?.evidenceSubmitted)} evidenceStatus={coreLoopWorkspace?.evidenceStatus} records={evidenceRecords} missionTitle={availableMission?.title} pillarLabel={priority?.dimension_label} />}
+    <div id="metodologia"><MethodologyMap map={methodologyMap} /></div><JourneyDeliveries missions={missions} availableMissionId={availableMission?.id} toolStarted={Boolean(toolWorkspace?.updatedAt)} implementationStatus={coreLoopWorkspace?.implementation?.status ?? "none"} evidenceSubmitted={Boolean(coreLoopWorkspace?.evidenceSubmitted)} cycleLabel={cycle?.title} /></>}
+    {activeView === "evidence" && <EvidenceOverview implementation={coreLoopWorkspace?.implementation ?? null} evidenceSubmitted={Boolean(coreLoopWorkspace?.evidenceSubmitted)} evidenceStatus={coreLoopWorkspace?.evidenceStatus} records={evidenceRecords} missionTitle={availableMission?.title} pillarLabel={priority?.dimension_label} cycleLabel={cycle?.title} />}
     {activeView === "diagnostics" && <DiagnosticsOverview workspace={workspace} diagnosticContent={<DiagnosticResult workspace={workspace} />} />}
     {activeView === "evolution" && <EvolutionProjection diagnosticComplete result={workspace.result} completedSteps={completedSteps} totalSteps={progressSteps.length} evidenceSubmitted={Boolean(coreLoopWorkspace?.evidenceSubmitted)} measurements={measurements} evidenceRecords={evidenceRecords} />}
-    {activeView === "account" && <section className="account-page"><header className="records-heading"><p className="eyebrow">Sistema</p><h1>Conta e segurança</h1><p>Gerencie sua forma de acesso ao Mesa OS.</p></header><PasswordSetup /><MesaOSTermsPanel state={mesaOSTerms} /><TermsReceipts receipts={termsReceipts} /><TutorIAMemoryPanel memories={tutorMemories} /><AIBudgetGovernance policies={aiBudgetPolicies} /></section>}
+    {activeView === "account" && <section className="account-page"><header className="records-heading"><p className="eyebrow">Sistema</p><h1>Conta e segurança</h1><p>Gerencie seus termos, privacidade e o acesso protegido por código temporário.</p></header><MesaOSTermsPanel state={mesaOSTerms} /><TermsReceipts receipts={termsReceipts} /></section>}
   </AppChrome>;
 }
 

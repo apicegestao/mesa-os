@@ -43,11 +43,11 @@ describe("member experience foundations", () => {
   });
 
   it("composes Hoje from canonical state without inventing missing metrics", () => {
-    render(<MemberHome memberName="Rafael Portela" nextAction={{ eyebrow: "Seu ponto de partida", title: "Continue o Raio-X", description: "Conclua o diagnóstico.", href: "#diagnostico", label: "Continuar diagnóstico" }} cycle={null} completedSteps={0} totalSteps={8} />);
+    render(<MemberHome memberName="Rafael Portela" localHour={9} nextAction={{ eyebrow: "Seu ponto de partida", title: "Continue o Raio-X", description: "Conclua o diagnóstico.", href: "#diagnostico", label: "Continuar diagnóstico" }} cycle={null} completedSteps={0} totalSteps={8} />);
     expect(screen.getByRole("heading", { name: "Bom dia, Rafael." })).toBeInTheDocument();
     expect(screen.getAllByText("0 de 8 etapas")).toHaveLength(2);
     expect(screen.getByText("Ainda não medido")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Pedir ajuda à TutorIA" })).toBeDisabled();
+    expect(screen.queryByRole("button", { name: "Pedir ajuda à TutorIA" })).not.toBeInTheDocument();
   });
 
   it("supports multiple real pending actions while preserving their order", () => {
@@ -93,18 +93,22 @@ describe("member experience foundations", () => {
     render(<EvidenceOverview implementation={null} evidenceSubmitted records={[
       { id: "evidence-1", missionTitle: "DRE gerencial", status: "approved", reviewerKind: "tutoria", description: "DRE foi utilizado na reunião semanal de gestão.", occurredOn: "2026-08-11" },
       { id: "evidence-2", missionTitle: "Ritual de liderança", status: "changes_requested", reviewerKind: "human", description: "Registro enviado sem a ata da reunião de liderança.", occurredOn: "2026-08-10" },
-    ]} />);
+    ]} cycleLabel="Controle" />);
     expect(screen.getByText("DRE gerencial")).toBeInTheDocument();
     expect(screen.getByText("Ritual de liderança")).toBeInTheDocument();
     expect(screen.getByText("Aprovada")).toBeInTheDocument();
     expect(screen.getByText("Correção solicitada")).toBeInTheDocument();
+    expect(screen.getByText("Histórico · Controle")).toBeInTheDocument();
+    expect(screen.getByText("Aprovadas")).toBeInTheDocument();
+    expect(screen.getByText("validadas no histórico")).toBeInTheDocument();
   });
 
   it("summarizes only the canonical journey deliveries", () => {
-    render(<JourneyDeliveries missions={[{ id: "mission-1", definition_id: "definition-1", position: 1, title: "Clareza de papéis", objective: "Definir responsabilidades essenciais.", rationale: "Reduz dependência.", status: "available", completed_at: null }]} availableMissionId="mission-1" toolStarted implementationStatus="draft" evidenceSubmitted={false} />);
+    render(<JourneyDeliveries missions={[{ id: "mission-1", definition_id: "definition-1", position: 1, title: "Clareza de papéis", objective: "Definir responsabilidades essenciais.", rationale: "Reduz dependência.", status: "available", completed_at: null }]} availableMissionId="mission-1" toolStarted implementationStatus="draft" evidenceSubmitted={false} cycleLabel="Fundamentos" />);
     expect(screen.getByRole("heading", { name: "Entregas em implementação" })).toBeInTheDocument();
     expect(screen.getByText("Em implementação")).toBeInTheDocument();
     expect(screen.getByText("Clareza de papéis")).toBeInTheDocument();
+    expect(screen.getByText("Plano · Fundamentos")).toBeInTheDocument();
   });
 
   it("shows diagnostic trajectory without scheduling unauthorized reanalysis", () => {

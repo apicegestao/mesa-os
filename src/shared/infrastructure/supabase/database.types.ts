@@ -1803,6 +1803,134 @@ export type Database = {
       }
     }
     Functions: {
+      accept_crm_handoff: {
+        Args: { target_handoff_id: string }
+        Returns: undefined
+      }
+      assign_internal_staff_role: {
+        Args: { target_identity_id: string; target_role: "admin" | "commercial" | "concierge" | "finance" | "mentor" }
+        Returns: string
+      }
+      bootstrap_first_internal_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      create_crm_opportunity: {
+        Args: {
+          target_account_name: string
+          target_contact_email: string | null
+          target_contact_name: string | null
+          target_expected_value: number | null
+          target_next_action: string
+          target_next_action_due_on: string | null
+          target_source: string
+          target_title: string
+        }
+        Returns: string
+      }
+      create_crm_handoff: {
+        Args: { target_opportunity_id: string; target_concierge_identity_id: string; target_checklist?: Json }
+        Returns: string
+      }
+      create_finance_offer: {
+        Args: { target_amount: number; target_code: string; target_currency?: string; target_name: string }
+        Returns: string
+      }
+      create_finance_proposal: {
+        Args: { target_crm_opportunity_id: string; target_expires_on?: string | null; target_price_version_id: string }
+        Returns: string
+      }
+      confirm_finance_payment: {
+        Args: { target_due_on?: string | null; target_external_reference?: string | null; target_method_label?: string | null; target_proposal_id: string }
+        Returns: string
+      }
+      prepare_asaas_checkout: {
+        Args: { target_proposal_id: string }
+        Returns: { checkout_id: string; external_reference: string; offer_name: string; amount: number; currency_code: string; payer_name: string; payer_email: string }[]
+      }
+      prepare_finance_access_provisioning: { Args: { target_checkout_session_id: string }; Returns: string | null }
+      get_asaas_checkout_for_reissue: {
+        Args: { target_proposal_id: string }
+        Returns: { checkout_id: string; provider_checkout_id: string; external_reference: string; offer_name: string; amount: number; currency_code: string; payer_name: string; payer_email: string }[]
+      }
+      release_asaas_checkout_for_reissue: { Args: { target_checkout_id: string; target_provider_checkout_id: string }; Returns: undefined }
+      claim_asaas_checkout: { Args: { target_checkout_id: string }; Returns: boolean }
+      record_asaas_checkout: { Args: { target_checkout_id: string; target_provider_checkout_id: string; target_checkout_link: string; target_expires_at?: string | null }; Returns: undefined }
+      fail_asaas_checkout: { Args: { target_checkout_id: string }; Returns: undefined }
+      reconcile_asaas_payment_event: { Args: { target_provider_event_id: string; target_event_type: string; target_external_reference: string; target_checkout_session_id: string; target_payment_reference: string; target_payload_sha256: string; target_amount?: number | null }; Returns: string }
+      get_my_finance_workspace: { Args: Record<PropertyKey, never>; Returns: Json }
+      get_global_mentor_workspace: { Args: Record<PropertyKey, never>; Returns: { organization_id: string; organization_name: string; active_cycle_title: string | null; active_cycle_ends_on: string | null; next_action_label: string | null; available_mission_count: number; approved_milestone_count: number }[] }
+      get_intelligence_workspace: { Args: Record<PropertyKey, never>; Returns: Json }
+      generate_intelligence_aggregate_snapshot: { Args: Record<PropertyKey, never>; Returns: string }
+      create_intelligence_proposal: { Args: { target_snapshot_id: string | null; target_type: string; target_title: string; target_summary: string; target_rationale: string; target_confidence: number | null; target_limitations: string }; Returns: string }
+      review_intelligence_proposal: { Args: { target_proposal_id: string; target_status: "accepted" | "rejected"; target_note: string }; Returns: undefined }
+      get_my_internal_portfolios: {
+        Args: Record<PropertyKey, never>
+        Returns: { assignment_id: string; kind: "concierge" | "mentor"; organization_id: string; organization_name: string; assigned_at: string; active_cycle_title: string | null; active_cycle_ends_on: string | null; next_action_label: string | null; approved_milestone_count: number; onboarding_pending_enrollments: number }[]
+      }
+      get_my_crm_workspace: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
+      get_my_internal_ops_state: {
+        Args: Record<PropertyKey, never>
+        Returns: { active: boolean; roles: ("admin" | "commercial" | "concierge" | "finance" | "mentor")[] }[]
+      }
+      get_my_methodology_editorial_release_workspace: { Args: Record<PropertyKey, never>; Returns: Json }
+      get_my_internal_operator_state: {
+        Args: Record<PropertyKey, never>
+        Returns: { active: boolean }[]
+      }
+      list_active_internal_operators: {
+        Args: Record<PropertyKey, never>
+        Returns: { identity_id: string; email: string; roles: ("admin" | "commercial" | "concierge" | "finance" | "mentor")[] }[]
+      }
+      list_available_concierges: {
+        Args: Record<PropertyKey, never>
+        Returns: { identity_id: string; email: string }[]
+      }
+      list_portfolio_organizations: {
+        Args: Record<PropertyKey, never>
+        Returns: { organization_id: string; organization_name: string }[]
+      }
+      list_managed_internal_portfolios: {
+        Args: Record<PropertyKey, never>
+        Returns: { assignment_id: string; organization_id: string; organization_name: string; assignee_identity_id: string; assignee_email: string; kind: "concierge" | "mentor"; assigned_at: string }[]
+      }
+      assign_internal_portfolio: {
+        Args: { target_organization_id: string; target_assignee_identity_id: string; target_kind: "concierge" | "mentor"; target_reason?: string | null }
+        Returns: string
+      }
+      revoke_internal_portfolio: { Args: { target_assignment_id: string }; Returns: undefined }
+      update_crm_opportunity_stage: {
+        Args: { target_opportunity_id: string; target_stage: "new" | "qualified" | "proposal" | "negotiation" | "won" | "lost"; target_next_action: string; target_next_action_due_on?: string | null; target_lost_reason?: string | null }
+        Returns: undefined
+      }
+      create_internal_access_enrollment: {
+        Args: {
+          target_email: string
+          target_organization_id: string
+          target_role: Database["public"]["Enums"]["membership_role"]
+          target_valid_for_hours?: number
+        }
+        Returns: string
+      }
+      revoke_internal_access_enrollment: {
+        Args: { target_enrollment_id: string }
+        Returns: undefined
+      }
+      list_my_internal_access_enrollments: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          created_at: string
+          email: string
+          expires_at: string
+          id: string
+          organization_id: string
+          role: Database["public"]["Enums"]["membership_role"]
+          status: "pending" | "provisioned" | "revoked" | "expired"
+        }[]
+      }
       get_my_mesa_os_terms_receipt: {
         Args: { target_receipt_id: string }
         Returns: { receipt_id: string; event: "accepted" | "withdrawn"; occurred_at: string; document_sha256: string; document_title: string; document_version: number }[]
@@ -1856,6 +1984,7 @@ export type Database = {
         Args: { submitted_payload: Json; target_tool_revision_id: string }
         Returns: string
       }
+      publish_methodology_editorial_unit: { Args: { target_code: string; target_version: number }; Returns: string }
       save_my_tutoria_memory: {
         Args: { submitted_confidence: number; submitted_content: string; submitted_kind: Database["public"]["Enums"]["tutoria_memory_kind"]; submitted_valid_until: string | null; target_memory_id: string | null }
         Returns: string
@@ -1918,6 +2047,15 @@ export type Database = {
           target_mission_id: string
         }
         Returns: Json
+      }
+      submit_mission_evidence_for_tutoria_review: {
+        Args: {
+          evidence_date: string
+          evidence_description: string
+          submitted_evidence_type: string
+          target_mission_id: string
+        }
+        Returns: string
       }
       withdraw_my_tutoria_context_consent: {
         Args: { target_document_version_id: string }

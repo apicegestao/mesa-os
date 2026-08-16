@@ -1,7 +1,7 @@
 # Current Construction Scope
 
 **Release:** V2.0  
-**Sprint:** RT-2.26–RT-2.27A — Release Train 1
+**Sprint:** RT-2.26–RT-2.27B — Release Train 1
 **Mode:** BUILD
 **Status:** IN PROGRESS — APPROVED FOR BUILD
 
@@ -25,8 +25,7 @@
 - Vínculos versionados do mapa com diagnóstico, conteúdo, treinamento, Missão, Ferramenta, Evidência, métrica e contexto inicial de leitura do TutorIA.
 
 - Visual fidelity correction using the approved HTML: Arial, compact density, colored canonical progress and Lula contextual card.
-- Authenticated password creation and direct email/password sign-in.
-- GitHub OAuth sign-in with verified-email identity linking and existing membership authorization.
+- IAM-2.29 usa exclusivamente e-mail previamente autorizado + código temporário; sem senha, link mágico ou login social.
 - One-time reset of methodological execution data for Grupo Ápice, preserving identity, organization and membership.
 - DSX-2.18A — Design System & Responsive App Shell.
 - IAX-2.18B — Member Information Architecture & Next Action.
@@ -47,6 +46,10 @@
 - TAH-2.24A — primeira conversa assistida do TutorIA, com entrada e saída tipadas.
 - TAH-2.24B — política útil contra abuso, preservando dúvidas empresariais legítimas.
 - TAH-2.24C — ativação exclusiva em preview/homologação via Netlify AI Gateway, com teto por chamada e sem chave pessoal.
+- GEM-3.5A — primeiro provedor pago de produção do TutorIA: Gemini direto, chamado somente no servidor para orientação contextual tipada; requer `GEMINI_API_KEY` secreta, kill switch, orçamento e auditoria.
+- GEM-3.5B — adaptação auditável do provedor para distinguir Gemini direto de gateway/ausência, sem expor chave, prompt ou conteúdo do membro.
+- GEM-3.5C — smoke controlado de qualidade, custo, timeout, schema de resposta, persistência e interrupção imediata por configuração; somente após Release Train integrado aprovado.
+- RPT-1 — promoção integrada do schema e da aplicação homologados para produção, com piloto inicial de 3–5 organizações. Módulos internos ficam restritos por RBAC; somente orientação Gemini é capacidade paga inicial. Cobrança real, canais externos e automações permanecem desativados até seus próprios gates.
 - TWR-2.25A — conversa de gestão ampliada e especializada, sem bloqueio arbitrário de dúvidas empresariais.
 - TWR-2.25B — workbench estruturado para ferramentas explicitamente autorizadas pelo Mapa de Desenvolvimento.
 - TWR-2.25C — prévia e exportação governada de PDF/XLSX com identidade Mesa dos Donos.
@@ -67,18 +70,42 @@
 - TCM-2.26P — proteção de proveniência: fatos automáticos não são reescritos manualmente.
 - TCM-2.26Q — adaptador mínimo da Missão atualmente disponível para o contexto autorizado do TutorIA.
 - RT-2.27A — Bloco Evolução confiável: IME, comparação dimensional e marcos derivados exclusivamente de fontes validadas.
+- IAM-2.28 — matrícula prévia, provisionamento server-side auditado e fundação de entrada sem senha para identidades autorizadas.
+- IAM-2.29 — acesso sem senha do membro e backoffice mínimo segregado da Mesa, limitado a `internal_operator`, matrícula/revogação e auditoria; sem acesso global automático aos dados dos membros.
+- OPS-3.0A R2 — CRM comercial de leads, contas, contatos, oportunidades, atividades, tarefas, carteira e handoff auditável; RBAC interno por capability; Concierge com onboarding e matrícula/revogação previamente autorizadas. BUILD ocorre apenas em homologação.
+- FIN-3.1A — fundação canônica e portátil de receita: catálogo/preço versionado, proposta, contrato, cobrança, pagamento confirmado, entitlement e auditoria; RBAC Financeiro; BUILD ocorre apenas em homologação, sem provedor ou checkout.
+- OPS-3.0B — carteira interna atribuída de Concierge e Mentor: atribuição temporal/auditável, envelope mínimo por finalidade, isolamento por carteira, revogação imediata em leituras futuras e interface interna mínima; BUILD ocorre apenas em homologação.
+- INT-3.2A — Mesa OS Intelligence: conjuntos agregados com supressão de coortes pequenas, insights e propostas internas rastreáveis para Admin; BUILD ocorre apenas em homologação, sem modelo ativo, dados brutos ou execução automática.
+- OPS-3.0C — visão metodológica global mínima do Mentor, com leitura auditada e sem conteúdo bruto; Concierge permanece por carteira; BUILD ocorre apenas em homologação.
+- FIN-3.1B — adaptador Asaas Sandbox: checkout hospedado, evento de webhook idempotente, reconciliação para fatos financeiros canônicos e elegibilidade de acesso; BUILD ocorre apenas em homologação. Retorno do navegador não autoriza acesso e nenhum dado de cartão/PIX entra no Mesa OS.
+- FIN-3.1C — vínculo automático e idempotente de conta CRM à organização Mesa OS após pagamento confirmado; matrícula `owner` do pagador por OTP, com conflitos encaminhados à Concierge. BUILD ocorre apenas em homologação.
+- GOV-CR-2.27B — reconciliação documentada para retenção longitudinal de conversas TutorIA sob Termos vigentes e visão metodológica global mínima do Mentor, com todos os limites descritos na Change Request correspondente.
+- EVD-AI-3.3A / GOV-CR-2.27C — autonomia graduada do TutorIA para validar evidências elegíveis e liberar apenas a continuidade de Missão explicitamente autorizada; baixa confiança, risco, dúvida persistente ou pedido explícito escalam para humano. BUILD ocorre apenas em homologação.
+- EVD-AI-3.3B fase B1 — cada escalonamento de Evidência cria uma única fila humana auditada, com envelope mínimo e sem promover produção. Confirmação humana e reversão de progresso permanecem fora desta fase.
+- EVD-AI-3.3B fase B2 — Mentor ou Admin resolve apenas Evidência já escalada pelo TutorIA, validando ou solicitando complemento com justificativa imutável; a validação humana pode liberar a continuidade atômica da Missão. Reversão de decisão automática aprovada permanece fora desta fase.
+- MTH-3.4A — fundação editorial interna do piloto T1: ementa, critérios de implementação e Evidência, métricas, limites do TutorIA e vínculo versionado às Ferramentas. BUILD ocorre apenas em homologação; material novo permanece em rascunho interno até aprovação e publicação explícitas.
+- MTH-3.4B — workspace estruturado reutilizável para modelos editoriais T1 já versionados, com validação local/server-side e exportação PDF/XLSX existente. BUILD ocorre apenas em homologação; a interface somente carrega revisões explicitamente `published`.
+- MTH-3.4C — revisão e publicação editorial controlada por Admin para unidades T1 e seus vínculos de Ferramenta. BUILD ocorre apenas em homologação; sem publicação automática, edição livre ou execução pela Intelligence.
+- MTH-3.4D — guias editoriais internos completos do T1 para uso de equipe, Ferramenta, Evidência e orientação do TutorIA. Sem publicação de conteúdo, curso ou ferramenta por esta entrega.
+- MTH-3.4E — sincronização versionada dos guias editoriais T1 com a fonte interna do sistema, preservando a revisão inicial e mantendo a revisão completa em rascunho. BUILD ocorre somente em homologação e não publica unidades ou ferramentas.
 
 ## Not Authorized
 
 - Journey ou jornada do membro.
 - TutorIA fora dos contratos TCF-2.21A a TCF-2.21D.
 - Tools ou ferramentas metodológicas.
-- Concierge.
+- Concierge fora do handoff, onboarding, matrícula/revogação e carteira estritamente atribuída explicitamente autorizados pelo OPS-3.0A R2/OPS-3.0B.
+- Mentor fora da visão metodológica global mínima autorizada pelo OPS-3.0C/GOV-CR-2.27B, sem conteúdo bruto e sem qualquer poder de alteração metodológica.
+- Checkout, provedor, cartão, PIX, webhook, cobrança automática, comunicação externa, contabilidade/fiscal, estorno automatizado ou múltiplos provedores financeiros, exceto o adaptador Asaas Sandbox estritamente definido no FIN-3.1B.
+- Mesa OS Intelligence operacional, dados agregados, propostas de metodologia ou qualquer atualização automatizada.
+- Modelo ativo fora do contrato GEM-3.5 de orientação contextual, dados identificáveis amplos, treinamento/fine-tuning, publicação automática ou execução de proposta pela Mesa OS Intelligence.
+- WhatsApp, Instagram, e-mail transacional, webhook, comunicação externa ou automação proativa.
 - WhatsApp.
 - Dashboards de negócio.
 - AI Tool Factory.
 - White label.
 - Cadastro público e criação automática de vínculo.
+- Cadastro público, criação automática de vínculo ou configuração de provedor externo fora do contrato IAM-2.28.
 - Login por senha, login social, MFA e SSO empresarial.
 - RBAC ou administração além de `owner` e `member` para acesso.
 - Múltiplas organizações por identidade.
@@ -88,7 +115,7 @@
 - Edição administrativa da metodologia.
 - Reabertura, invalidação ou sobrescrita de resultado concluído.
 - Participação colaborativa ou submissão por `member` neste primeiro incremento.
-- Chat bruto, memória automática derivada de conversa, RAG, embeddings, fine-tuning, autonomia decisória ou desempate automático do TutorIA.
+- Chat bruto, memória automática derivada de conversa, RAG, embeddings, fine-tuning, autonomia decisória ou desempate automático do TutorIA, exceto a retenção longitudinal explicitamente limitada pelo GOV-CR-2.27B.
 - Derivação automática a partir de fontes canônicas antes de um incremento próprio com adaptadores, observabilidade e testes de cada fonte.
 - Escolha humana em caso de empate no menor score.
 - Seleção de dimensão diferente da única menor candidata.
@@ -98,10 +125,10 @@
 - Encerramento automático do ciclo ao ultrapassar a data final.
 - Ciclos paralelos; RT-2.20 autoriza histórico sequencial, mantendo no máximo um ciclo ativo por organização.
 - Geração de Missão por TutorIA ou qualquer IA.
-- Ferramenta, Implementação, Evidência ou Evolução.
+- Ferramenta, Implementação, Evidência ou Evolução, exceto a decisão de evidência e continuidade limitada do EVD-AI-3.3A/GOV-CR-2.27C.
 - Conclusão, desbloqueio, reordenação, substituição ou edição de Missão.
 - Definições de Missão para dimensões diferentes de `Liderança & Equipe`.
-- Submissão final, aprovação ou mudança de estado da Missão.
+- Submissão final, aprovação ou mudança de estado da Missão, exceto a continuidade atômica e auditada autorizada pelo EVD-AI-3.3A/GOV-CR-2.27C.
 - Implementação, Evidência ou Evolução.
 - Exportação, anexos, comentários ou colaboração por `member`.
 - Feature de negócio, migration ou alteração de dados fora dos RT-2.20/RT-2.21; deploy manual continua proibido.
@@ -110,7 +137,7 @@
 - Inventar novamente decisões já aprovadas sem primeiro recuperar a fonte.
 - Alterar documentos `FROZEN` antes de Change Request explícito e rastreável.
 - Redução de testes, RLS, validação server-side ou rastreabilidade.
-- Conteúdo, treinamento, ferramenta, regra de progressão ou compatibilidade metodológica não aprovados e não descritos nos Definition Packs RT-2.20/RT-2.21.
+- Conteúdo, treinamento, ferramenta, regra de progressão ou compatibilidade metodológica não aprovados e não descritos nos Definition Packs RT-2.20/RT-2.21, EVD-AI-3.3 ou MTH-3.4A.
 
 ## Exit criteria dos RT-2.20 e RT-2.21
 

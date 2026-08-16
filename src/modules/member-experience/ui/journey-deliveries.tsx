@@ -1,7 +1,7 @@
 import type { Mission } from "@/modules/mission";
 
-export function JourneyDeliveries({ missions, availableMissionId, toolStarted, implementationStatus, evidenceSubmitted }: { missions: Mission[]; availableMissionId?: string; toolStarted: boolean; implementationStatus: "none" | "draft" | "implemented"; evidenceSubmitted: boolean }) {
-  return <section className="journey-deliveries" aria-labelledby="deliveries-title"><div className="records-section-title"><div><p className="eyebrow">Plano do T1</p><h2 id="deliveries-title">Entregas em implementação</h2></div><span>{missions.length} {missions.length === 1 ? "entrega" : "entregas"}</span></div>
+export function JourneyDeliveries({ missions, availableMissionId, toolStarted, implementationStatus, evidenceSubmitted, cycleLabel }: { missions: Mission[]; availableMissionId?: string; toolStarted: boolean; implementationStatus: "none" | "draft" | "implemented"; evidenceSubmitted: boolean; cycleLabel?: string }) {
+  return <section className="journey-deliveries" aria-labelledby="deliveries-title"><div className="records-section-title"><div><p className="eyebrow">Plano · {cycleLabel ?? "Ciclo em preparação"}</p><h2 id="deliveries-title">Entregas em implementação</h2></div><span>{missions.length} {missions.length === 1 ? "entrega" : "entregas"}</span></div>
     {missions.length ? <div className="delivery-list">{missions.map((mission) => {
       const active = mission.id === availableMissionId;
       const state = mission.status === "completed" ? "Concluída" : active && evidenceSubmitted ? "Evidenciada" : active && implementationStatus === "implemented" ? "Aguardando evidência" : active && (toolStarted || implementationStatus === "draft") ? "Em implementação" : active ? "Disponível" : "Próxima";

@@ -1,0 +1,144 @@
+import { redirect } from "next/navigation";
+import { OpsEnrollmentPanel, OpsStaffEnrollmentPanel } from "@/modules/identity-access";
+import { OpsCrmConsole } from "@/modules/crm";
+import { OpsFinanceConsole } from "@/modules/finance/ui/ops-finance-console";
+import { OpsPortfolioConsole } from "@/modules/operations/ui/ops-portfolio-console";
+import { OpsSupportConsole } from "@/modules/operations/ui/ops-support-console";
+import { OpsConciergeCapacity } from "@/modules/operations/ui/ops-concierge-capacity";
+import { OpsIntelligenceConsole } from "@/modules/intelligence/ui/ops-intelligence-console";
+import { OpsEditorialConsole, type EditorialReleaseUnit } from "@/modules/methodology-editorial";
+import type { CrmWorkspace, InternalRole } from "@/modules/crm/domain";
+import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
+
+export const dynamic = "force-dynamic";
+
+type OpsView = "crm" | "portfolio" | "support" | "finance" | "intelligence" | "editorial" | "access";
+const views: OpsView[] = ["crm", "portfolio", "support", "finance", "intelligence", "editorial", "access"];
+
+const viewPresentation: Record<OpsView, { eyebrow: string; title: string; summary: string }> = {
+  crm: {
+    eyebrow: "Operação comercial",
+    title: "CRM",
+    summary: "Oportunidades, distribuição e acompanhamento desde o primeiro contato.",
+  },
+  portfolio: {
+    eyebrow: "Acompanhamento do membro",
+    title: "Carteira",
+    summary: "Visibilidade da condução e dos pontos de atenção de cada membro.",
+  },
+  support: {
+    eyebrow: "Condução do membro",
+    title: "Suporte",
+    summary: "Orientações e encaminhamentos que preservam o contexto do acompanhamento.",
+  },
+  finance: {
+    eyebrow: "Receita e permanência",
+    title: "Financeiro",
+    summary: "Propostas, faturamento e sinais de acesso vinculados ao relacionamento.",
+  },
+  intelligence: {
+    eyebrow: "Melhoria contínua",
+    title: "Intelligence",
+    summary: "Leituras agregadas para evoluir método, ferramentas e operação com responsabilidade.",
+  },
+  editorial: { eyebrow: "Método e ferramentas", title: "Editorial", summary: "Conteúdo e ferramentas T1 sob revisão e publicação controladas." },
+  access: {
+    eyebrow: "Controle de acesso",
+    title: "Acessos",
+    summary: "Atribuições internas e matrículas autorizadas, com permissões isoladas.",
+  },
+};
+
+function canUseView(view: OpsView, roles: InternalRole[]) {
+  if (view === "crm") return roles.includes("admin") || roles.includes("commercial") || roles.includes("concierge");
+  if (view === "portfolio") return roles.includes("admin") || roles.includes("concierge") || roles.includes("mentor");
+  if (view === "support") return roles.includes("admin") || roles.includes("concierge") || roles.includes("mentor");
+  if (view === "finance") return roles.includes("admin") || roles.includes("commercial") || roles.includes("finance");
+  if (view === "intelligence" || view === "editorial") return roles.includes("admin");
+  return roles.includes("admin") || roles.includes("concierge");
+}
+
+function OpsNavigation({ activeView, roles }: { activeView: OpsView; roles: InternalRole[] }) {
+  const items: { view: OpsView; label: string }[] = [
+    { view: "crm", label: "CRM" },
+    { view: "portfolio", label: "Carteira" },
+    { view: "support", label: "Suporte" },
+    { view: "finance", label: "Financeiro" },
+    { view: "intelligence", label: "Intelligence" },
+    { view: "editorial", label: "Editorial" },
+    { view: "access", label: "Acessos" },
+  ];
+
+  return <nav className="ops-navigation" aria-label="Módulos internos">{items.filter((item) => canUseView(item.view, roles)).map((item) => <a key={item.view} href={`/ops?view=${item.view}`} className={item.view === activeView ? "active" : ""}><span>{item.label}</span><b>→</b></a>)}</nav>;
+}
+
+export default async function OpsPage({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
+  const supabase = await createSupabaseServerClient();
+  const { data: claimsData } = await supabase.auth.getClaims();
+  if (!claimsData?.claims?.sub) redirect("/login");
+
+  const { data, error } = await supabase.rpc("get_my_internal_operator_state");
+  if (error || !data?.[0]?.active) {
+    return <main className="shell"><section className="status"><p className="eyebrow">Acesso interno</p><h1>Acesso não autorizado</h1><p className="summary">Esta conta não possui uma atribuição operacional ativa.</p></section></main>;
+  }
+
+  const { data: opsState, error: opsStateError } = await supabase.rpc("get_my_internal_ops_state");
+  if (opsStateError || !opsState?.[0]?.active) {
+    return <main className="shell"><section className="status"><p className="eyebrow">Acesso interno</p><h1>Operação temporariamente indisponível</h1><p className="summary">Sua sessão foi validada, mas não foi possível consultar as autorizações agora.</p></section></main>;
+  }
+
+  const roles = opsState[0].roles as InternalRole[];
+  if (roles.length === 0) return <main className="shell"><OpsCrmConsole concierges={[]} initialWorkspace={{ opportunities: [], handoffs: [] }} isBootstrap roles={[]} /></main>;
+
+  const requestedView = (await searchParams).view;
+  const activeView = views.includes(requestedView as OpsView) && canUseView(requestedView as OpsView, roles) ? requestedView as OpsView : "crm";
+  const presentation = viewPresentation[activeView];
+  const workspace = ((await supabase.rpc("get_my_crm_workspace")).data as CrmWorkspace | null) ?? { opportunities: [], handoffs: [] };
+  const concierges = activeView === "crm" || activeView === "portfolio"
+    ? (((await supabase.rpc("list_available_concierges")).data ?? []) as { email: string; identity_id: string }[])
+    : [];
+
+  let content: React.ReactNode;
+  if (activeView === "crm") {
+    content = <OpsCrmConsole concierges={concierges} initialWorkspace={workspace} isBootstrap={false} roles={roles} />;
+  } else if (activeView === "finance") {
+    const { data: financeData } = await supabase.rpc("get_my_finance_workspace");
+    content = <OpsFinanceConsole opportunities={workspace.opportunities} roles={roles} workspace={(financeData ?? { offers: [], proposals: [] }) as never} />;
+  } else if (activeView === "support") {
+    content = <main className="ops-module"><OpsSupportConsole roles={roles} /></main>;
+  } else if (activeView === "intelligence") {
+    const { data: intelligenceData } = await supabase.rpc("get_intelligence_workspace");
+    content = <main className="ops-module"><OpsIntelligenceConsole workspace={(intelligenceData ?? { snapshots: [], proposals: [] }) as never} /></main>;
+  } else if (activeView === "editorial") {
+    const { data: editorialData } = await supabase.rpc("get_my_methodology_editorial_release_workspace");
+    content = <main className="ops-module"><OpsEditorialConsole units={(Array.isArray(editorialData) ? editorialData : []) as EditorialReleaseUnit[]} /></main>;
+  } else if (activeView === "access") {
+    const [{ data: enrollments }, { data: organizations }] = await Promise.all([
+      supabase.rpc("list_my_internal_access_enrollments"),
+      roles.includes("admin") ? supabase.rpc("list_portfolio_organizations") : Promise.resolve({ data: [] }),
+    ]);
+    content = <main className="ops-module">{roles.includes("admin") && <OpsStaffEnrollmentPanel organizations={organizations ?? []} />}<OpsEnrollmentPanel initialEnrollments={enrollments ?? []} /></main>;
+  } else {
+    const [{ data: operatorsData }, { data: organizationsData }, { data: managedPortfoliosData }, { data: globalMentorData }, { data: myPortfoliosData }] = await Promise.all([
+      supabase.rpc("list_active_internal_operators"),
+      roles.includes("admin") ? supabase.rpc("list_portfolio_organizations") : Promise.resolve({ data: [] }),
+      roles.includes("admin") ? supabase.rpc("list_managed_internal_portfolios") : Promise.resolve({ data: [] }),
+      roles.includes("mentor") ? supabase.rpc("get_global_mentor_workspace") : Promise.resolve({ data: [] }),
+      roles.includes("mentor") || roles.includes("concierge") ? supabase.rpc("get_my_internal_portfolios") : Promise.resolve({ data: [] }),
+    ]);
+    content = <main className="ops-module"><OpsPortfolioConsole globalMentor={(globalMentorData ?? []) as never[]} managed={(managedPortfoliosData ?? []) as never[]} operators={(operatorsData ?? []) as never[]} organizations={(organizationsData ?? []) as never[]} portfolios={(myPortfoliosData ?? []) as never[]} roles={roles} />{roles.includes("admin") && <OpsConciergeCapacity concierges={concierges} />}</main>;
+  }
+
+  return <main className="ops-shell">
+    <aside className="ops-sidebar">
+      <a className="ops-brand" href="/ops"><span className="mesa-bars" aria-hidden="true"><i /><i /><i /></span><span><strong>MESA</strong><small>DOS DONOS</small></span></a>
+      <p className="ops-sidebar-label">Ambiente interno</p>
+      <OpsNavigation activeView={activeView} roles={roles} />
+      <div className="ops-sidebar-footer"><strong>Operação Mesa</strong><small>Permissões e dados isolados</small><a href="/app">Ver visão de membro</a></div>
+    </aside>
+    <section className="ops-main">
+      <header className="ops-header"><div><p className="eyebrow">{presentation.eyebrow}</p><h1>{presentation.title}</h1><p className="ops-header-summary">{presentation.summary}</p></div><a href="/app">Ver ambiente do membro</a></header>
+      {content}
+    </section>
+  </main>;
+}

@@ -4,6 +4,7 @@ import type { Database } from "@/shared/infrastructure/supabase/database.types";
 export type CoreLoopWorkspace = {
   implementation: { status: "draft" | "implemented"; summary: string; implementedOn: string } | null;
   evidenceSubmitted: boolean;
+  evidenceId?: string | null;
   evidenceStatus?: "submitted" | "approved" | "changes_requested" | "escalated" | null;
 };
 
@@ -24,6 +25,7 @@ export async function loadCoreLoopWorkspace(supabase: SupabaseClient<Database>, 
   return {
     implementation: implementation ? { status: implementation.status as "draft" | "implemented", summary: implementation.summary, implementedOn: implementation.implemented_on } : null,
     evidenceSubmitted: Boolean(evidence),
+    evidenceId: evidence?.id ?? null,
     evidenceStatus: evidence?.review_status === "approved" || evidence?.review_status === "changes_requested" || evidence?.review_status === "escalated" ? evidence.review_status : evidence ? "submitted" : null,
   } satisfies CoreLoopWorkspace;
 }
