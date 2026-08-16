@@ -19,6 +19,7 @@ describe("TutorIA guided orientation contract", () => {
 
   it("keeps model access off unless every server-only gate is present", () => {
     expect(orientationGatewayEnabled({ TUTORIA_ORIENTATION_ENABLED: "true" })).toBe(false);
-    expect(orientationGatewayEnabled({ TUTORIA_ORIENTATION_ENABLED: "true", GEMINI_API_KEY: "gateway", GOOGLE_GEMINI_BASE_URL: "https://gateway.example" })).toBe(true);
+    expect(orientationGatewayEnabled({ TUTORIA_ORIENTATION_ENABLED: "true", GEMINI_API_KEY: "gemini-secret" })).toBe(true);
+    expect(orientationGatewayEnabled({ TUTORIA_ORIENTATION_ENABLED: "true", GEMINI_API_KEY: "   " })).toBe(false);
   });
 });

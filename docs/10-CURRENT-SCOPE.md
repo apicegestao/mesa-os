@@ -46,6 +46,9 @@
 - TAH-2.24A — primeira conversa assistida do TutorIA, com entrada e saída tipadas.
 - TAH-2.24B — política útil contra abuso, preservando dúvidas empresariais legítimas.
 - TAH-2.24C — ativação exclusiva em preview/homologação via Netlify AI Gateway, com teto por chamada e sem chave pessoal.
+- GEM-3.5A — primeiro provedor pago de produção do TutorIA: Gemini direto, chamado somente no servidor para orientação contextual tipada; requer `GEMINI_API_KEY` secreta, kill switch, orçamento e auditoria.
+- GEM-3.5B — adaptação auditável do provedor para distinguir Gemini direto de gateway/ausência, sem expor chave, prompt ou conteúdo do membro.
+- GEM-3.5C — smoke controlado de qualidade, custo, timeout, schema de resposta, persistência e interrupção imediata por configuração; somente após Release Train integrado aprovado.
 - TWR-2.25A — conversa de gestão ampliada e especializada, sem bloqueio arbitrário de dúvidas empresariais.
 - TWR-2.25B — workbench estruturado para ferramentas explicitamente autorizadas pelo Mapa de Desenvolvimento.
 - TWR-2.25C — prévia e exportação governada de PDF/XLSX com identidade Mesa dos Donos.
@@ -94,7 +97,7 @@
 - Mentor fora da visão metodológica global mínima autorizada pelo OPS-3.0C/GOV-CR-2.27B, sem conteúdo bruto e sem qualquer poder de alteração metodológica.
 - Checkout, provedor, cartão, PIX, webhook, cobrança automática, comunicação externa, contabilidade/fiscal, estorno automatizado ou múltiplos provedores financeiros, exceto o adaptador Asaas Sandbox estritamente definido no FIN-3.1B.
 - Mesa OS Intelligence operacional, dados agregados, propostas de metodologia ou qualquer atualização automatizada.
-- Modelo ativo, dados identificáveis amplos, treinamento/fine-tuning, publicação automática ou execução de proposta pela Mesa OS Intelligence.
+- Modelo ativo fora do contrato GEM-3.5 de orientação contextual, dados identificáveis amplos, treinamento/fine-tuning, publicação automática ou execução de proposta pela Mesa OS Intelligence.
 - WhatsApp, Instagram, e-mail transacional, webhook, comunicação externa ou automação proativa.
 - WhatsApp.
 - Dashboards de negócio.

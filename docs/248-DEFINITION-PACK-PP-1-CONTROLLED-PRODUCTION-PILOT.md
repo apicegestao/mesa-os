@@ -53,24 +53,28 @@ convites a Comercial/Financeiro e sem dados ou operações comerciais no piloto.
 ## 5. Lista ordenada de migrations candidatas
 
 Esta é a lista mínima analisada a partir da produção atual (53 migrations) e da
-homologação. A aplicação só ocorre após uma revisão final da lista no projeto de
-produção; migrations não relacionadas seguem fora do trem.
+homologação. Os ambientes registraram versões temporais próprias quando as
+migrations foram aplicadas; por isso, PP-1 identifica cada alteração pelo seu
+**nome lógico** e pelo SQL versionado no repositório, não pelo timestamp do arquivo.
+A aplicação só ocorre após uma revisão final dessa equivalência; migrations não
+relacionadas seguem fora do trem.
 
 | Ordem | Migration | Motivo |
 |---:|---|---|
-| 1 | `20260813204800_iam_2_28_enrollment_advisor_hardening` | nega acesso direto a matrículas e auditoria |
-| 2 | `20260813214349_iam_2_29_segregated_access` | separa membro e operação interna |
-| 3 | `20260813214746_iam_2_29_rpc_privileges_hardening` | remove execução anônima dos RPCs internos |
-| 4 | `20260814030312_ops_3_0a_crm_foundation` | somente fundação de papéis/auditoria internos exigida pelos gates; CRM permanece não habilitado no piloto |
-| 5 | `20260814223000_internal_staff_enrollment` | matrícula auditada de Admin interno |
-| 6 | `20260814234500_tutoria_conversation_longitudinal_memory` | continuidade de conversa, termos e memória privada |
-| 7 | `20260815030000_mth_3_4a_editorial_curriculum_foundation` | quatro unidades T1 em rascunho, ligadas a ferramentas |
-| 8 | `20260815030100_mth_3_4a_editorial_rls_denial` | defesa em profundidade dos rascunhos editoriais |
-| 9 | `20260815033000_mth_3_4c_editorial_release_gate` | publicação editorial atômica e somente Admin |
-| 10 | `20260815040000_mth_3_4e_editorial_guide_sync` | versão editorial T1 completa |
-| 11 | `20260815041000_mth_3_4c_editorial_workspace_rpc_grant` | corrige wrapper do workspace editorial |
-| 12 | `20260815041100_mth_3_4c_editorial_publish_rpc_grant` | corrige wrapper de publicação editorial |
-| 13 | `20260815041200_rpc_active_member_private_grants` | restaura wrappers privados de rascunho e memória, mantendo as verificações internas |
+| 1 | `iam_2_28_controlled_onboarding` | matrícula autorizada e provisionamento controlado por OTP |
+| 2 | `iam_2_28_enrollment_advisor_hardening` | nega acesso direto a matrículas e auditoria |
+| 3 | `iam_2_29_segregated_access` | separa membro e operação interna |
+| 4 | `iam_2_29_rpc_privileges_hardening` | remove execução anônima dos RPCs internos |
+| 5 | `ops_3_0a_crm_foundation` | somente fundação de papéis/auditoria internos exigida pelos gates; CRM permanece não habilitado no piloto |
+| 6 | `internal_staff_enrollment` | matrícula auditada de Admin interno |
+| 7 | `tutoria_conversation_longitudinal_memory` | continuidade de conversa, termos e memória privada |
+| 8 | `mth_3_4a_editorial_curriculum_foundation` | quatro unidades T1 em rascunho, ligadas a ferramentas |
+| 9 | `mth_3_4a_editorial_rls_denial` | defesa em profundidade dos rascunhos editoriais |
+| 10 | `mth_3_4c_editorial_release_gate` | publicação editorial atômica e somente Admin |
+| 11 | `mth_3_4e_editorial_guide_sync` | versão editorial T1 completa |
+| 12 | `mth_3_4c_editorial_workspace_rpc_grant` | corrige wrapper do workspace editorial |
+| 13 | `mth_3_4c_editorial_publish_rpc_grant` | corrige wrapper de publicação editorial |
+| 14 | `rpc_active_member_private_grants` | restaura wrappers privados de rascunho e memória, mantendo as verificações internas |
 
 As migrations de CRM posteriores, financeiro, suporte, Intelligence e EVD-AI não
 fazem parte de PP-1. A evidência do piloto segue o fluxo estruturado já existente;
