@@ -1,6 +1,6 @@
 # Definition Pack RPT-1 — Promoção integrada do piloto real
 
-**Status:** DRAFT — preparação autorizada; promoção exige pre-flight final  
+**Status:** EM EXECUÇÃO — schema promovido; aplicativo e ativações externas pendentes
 **Data:** 16 de agosto de 2026  
 **Decisão do owner:** promover o sistema integrado para experiência real, com
 Gemini como primeiro provedor pago, mantendo segurança e ativação externa gradual.
@@ -35,11 +35,12 @@ RBAC, flags e ausência deliberada de segredos mantêm cada capacidade no seu li
 | Gemini orientação TutorIA | habilitar somente depois do smoke técnico |
 | CRM/Financeiro/Intelligence | acesso somente interno e auditado |
 
-## Migrations a promover
+## Migrations promovidas
 
-Produção possui as 53 migrations-base. Aplicar, pelos nomes lógicos e SQL
-versionado, as 47 migrations já homologadas a seguir; cada banco registra seu
-próprio identificador temporal.
+Produção possuía as 53 migrations-base. Em 16 de agosto de 2026, foram aplicadas,
+na ordem homologada, as migrations abaixo por seus nomes lógicos e SQL versionado.
+Cada banco mantém seu próprio identificador temporal. A promoção não configurou
+segredos, não criou checkout externo e não efetuou cobranças.
 
 1. IAM: `iam_2_28_controlled_onboarding`,
    `iam_2_28_enrollment_advisor_hardening`, `iam_2_29_segregated_access`,
@@ -48,7 +49,7 @@ próprio identificador temporal.
    `crm_kanban_client_workspace`, `ops_3_0b_mentor_role`,
    `ops_3_0b_portfolio_core`, `ops_3_0c_global_mentor_view`,
    `ops_3_0d_member_support`, `ops_3_0d_support_assignment`,
-   `crm_concierge_capacity_allocation_retry`, `crm_concierge_capacity_rpc`,
+   `crm_concierge_capacity_allocation`,
    `rpc_privilege_reconciliation`, `internal_staff_enrollment`.
 3. Financeiro Sandbox: `fin_3_1a_revenue_foundation`, `fin_3_1a_revenue_core`,
    `fin_3_1a_payment_guard`, `fin_3_1b_asaas_checkout_reconciliation`,
@@ -73,9 +74,9 @@ próprio identificador temporal.
 
 ## Sequência de promoção
 
-1. conferir o histórico de migrations e Security Advisor em produção;
-2. aplicar as migrations na ordem homologada, interrompendo na primeira falha;
-3. confirmar schema, RLS/RPCs e advisors;
+1. ~~conferir o histórico de migrations e Security Advisor em produção;~~ concluído;
+2. ~~aplicar as migrations na ordem homologada, interrompendo na primeira falha;~~ concluído;
+3. ~~confirmar schema, RLS/RPCs e advisors;~~ concluído — Security Advisor sem alertas;
 4. merge único da branch homologada em `main` e deploy Netlify único;
 5. configurar `GEMINI_API_KEY` no cofre runtime; manter flag de orientação desligada;
 6. executar smoke de organização de demonstração;
