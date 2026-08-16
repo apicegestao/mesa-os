@@ -49,6 +49,7 @@
 - GEM-3.5A — primeiro provedor pago de produção do TutorIA: Gemini direto, chamado somente no servidor para orientação contextual tipada; requer `GEMINI_API_KEY` secreta, kill switch, orçamento e auditoria.
 - GEM-3.5B — adaptação auditável do provedor para distinguir Gemini direto de gateway/ausência, sem expor chave, prompt ou conteúdo do membro.
 - GEM-3.5C — smoke controlado de qualidade, custo, timeout, schema de resposta, persistência e interrupção imediata por configuração; somente após Release Train integrado aprovado.
+- RPT-1 — promoção integrada do schema e da aplicação homologados para produção, com piloto inicial de 3–5 organizações. Módulos internos ficam restritos por RBAC; somente orientação Gemini é capacidade paga inicial. Cobrança real, canais externos e automações permanecem desativados até seus próprios gates.
 - TWR-2.25A — conversa de gestão ampliada e especializada, sem bloqueio arbitrário de dúvidas empresariais.
 - TWR-2.25B — workbench estruturado para ferramentas explicitamente autorizadas pelo Mapa de Desenvolvimento.
 - TWR-2.25C — prévia e exportação governada de PDF/XLSX com identidade Mesa dos Donos.

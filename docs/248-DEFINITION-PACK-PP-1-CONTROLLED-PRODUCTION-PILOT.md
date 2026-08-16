@@ -1,6 +1,6 @@
 # Definition Pack PP-1 — Piloto T1 controlado em produção
 
-**Status:** DRAFT — aguardando confirmação de restauração, aprovação explícita e janela de promoção  
+**Status:** SUPERSEDED BY RPT-1 — preservado como análise do piloto mínimo
 **Data:** 16 de agosto de 2026  
 **Base:** CP-03, Constitution, Scope Lock, ADR-003, ADR-004, ADR-033, ADR-036,
 ADR-039, ADR-040, ADR-041, Current Scope e conversa-fonte `Mesa OS V2`.
