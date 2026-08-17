@@ -6,7 +6,7 @@ import { loadPublishedMethodologyMap } from "@/modules/methodology";
 import { loadMissions } from "@/modules/mission";
 import { loadPriority } from "@/modules/priority";
 import { buildTutorIAMemberState, buildTutorIAMethodologySummary, recordTutorIAReadGateway } from "@/modules/tutoria-foundation";
-import { buildOrientationPrompt, estimateModelCostUsdMicros, evaluateTutorIAUsage, orientationGatewayEnabled, orientationRequestBudgetAllowed, parseOrientationOutput, TUTORIA_ORIENTATION_MAX_COST_USD_MICROS } from "@/modules/tutoria-guidance";
+import { buildOrientationPrompt, estimateModelCostUsdMicros, evaluateTutorIAUsage, orientationGatewayEnabled, parseOrientationOutput, TUTORIA_ORIENTATION_MAX_COST_USD_MICROS } from "@/modules/tutoria-guidance";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 import { loadMesaOSTermsState } from "@/modules/tutoria-consent";
 import { loadTutorIAOrientationContext } from "@/modules/tutoria-memory/data";
@@ -44,8 +44,8 @@ export async function POST(request: Request) {
 
   const audit = (event_kind: "invocation_started" | "invocation_finished", outcome: "served" | "unavailable" | "escalated", options: { duration_ms?: number; response_schema_valid?: boolean; failure_code?: string; provider_code?: typeof PROVIDER_CODE | "none" } = {}) => supabase.from("tutoria_orientation_audits").insert({ organization_id: membership.organization_id, actor_identity_id: actorIdentityId, objective: usage.request.objective, event_kind, outcome, provider_code: options.provider_code ?? "none", model_code: options.provider_code === PROVIDER_CODE ? MODEL : null, response_schema_valid: options.response_schema_valid ?? false, duration_ms: options.duration_ms ?? 0, failure_code: options.failure_code ?? null });
 
-  if (!orientationGatewayEnabled() || !orientationRequestBudgetAllowed()) {
-    await audit("invocation_finished", "unavailable", { failure_code: orientationGatewayEnabled() ? "budget_not_configured" : "orientation_not_enabled" });
+  if (!orientationGatewayEnabled()) {
+    await audit("invocation_finished", "unavailable", { failure_code: "orientation_not_enabled" });
     return NextResponse.json({ code: "orientation_unavailable" }, { status: 503 });
   }
   const { count } = await supabase.from("tutoria_orientation_audits").select("id", { count: "exact", head: true }).eq("organization_id", membership.organization_id).eq("actor_identity_id", actorIdentityId).gte("created_at", new Date(Date.now() - 60_000).toISOString());
@@ -60,7 +60,8 @@ export async function POST(request: Request) {
   const reservationId = reservation?.reservation_id;
   if (reservationError || !reservation?.allowed || !reservationId) {
     await audit("invocation_finished", "unavailable", { provider_code: PROVIDER_CODE, failure_code: reservation?.denial_code ?? "budget_reservation_failed" });
-    return NextResponse.json({ code: "orientation_budget_unavailable" }, { status: 503 });
+    const code = reservation?.denial_code === "member_budget_exhausted" ? "orientation_budget_exhausted" : "orientation_unavailable";
+    return NextResponse.json({ code }, { status: 503 });
   }
 
   const startedAt = Date.now();

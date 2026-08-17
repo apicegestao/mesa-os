@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { NextAction } from "../domain/next-action";
+import Link from "next/link";
 import { MemberGreeting } from "./member-greeting";
 
 type PulseItem = { label: string; value: string; progress?: number; tone: "blue" | "gold" | "plum" | "green" };
@@ -65,7 +66,7 @@ export function MemberHome({
         <div className="action-list">{actions.map((action, index) => <article className="action-card" key={`${action.href}-${action.title}`}>
           <span className="action-number">{String(index + 1).padStart(2, "0")}</span>
           <div className="action-copy"><p className="eyebrow">{action.eyebrow}</p><h3>{action.title}</h3><p>{action.description}</p><div className="action-meta"><span>{index === 0 ? "Foco atual" : "Pendente"}</span><span>{index === 0 ? "Agora" : "Na sequência"}</span></div></div>
-          <div className="action-buttons"><a href={action.href}>{action.label}<span aria-hidden="true">→</span></a></div>
+          <div className="action-buttons"><Link href={action.href as never}>{action.label}<span aria-hidden="true">→</span></Link></div>
         </article>)}</div>
       </section>
 

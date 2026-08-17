@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 
 type Result = { code?: string; orientation?: { resumo: string; proxima_acao: string; justificativa_metodologica: string }; conversation_persistence?: "saved" | "unavailable" };
 type ConversationEntry = { role: "member"; body: string } | { role: "tutoria"; result?: Result; body?: string };
-const messages: Record<string, string> = { orientation_unavailable: "Não consegui concluir esta orientação agora. Tente novamente em instantes.", orientation_budget_unavailable: "O TutorIA não está disponível porque a política de orçamento ainda não foi configurada.", orientation_rate_limited: "Você fez muitas tentativas agora. Aguarde um instante e tente novamente.", orientation_escalated: "Para orientar com segurança, preciso de mais contexto ou de apoio humano.", unsupported_request: "Posso ajudar com gestão, decisões, finanças, equipe, vendas, processos e sua jornada na Mesa." };
+const messages: Record<string, string> = { orientation_unavailable: "Não consegui concluir esta orientação agora. Tente novamente em instantes.", orientation_budget_exhausted: "O limite mensal de uso do TutorIA para este acesso foi atingido. A equipe pode revisar a disponibilidade.", orientation_rate_limited: "Você fez muitas tentativas agora. Aguarde um instante e tente novamente.", orientation_escalated: "Para orientar com segurança, preciso de mais contexto ou de apoio humano.", unsupported_request: "Posso ajudar com gestão, decisões, finanças, equipe, vendas, processos e sua jornada na Mesa." };
 const conversationStorageKey = "mesa-os:tutoria:conversation:v1";
 
 export function TutorIAAssistant({ workbench }: { workbench?: ReactNode }) {

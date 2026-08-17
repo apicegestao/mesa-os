@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { OpsEnrollmentPanel, OpsStaffEnrollmentPanel } from "@/modules/identity-access";
 import { OpsCrmConsole } from "@/modules/crm";
 import { OpsFinanceConsole } from "@/modules/finance/ui/ops-finance-console";
@@ -69,7 +70,7 @@ function OpsNavigation({ activeView, roles }: { activeView: OpsView; roles: Inte
     { view: "access", label: "Acessos" },
   ];
 
-  return <nav className="ops-navigation" aria-label="Módulos internos">{items.filter((item) => canUseView(item.view, roles)).map((item) => <a key={item.view} href={`/ops?view=${item.view}`} className={item.view === activeView ? "active" : ""}><span>{item.label}</span><b>→</b></a>)}</nav>;
+  return <nav className="ops-navigation" aria-label="Módulos internos">{items.filter((item) => canUseView(item.view, roles)).map((item) => <Link key={item.view} href={`/ops?view=${item.view}`} className={item.view === activeView ? "active" : ""}><span>{item.label}</span><b>→</b></Link>)}</nav>;
 }
 
 export default async function OpsPage({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
@@ -131,13 +132,13 @@ export default async function OpsPage({ searchParams }: { searchParams: Promise<
 
   return <main className="ops-shell">
     <aside className="ops-sidebar">
-      <a className="ops-brand" href="/ops"><span className="mesa-bars" aria-hidden="true"><i /><i /><i /></span><span><strong>MESA</strong><small>DOS DONOS</small></span></a>
+      <Link className="ops-brand" href="/ops"><span className="mesa-bars" aria-hidden="true"><i /><i /><i /></span><span><strong>MESA</strong><small>DOS DONOS</small></span></Link>
       <p className="ops-sidebar-label">Ambiente interno</p>
       <OpsNavigation activeView={activeView} roles={roles} />
-      <div className="ops-sidebar-footer"><strong>Operação Mesa</strong><small>Permissões e dados isolados</small><a href="/app">Ver visão de membro</a></div>
+      <div className="ops-sidebar-footer"><strong>Operação Mesa</strong><small>Permissões e dados isolados</small><Link href="/app">Ver visão de membro</Link></div>
     </aside>
     <section className="ops-main">
-      <header className="ops-header"><div><p className="eyebrow">{presentation.eyebrow}</p><h1>{presentation.title}</h1><p className="ops-header-summary">{presentation.summary}</p></div><a href="/app">Ver ambiente do membro</a></header>
+      <header className="ops-header"><div><p className="eyebrow">{presentation.eyebrow}</p><h1>{presentation.title}</h1><p className="ops-header-summary">{presentation.summary}</p></div><Link href="/app">Ver ambiente do membro</Link></header>
       {content}
     </section>
   </main>;
