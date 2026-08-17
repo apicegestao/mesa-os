@@ -14,6 +14,10 @@
 
 ## Authorized
 
+- DIA-3.6 — revisão v2 do Raio-X do Empresário: quatro pilares do Mapa de
+  Desenvolvimento, 32 itens versionados, escala comportamental 1–5, preservação
+  integral de execuções anteriores e protocolo formal de validação posterior.
+
 - MTH-2.20A — grafo metodológico versionado do Mapa de Desenvolvimento 4 × 4.
 - CYC-2.20B — histórico temporal de prioridades e ciclos T1, T2 e seguintes.
 - DIA-2.20C — episódios de entrada, pulso, reanálise trimestral e saída.

@@ -182,3 +182,13 @@ O frontend usa somente publishable key. Chaves secret/service-role ficam exclusi
 - A conversa pode ser persistida sob os termos vigentes; memória canônica continua estruturada, escopada, corrigível e separada de chat bruto.
 - Mesa OS Intelligence recebe somente sinais governados, agregados e desidentificados quando aplicável. Ela pode propor melhorias, mas não publica conteúdo, altera prompts produtivos nem toma ações automaticamente.
 - A implementação exige Definition Pack próprio, contratos de contexto e ferramentas, avaliações de qualidade/segurança, orçamento e critérios de escalonamento. Esta ADR não autoriza BUILD por si só.
+
+## ADR-042 — Raio-X por pilares e evidência de mensuração
+
+**Status:** ACCEPTED
+
+- O Raio-X é um instrumento de maturidade de práticas de gestão, não avaliação clínica, ranking ou benchmark externo.
+- Revisões usam os quatro pilares versionados do Mapa de Desenvolvimento; cada execução preserva sua revisão e nunca tem o score histórico reescrito.
+- Itens usam escala ordinal de cinco pontos com âncoras comportamentais e foco em prática observável, cadência, responsabilidade e evidência de uso.
+- Uma revisão pode ser metodologicamente fundamentada, mas só poderá ser declarada validada após protocolo documentado de conteúdo, compreensão, confiabilidade, estrutura e interpretação.
+- Alterações futuras de itens, pesos, faixas ou uso do score continuam exigindo Change Request e Definition Pack.

@@ -14,6 +14,7 @@ export function DiagnosticExperience({ initialWorkspace }: { initialWorkspace: D
   const activeDimension = workspace.dimensions[activeIndex];
   const count = answeredCount(workspace.answers);
   const total = workspace.dimensions.reduce((sum, dimension) => sum + dimension.questions.length, 0);
+  const estimatedMinutes = Math.max(8, Math.ceil(total * 0.375));
   const progress = Math.round((count / total) * 100);
   const complete = isDiagnosticComplete(workspace);
   const tones = ["blue", "gold", "plum", "green", "blue"] as const;
@@ -53,8 +54,8 @@ export function DiagnosticExperience({ initialWorkspace }: { initialWorkspace: D
 
   if (workspace.status === "not_started") return <section className="diagnostic-layout">
     <div className="welcome-card card"><p className="eyebrow">Sua próxima ação</p><h1>Descubra o ponto de partida da sua empresa</h1>
-      <p>O Raio-X do Empresário percorre cinco dimensões da gestão. São 20 perguntas e leva cerca de 8 minutos.</p>
-      <ul><li>Responda com base no que acontece hoje.</li><li>Você pode salvar e continuar depois.</li><li>O resultado fica registrado após a conclusão.</li></ul>
+      <p>O Raio-X percorre {workspace.dimensions.length} pilares da gestão. São {total} perguntas e leva cerca de {estimatedMinutes} minutos.</p>
+      <ul><li>Responda pela prática atual, não pelo que pretende implantar.</li><li>Considere cadência, responsável e evidência de uso ao escolher sua resposta.</li><li>Você pode salvar e continuar depois.</li><li>O resultado fica registrado após a conclusão.</li></ul>
       <button onClick={begin} disabled={isPending}>{isPending ? "Preparando…" : "Iniciar diagnóstico"}</button>
       {message && <p className="feedback feedback-error" role="alert">{message}</p>}
     </div>
