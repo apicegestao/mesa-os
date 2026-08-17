@@ -631,3 +631,33 @@ h1 { font-size: clamp(1.75rem, 4vw, 2.7rem); line-height: 1.08; }
 .tutoria-consent-actions { display: grid; gap: 1rem; }
 .consent-check { display: flex; gap: .55rem; align-items: flex-start; margin: .75rem 0; color: #1e293b; }
 .consent-check input { margin-top: .25rem; }
+
+/* UXM-3.7 — mobile-first production hardening */
+@media (max-width: 760px) {
+  html { -webkit-text-size-adjust: 100%; }
+  body { min-width: 0; overflow-x: hidden; }
+  .experience-shell, .experience-main, .experience-content, .ops-shell, .ops-main { min-width: 0; }
+  .experience-sidebar { position: static; top: auto; gap: .45rem; padding: .55rem .75rem; }
+  .experience-sidebar nav { width: 100%; gap: .35rem; margin-left: 0; padding-bottom: .1rem; scroll-snap-type: x proximity; scrollbar-width: none; }
+  .experience-sidebar nav::-webkit-scrollbar { display: none; }
+  .experience-sidebar nav a { min-height: 44px; padding: .7rem .75rem; font-size: .82rem; scroll-snap-align: start; }
+  .experience-sidebar nav a span { display: inline; font-size: .72rem; }
+  .experience-topbar { position: static; min-height: 56px; padding: .55rem .85rem; background: #fff; backdrop-filter: none; }
+  .experience-topbar small { font-size: .62rem; }.experience-topbar strong { font-size: .9rem; }
+  .topbar-account { gap: .55rem; }.topbar-avatar { width: 32px; height: 32px; }.experience-topbar .header-action { min-height: 40px; padding: .45rem; font-size: .78rem; }
+  .experience-content { width: calc(100% - 1.25rem); padding: .85rem 0 6.5rem; }
+  .today-greeting { margin-bottom: .9rem; }.today-greeting h1 { font-size: clamp(1.45rem, 7vw, 1.9rem); }.today-greeting > p:last-child { font-size: .88rem; line-height: 1.42; }
+  .cycle-card, .result-card, .actions-column, .pulse-card, .experience-section, .experience-card, .evolution-projection, .journey-deliveries, .pending-diagnostic-card { border-radius: .75rem; }
+  .cycle-card, .result-card { min-height: auto; padding: 1rem; }.cycle-card h2, .result-card h2 { margin-top: 1rem; font-size: 1.05rem; }.cycle-card > p, .result-card > p:nth-of-type(2) { font-size: .82rem; }
+  .today-grid { gap: .75rem; margin-top: .9rem; }.actions-column, .pulse-card { padding: .9rem; }.compact-heading h2 { font-size: 1rem; }.compact-heading > span { font-size: .72rem; }
+  .action-card { grid-template-columns: auto minmax(0, 1fr); gap: .7rem; padding: .85rem; }.action-number { width: 32px; height: 32px; font-size: .75rem; }.action-copy h3 { font-size: .92rem; }.action-copy > p:not(.eyebrow), .action-meta { font-size: .76rem; }.action-buttons { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; width: 100%; }.action-buttons a, .action-buttons button { min-height: 42px; align-items: center; padding: .65rem .75rem; font-size: .78rem; }
+  .experience-shell button:not(.floating-tutoria):not(.tutoria-close):not(.tutoria-reset), .experience-shell .primary-link, .pending-diagnostic-card summary, .new-evidence-link, .empty-evidence-link, .delivery-row a { min-height: 44px; align-items: center; }
+  .experience-shell .eyebrow { font-size: .68rem; }.section-heading h2, .records-heading h1 { font-size: clamp(1.35rem, 6vw, 1.8rem); }.section-intro, .records-heading > p:last-child { font-size: .88rem; line-height: 1.45; }
+  .mentor-note { grid-template-columns: auto minmax(0, 1fr); gap: .75rem; padding: .9rem; }.mentor-note blockquote { font-size: 1rem; }.ghost-light { grid-column: 1 / -1; width: 100%; min-height: 42px; display: inline-flex; justify-content: center; align-items: center; }
+  .diagnostic-heading { gap: .8rem; }.experience-shell .diagnostic-heading h1 { font-size: 1.45rem; }.experience-shell .diagnostic-heading p:last-child { font-size: .86rem; line-height: 1.45; }.diagnostic-heading-actions { flex-wrap: wrap; }.diagnostic-tutoria { min-height: 40px; font-size: .78rem; }.experience-shell .question-card { padding: .85rem; }.experience-shell .question-fieldset legend { font-size: .92rem; line-height: 1.45; }.experience-shell .scale-options label { min-height: 48px; display: grid; grid-template-columns: 1.7rem minmax(0, 1fr); justify-items: start; align-items: center; gap: .55rem; padding: .65rem .75rem; text-align: left; }.experience-shell .scale-options strong { display: grid; width: 1.7rem; height: 1.7rem; place-items: center; border-radius: 50%; background: #eaf0f5; }.experience-shell .scale-options label.selected strong { background: #397fba; color: #fff; }.experience-shell .scale-options span { font-size: .78rem; line-height: 1.3; }.diagnostic-actions { display: grid; grid-template-columns: 1fr; }.diagnostic-actions .button-secondary { margin-right: 0; }.diagnostic-actions button { width: 100%; }
+  .evidence-stat-grid article, .evolution-stat-grid article { min-height: auto; padding: .9rem; }.evidence-stat-grid strong, .evolution-stat-grid strong { margin-top: .6rem; font-size: 1.6rem; }.proof-history, .evidence-history, .evolution-dimensions, .evolution-milestones, .cycle-history { padding: .85rem; }
+  .floating-tutoria { right: 12px; bottom: 12px; min-height: 48px; padding: 8px 13px 8px 8px; }.floating-tutoria > span { width: 32px; height: 32px; }.floating-tutoria strong { font-size: .78rem; }
+  .tutoria-assistant { right: 10px; bottom: 70px; width: calc(100vw - 20px); max-height: calc(100svh - 86px); padding: 12px; border-radius: 12px; }.tutoria-assistant h2 { font-size: 1.08rem; }.tutoria-conversation { max-height: min(44svh, 350px); }.tutoria-composer { grid-template-columns: 1fr; }.tutoria-composer textarea { min-height: 58px; font-size: .9rem; }.tutoria-composer button { min-height: 44px; font-size: .84rem; }
+  .ops-sidebar { position: static; width: 100%; min-height: auto; padding: .7rem .85rem; }.ops-sidebar .ops-navigation { display: flex; overflow-x: auto; }.ops-sidebar .ops-navigation a { min-height: 44px; padding: .7rem .8rem; font-size: .82rem; white-space: nowrap; }.ops-main { margin-left: 0; padding-bottom: 2rem; }.ops-header, .ops-module, .ops-console { width: calc(100% - 1.25rem); }.ops-header { align-items: flex-start; flex-direction: column; padding: 1rem 0 .75rem; }.ops-header h1 { font-size: 1.35rem; }.ops-header-summary { font-size: .88rem; }.ops-create, .ops-finance { padding: .9rem; }
+  .ops-client-drawer { width: 100vw; padding: 1rem; }.ops-client-drawer h2 { font-size: 1.35rem; }
+}
