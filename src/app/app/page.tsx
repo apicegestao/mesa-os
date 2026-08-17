@@ -32,15 +32,14 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
 
   const { data: membership } = await supabase
     .from("memberships")
-    .select("role,status,organization_id,organizations(name)")
+    .select("role,status,organization_id")
     .eq("identity_id", subject)
     .eq("status", "active")
     .maybeSingle();
 
   if (!membership) return <main className="shell"><section className="status"><p className="eyebrow">Mesa OS</p><h1>Acesso pendente</h1><p className="summary">Sua identidade foi confirmada, mas não existe um vínculo organizacional ativo. Fale com quem enviou seu convite.</p><form action={logout}><button type="submit" className="button-secondary">Sair</button></form></section></main>;
 
-  const organization = Array.isArray(membership.organizations) ? membership.organizations[0] : membership.organizations;
-  if (membership.role !== "owner") return <main className="shell"><section className="status"><p className="eyebrow">Mesa OS · {organization?.name}</p><h1>Acesso confirmado</h1><p className="summary">O Raio-X inicial está disponível somente para o responsável da organização neste momento.</p><form action={logout}><button type="submit" className="button-secondary">Sair</button></form></section></main>;
+  if (membership.role !== "owner") return <main className="shell"><section className="status"><p className="eyebrow">Mesa OS</p><h1>Acesso confirmado</h1><p className="summary">O Raio-X inicial está disponível somente para o responsável da organização neste momento.</p><form action={logout}><button type="submit" className="button-secondary">Sair</button></form></section></main>;
 
   const workspace = await loadDiagnosticWorkspace(supabase, membership.organization_id);
   const priority = workspace?.status === "completed" ? await loadPriority(supabase, membership.organization_id) : null;
@@ -57,15 +56,14 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
   const swotWorkbench = await loadWorkbenchWorkspace(supabase, "swot_strategic_reading_v1");
   const salesWorkbench = await loadWorkbenchWorkspace(supabase, "sales_funnel_value_v1");
   const processWorkbench = await loadWorkbenchWorkspace(supabase, "critical_process_map_v1");
-  const organizationName = organization?.name ?? "Sua empresa";
   const mesaOSTerms = await loadMesaOSTermsState(supabase);
-  if (mesaOSTerms?.latestEvent !== "accepted") return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout}><MesaOSTermsGate state={mesaOSTerms ?? { documentVersionId: "", title: "Termos de Uso", bodyMarkdown: "Os Termos de Uso estão sendo preparados. Tente novamente em instantes.", contentSha256: "", latestEvent: null, automationEnabled: false }} /></AppChrome>;
+  if (mesaOSTerms?.latestEvent !== "accepted") return <AppChrome memberName={memberName} logoutAction={logout}><MesaOSTermsGate state={mesaOSTerms ?? { documentVersionId: "", title: "Termos de Uso", bodyMarkdown: "Os Termos de Uso estão sendo preparados. Tente novamente em instantes.", contentSha256: "", latestEvent: null, automationEnabled: false }} /></AppChrome>;
   const termsReceipts = activeView === "account" ? await loadMyTermsReceipts(supabase) : [];
-  if (!workspace) return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout}><section className="experience-card empty-experience"><p className="eyebrow">Mesa OS</p><h1>Diagnóstico indisponível</h1><p>Não foi possível carregar a definição neste momento. Tente novamente em instantes.</p></section></AppChrome>;
+  if (!workspace) return <AppChrome memberName={memberName} logoutAction={logout}><section className="experience-card empty-experience"><p className="eyebrow">Mesa OS</p><h1>Diagnóstico indisponível</h1><p>Não foi possível carregar a definição neste momento. Tente novamente em instantes.</p></section></AppChrome>;
 
   if (workspace.status !== "completed") {
     const nextAction = deriveNextAction({ diagnosticStatus: "draft", hasPriority: false, priorityTied: false, hasCycle: false, hasMissions: false, hasAvailableMission: false, hasToolDraft: false, implementationStatus: "none" });
-    return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout} progress={0} activeView={activeView}>
+    return <AppChrome memberName={memberName} logoutAction={logout} progress={0} activeView={activeView}>
       {activeView === "today" && <><MemberHome memberName={memberName} nextAction={nextAction} cycle={null} completedSteps={0} totalSteps={8} highlightedPending={<section className="pending-diagnostic-card"><div><p className="eyebrow">Pendência prioritária</p><h2>Concluir o Raio-X do Empresário</h2><p>Finalize sua leitura de entrada para liberar a prioridade metodológica.</p></div><details><summary>Continuar Raio-X</summary><DiagnosticExperience initialWorkspace={workspace} /></details></section>} /><MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} message="Antes de acelerar, conclua o Raio-X. Uma leitura honesta do ponto de partida evita que a empresa trate apenas os sintomas." materialTitle="Como transformar diagnóstico em decisão de gestão" /></>}
       {activeView === "journey" && <><JourneyProgress steps={draftProgressSteps} /><div id="metodologia"><MethodologyMap map={methodologyMap} /></div><JourneyDeliveries missions={[]} toolStarted={false} implementationStatus="none" evidenceSubmitted={false} /></>}
       {activeView === "diagnostics" && <DiagnosticsOverview workspace={workspace} diagnosticContent={<DiagnosticExperience initialWorkspace={workspace} />} />}
@@ -99,7 +97,7 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
   const completedSteps = progressSteps.filter((step) => step.complete).length;
   const progress = Math.round((completedSteps / progressSteps.length) * 100);
 
-  return <AppChrome organizationName={organizationName} memberName={memberName} logoutAction={logout} progress={progress} activeView={activeView} cycleLabel={cycle?.title} tutoriaWorkbench={<>{dreWorkbench && <DreWorkbench workspace={dreWorkbench} />}{raciWorkbench && <RaciWorkbench workspace={raciWorkbench} />}{swotWorkbench && <SwotWorkbench workspace={swotWorkbench} />}{salesWorkbench && <StructuredWorkbench workspace={salesWorkbench} />}{processWorkbench && <StructuredWorkbench workspace={processWorkbench} />}</>}>
+  return <AppChrome memberName={memberName} logoutAction={logout} progress={progress} activeView={activeView} cycleLabel={cycle?.title} tutoriaWorkbench={<>{dreWorkbench && <DreWorkbench workspace={dreWorkbench} />}{raciWorkbench && <RaciWorkbench workspace={raciWorkbench} />}{swotWorkbench && <SwotWorkbench workspace={swotWorkbench} />}{salesWorkbench && <StructuredWorkbench workspace={salesWorkbench} />}{processWorkbench && <StructuredWorkbench workspace={processWorkbench} />}</>}>
     {activeView === "today" && <><MemberHome memberName={memberName} nextAction={nextAction} cycle={cycle} priorityLabel={priority?.dimension_label} missionTitle={availableMission?.title} completedSteps={completedSteps} totalSteps={progressSteps.length} /><MentorNote materialUrl={process.env.NEXT_PUBLIC_LULA_MATERIAL_URL} message={`Seu próximo avanço é ${nextAction.title.toLocaleLowerCase()}. ${nextAction.description}`} materialTitle={availableMission ? "Como transformar a missão atual em rotina de gestão" : "Como transformar diagnóstico em decisão de gestão"} /></>}
     {activeView === "journey" && <><JourneyProgress steps={progressSteps} />
     <section id="jornada" className="experience-section journey-section" aria-labelledby="journey-title">

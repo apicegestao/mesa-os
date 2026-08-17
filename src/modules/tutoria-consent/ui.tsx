@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { acceptMesaOSTerms, withdrawMesaOSTutoriaContext } from "./actions";
+import { acceptMesaOSTerms } from "./actions";
 import type { MesaOSTermsState } from "./data";
 
 const initialState = { status: "idle" as const };
@@ -17,16 +17,11 @@ export function MesaOSTermsGate({ state }: { state: MesaOSTermsState }) {
 
 export function MesaOSTermsPanel({ state }: { state: MesaOSTermsState | null }) {
   if (!state) return null;
-  if (state.latestEvent === "accepted" && state.automationEnabled) return <section className="ai-budget-card tutoria-memory-card"><p className="eyebrow">Termos de Uso</p><h2>Versão atual aceita</h2><p>O contexto estruturado do TutorIA está ativo nos limites dos Termos. Você pode desligar novas derivações automáticas a qualquer momento.</p><NoticeSummary state={state} /><WithdrawButton state={state} /></section>;
-  return <section className="ai-budget-card tutoria-memory-card"><p className="eyebrow">Termos de Uso</p><h2>Contexto automático desativado</h2><p>Você pode reativar o contexto longitudinal do TutorIA aceitando a versão atual dos Termos.</p><NoticeSummary state={state} /><AcceptButton state={state} /></section>;
+  if (state.latestEvent === "accepted" && state.automationEnabled) return <section className="ai-budget-card tutoria-memory-card"><p className="eyebrow">Termos de Uso</p><h2>Versão atual aceita</h2><p>O contexto estruturado do TutorIA está ativo nos limites dos Termos. Para solicitar a interrupção de novas derivações automáticas, fale com a equipe Mesa.</p><NoticeSummary state={state} /></section>;
+  return <section className="ai-budget-card tutoria-memory-card"><p className="eyebrow">Termos de Uso</p><h2>Contexto sob atendimento</h2><p>A equipe Mesa pode orientar sobre a personalização longitudinal do TutorIA e registrar solicitações relacionadas ao contexto.</p><NoticeSummary state={state} /><AcceptButton state={state} /></section>;
 }
 
 function AcceptButton({ state }: { state: MesaOSTermsState }) {
   const [actionState, action] = useActionState(acceptMesaOSTerms, initialState);
   return <form action={action}><input type="hidden" name="documentVersionId" value={state.documentVersionId} /><label className="consent-check"><input type="checkbox" name="informed" value="yes" required /> Li e aceito estes Termos de Uso.</label><button type="submit">Aceitar e continuar</button>{actionState.message && <p className={`feedback feedback-${actionState.status}`} role="status">{actionState.message}</p>}</form>;
-}
-
-function WithdrawButton({ state }: { state: MesaOSTermsState }) {
-  const [actionState, action] = useActionState(withdrawMesaOSTutoriaContext, initialState);
-  return <form action={action}><input type="hidden" name="documentVersionId" value={state.documentVersionId} /><button type="submit" className="button-secondary">Desligar novas derivações automáticas</button>{actionState.message && <p className={`feedback feedback-${actionState.status}`} role="status">{actionState.message}</p>}</form>;
 }

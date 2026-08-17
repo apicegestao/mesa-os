@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { NextAction } from "../domain/next-action";
-import { memberGreeting } from "../domain/greeting";
+import { MemberGreeting } from "./member-greeting";
 
 type PulseItem = { label: string; value: string; progress?: number; tone: "blue" | "gold" | "plum" | "green" };
 
@@ -29,8 +29,6 @@ export function MemberHome({
 }) {
   const progress = Math.round((completedSteps / totalSteps) * 100);
   const actions = [nextAction, ...additionalActions];
-  const firstName = memberName.trim().split(/\s+/)[0] || "membro";
-  const greeting = memberGreeting(localHour ?? new Date().getHours());
   const pulse: PulseItem[] = [
     { label: "Core loop", value: `${completedSteps} de ${totalSteps} etapas`, progress, tone: "blue" },
     { label: "Prioridade", value: priorityLabel ?? "Aguardando diagnóstico", tone: "gold" },
@@ -40,7 +38,7 @@ export function MemberHome({
   return <section id="hoje" className="member-today" aria-labelledby="today-title">
     <header className="today-greeting">
       <p className="eyebrow">Hoje</p>
-      <h1 id="today-title">{greeting}, {firstName}.</h1>
+      <h1 id="today-title"><MemberGreeting memberName={memberName} initialHour={localHour} /></h1>
       <p>Seu foco está organizado abaixo: contexto, próxima ação e o que já avançou.</p>
     </header>
 
