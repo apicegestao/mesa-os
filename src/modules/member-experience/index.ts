@@ -9,4 +9,5 @@ export type { MemberView } from "./ui/app-chrome";
 export { MethodologyMap } from "./ui/methodology-map";
 export { TutoriaPresence } from "./ui/tutoria-presence";
 export { JourneyProgress, type ProgressStep } from "./ui/journey-progress";
+export { JourneyGuide } from "./ui/journey-guide";
 export { MentorNote } from "./ui/mentor-note";

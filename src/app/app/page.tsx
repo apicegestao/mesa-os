@@ -12,7 +12,7 @@ import { loadMeasurementProjection } from "@/modules/measurement";
 import { loadPublishedMethodologyMap } from "@/modules/methodology";
 import { CoreLoopPanel } from "@/modules/core-loop/core-loop-panel";
 import { logout } from "@/modules/identity-access";
-import { AppChrome, deriveNextAction, DiagnosticsOverview, EvidenceOverview, EvolutionProjection, JourneyDeliveries, JourneyProgress, MemberHome, MentorNote, MethodologyMap, type MemberView, type ProgressStep } from "@/modules/member-experience";
+import { AppChrome, deriveNextAction, DiagnosticsOverview, EvidenceOverview, EvolutionProjection, JourneyDeliveries, JourneyGuide, JourneyProgress, MemberHome, MentorNote, MethodologyMap, type MemberView, type ProgressStep } from "@/modules/member-experience";
 import { lowestCandidates } from "@/modules/priority/domain/priority";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 import { loadMesaOSTermsState, loadMyTermsReceipts, MesaOSTermsGate, MesaOSTermsPanel, TermsReceipts } from "@/modules/tutoria-consent";
@@ -105,6 +105,7 @@ export default async function AuthenticatedShellPage({ searchParams }: { searchP
     {activeView === "journey" && <><JourneyProgress steps={progressSteps} />
     <section id="jornada" className="experience-section journey-section" aria-labelledby="journey-title">
       <div className="section-heading"><div><p className="eyebrow">Minha jornada</p><h2 id="journey-title">Do diagnóstico à transformação</h2></div><span className="status-pill">Ciclo atual</span></div>
+      <JourneyGuide nextAction={nextAction} />
       <div className="journey-rail" aria-label="Etapas da jornada"><span className="done">Diagnóstico</span><span className={priority ? "done" : "current"}>Prioridade</span><span className={cycle ? "done" : priority ? "current" : "future"}>Ciclo</span><span className={availableMission ? "current" : "future"}>Missão</span><span className="future">Evolução</span></div>
       {workspace.executionId && workspace.result && <div className="journey-panels"><div id="prioridade"><PriorityPanel result={workspace.result} priority={priority} /></div>{priority && <div id="ciclo"><CyclePanel priorityId={priority.id} cycle={cycle} /></div>}{cycle && <div id="missao"><MissionPanel cycleId={cycle.id} missions={missions} /></div>}</div>}
     </section>

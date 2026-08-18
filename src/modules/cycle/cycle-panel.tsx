@@ -53,11 +53,11 @@ export function CyclePanel({
       <p className="eyebrow">Sua próxima ação</p>
       <h2>Iniciar ciclo de 90 dias</h2>
       <p>
-        O ciclo organiza o período de foco da prioridade confirmada. Ainda não
-        cria Missões, metas ou tarefas.
+        Ative o período de foco definido pelo Raio-X. A primeira Missão será
+        liberada imediatamente para você saber exatamente como começar.
       </p>
       <button disabled={pending} onClick={handleStart}>
-        {pending ? "Iniciando…" : "Iniciar ciclo"}
+        {pending ? "Preparando sua jornada…" : "Ativar ciclo e primeira Missão"}
       </button>
       {message && <p className="feedback error-text">{message}</p>}
     </section>
