@@ -6,9 +6,10 @@ export const metadata: Metadata = {
   description: "Fundação técnica do Mesa OS.",
   applicationName: "Mesa OS",
   icons: {
-    icon: "/icon.png",
-    apple: "/apple-icon.png",
+    icon: "/icon.png?v=4",
+    apple: "/apple-icon.png?v=4",
   },
+  manifest: "/manifest.webmanifest",
 };
 
 export const viewport: Viewport = {

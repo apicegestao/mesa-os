@@ -297,6 +297,10 @@ button:disabled { cursor: wait; opacity: 0.65; }
 .journey-panels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; align-items: start; }
 .journey-panels > div { scroll-margin-top: 5.5rem; }
 .experience-shell .priority-wrap { width: auto; margin: 0; }
+.experience-sidebar nav a .nav-icon { display:inline-grid; width:1em; height:1em; place-items:center; }
+.experience-sidebar nav a .nav-icon svg { width:1em; height:1em; fill:none; stroke:currentColor; stroke-linecap:round; stroke-linejoin:round; stroke-width:1.7; }
+.diagnostic-result-action { display:inline-flex; align-items:center; justify-content:space-between; gap:.9rem; margin-top:1rem; border-radius:.55rem; padding:.7rem .85rem; background:#101d37; color:#fff; font-size:.75rem; font-weight:800; text-decoration:none; transition:background .16s ease, transform .16s ease; }
+.diagnostic-result-action:hover { background:#173f66; transform:translateY(-1px); }
 .experience-shell .priority-card { max-width: none; margin: 0; border-top-width: 3px; padding: 1.25rem; box-shadow: none; }
 .experience-shell .priority-card h2 { font-size: clamp(1.45rem, 2.5vw, 2rem); }
 .experience-shell .priority-card + .priority-card { margin-top: 1rem; }
@@ -621,6 +625,16 @@ h1 { font-size: clamp(1.75rem, 4vw, 2.7rem); line-height: 1.08; }
 .comparison-track { position:relative; height:.48rem; overflow:hidden; border-radius:99px; background:#e8eef3; }.comparison-track i,.comparison-track b { position:absolute; inset:0 auto 0 0; display:block; height:100%; border-radius:inherit; }.comparison-track .baseline { background:#cbd9e5; }.comparison-track b.blue { background:#397fba; }.comparison-track b.gold { background:#b9853d; }.comparison-track b.plum { background:#955277; }.comparison-track b.green { background:#31806d; }
 .history-head { display:grid; grid-template-columns:1fr .55fr .9fr .8fr; gap:1rem; padding:.55rem 0; border-top:1px solid #e5ebf0; color:#8393a2; font-size:.58rem; font-weight:800; letter-spacing:.05em; text-transform:uppercase; }
 @media (max-width:760px) { .evolution-stat-grid,.evolution-detail-grid { grid-template-columns:1fr; }.history-head { display:none; } }
+
+/* UXR-3.11 — interaction continuity and legibility pass */
+.experience-shell button, .experience-shell a { -webkit-tap-highlight-color:transparent; }
+.experience-shell button:not(:disabled), .experience-shell .action-buttons a, .experience-shell .diagnostic-result-action { transition:background .16s ease, border-color .16s ease, color .16s ease, transform .16s ease, box-shadow .16s ease; }
+.experience-shell button:not(:disabled):hover, .experience-shell .action-buttons a:hover { transform:translateY(-1px); }
+.experience-shell button:focus-visible, .experience-shell a:focus-visible { outline:3px solid rgb(57 127 186 / 35%); outline-offset:3px; }
+.experience-shell .priority-card { border-color:#dbe4ec; box-shadow:0 .45rem 1.35rem rgb(16 29 55 / 6%); }
+.experience-shell .priority-card > p:not(.eyebrow) { color:#526d86; line-height:1.5; }
+.experience-shell .priority-card button { background:#101d37; color:#fff; }
+@media (max-width:760px) { .experience-sidebar nav a .nav-icon { width:.9rem; height:.9rem; }.diagnostic-result-action { width:100%; min-height:44px; font-size:.82rem; }.experience-shell .priority-card button { min-height:44px; width:100%; }.experience-shell .result-hero { padding:1.35rem 1rem; } }
 .tutoria-consent-notice {
   margin: 1rem 0;
   border: 1px solid var(--line, #dce5ef);

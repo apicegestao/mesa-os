@@ -1,5 +1,6 @@
 import type { DiagnosticResult as Result, DiagnosticWorkspace } from "../domain/diagnostic";
 import { RadarChart } from "./radar-chart";
+import Link from "next/link";
 
 export function DiagnosticResult({ workspace }: { workspace: DiagnosticWorkspace }) {
   const result = workspace.result as Result;
@@ -12,7 +13,8 @@ export function DiagnosticResult({ workspace }: { workspace: DiagnosticWorkspace
       <p className="result-label">Índice de Maturidade Empresarial</p>
       <strong className="ime-score">{result.ime}</strong>
       <span className="stage-pill">{result.stageLabel}</span>
-      <p>Este resultado registra sua leitura de entrada. As próximas etapas ainda não fazem parte deste incremento.</p>
+      <p>Este resultado registra sua leitura de entrada. A prioridade do primeiro ciclo foi definida a partir da dimensão que mais precisa de atenção agora.</p>
+      <Link className="diagnostic-result-action" href="/app?view=journey#ciclo">Preparar meu ciclo de 90 dias <span aria-hidden="true">→</span></Link>
     </div>
     <div className="result-grid">
       <section className="card"><h2>Perfil por dimensão</h2><RadarChart dimensions={result.dimensions} /></section>
