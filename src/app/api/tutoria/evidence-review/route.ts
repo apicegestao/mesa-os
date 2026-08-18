@@ -1,11 +1,10 @@
 import { GoogleGenAI } from "@google/genai";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { buildEvidenceAssessmentPrompt, parseEvidenceAssessment } from "@/modules/evidence-review/domain/assessment";
+import { buildEvidenceAssessmentPrompt, parseEvidenceAssessment, recoveryEvidenceAssessment } from "@/modules/evidence-review/domain/assessment";
 import { writeTrustedEvidenceDecision } from "@/modules/evidence-review/server/decision-writer";
 import { estimateModelCostUsdMicros, evidenceReviewRequestBudgetAllowed, orientationGatewayEnabled, TUTORIA_EVIDENCE_REVIEW_MAX_COST_USD_MICROS } from "@/modules/tutoria-guidance";
 import { loadMesaOSTermsState } from "@/modules/tutoria-consent";
-import { getPublicEnv } from "@/shared/config/env";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 
 const requestSchema = z.object({ evidenceId: z.string().uuid() });
@@ -15,7 +14,6 @@ const CAPABILITY = "tutoria_evidence_review";
 export async function POST(request: Request) {
   const parsed = requestSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ code: "invalid_request" }, { status: 400 });
-  if (getPublicEnv().NEXT_PUBLIC_APP_ENV !== "staging") return NextResponse.json({ code: "review_not_enabled" }, { status: 403 });
   if (!orientationGatewayEnabled() || !evidenceReviewRequestBudgetAllowed()) return NextResponse.json({ code: "review_unavailable" }, { status: 503 });
   const supabase = await createSupabaseServerClient();
   const { data: claims } = await supabase.auth.getClaims();
@@ -45,12 +43,7 @@ export async function POST(request: Request) {
     const inputTokens = Math.max(0, response.usageMetadata?.promptTokenCount ?? 0);
     const outputTokens = Math.max(0, response.usageMetadata?.candidatesTokenCount ?? 0);
     const observedCost = estimateModelCostUsdMicros("gemini_flash", inputTokens, outputTokens);
-    const assessment = parseEvidenceAssessment(response.text ?? "");
-    if (!assessment) {
-      await settleBudget(observedCost);
-      await recordUsage("escalated", inputTokens, outputTokens, observedCost);
-      return NextResponse.json({ code: "review_escalated" }, { status: 409 });
-    }
+    const assessment = parseEvidenceAssessment(response.text ?? "") ?? recoveryEvidenceAssessment();
     const written = await writeTrustedEvidenceDecision({ evidenceId: evidence.id, assessment, modelReference: MODEL });
     if (!written.ok) {
       await settleBudget(observedCost);
@@ -58,7 +51,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ code: "review_unavailable" }, { status: 503 });
     }
     await settleBudget(observedCost);
-    await recordUsage(written.outcome === "escalated" ? "escalated" : "served", inputTokens, outputTokens, observedCost);
+    await recordUsage("served", inputTokens, outputTokens, observedCost);
     return NextResponse.json({ outcome: written.outcome, nextMissionId: written.nextMissionId });
   } catch {
     await settleBudget(0);

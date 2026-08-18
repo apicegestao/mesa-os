@@ -11,7 +11,7 @@ describe("TutorIA floating conversation", () => {
     expect(screen.queryByLabelText("Como posso ajudar?")).not.toBeInTheDocument();
   });
 
-  it("keeps human support out of the page until TutorIA asks for escalation", () => {
+  it("does not offer a human escalation action in the TutorIA experience", () => {
     render(<TutorIAAssistant />);
     expect(screen.queryByRole("button", { name: "Falar com a equipe" })).not.toBeInTheDocument();
   });

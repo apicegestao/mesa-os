@@ -6,7 +6,7 @@ import { loadPublishedMethodologyMap } from "@/modules/methodology";
 import { loadMissions } from "@/modules/mission";
 import { loadPriority } from "@/modules/priority";
 import { buildTutorIAMemberState, buildTutorIAMethodologySummary, recordTutorIAReadGateway } from "@/modules/tutoria-foundation";
-import { buildOrientationPrompt, estimateModelCostUsdMicros, evaluateTutorIAUsage, foundationalOrientation, orientationGatewayEnabled, parseOrientationOutput, TUTORIA_ORIENTATION_MAX_COST_USD_MICROS } from "@/modules/tutoria-guidance";
+import { buildOrientationPrompt, estimateModelCostUsdMicros, evaluateTutorIAUsage, foundationalOrientation, keepOrientationAutonomous, orientationGatewayEnabled, parseOrientationOutput, recoveryOrientation, TUTORIA_ORIENTATION_MAX_COST_USD_MICROS } from "@/modules/tutoria-guidance";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 import { loadMesaOSTermsState } from "@/modules/tutoria-consent";
 import { loadTutorIAOrientationContext } from "@/modules/tutoria-memory/data";
@@ -36,10 +36,10 @@ export async function POST(request: Request) {
   const terms = await loadMesaOSTermsState(supabase);
   const longitudinalContext = await loadTutorIAOrientationContext(supabase, terms?.latestEvent === "accepted" && terms.automationEnabled);
   const policy = await recordTutorIAReadGateway({ supabase, authenticatedIdentityId: actorIdentityId, organizationId: membership.organization_id, membershipActive: membership.status === "active", requestedTool: usage.request.objective === "understand_next_step" ? "read_member_state" : "read_methodology_map", sourceCodes: ["member_state", "methodology_summary"], absentFields: methodology.status === "absent" ? ["published_methodology"] : [] });
-  if (policy.outcome !== "allow") return NextResponse.json({ code: "orientation_escalated" }, { status: 409 });
+  if (policy.outcome !== "allow") return NextResponse.json({ code: "orientation_unavailable" }, { status: 503 });
   if (longitudinalContext.length) {
     const contextPolicy = await recordTutorIAReadGateway({ supabase, authenticatedIdentityId: actorIdentityId, organizationId: membership.organization_id, membershipActive: true, requestedTool: "read_longitudinal_context", sourceCodes: ["diagnostic_completed", "priority_confirmed", "cycle_started", "mission_available", "implementation_confirmed", "evidence_approved"], absentFields: [] });
-    if (contextPolicy.outcome !== "allow") return NextResponse.json({ code: "orientation_escalated" }, { status: 409 });
+    if (contextPolicy.outcome !== "allow") return NextResponse.json({ code: "orientation_unavailable" }, { status: 503 });
   }
 
   const audit = (event_kind: "invocation_started" | "invocation_finished", outcome: "served" | "unavailable" | "escalated", options: { duration_ms?: number; response_schema_valid?: boolean; failure_code?: string; provider_code?: typeof PROVIDER_CODE | "none" } = {}) => supabase.from("tutoria_orientation_audits").insert({ organization_id: membership.organization_id, actor_identity_id: actorIdentityId, objective: usage.request.objective, event_kind, outcome, provider_code: options.provider_code ?? "none", model_code: options.provider_code === PROVIDER_CODE ? MODEL : null, response_schema_valid: options.response_schema_valid ?? false, duration_ms: options.duration_ms ?? 0, failure_code: options.failure_code ?? null });
@@ -54,7 +54,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ code: "orientation_rate_limited" }, { status: 429 });
   }
   const { error: startAuditError } = await audit("invocation_started", "unavailable", { provider_code: PROVIDER_CODE, failure_code: "model_invocation_started" });
-  if (startAuditError) return NextResponse.json({ code: "orientation_escalated" }, { status: 409 });
+  if (startAuditError) return NextResponse.json({ code: "orientation_unavailable" }, { status: 503 });
   const { data: reservationRows, error: reservationError } = await supabase.rpc("reserve_tutoria_member_budget", { requested_capability_code: "tutoria_orientation", maximum_cost_usd_micros: TUTORIA_ORIENTATION_MAX_COST_USD_MICROS });
   const reservation = reservationRows?.[0];
   const reservationId = reservation?.reservation_id;
@@ -72,18 +72,13 @@ export async function POST(request: Request) {
     const response = await genAI.models.generateContent({ model: MODEL, contents: buildOrientationPrompt({ objective: usage.request.objective, question: usage.request.question, memberState, methodology, longitudinalContext }), config: { responseMimeType: "application/json", responseSchema: { type: Type.OBJECT, properties: { resumo: { type: Type.STRING }, proxima_acao: { type: Type.STRING }, justificativa_metodologica: { type: Type.STRING }, confidence_band: { type: Type.STRING, enum: ["high", "medium", "low"] }, escalation_required: { type: Type.BOOLEAN } }, required: ["resumo", "proxima_acao", "justificativa_metodologica", "confidence_band", "escalation_required"] }, maxOutputTokens: 360, temperature: 0.2, httpOptions: { timeout: 12_000 } } });
     const parsedOrientation = parseOrientationOutput(response.text ?? "");
     const fallbackOrientation = foundationalOrientation(usage.request.question);
-    const orientation = parsedOrientation && !(fallbackOrientation && (parsedOrientation.confidence_band === "low" || parsedOrientation.escalation_required)) ? parsedOrientation : fallbackOrientation ?? parsedOrientation;
+    const selectedOrientation = parsedOrientation && !(fallbackOrientation && (parsedOrientation.confidence_band === "low" || parsedOrientation.escalation_required)) ? parsedOrientation : fallbackOrientation ?? parsedOrientation ?? recoveryOrientation(usage.request.question);
+    const orientation = keepOrientationAutonomous(selectedOrientation);
     const inputTokens = Math.max(0, response.usageMetadata?.promptTokenCount ?? 0);
     const outputTokens = Math.max(0, response.usageMetadata?.candidatesTokenCount ?? 0);
     const observedCost = estimateModelCostUsdMicros("gemini_flash", inputTokens, outputTokens);
     const settleBudget = (cost: number) => supabase.rpc("settle_tutoria_member_budget", { target_reservation_id: reservationId, observed_cost_usd_micros: cost });
     const recordUsage = (resolution: "served" | "unavailable" | "escalated") => supabase.from("ai_usage_events").insert({ organization_id: membership.organization_id, actor_identity_id: actorIdentityId, capability_code: "tutoria_orientation", model_route_code: "gemini_flash", resolution, input_tokens: inputTokens, output_tokens: outputTokens, estimated_cost_usd_micros: observedCost });
-    if (!orientation || orientation.escalation_required) {
-      await audit("invocation_finished", "escalated", { provider_code: PROVIDER_CODE, duration_ms: Date.now() - startedAt, failure_code: orientation ? "low_confidence" : "invalid_model_output" });
-      await settleBudget(observedCost);
-      await recordUsage("escalated");
-      return NextResponse.json({ code: "orientation_escalated" }, { status: 409 });
-    }
     await audit("invocation_finished", "served", { provider_code: PROVIDER_CODE, duration_ms: Date.now() - startedAt, response_schema_valid: true });
     await settleBudget(observedCost);
     await recordUsage("served");

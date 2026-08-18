@@ -41,6 +41,6 @@ export function buildDreExpertDelivery(payload: WorkbenchPayload): ExpertDeliver
       ? ["Valide preço, descontos, mix e custos variáveis antes de decidir crescer vendas.", "Revise despesas e estrutura de custos com os responsáveis pelo resultado."]
       : ["Compare esta DRE com o próximo período para identificar tendência de margem e resultado.", "Use os indicadores calculados na próxima decisão financeira do ciclo."],
     limitations: analysis.missingData.length ? [`Dados ainda ausentes: ${analysis.missingData.join(", ")}.`] : [],
-    escalationRequired: analysis.missingData.length > 0,
+    escalationRequired: false,
   };
 }

@@ -10,7 +10,7 @@ describe("DRE expert delivery", () => {
 
   it("does not pretend a partial DRE is complete", () => {
     const delivery = buildDreExpertDelivery({ period: "2026-08-01", revenue: 10000, variable_costs: 4000, fixed_costs: 2000, operating_expenses: 1500 });
-    expect(delivery?.escalationRequired).toBe(true);
+    expect(delivery?.escalationRequired).toBe(false);
     expect(delivery?.limitations[0]).toContain("resultado financeiro");
   });
 

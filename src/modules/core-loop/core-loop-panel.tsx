@@ -18,7 +18,7 @@ export function CoreLoopPanel({ missionId, workspace }: { missionId: string; wor
   const evidenceDescriptionLength = description.trim().length;
   const evidenceDateValid = Boolean(occurredOn) && occurredOn <= today() && occurredOn >= (workspace.implementation?.implementedOn ?? "");
   const evidenceValid = evidenceDescriptionLength >= 20 && evidenceDescriptionLength <= 1000 && evidenceDateValid;
-  const awaitingReview = workspace.evidenceStatus === "submitted" || workspace.evidenceStatus === "escalated";
+  const awaitingReview = workspace.evidenceStatus === "submitted";
   const needsCorrection = workspace.evidenceStatus === "changes_requested" && Boolean(workspace.evidenceId);
 
   function implementation(confirm: boolean) {
@@ -31,9 +31,9 @@ export function CoreLoopPanel({ missionId, workspace }: { missionId: string; wor
       const submitted = needsCorrection && workspace.evidenceId ? await submitEvidenceRevision(workspace.evidenceId, evidenceType, description, occurredOn) : await submitEvidence(missionId, evidenceType, description, occurredOn);
       if (!submitted.ok || !submitted.evidenceId) return setMessage(submitted.message);
       const response = await fetch("/api/tutoria/evidence-review", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ evidenceId: submitted.evidenceId }) });
-      const decision = await response.json().catch(() => null) as { outcome?: "approved" | "changes_requested" | "escalated" } | null;
+      const decision = await response.json().catch(() => null) as { outcome?: "approved" | "changes_requested" } | null;
       if (!response.ok || !decision?.outcome) return setMessage("Evidência registrada. A decisão da TutorIA ficará disponível assim que a análise for concluída.");
-      setMessage(decision.outcome === "approved" ? "Evidência validada pela TutorIA. A próxima Missão foi liberada." : decision.outcome === "changes_requested" ? "A TutorIA identificou pontos para complementar antes da validação." : "A evidência foi encaminhada para apoio humano especializado.");
+      setMessage(decision.outcome === "approved" ? "Evidência validada pela TutorIA. A próxima Missão foi liberada." : "A TutorIA identificou pontos para complementar antes da validação.");
     });
   }
 
@@ -46,8 +46,8 @@ export function CoreLoopPanel({ missionId, workspace }: { missionId: string; wor
       <label><span>Data da aplicação</span><input type="date" max={today()} value={implementedOn} onChange={(event) => setImplementedOn(event.target.value)} /></label>
       <div className="tool-main-actions"><button type="button" className="button-secondary" disabled={pending} onClick={() => implementation(false)}>Salvar rascunho</button><button type="button" disabled={pending} onClick={() => implementation(true)}>Marcar como implementado</button></div>
     </> : awaitingReview ? <>
-      <h2>{workspace.evidenceStatus === "escalated" ? "Evidência em revisão humana" : "Evidência em análise"}</h2>
-      <p>{workspace.evidenceStatus === "escalated" ? "A TutorIA encaminhou este caso para a equipe especializada. Você será avisado aqui quando houver uma decisão." : "A TutorIA está avaliando esta evidência. Não é necessário reenviar enquanto a análise estiver em andamento."}</p>
+      <h2>Evidência em análise</h2>
+      <p>A TutorIA está avaliando esta evidência. Não é necessário reenviar enquanto a análise estiver em andamento.</p>
     </> : <>
       <h2>{needsCorrection ? "Envie o complemento solicitado" : "Registre uma evidência"}</h2>
       <p>{needsCorrection ? "Envie uma nova versão com o complemento pedido. O histórico anterior continuará preservado." : "Conte um fato observável que mostre o uso da implementação. A TutorIA analisará os critérios antes de validar a continuidade da Missão."}</p>

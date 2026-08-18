@@ -5,6 +5,14 @@
 **Mode:** BUILD
 **Status:** IN PROGRESS — APPROVED FOR BUILD
 
+## Current authorization update — TUT-3.8
+
+- TUT-3.8 — autonomia integral do TutorIA: guia, ensino, avaliação de
+  evidências elegíveis e continuidade metodológica sem escalonamento ou
+  aprovação humana. Baixa confiança, risco ou dado ausente pedem complemento
+  específico ao membro; não criam fila humana. Concierge permanece restrito a
+  experiência do cliente e não substitui autoridade metodológica do TutorIA.
+
 ## Production baseline
 
 - IMP-2.15A — implementação com rascunho e confirmação explícita.

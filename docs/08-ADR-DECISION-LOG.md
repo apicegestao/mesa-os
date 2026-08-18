@@ -192,3 +192,13 @@ O frontend usa somente publishable key. Chaves secret/service-role ficam exclusi
 - Itens usam escala ordinal de cinco pontos com âncoras comportamentais e foco em prática observável, cadência, responsabilidade e evidência de uso.
 - Uma revisão pode ser metodologicamente fundamentada, mas só poderá ser declarada validada após protocolo documentado de conteúdo, compreensão, confiabilidade, estrutura e interpretação.
 - Alterações futuras de itens, pesos, faixas ou uso do score continuam exigindo Change Request e Definition Pack.
+
+## ADR-043 — TutorIA como autoridade autônoma da progressão metodológica
+
+**Status:** ACCEPTED
+
+- TutorIA é a autoridade operacional única de orientação, ensino, avaliação de evidência e liberação da continuidade metodológica do membro.
+- Concierge presta acompanhamento de experiência, sem aprovar, substituir ou corrigir a decisão metodológica do TutorIA.
+- Baixa confiança, risco, lacuna de dados ou saída inválida não criam escalonamento humano: o TutorIA preserva o limite, solicita complemento verificável e reavalia.
+- A progressão permanece estritamente limitada: somente evidência que atende aos critérios e à confiança mínima é aprovada e libera a próxima Missão em transação auditável.
+- Controles de orçamento, consentimento, isolamento, rate limit, contratos server-side e auditoria não são afrouxados por esta decisão.

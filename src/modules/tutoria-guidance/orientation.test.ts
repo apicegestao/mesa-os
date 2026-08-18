@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildOrientationPrompt, foundationalOrientation, orientationGatewayEnabled, parseOrientationOutput } from "./orientation";
+import { buildOrientationPrompt, foundationalOrientation, keepOrientationAutonomous, orientationGatewayEnabled, parseOrientationOutput, recoveryOrientation } from "./orientation";
 
 const state = { diagnosticWorkspace: "available", priority: "defined", cycle: "active", availableMission: "available", evidence: "absent" } as const;
 const methodology = { status: "published", stageCount: 4, pillarCount: 4, outcomeCount: 16 } as const;
@@ -20,6 +20,12 @@ describe("TutorIA guided orientation contract", () => {
 
   it("answers a foundational DRE question without requiring human support", () => {
     expect(foundationalOrientation("Não sei fazer uma DRE. Você pode me ajudar?")).toMatchObject({ escalation_required: false, confidence_band: "high" });
+  });
+
+  it("keeps an uncertain model answer autonomous and actionable", () => {
+    const result = keepOrientationAutonomous({ resumo: "Há incerteza.", proxima_acao: "Mostre os dados disponíveis.", justificativa_metodologica: "Precisamos separar fatos.", confidence_band: "low", escalation_required: true });
+    expect(result).toMatchObject({ escalation_required: false, confidence_band: "medium" });
+    expect(recoveryOrientation("Preciso decidir sobre preço").proxima_acao).toContain("resultado");
   });
 
   it("keeps model access off unless every server-only gate is present", () => {

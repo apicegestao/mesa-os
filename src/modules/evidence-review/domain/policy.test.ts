@@ -12,10 +12,10 @@ describe("evidence autonomy policy", () => {
     expect(decideEvidenceReview({ ...safe, criteriaMet: false })).toBe("changes_requested");
   });
 
-  it("escalates low confidence, risk, direct request, or persistent doubt", () => {
-    expect(decideEvidenceReview({ ...safe, confidence: 0.84 })).toBe("escalated");
-    expect(decideEvidenceReview({ ...safe, riskDetected: true })).toBe("escalated");
-    expect(decideEvidenceReview({ ...safe, memberRequestedHuman: true })).toBe("escalated");
-    expect(decideEvidenceReview({ ...safe, repeatedUnresolvedQuestion: true })).toBe("escalated");
+  it("asks for a complement when confidence, risk or context are insufficient", () => {
+    expect(decideEvidenceReview({ ...safe, confidence: 0.84 })).toBe("changes_requested");
+    expect(decideEvidenceReview({ ...safe, riskDetected: true })).toBe("changes_requested");
+    expect(decideEvidenceReview({ ...safe, memberRequestedHuman: true })).toBe("changes_requested");
+    expect(decideEvidenceReview({ ...safe, repeatedUnresolvedQuestion: true })).toBe("changes_requested");
   });
 });

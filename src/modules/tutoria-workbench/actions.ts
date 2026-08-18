@@ -75,8 +75,8 @@ export async function explainSavedDre() {
     const outputTokens = Math.max(0, response.usageMetadata?.candidatesTokenCount ?? 0);
     const cost = estimateModelCostUsdMicros("gemini_flash", inputTokens, outputTokens);
     await supabase.rpc("settle_tutoria_member_budget", { target_reservation_id: reservation.reservation_id, observed_cost_usd_micros: cost });
-    await supabase.from("ai_usage_events").insert({ organization_id: membership.organization_id, actor_identity_id: actorIdentityId, capability_code: "tutoria_dre_analysis", model_route_code: "gemini_flash", resolution: delivery ? "served" : "escalated", input_tokens: inputTokens, output_tokens: outputTokens, estimated_cost_usd_micros: cost });
-    if (!delivery || delivery.escalationRequired) { await audit("escalated", { provider: "netlify_ai_gateway", durationMs: Date.now() - startedAt, failureCode: delivery ? "low_confidence" : "invalid_model_output" }); return { ok: false as const, message: "Para aprofundar com segurança, a TutorIA precisa de mais dados ou de apoio humano." }; }
+    await supabase.from("ai_usage_events").insert({ organization_id: membership.organization_id, actor_identity_id: actorIdentityId, capability_code: "tutoria_dre_analysis", model_route_code: "gemini_flash", resolution: delivery ? "served" : "unavailable", input_tokens: inputTokens, output_tokens: outputTokens, estimated_cost_usd_micros: cost });
+    if (!delivery) { await audit("unavailable", { provider: "netlify_ai_gateway", durationMs: Date.now() - startedAt, failureCode: "invalid_model_output" }); return { ok: false as const, message: "Não consegui concluir a leitura agora. Confira os campos da DRE e tente novamente; vou preservar o que já estiver registrado." }; }
     await audit("served", { provider: "netlify_ai_gateway", durationMs: Date.now() - startedAt, valid: true });
     return { ok: true as const, delivery };
   } catch {

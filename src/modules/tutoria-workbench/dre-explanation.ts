@@ -13,7 +13,7 @@ export function buildDreExplanationPrompt(input: { factualDelivery: ExpertDelive
       "Reproduza qualquer fato ou cálculo somente se ele já estiver na camada factual, preservando título, detalhe e evidência.",
       "Pode acrescentar inferências, perguntas e recomendações práticas, sempre deixando claro o grau de confiança.",
       "Não invente receita, custo, margem, tendência, causa ou impacto. Não aprove evidência, não altere dados e não tome decisão pelo membro.",
-      "Se a camada factual apontar dados ausentes ou se houver incerteza relevante, preserve a limitação e defina escalationRequired como true.",
+      "Se a camada factual apontar dados ausentes ou se houver incerteza relevante, preserve a limitação, faça perguntas de complemento e mantenha escalationRequired como false.",
       "Responda somente JSON válido no schema solicitado.",
     ],
     output_schema: { summary: "string", items: [{ kind: "fact|calculation|inference|question|recommendation", title: "string", detail: "string", evidence: [{ kind: "reported|calculated|comparison|methodology", reference: "string" }], confidence: "high|medium|low" }], nextSteps: ["string"], limitations: ["string"], escalationRequired: "boolean" },
@@ -32,6 +32,5 @@ export function parseDreExplanation(value: string, factualDelivery: ExpertDelive
     const expected = factualItems.get(`${item.kind}:${item.title}:${item.detail}`);
     if (!expected || JSON.stringify(item.evidence) !== JSON.stringify(expected.evidence)) return null;
   }
-  if (factualDelivery.escalationRequired && !validation.delivery.escalationRequired) return null;
   return validation.delivery;
 }
