@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildOrientationPrompt, orientationGatewayEnabled, parseOrientationOutput } from "./orientation";
+import { buildOrientationPrompt, foundationalOrientation, orientationGatewayEnabled, parseOrientationOutput } from "./orientation";
 
 const state = { diagnosticWorkspace: "available", priority: "defined", cycle: "active", availableMission: "available", evidence: "absent" } as const;
 const methodology = { status: "published", stageCount: 4, pillarCount: 4, outcomeCount: 16 } as const;
@@ -15,6 +15,11 @@ describe("TutorIA guided orientation contract", () => {
   it("accepts only the bounded response schema", () => {
     expect(parseOrientationOutput('{"resumo":"Você iniciou o ciclo.","proxima_acao":"Conclua a Missão disponível.","justificativa_metodologica":"A jornada avança por implementação.","confidence_band":"high","escalation_required":false}')).toMatchObject({ confidence_band: "high" });
     expect(parseOrientationOutput('{"resumo":"ok"}')).toBeNull();
+    expect(parseOrientationOutput('```json\n{"resumo":"Você iniciou o ciclo.","proxima_acao":"Conclua a Missão disponível.","justificativa_metodologica":"A jornada avança por implementação.","confidence_band":"high","escalation_required":false}\n```')).toMatchObject({ confidence_band: "high" });
+  });
+
+  it("answers a foundational DRE question without requiring human support", () => {
+    expect(foundationalOrientation("Não sei fazer uma DRE. Você pode me ajudar?")).toMatchObject({ escalation_required: false, confidence_band: "high" });
   });
 
   it("keeps model access off unless every server-only gate is present", () => {

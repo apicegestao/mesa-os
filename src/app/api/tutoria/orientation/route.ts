@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, Type } from "@google/genai";
 import { loadCycle } from "@/modules/cycle";
 import { loadDiagnosticWorkspace } from "@/modules/diagnostic";
 import { loadPublishedMethodologyMap } from "@/modules/methodology";
 import { loadMissions } from "@/modules/mission";
 import { loadPriority } from "@/modules/priority";
 import { buildTutorIAMemberState, buildTutorIAMethodologySummary, recordTutorIAReadGateway } from "@/modules/tutoria-foundation";
-import { buildOrientationPrompt, estimateModelCostUsdMicros, evaluateTutorIAUsage, orientationGatewayEnabled, parseOrientationOutput, TUTORIA_ORIENTATION_MAX_COST_USD_MICROS } from "@/modules/tutoria-guidance";
+import { buildOrientationPrompt, estimateModelCostUsdMicros, evaluateTutorIAUsage, foundationalOrientation, orientationGatewayEnabled, parseOrientationOutput, TUTORIA_ORIENTATION_MAX_COST_USD_MICROS } from "@/modules/tutoria-guidance";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 import { loadMesaOSTermsState } from "@/modules/tutoria-consent";
 import { loadTutorIAOrientationContext } from "@/modules/tutoria-memory/data";
@@ -69,14 +69,16 @@ export async function POST(request: Request) {
     const apiKey = process.env.GEMINI_API_KEY?.trim();
     if (!apiKey) throw new Error("gemini_api_key_missing");
     const genAI = new GoogleGenAI({ apiKey });
-    const response = await genAI.models.generateContent({ model: MODEL, contents: buildOrientationPrompt({ objective: usage.request.objective, question: usage.request.question, memberState, methodology, longitudinalContext }), config: { responseMimeType: "application/json", maxOutputTokens: 360, temperature: 0.2, httpOptions: { timeout: 12_000 } } });
-    const orientation = parseOrientationOutput(response.text ?? "");
+    const response = await genAI.models.generateContent({ model: MODEL, contents: buildOrientationPrompt({ objective: usage.request.objective, question: usage.request.question, memberState, methodology, longitudinalContext }), config: { responseMimeType: "application/json", responseSchema: { type: Type.OBJECT, properties: { resumo: { type: Type.STRING }, proxima_acao: { type: Type.STRING }, justificativa_metodologica: { type: Type.STRING }, confidence_band: { type: Type.STRING, enum: ["high", "medium", "low"] }, escalation_required: { type: Type.BOOLEAN } }, required: ["resumo", "proxima_acao", "justificativa_metodologica", "confidence_band", "escalation_required"] }, maxOutputTokens: 360, temperature: 0.2, httpOptions: { timeout: 12_000 } } });
+    const parsedOrientation = parseOrientationOutput(response.text ?? "");
+    const fallbackOrientation = foundationalOrientation(usage.request.question);
+    const orientation = parsedOrientation && !(fallbackOrientation && (parsedOrientation.confidence_band === "low" || parsedOrientation.escalation_required)) ? parsedOrientation : fallbackOrientation ?? parsedOrientation;
     const inputTokens = Math.max(0, response.usageMetadata?.promptTokenCount ?? 0);
     const outputTokens = Math.max(0, response.usageMetadata?.candidatesTokenCount ?? 0);
     const observedCost = estimateModelCostUsdMicros("gemini_flash", inputTokens, outputTokens);
     const settleBudget = (cost: number) => supabase.rpc("settle_tutoria_member_budget", { target_reservation_id: reservationId, observed_cost_usd_micros: cost });
     const recordUsage = (resolution: "served" | "unavailable" | "escalated") => supabase.from("ai_usage_events").insert({ organization_id: membership.organization_id, actor_identity_id: actorIdentityId, capability_code: "tutoria_orientation", model_route_code: "gemini_flash", resolution, input_tokens: inputTokens, output_tokens: outputTokens, estimated_cost_usd_micros: observedCost });
-    if (!orientation || orientation.confidence_band === "low" || orientation.escalation_required) {
+    if (!orientation || orientation.escalation_required) {
       await audit("invocation_finished", "escalated", { provider_code: PROVIDER_CODE, duration_ms: Date.now() - startedAt, failure_code: orientation ? "low_confidence" : "invalid_model_output" });
       await settleBudget(observedCost);
       await recordUsage("escalated");
