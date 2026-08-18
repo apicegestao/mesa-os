@@ -45,7 +45,8 @@ describe("member experience foundations", () => {
   it("composes Hoje from canonical state without inventing missing metrics", () => {
     render(<MemberHome memberName="Rafael Portela" localHour={9} nextAction={{ eyebrow: "Seu ponto de partida", title: "Continue o Raio-X", description: "Conclua o diagnóstico.", href: "#diagnostico", label: "Continuar diagnóstico" }} cycle={null} completedSteps={0} totalSteps={8} />);
     expect(screen.getByRole("heading", { name: /boa (manhã|tarde|noite), Rafael\./i })).toBeInTheDocument();
-    expect(screen.getAllByText("0 de 8 etapas")).toHaveLength(2);
+    expect(screen.getByText("0% concluído")).toBeInTheDocument();
+    expect(screen.getByText("0 de 8 concluídas")).toBeInTheDocument();
     expect(screen.getByText("Ainda não medido")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Pedir ajuda à TutorIA" })).not.toBeInTheDocument();
   });

@@ -131,13 +131,14 @@ export default async function OpsPage({ searchParams }: { searchParams: Promise<
   }
 
   return <main className="ops-shell">
+    <a className="skip-link" href="#conteudo-operacao">Pular para o conteúdo</a>
     <aside className="ops-sidebar">
       <Link className="ops-brand" href="/ops"><span className="mesa-bars" aria-hidden="true"><i /><i /><i /></span><span><strong>MESA</strong><small>DOS DONOS</small></span></Link>
       <p className="ops-sidebar-label">Ambiente interno</p>
       <OpsNavigation activeView={activeView} roles={roles} />
       <div className="ops-sidebar-footer"><strong>Operação Mesa</strong><small>Permissões e dados isolados</small><Link href="/app">Ver visão de membro</Link></div>
     </aside>
-    <section className="ops-main">
+    <section id="conteudo-operacao" className="ops-main" tabIndex={-1}>
       <header className="ops-header"><div><p className="eyebrow">{presentation.eyebrow}</p><h1>{presentation.title}</h1><p className="ops-header-summary">{presentation.summary}</p></div><Link href="/app">Ver ambiente do membro</Link></header>
       {content}
     </section>

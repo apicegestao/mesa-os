@@ -635,6 +635,35 @@ h1 { font-size: clamp(1.75rem, 4vw, 2.7rem); line-height: 1.08; }
 .experience-shell .priority-card > p:not(.eyebrow) { color:#526d86; line-height:1.5; }
 .experience-shell .priority-card button { background:#101d37; color:#fff; }
 @media (max-width:760px) { .experience-sidebar nav a .nav-icon { width:.9rem; height:.9rem; }.diagnostic-result-action { width:100%; min-height:44px; font-size:.82rem; }.experience-shell .priority-card button { min-height:44px; width:100%; }.experience-shell .result-hero { padding:1.35rem 1rem; } }
+
+/* UXR-3.12 — shared interaction system for member and internal areas */
+.skip-link { position:fixed; z-index:100; top:.65rem; left:.65rem; transform:translateY(-180%); border-radius:.55rem; padding:.65rem .85rem; background:#fff; color:#101d37; box-shadow:0 .6rem 1.6rem rgb(16 29 55 / 18%); font-size:.82rem; font-weight:800; text-decoration:none; transition:transform .16s ease; }
+.skip-link:focus { transform:translateY(0); outline:3px solid rgb(57 127 186 / 40%); outline-offset:2px; }
+.experience-sidebar nav a .nav-icon { display:inline-grid; flex:0 0 1rem; width:1rem; height:1rem; place-items:center; }
+.experience-sidebar nav a .nav-icon svg { width:1rem; height:1rem; fill:none; stroke:currentColor; stroke-linecap:round; stroke-linejoin:round; stroke-width:1.55; }
+:is(.experience-shell, .ops-shell) :is(input, select, textarea) { min-height:2.7rem; border:1px solid #cddae5; border-radius:.55rem; padding:.65rem .75rem; background:#fff; color:#101d37; box-shadow:inset 0 1px 1px rgb(16 29 55 / 2%); transition:border-color .16s ease, box-shadow .16s ease, background .16s ease; }
+:is(.experience-shell, .ops-shell) textarea { min-height:6.25rem; line-height:1.45; }
+:is(.experience-shell, .ops-shell) :is(input, select, textarea):hover { border-color:#9db9cf; }
+:is(.experience-shell, .ops-shell) :is(input, select, textarea):focus { border-color:#397fba; outline:0; box-shadow:0 0 0 3px rgb(57 127 186 / 14%); }
+:is(.experience-shell, .ops-shell) .auth-form { gap:.7rem; }
+:is(.experience-shell, .ops-shell) .auth-form label { display:grid; gap:.35rem; color:#20374e; font-size:.79rem; }
+:is(.experience-shell, .ops-shell) :is(button, .access-link, .primary-link, .new-evidence-link, .empty-evidence-link, .diagnostic-result-action) { min-height:2.6rem; align-items:center; }
+:is(.experience-shell, .ops-shell) button:not(:disabled) { box-shadow:0 1px 0 rgb(255 255 255 / 12%) inset; }
+:is(.experience-shell, .ops-shell) button:disabled { opacity:.55; }
+:is(.experience-shell, .ops-shell) .feedback { padding:.55rem .65rem; border-radius:.5rem; background:#f4f7fa; font-size:.79rem; line-height:1.4; }
+:is(.experience-shell, .ops-shell) .feedback-success { background:#eaf6f1; color:#206b58; }
+:is(.experience-shell, .ops-shell) .feedback-error, :is(.experience-shell, .ops-shell) .error-text { background:#fff1ed; color:#9a3d2d; }
+.ops-header { position:sticky; top:0; z-index:10; min-height:70px; padding-top:1.05rem; background:rgb(243 247 250 / 92%); backdrop-filter:blur(12px); }
+.ops-header > a { display:inline-flex; align-items:center; min-height:2.4rem; border:1px solid #cbddea; border-radius:.5rem; padding:.55rem .7rem; color:#276eaa; }
+.ops-module { display:grid; gap:1rem; }
+.ops-module > :is(.ops-finance, .experience-card, .status, .ops-create) { margin-top:0; }
+.ops-shell .ops-finance, .ops-shell .ops-create, .ops-shell .experience-card { border-color:#dbe4ec; border-radius:.8rem; }
+.ops-shell details { overflow:hidden; border-color:#dbe4ec; border-radius:.65rem; background:#fbfcfe; }
+.ops-shell details > summary { display:flex; align-items:center; min-height:2.7rem; padding:.6rem .75rem; color:#20374e; }
+.ops-shell details[open] > summary { border-bottom:1px solid #e1e9ef; background:#f1f6fa; }
+.ops-shell details > :not(summary) { margin-inline:.75rem; }
+.ops-shell .ops-client-card:focus-visible, .ops-shell .ops-navigation a:focus-visible { outline:3px solid rgb(122 183 227 / 45%); outline-offset:3px; }
+@media (max-width:760px) { :is(.experience-shell, .ops-shell) :is(input, select, textarea) { min-height:2.8rem; font-size:16px; }.ops-header { position:static; }.ops-module { gap:.8rem; }.ops-shell .ops-finance, .ops-shell .ops-create { padding:.9rem; } }
 .tutoria-consent-notice {
   margin: 1rem 0;
   border: 1px solid var(--line, #dce5ef);

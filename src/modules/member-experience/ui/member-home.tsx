@@ -31,7 +31,7 @@ export function MemberHome({
   const progress = Math.round((completedSteps / totalSteps) * 100);
   const actions = [nextAction, ...additionalActions];
   const pulse: PulseItem[] = [
-    { label: "Core loop", value: `${completedSteps} de ${totalSteps} etapas`, progress, tone: "blue" },
+    { label: "Etapas da jornada", value: `${completedSteps} de ${totalSteps} concluídas`, progress, tone: "blue" },
     { label: "Prioridade", value: priorityLabel ?? "Aguardando diagnóstico", tone: "gold" },
     { label: "Missão atual", value: missionTitle ?? "Ainda não definida", tone: "green" },
   ];
