@@ -1,5 +1,6 @@
 import { z } from "zod";
 import type { TutorIAMemberState, TutorIAMethodologySummary } from "@/modules/tutoria-foundation";
+import { tutorIATeachingStandard } from "./quality";
 
 export const orientationObjectiveSchema = z.enum(["understand_next_step", "understand_methodology"]);
 export type OrientationObjective = z.infer<typeof orientationObjectiveSchema>;
@@ -61,6 +62,7 @@ export function buildOrientationPrompt(input: { objective: OrientationObjective;
     objective: input.objective,
     member_question_untrusted: input.question ?? null,
     permitted_context: { member_state: input.memberState, methodology_summary: input.methodology, longitudinal_context_untrusted: input.longitudinalContext ?? [] },
+    teaching_standard: tutorIATeachingStandard,
     constraints: [
       "Seja direto, didático e útil para um empresário sem tempo. Responda primeiro ao que foi perguntado; não rodeie, não repita a pergunta e não use jargão sem explicar.",
       "Estruture a resposta assim: resumo em uma frase simples; próxima ação em até três passos curtos e numerados quando fizer sentido; justificativa em uma frase de linguagem comum.",

@@ -6,7 +6,7 @@ import { loadPublishedMethodologyMap } from "@/modules/methodology";
 import { loadMissions } from "@/modules/mission";
 import { loadPriority } from "@/modules/priority";
 import { buildTutorIAMemberState, buildTutorIAMethodologySummary, recordTutorIAReadGateway } from "@/modules/tutoria-foundation";
-import { buildOrientationPrompt, estimateModelCostUsdMicros, evaluateTutorIAUsage, foundationalOrientation, keepOrientationAutonomous, orientationGatewayEnabled, parseOrientationOutput, recoveryOrientation, TUTORIA_ORIENTATION_MAX_COST_USD_MICROS } from "@/modules/tutoria-guidance";
+import { buildOrientationPrompt, estimateModelCostUsdMicros, evaluateTutorIAUsage, foundationalOrientation, keepOrientationAutonomous, meetsTutorIAQualityStandard, orientationGatewayEnabled, parseOrientationOutput, recoveryOrientation, TUTORIA_ORIENTATION_MAX_COST_USD_MICROS } from "@/modules/tutoria-guidance";
 import { createSupabaseServerClient } from "@/shared/infrastructure/supabase/server";
 import { loadMesaOSTermsState } from "@/modules/tutoria-consent";
 import { loadTutorIAOrientationContext } from "@/modules/tutoria-memory/data";
@@ -72,7 +72,7 @@ export async function POST(request: Request) {
     const response = await genAI.models.generateContent({ model: MODEL, contents: buildOrientationPrompt({ objective: usage.request.objective, question: usage.request.question, memberState, methodology, longitudinalContext }), config: { responseMimeType: "application/json", responseSchema: { type: Type.OBJECT, properties: { resumo: { type: Type.STRING }, proxima_acao: { type: Type.STRING }, justificativa_metodologica: { type: Type.STRING }, confidence_band: { type: Type.STRING, enum: ["high", "medium", "low"] }, escalation_required: { type: Type.BOOLEAN } }, required: ["resumo", "proxima_acao", "justificativa_metodologica", "confidence_band", "escalation_required"] }, maxOutputTokens: 360, temperature: 0.2, httpOptions: { timeout: 12_000 } } });
     const parsedOrientation = parseOrientationOutput(response.text ?? "");
     const fallbackOrientation = foundationalOrientation(usage.request.question);
-    const selectedOrientation = parsedOrientation && !(fallbackOrientation && (parsedOrientation.confidence_band === "low" || parsedOrientation.escalation_required)) ? parsedOrientation : fallbackOrientation ?? parsedOrientation ?? recoveryOrientation(usage.request.question);
+    const selectedOrientation = parsedOrientation && meetsTutorIAQualityStandard(parsedOrientation) && !(fallbackOrientation && (parsedOrientation.confidence_band === "low" || parsedOrientation.escalation_required)) ? parsedOrientation : fallbackOrientation ?? recoveryOrientation(usage.request.question);
     const orientation = keepOrientationAutonomous(selectedOrientation);
     const inputTokens = Math.max(0, response.usageMetadata?.promptTokenCount ?? 0);
     const outputTokens = Math.max(0, response.usageMetadata?.candidatesTokenCount ?? 0);

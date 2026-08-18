@@ -18,6 +18,10 @@
   resposta direta, passos práticos, explicação de conceitos e uma pergunta de
   continuação quando indispensável.
 
+- TUT-3.10 — biblioteca de qualidade didática do TutorIA: cenários sintéticos,
+  padrão de ensino e guardrail de resposta útil. Não cria novo contexto, modelo,
+  custo, ferramenta ou permissão.
+
 ## Production baseline
 
 - IMP-2.15A — implementação com rascunho e confirmação explícita.
