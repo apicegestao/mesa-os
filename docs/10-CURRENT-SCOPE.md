@@ -22,6 +22,10 @@
   padrão de ensino e guardrail de resposta útil. Não cria novo contexto, modelo,
   custo, ferramenta ou permissão.
 
+- DIA-3.8 — Raio-X guiado sobreposto e direção inicial autônoma: ao concluir,
+  a prioridade é derivada do snapshot de diagnóstico e desempatada pela ordem
+  metodológica publicada, sem confirmação ou escolha do membro.
+
 ## Production baseline
 
 - IMP-2.15A — implementação com rascunho e confirmação explícita.

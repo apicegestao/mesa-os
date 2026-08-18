@@ -505,6 +505,11 @@ h1 { font-size: clamp(1.75rem, 4vw, 2.7rem); line-height: 1.08; }
 .dimension-mini-track b { display:block; height:100%; border-radius:inherit; transition:width 250ms ease; }
 .dimension-mini-track.blue b { background:#397fba; }.dimension-mini-track.gold b { background:#b9853d; }.dimension-mini-track.plum b { background:#955277; }.dimension-mini-track.green b { background:#31806d; }
 .experience-shell .question-card { border-color:#dbe4ec; border-radius:.7rem; padding:1rem 1.15rem; box-shadow:none; }
+.diagnostic-overlay { position:fixed; inset:0; z-index:70; display:grid; place-items:center; padding:clamp(.65rem,2vw,1.5rem); background:rgb(16 29 55 / 38%); backdrop-filter:blur(5px); }
+.diagnostic-dialog { width:min(1040px,100%); max-height:calc(100dvh - 1.3rem); overflow:auto; border:1px solid #dbe4ec; border-radius:1rem; padding:clamp(1rem,3vw,2rem); background:#f4f7fa; box-shadow:0 28px 80px rgb(16 29 55 / 32%); }
+.active-dimension-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; margin-bottom:.2rem; padding-bottom:.9rem; border-bottom:1px solid #e2e9ef; }
+.active-dimension-heading h2 { margin:.18rem 0 0; color:#101d37; font-family:Arial,Helvetica,sans-serif; font-size:clamp(1.05rem,2vw,1.35rem); }
+.active-dimension-heading > span { flex:0 0 auto; border-radius:99px; padding:.35rem .55rem; background:#eaf3fa; color:#397fba; font-size:.68rem; font-weight:800; }
 .experience-shell .dimension-counter { color:#397fba; font-size:.65rem; }
 .experience-shell .question-fieldset { padding:1rem 0; border-color:#e2e9ef; }
 .experience-shell .question-fieldset legend { margin-bottom:.75rem; font-size:.82rem; }
@@ -529,7 +534,7 @@ h1 { font-size: clamp(1.75rem, 4vw, 2.7rem); line-height: 1.08; }
 .evolution-state { color:#fff; }.evolution-state strong { display:block; margin:1.2rem 0 .35rem; font-size:1rem; }.evolution-state > p:last-child { margin:0; color:#b8c8d7; font-size:.75rem; line-height:1.45; }
 .evolution-evidence { border:1px solid #dbe4ec; }.evolution-evidence .compact-heading h3 { font-size:.92rem; }.evolution-row + .evolution-row { margin-top:1rem; }.evolution-row > div:first-child { display:flex; justify-content:space-between; gap:1rem; margin-bottom:.45rem; font-size:.72rem; }.evolution-row span { color:#71859a; }
 .quarter-roadmap { display:grid; grid-template-columns:repeat(4,1fr); gap:.55rem; margin-top:.75rem; }.quarter-roadmap article { display:grid; gap:.35rem; min-height:4.2rem; align-content:center; border:1px solid #dbe4ec; border-radius:.55rem; padding:.75rem; }.quarter-roadmap article.current { border-color:#397fba; background:#edf5fb; }.quarter-roadmap strong { font-size:.75rem; }.quarter-roadmap small { color:#71859a; font-size:.62rem; line-height:1.35; }
-@media (max-width:760px) { .diagnostic-heading-actions { width:100%; justify-content:space-between; }.experience-shell .dimension-nav { display:grid; grid-template-columns:1fr 1fr; }.experience-shell .dimension-nav button { flex:auto; }.experience-shell .scale-options { grid-template-columns:1fr; }.evolution-grid,.quarter-roadmap { grid-template-columns:1fr; } }
+@media (max-width:760px) { .diagnostic-overlay { padding:0; }.diagnostic-dialog { max-height:100dvh; border:0; border-radius:0; padding:1rem .85rem; }.diagnostic-heading-actions { width:100%; justify-content:space-between; }.experience-shell .dimension-nav { display:grid; grid-template-columns:1fr 1fr; }.experience-shell .dimension-nav button { flex:auto; }.experience-shell .scale-options { grid-template-columns:1fr; }.evolution-grid,.quarter-roadmap { grid-template-columns:1fr; } }
 
 /* RT-2.19 information architecture — focused independent pages */
 .records-page { padding:1.25rem 0 2rem; }

@@ -5,8 +5,8 @@ const completed: MemberJourneyState = { diagnosticStatus: "completed", hasPriori
 
 describe("deriveNextAction", () => {
   const cases: [MemberJourneyState, string][] = [
-    [{ ...completed, hasPriority: false, priorityTied: false }, "Confirme o foco do ciclo"],
-    [{ ...completed, hasPriority: false, priorityTied: true }, "Aguardando desempate TutorIA"],
+    [{ ...completed, hasPriority: false, priorityTied: false }, "TutorIA está preparando seu foco"],
+    [{ ...completed, hasPriority: false, priorityTied: true }, "TutorIA está definindo o ponto de partida"],
     [{ ...completed, hasCycle: false }, "Inicie o ciclo de 90 dias"],
     [{ ...completed, hasMissions: false }, "Conheça sua primeira Missão"],
     [{ ...completed, hasToolDraft: false }, "Construa a ferramenta da Missão"],

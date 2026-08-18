@@ -117,7 +117,7 @@ describe("member experience foundations", () => {
     expect(screen.getByRole("heading", { name: "Momentos de reanálise" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "O que será medido" })).toBeInTheDocument();
     expect(screen.getByText("Pulso de maturidade nos quatro pilares")).toBeInTheDocument();
-    expect(screen.getByText("Prioridade estratégica declarada pelo membro")).toBeInTheDocument();
+    expect(screen.getByText("Direção estratégica derivada pelo Raio-X")).toBeInTheDocument();
     expect(screen.getAllByText("Aguardando autorização metodológica.")).toHaveLength(3);
     expect(screen.queryByText(/abre em \d+ dias/i)).not.toBeInTheDocument();
   });
