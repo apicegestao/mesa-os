@@ -24,6 +24,6 @@ function isConversationEntry(value: unknown): value is ConversationEntry {
 function TutorIAResponse({ result, body }: { result?: Result; body?: string }) {
   if (body) return <article className="tutoria-answer"><p>{body}</p></article>;
   if (!result) return null;
-  if (result.orientation) return <article className="tutoria-answer"><strong>{result.orientation.resumo}</strong><p>{result.orientation.proxima_acao}</p><small>{result.orientation.justificativa_metodologica}</small></article>;
+  if (result.orientation) return <article className="tutoria-answer"><strong>{result.orientation.resumo}</strong><p><b>Faça assim:</b> {result.orientation.proxima_acao}</p><small><b>Por quê:</b> {result.orientation.justificativa_metodologica}</small></article>;
   return <p className="tutoria-state" role="status">{messages[result.code ?? ""] ?? "Não foi possível orientar agora. Tente novamente em instantes."}</p>;
 }

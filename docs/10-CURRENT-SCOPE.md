@@ -13,6 +13,11 @@
   específico ao membro; não criam fila humana. Concierge permanece restrito a
   experiência do cliente e não substitui autoridade metodológica do TutorIA.
 
+- DIA-3.7 / TUT-3.9 — hotfix do contrato de início do diagnóstico após a
+  temporalidade de episódios e padronização de didática executiva do TutorIA:
+  resposta direta, passos práticos, explicação de conceitos e uma pergunta de
+  continuação quando indispensável.
+
 ## Production baseline
 
 - IMP-2.15A — implementação com rascunho e confirmação explícita.
