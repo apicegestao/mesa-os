@@ -663,6 +663,45 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 .ai-strip.locked{ background:var(--surface-sunken); }
 .ai-strip.locked .insight-ic{ color:var(--ink-muted); }
 .ai-strip-lock-note{ font-size:11px; color:var(--ink-muted); margin-top:4px; }
+
+/* ---------- compras ---------- */
+.compras-tabs{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
+.compras-tab{ font-size:12.5px; font-weight:600; padding:7px 14px; border-radius:999px; border:1px solid var(--border); background:var(--surface); color:var(--ink-2); cursor:pointer; }
+.compras-tab:hover{ background:var(--surface-sunken); }
+.compras-tab.selected{ border-color:var(--accent); background:var(--accent-soft); color:var(--accent-strong); }
+.compras-pane{ display:none; }
+.compras-pane.on{ display:block; }
+.status-chip{ font-size:10.5px; font-weight:700; padding:3px 9px; border-radius:999px; white-space:nowrap; text-transform:uppercase; letter-spacing:.03em; }
+.status-chip.rascunho{ background:var(--surface-sunken); color:var(--ink-muted); }
+.status-chip.aguardando_aprovacao{ background:color-mix(in srgb, var(--warning) 30%, transparent); color:#8a5a00; }
+:root[data-theme="dark"] .status-chip.aguardando_aprovacao{ color:var(--warning); }
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .status-chip.aguardando_aprovacao{ color:var(--warning); } }
+.status-chip.aprovado{ background:var(--info-soft); color:var(--info); }
+.status-chip.enviado{ background:var(--accent-soft); color:var(--accent-strong); }
+.status-chip.recebido{ background:color-mix(in srgb, var(--good) 14%, transparent); color:var(--good-text); }
+.status-chip.rejeitado{ background:var(--critical-soft); color:var(--critical); }
+.pedido-steps{ display:flex; align-items:center; gap:4px; margin:10px 0 14px; flex-wrap:wrap; }
+.pedido-step{ font-size:10.5px; font-weight:600; color:var(--ink-muted); padding:4px 9px; border-radius:999px; background:var(--surface-sunken); }
+.pedido-step.done{ background:color-mix(in srgb, var(--good) 14%, transparent); color:var(--good-text); }
+.pedido-step.current{ background:var(--accent-soft); color:var(--accent-strong); }
+.pedido-step-arrow{ color:var(--ink-muted); font-size:11px; }
+.supplier-row{ display:flex; align-items:center; gap:12px; padding:12px; border:1px solid var(--border); border-radius:11px; cursor:pointer; margin-bottom:8px; }
+.supplier-row:hover{ border-color:var(--accent); background:var(--accent-soft); }
+.supplier-row.picked{ border-color:var(--accent); background:var(--accent-soft); }
+.supplier-row-name{ font-size:13px; font-weight:600; flex:1; }
+.supplier-row-meta{ font-size:11px; color:var(--ink-muted); }
+.supplier-row-price{ font-family:'Fraunces',serif; font-size:16px; font-weight:600; text-align:right; min-width:90px; }
+.supplier-best{ font-size:10px; font-weight:700; color:var(--good-text); text-transform:uppercase; letter-spacing:.03em; }
+.score-badge{ display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:700; padding:2px 8px; border-radius:999px; }
+.score-badge.alto{ background:color-mix(in srgb, var(--good) 14%, transparent); color:var(--good-text); }
+.score-badge.medio{ background:color-mix(in srgb, var(--warning) 30%, transparent); color:#8a5a00; }
+:root[data-theme="dark"] .score-badge.medio{ color:var(--warning); }
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .score-badge.medio{ color:var(--warning); } }
+.score-badge.baixo{ background:var(--critical-soft); color:var(--critical); }
+.score-bars{ display:flex; flex-direction:column; gap:6px; }
+.score-bar-row{ display:grid; grid-template-columns:70px 1fr 32px; gap:8px; align-items:center; font-size:11px; color:var(--ink-muted); }
+.score-bar-track{ height:6px; border-radius:4px; background:var(--surface-sunken); overflow:hidden; }
+.score-bar-fill{ height:100%; border-radius:4px; background:var(--accent); }
 </style>
 
 <div class="shell">
@@ -727,6 +766,10 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
     <button class="side-link" data-view="estoque">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>
       Estoque
+    </button>
+    <button class="side-link" data-view="compras">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2.4l2.6 12.6a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21.5 8H6"/></svg>
+      Compras
     </button>
     <div class="side-group" data-group="auditoria">
       <button class="side-group-head" data-group-toggle="auditoria">
@@ -1317,6 +1360,79 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
         </div>
       </section>
 
+      <!-- ===================== COMPRAS ===================== -->
+      <section class="view" id="view-compras">
+        <div class="ai-strip" data-module="compras"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · compras inteligentes</div><div class="ai-strip-text" id="comprasAiHeadline">Comparando preços entre fornecedores…</div></div></div>
+
+        <div class="compras-tabs" id="comprasTabs">
+          <button type="button" class="compras-tab selected" data-pane="pedidos">Pedidos de compra</button>
+          <button type="button" class="compras-tab" data-pane="fornecedores">Fornecedores</button>
+          <button type="button" class="compras-tab" data-pane="precos">Preços &amp; comparação</button>
+        </div>
+
+        <div class="compras-pane on" id="pane-pedidos">
+          <div class="grid g-3" id="comprasKpiRow"></div>
+
+          <div class="section-title">Novo pedido de compra</div>
+          <div class="card card-pad">
+            <div class="form-grid">
+              <div class="form-field"><label>Item</label><select id="pedidoItem"></select></div>
+              <div class="form-field"><label>Quantidade</label><input type="number" id="pedidoQtd" min="1" value="1"></div>
+            </div>
+            <div class="card-note" style="margin:14px 0 8px;">Escolha o fornecedor comparando preço, prazo de entrega e nota de qualidade — antes de enviar, não depois.</div>
+            <div id="pedidoSupplierCompare"></div>
+            <div class="form-actions">
+              <button type="button" class="mini-btn" id="pedidoSalvarRascunho">Salvar como rascunho</button>
+              <button type="button" class="mini-btn primary" id="pedidoEnviar" disabled>Enviar pedido</button>
+            </div>
+          </div>
+
+          <div class="section-title">Pedidos</div>
+          <div class="card card-pad">
+            <div style="overflow-x:auto;">
+              <table class="simple">
+                <thead><tr><th>Pedido</th><th>Loja</th><th>Fornecedor</th><th>Item(ns)</th><th class="num">Valor</th><th>Status</th><th>Ação</th></tr></thead>
+                <tbody id="pedidosBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="compras-pane" id="pane-fornecedores">
+          <div class="card card-pad" style="margin-bottom:16px;">
+            <div class="card-head"><div class="card-note">Cadastro de fornecedores restrito a supervisores e admins</div><button type="button" class="mini-btn primary" id="fornecedorAddBtn">+ Adicionar fornecedor</button></div>
+          </div>
+          <div class="card card-pad" id="fornecedorForm" hidden>
+            <div class="card-head"><div class="card-title" id="fornecedorFormTitle">Adicionar fornecedor</div><button type="button" class="mini-btn" id="fornecedorCancel">Cancelar</button></div>
+            <div class="form-grid">
+              <div class="form-field"><label>Nome</label><input type="text" id="ffNome"></div>
+              <div class="form-field"><label>CNPJ</label><input type="text" id="ffCnpj"></div>
+              <div class="form-field"><label>Contato</label><input type="text" id="ffContato"></div>
+              <div class="form-field"><label>Prazo de entrega (dias)</label><input type="number" id="ffLeadTime" min="0" value="2"></div>
+              <div class="form-field"><label>Prazo de pagamento (dias)</label><input type="number" id="ffCondPagamento" min="0" value="28"></div>
+            </div>
+            <div class="form-field" style="margin-top:10px;"><label>Categorias fornecidas</label><div id="ffCategorias" style="display:flex; gap:14px; flex-wrap:wrap; margin-top:4px;"></div></div>
+            <div class="form-actions"><button type="button" class="mini-btn primary" id="fornecedorSalvar">Salvar fornecedor</button></div>
+          </div>
+          <div class="grid g-3" id="fornecedorCards"></div>
+        </div>
+
+        <div class="compras-pane" id="pane-precos">
+          <div class="card card-pad" style="margin-bottom:16px;">
+            <div class="form-field"><label>Item</label><select id="precoItemSelect"></select></div>
+          </div>
+          <div class="section-title">Comparação entre fornecedores</div>
+          <div class="card card-pad">
+            <div id="precoCompareTable"></div>
+          </div>
+          <div class="section-title">Histórico de preço · 6 meses</div>
+          <div class="card card-pad">
+            <div class="viz-wrap"><svg id="precoHistChart" width="100%" height="220" role="img" aria-label="Histórico de preço por fornecedor"></svg><div class="viz-tip" id="tipPrecoHist"></div></div>
+            <div class="legend" id="precoHistLegend"></div>
+          </div>
+        </div>
+      </section>
+
       <!-- ===================== AUDITORIA ===================== -->
       <section class="view" id="view-auditoria">
         <div class="ai-strip" data-module="auditoria"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · auditoria contínua</div><div class="ai-strip-text" id="audAiHeadline">Cruzando checklists, caixa e notas fiscais…</div></div></div>
@@ -1821,7 +1937,7 @@ document.getElementById('themeToggle').addEventListener('click', function(){
 var navLinks = document.querySelectorAll('.side-link[data-view], .side-sub-link[data-view]');
 var MODULE_TITLES = {
   hub:{ title:'Darius' }, apresentacao:{ title:'Apresentação' }, dre:{ title:'Financeiro' }, micro:{ title:'Financeiro' }, caixa:{ title:'Financeiro' }, cenarios:{ title:'Financeiro' },
-  metas:{ title:'Metas' }, estoque:{ title:'Estoque' },
+  metas:{ title:'Metas' }, estoque:{ title:'Estoque' }, compras:{ title:'Compras' },
   auditoria:{ title:'Auditoria · Contínua' }, 'auditoria-externa':{ title:'Auditoria · Externa' }, 'auditoria-ia':{ title:'Auditoria · IA & Anomalias' }, 'log-atividade':{ title:'Auditoria · Log de Atividade' },
   integracoes:{ title:'Integrações' }, conciliacao:{ title:'Conciliação' }, planocontas:{ title:'Plano de Contas' },
   usuarios:{ title:'Pessoas' }, papeis:{ title:'Papéis & Permissões' }
@@ -1839,6 +1955,7 @@ function updateTopbarSub(viewKey){
   else if(viewKey==='cenarios'){ sub = lastPA ? (UNIT_META[state.unit].name+' · próximos 6 meses a partir de '+lastPA.label) : ''; }
   else if(viewKey==='metas'){ sub = lastPA ? (UNIT_META[state.unit].name+' · metas de '+lastPA.label) : ''; }
   else if(viewKey==='estoque'){ sub = UNIT_META[state.unit].name+' · controle próprio da unidade'; }
+  else if(viewKey==='compras'){ sub = UNIT_META[state.unit].name+' · fornecedores, preços e pedidos'; }
   else if(viewKey==='auditoria'){ sub = UNIT_META[state.unit].name+' · checklist do dia a dia'; }
   else if(viewKey==='auditoria-externa'){ sub = UNIT_META[state.unit].name+' · visitas formais agendadas'; }
   else if(viewKey==='auditoria-ia'){ sub = 'Padrões de dados, comportamento e controle interno'; }
@@ -3050,6 +3167,309 @@ var transferLog = [
   {data:'09/09', origem:'central', destino:'bar1', item:'Cerveja long neck', qtd:96, unit:'un'},
   {data:'08/09', origem:'central', destino:'cozinha1', item:'Frango (peito)', qtd:20, unit:'kg'}
 ];
+
+/* ============================================================
+   COMPRAS — fornecedores, preços e pedidos de compra
+============================================================ */
+var FORNECEDORES = [
+  { id:'dist-alimentos', nome:'Distribuidora Alimentos SA', cnpj:'12.345.678/0001-90', categorias:['Proteínas','Secos/Mercearia'], leadTimeDias:2, condPagamentoDias:28, contato:'(11) 4002-8888' },
+  { id:'hortifruti-nova-safra', nome:'Hortifruti Nova Safra', cnpj:'23.456.789/0001-11', categorias:['Hortifrúti'], leadTimeDias:1, condPagamentoDias:7, contato:'(11) 3344-2211' },
+  { id:'bebidas-central', nome:'Bebidas Central Distribuidora', cnpj:'34.567.890/0001-22', categorias:['Bebidas'], leadTimeDias:3, condPagamentoDias:30, contato:'(11) 5566-9900' },
+  { id:'frigorifico-boi-manso', nome:'Frigorífico Boi Manso', cnpj:'45.678.901/0001-33', categorias:['Proteínas'], leadTimeDias:2, condPagamentoDias:21, contato:'(11) 2233-1010' },
+  { id:'embalatudo', nome:'EmbalaTudo Distribuidora', cnpj:'56.789.012/0001-44', categorias:['Embalagens','Limpeza'], leadTimeDias:4, condPagamentoDias:30, contato:'(11) 7788-3344' }
+];
+var ALCADA_COMPRA = 5000; // pedidos acima disso exigem aprovação (nível "Validar"/"Administrar" em Compras)
+function fornecedorById(id){ return FORNECEDORES.find(function(f){ return f.id===id; }); }
+function fornecedoresForItem(itemName){
+  var it = ITEM_CATALOG.find(function(i){ return i.name===itemName; });
+  if(!it) return [];
+  return FORNECEDORES.filter(function(f){ return f.categorias.indexOf(it.cat)!==-1; });
+}
+function precoFornecedorItem(itemName, fornecedorId, mesesAtras){
+  mesesAtras = mesesAtras||0;
+  var it = ITEM_CATALOG.find(function(i){ return i.name===itemName; });
+  if(!it) return 0;
+  var seed = hashString(itemName+'|'+fornecedorId);
+  var baseMult = 0.85 + seededNoise(seed, 0.18); // nível de preço relativo, consistente por fornecedor
+  var idx = periodIdx(state.ay, state.am) - mesesAtras;
+  var monthNoise = seededNoise(seed*7 + idx*13, 0.05);
+  return +(it.custo * baseMult * monthNoise).toFixed(2);
+}
+function precoHistorico(itemName, fornecedorId, meses){
+  meses = meses||6;
+  var arr = [];
+  for(var i=meses-1;i>=0;i--) arr.push(precoFornecedorItem(itemName, fornecedorId, i));
+  return arr;
+}
+function fornecedorScore(f){
+  var entrega = Math.max(35, Math.round(100 - f.leadTimeDias*9));
+  var qualidade = Math.round(75 + seededNoise(hashString(f.id+'-qualidade'), 0.15)*25);
+  var itens = ITEM_CATALOG.filter(function(it){ return f.categorias.indexOf(it.cat)!==-1; });
+  var avgMult = itens.length ? itens.reduce(function(s,it){ return s+(0.85+seededNoise(hashString(it.name+'|'+f.id),0.18)); },0)/itens.length : 1;
+  var preco = Math.round(Math.max(30, Math.min(100, 100 - (avgMult-0.85)/0.36*70)));
+  var geral = Math.round(entrega*0.3 + qualidade*0.35 + preco*0.35);
+  return { entrega:entrega, qualidade:qualidade, preco:preco, geral:geral };
+}
+function scoreTier(v){ return v>=80 ? 'alto' : v>=60 ? 'medio' : 'baixo'; }
+var pedidoSeq = 1046;
+var PEDIDOS_COMPRA = [
+  { id:'PC-1042', unit:'pinheiros', fornecedorId:'dist-alimentos', itens:[{item:'Filé mignon', qtd:20, preco:52}], status:'recebido', criadoPor:'Camila Rocha', aprovadoPor:'Marina Torres', data:'05/09' },
+  { id:'PC-1043', unit:'moema', fornecedorId:'frigorifico-boi-manso', itens:[{item:'Camarão 21/25', qtd:10, preco:70}], status:'aguardando_aprovacao', criadoPor:'Patrícia Nunes', aprovadoPor:null, data:'10/09' },
+  { id:'PC-1044', unit:'vilamadalena', fornecedorId:'bebidas-central', itens:[{item:'Cerveja long neck', qtd:480, preco:5.6}], status:'aprovado', criadoPor:'Jonas Almeida', aprovadoPor:'Eduardo Salles', data:'09/09' },
+  { id:'PC-1045', unit:'tatuape', fornecedorId:'hortifruti-nova-safra', itens:[{item:'Tomate', qtd:40, preco:6.8}], status:'enviado', criadoPor:'Camila Rocha', aprovadoPor:'Camila Rocha', data:'08/09' }
+];
+function pedidoValor(p){ return p.itens.reduce(function(s,it){ return s+it.qtd*it.preco; },0); }
+var pedidoSelecionado = { fornecedorId:null, preco:null };
+var STATUS_LABELS = { rascunho:'Rascunho', aguardando_aprovacao:'Aguardando aprovação', aprovado:'Aprovado', enviado:'Enviado', recebido:'Recebido', rejeitado:'Rejeitado' };
+var PEDIDO_STEP_ORDER = ['rascunho','aguardando_aprovacao','aprovado','enviado','recebido'];
+function pedidoStepsHTML(status){
+  if(status==='rejeitado') return '<div class="pedido-steps"><span class="pedido-step" style="background:var(--critical-soft); color:var(--critical);">Rejeitado</span></div>';
+  var curIdx = PEDIDO_STEP_ORDER.indexOf(status);
+  return '<div class="pedido-steps">' + PEDIDO_STEP_ORDER.map(function(s,i){
+    var cls = i<curIdx ? 'done' : i===curIdx ? 'current' : '';
+    return (i>0?'<span class="pedido-step-arrow">→</span>':'') + '<span class="pedido-step '+cls+'">'+STATUS_LABELS[s]+'</span>';
+  }).join('') + '</div>';
+}
+function renderComprasTabs(){
+  var tabs = document.querySelectorAll('#comprasTabs .compras-tab');
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      tabs.forEach(function(t){ t.classList.toggle('selected', t===tab); });
+      document.querySelectorAll('.compras-pane').forEach(function(p){ p.classList.toggle('on', p.id==='pane-'+tab.dataset.pane); });
+    });
+  });
+}
+function renderPedidoSupplierCompare(){
+  var itemName = document.getElementById('pedidoItem').value;
+  var host = document.getElementById('pedidoSupplierCompare');
+  var fornecedores = fornecedoresForItem(itemName);
+  pedidoSelecionado = { fornecedorId:null, preco:null };
+  document.getElementById('pedidoEnviar').disabled = true;
+  if(!fornecedores.length){ host.innerHTML = '<div class="stat-foot">Nenhum fornecedor cadastrado para esta categoria ainda — cadastre um em Fornecedores.</div>'; return; }
+  var precos = fornecedores.map(function(f){ return { f:f, preco:precoFornecedorItem(itemName, f.id, 0), score:fornecedorScore(f) }; });
+  var melhorPreco = Math.min.apply(null, precos.map(function(p){ return p.preco; }));
+  host.innerHTML = precos.sort(function(a,b){ return a.preco-b.preco; }).map(function(p){
+    return '<div class="supplier-row" data-fornecedor="'+p.f.id+'" data-preco="'+p.preco+'">' +
+      '<div><div class="supplier-row-name">'+p.f.nome+(p.preco===melhorPreco?' <span class="supplier-best">Melhor preço</span>':'')+'</div>' +
+      '<div class="supplier-row-meta">Entrega em '+p.f.leadTimeDias+' dia(s) · pagamento em '+p.f.condPagamentoDias+' dias · <span class="score-badge '+scoreTier(p.score.geral)+'">Score '+p.score.geral+'</span></div></div>' +
+      '<div class="supplier-row-price tnum">'+fmt(p.preco/1000)+'</div>' +
+    '</div>';
+  }).join('');
+  host.querySelectorAll('.supplier-row').forEach(function(row){
+    row.addEventListener('click', function(){
+      host.querySelectorAll('.supplier-row').forEach(function(r){ r.classList.toggle('picked', r===row); });
+      pedidoSelecionado = { fornecedorId:row.dataset.fornecedor, preco:+row.dataset.preco };
+      document.getElementById('pedidoEnviar').disabled = false;
+    });
+  });
+}
+function criarPedido(comoRascunho){
+  var itemName = document.getElementById('pedidoItem').value;
+  var qtd = +document.getElementById('pedidoQtd').value || 1;
+  if(!itemName) return;
+  var valorRaw = pedidoSelecionado.preco ? pedidoSelecionado.preco*qtd : 0; // preço já em R$ reais, igual custo do catálogo
+  var status;
+  if(comoRascunho || !pedidoSelecionado.fornecedorId){ status = 'rascunho'; }
+  else { status = valorRaw>ALCADA_COMPRA ? 'aguardando_aprovacao' : 'aprovado'; }
+  var id = 'PC-'+(++pedidoSeq);
+  var u = USERS[state.loggedUserIdx];
+  PEDIDOS_COMPRA.unshift({ id:id, unit:state.unit==='consolidado'?'pinheiros':state.unit, fornecedorId:pedidoSelecionado.fornecedorId, itens:[{item:itemName, qtd:qtd, preco: pedidoSelecionado.preco || 0}], status:status, criadoPor:u.name, aprovadoPor: status==='aprovado' ? u.name : null, data:'11/09' });
+  logActivity(status==='rascunho'?'rascunho':'pedido de compra', 'Compras', id+' — '+qtd+' de "'+itemName+'"'+(status==='rascunho'?' salvo como rascunho':' criado, status: '+STATUS_LABELS[status]));
+  renderCompras();
+}
+function avancarPedido(id, novoStatus){
+  var p = PEDIDOS_COMPRA.find(function(x){ return x.id===id; });
+  if(!p) return;
+  if((novoStatus==='aprovado'||novoStatus==='rejeitado') && !tierAtLeast(currentTier('compras'),'approve')){
+    logActivity('acesso negado', 'Compras', 'Tentou '+(novoStatus==='aprovado'?'aprovar':'rejeitar')+' '+id+' sem nível de Validar/Administrar');
+    alert('Seu nível de acesso em Compras não permite aprovar/rejeitar pedidos.');
+    return;
+  }
+  p.status = novoStatus;
+  if(novoStatus==='aprovado') p.aprovadoPor = USERS[state.loggedUserIdx].name;
+  logActivity(novoStatus==='aprovado'?'aprovação':novoStatus==='rejeitado'?'rejeição':'atualização', 'Compras', id+' → '+STATUS_LABELS[novoStatus]);
+  renderCompras();
+}
+function renderPedidosBody(){
+  var canApprove = tierAtLeast(currentTier('compras'),'approve');
+  document.getElementById('pedidosBody').innerHTML = PEDIDOS_COMPRA.map(function(p){
+    var f = fornecedorById(p.fornecedorId);
+    var itensTxt = p.itens.map(function(it){ return it.qtd+' × '+it.item; }).join(', ');
+    var acoes = '';
+    if(p.status==='aguardando_aprovacao'){
+      acoes = '<button type="button" class="mini-btn primary" data-approve="'+p.id+'"'+(canApprove?'':' disabled title="Requer nível Validar/Administrar em Compras"')+'>Aprovar</button>' +
+        '<button type="button" class="mini-btn" data-reject="'+p.id+'"'+(canApprove?'':' disabled')+'>Rejeitar</button>';
+    } else if(p.status==='aprovado'){
+      acoes = '<button type="button" class="mini-btn primary" data-send="'+p.id+'">Marcar enviado</button>';
+    } else if(p.status==='enviado'){
+      acoes = '<button type="button" class="mini-btn primary" data-receive="'+p.id+'">Confirmar recebimento</button>';
+    } else if(p.status==='rascunho'){
+      acoes = '<button type="button" class="mini-btn" data-delete="'+p.id+'">Excluir</button>';
+    } else { acoes = '—'; }
+    return '<tr><td><b>'+p.id+'</b>'+pedidoStepsHTML(p.status)+'</td><td>'+(UNIT_META[p.unit]?UNIT_META[p.unit].name:p.unit)+'</td><td>'+(f?f.nome:'—')+'</td><td>'+itensTxt+'</td><td class="num">'+fmt(pedidoValor(p)/1000)+'</td><td><span class="status-chip '+p.status+'">'+STATUS_LABELS[p.status]+'</span></td><td class="row-actions">'+acoes+'</td></tr>';
+  }).join('');
+  var body = document.getElementById('pedidosBody');
+  body.querySelectorAll('[data-approve]').forEach(function(b){ b.addEventListener('click', function(){ avancarPedido(b.dataset.approve, 'aprovado'); }); });
+  body.querySelectorAll('[data-reject]').forEach(function(b){ b.addEventListener('click', function(){ avancarPedido(b.dataset.reject, 'rejeitado'); }); });
+  body.querySelectorAll('[data-send]').forEach(function(b){ b.addEventListener('click', function(){ avancarPedido(b.dataset.send, 'enviado'); }); });
+  body.querySelectorAll('[data-receive]').forEach(function(b){ b.addEventListener('click', function(){ avancarPedido(b.dataset.receive, 'recebido'); }); });
+  body.querySelectorAll('[data-delete]').forEach(function(b){ b.addEventListener('click', function(){
+    PEDIDOS_COMPRA = PEDIDOS_COMPRA.filter(function(p){ return p.id!==b.dataset.delete; });
+    renderCompras();
+  }); });
+}
+function renderPedidos(){
+  var abertos = PEDIDOS_COMPRA.filter(function(p){ return p.status!=='recebido' && p.status!=='rejeitado'; });
+  var aguardando = PEDIDOS_COMPRA.filter(function(p){ return p.status==='aguardando_aprovacao'; });
+  var valorAberto = abertos.reduce(function(s,p){ return s+pedidoValor(p); },0)/1000;
+  document.getElementById('comprasKpiRow').innerHTML =
+    '<div class="card card-pad stat"><div class="stat-label">Pedidos em aberto</div><div class="stat-value tnum">'+abertos.length+'</div><div class="stat-foot">'+fmt(valorAberto)+' em trânsito</div><div class="stat-explain">Do rascunho até enviado — ainda não recebido.</div></div>' +
+    '<div class="card card-pad stat"><div class="stat-label">Aguardando aprovação</div><div class="stat-value tnum">'+aguardando.length+'</div><div class="stat-foot">acima de '+fmt(ALCADA_COMPRA/1000)+' exige validação</div><div class="stat-explain">Alçada de compra: pedidos acima desse valor não saem sem aprovação de quem tem nível Validar/Administrar.</div></div>' +
+    '<div class="card card-pad stat"><div class="stat-label">Fornecedores cadastrados</div><div class="stat-value tnum">'+FORNECEDORES.length+'</div><div class="stat-foot">cobrindo '+invAllCategories().length+' categorias</div><div class="stat-explain">Quanto mais fornecedores por categoria, melhor a comparação de preço.</div></div>';
+  renderPedidoSupplierCompare();
+  renderPedidosBody();
+  var maiorGap = null;
+  ITEM_CATALOG.forEach(function(it){
+    var fs = fornecedoresForItem(it.name);
+    if(fs.length<2) return;
+    var precos = fs.map(function(f){ return precoFornecedorItem(it.name,f.id,0); });
+    var gap = (Math.max.apply(null,precos)-Math.min.apply(null,precos))/Math.min.apply(null,precos);
+    if(!maiorGap || gap>maiorGap.gap) maiorGap = { item:it.name, gap:gap };
+  });
+  document.getElementById('comprasAiHeadline').innerHTML = maiorGap ?
+    'Maior diferença de preço entre fornecedores agora: <b>'+maiorGap.item+'</b>, '+fmtPct(maiorGap.gap,0)+' entre o mais caro e o mais barato — vale revisar antes do próximo pedido.' :
+    'Nenhuma diferença relevante de preço entre fornecedores no momento.';
+}
+function renderFornecedorForm(id){
+  var form = document.getElementById('fornecedorForm');
+  var editing = id ? fornecedorById(id) : null;
+  document.getElementById('fornecedorFormTitle').textContent = editing ? 'Editar fornecedor' : 'Adicionar fornecedor';
+  document.getElementById('ffNome').value = editing ? editing.nome : '';
+  document.getElementById('ffCnpj').value = editing ? editing.cnpj : '';
+  document.getElementById('ffContato').value = editing ? editing.contato : '';
+  document.getElementById('ffLeadTime').value = editing ? editing.leadTimeDias : 2;
+  document.getElementById('ffCondPagamento').value = editing ? editing.condPagamentoDias : 28;
+  document.getElementById('ffCategorias').innerHTML = invAllCategories().map(function(c){
+    var checked = editing && editing.categorias.indexOf(c)!==-1;
+    return '<label class="form-check"><input type="checkbox" value="'+c+'"'+(checked?' checked':'')+'> '+c+'</label>';
+  }).join('');
+  form.dataset.editing = editing ? editing.id : '';
+  form.hidden = false;
+  form.scrollIntoView({behavior:'smooth', block:'center'});
+}
+document.getElementById('fornecedorAddBtn').addEventListener('click', function(){ renderFornecedorForm(null); });
+document.getElementById('fornecedorCancel').addEventListener('click', function(){ document.getElementById('fornecedorForm').hidden = true; });
+document.getElementById('fornecedorSalvar').addEventListener('click', function(){
+  var form = document.getElementById('fornecedorForm');
+  var nome = document.getElementById('ffNome').value.trim();
+  if(!nome){ alert('Informe o nome do fornecedor.'); return; }
+  var categorias = Array.prototype.map.call(document.querySelectorAll('#ffCategorias input:checked'), function(cb){ return cb.value; });
+  var editingId = form.dataset.editing;
+  var novo = {
+    id: editingId || ('forn-'+Date.now()),
+    nome: nome,
+    cnpj: document.getElementById('ffCnpj').value.trim(),
+    contato: document.getElementById('ffContato').value.trim(),
+    leadTimeDias: +document.getElementById('ffLeadTime').value || 1,
+    condPagamentoDias: +document.getElementById('ffCondPagamento').value || 0,
+    categorias: categorias
+  };
+  if(editingId){
+    var idx = FORNECEDORES.findIndex(function(f){ return f.id===editingId; });
+    if(idx!==-1) FORNECEDORES[idx] = novo;
+    logActivity('edição', 'Compras', 'Fornecedor "'+nome+'" editado');
+  } else {
+    FORNECEDORES.push(novo);
+    logActivity('cadastro', 'Compras', 'Fornecedor "'+nome+'" cadastrado');
+  }
+  form.hidden = true;
+  renderCompras();
+});
+function renderFornecedores(){
+  document.getElementById('fornecedorCards').innerHTML = FORNECEDORES.map(function(f){
+    var s = fornecedorScore(f);
+    return '<div class="card card-pad">' +
+      '<div class="card-head"><div class="card-title">'+f.nome+'</div><span class="score-badge '+scoreTier(s.geral)+'">Score '+s.geral+'</span></div>' +
+      '<div class="stat-explain" style="border-top:none; padding-top:0;">'+f.cnpj+' · '+f.contato+'</div>' +
+      '<div style="margin:10px 0;">'+f.categorias.map(function(c){ return '<span class="proto" style="margin-right:6px;">'+c+'</span>'; }).join('')+'</div>' +
+      '<div class="score-bars">' +
+        '<div class="score-bar-row"><span>Preço</span><div class="score-bar-track"><div class="score-bar-fill" style="width:'+s.preco+'%;"></div></div><span>'+s.preco+'</span></div>' +
+        '<div class="score-bar-row"><span>Entrega</span><div class="score-bar-track"><div class="score-bar-fill" style="width:'+s.entrega+'%;"></div></div><span>'+s.entrega+'</span></div>' +
+        '<div class="score-bar-row"><span>Qualidade</span><div class="score-bar-track"><div class="score-bar-fill" style="width:'+s.qualidade+'%;"></div></div><span>'+s.qualidade+'</span></div>' +
+      '</div>' +
+      '<div class="stat-foot" style="margin-top:10px;">Entrega em '+f.leadTimeDias+' dia(s) · paga em '+f.condPagamentoDias+' dias</div>' +
+      '<div class="form-actions"><button type="button" class="mini-btn" data-edit-forn="'+f.id+'">Editar</button><button type="button" class="mini-btn" data-del-forn="'+f.id+'">Excluir</button></div>' +
+    '</div>';
+  }).join('');
+  document.querySelectorAll('[data-edit-forn]').forEach(function(b){ b.addEventListener('click', function(){ renderFornecedorForm(b.dataset.editForn); }); });
+  document.querySelectorAll('[data-del-forn]').forEach(function(b){ b.addEventListener('click', function(){
+    if(!confirm('Excluir este fornecedor?')) return;
+    FORNECEDORES = FORNECEDORES.filter(function(f){ return f.id!==b.dataset.delForn; });
+    logActivity('exclusão', 'Compras', 'Fornecedor removido');
+    renderCompras();
+  }); });
+}
+function renderPrecosTab(){
+  var sel = document.getElementById('precoItemSelect');
+  if(!sel.dataset.built){
+    sel.innerHTML = ITEM_CATALOG.map(function(it){ return '<option value="'+it.name+'">'+it.name+'</option>'; }).join('');
+    sel.dataset.built = '1';
+    sel.addEventListener('change', renderPrecosTab);
+  }
+  var itemName = sel.value || ITEM_CATALOG[0].name;
+  var fornecedores = fornecedoresForItem(itemName);
+  var compareHost = document.getElementById('precoCompareTable');
+  if(!fornecedores.length){ compareHost.innerHTML = '<div class="stat-foot">Nenhum fornecedor cadastrado para esta categoria.</div>'; }
+  else {
+    var precos = fornecedores.map(function(f){ return { f:f, preco:precoFornecedorItem(itemName,f.id,0) }; });
+    var melhor = Math.min.apply(null, precos.map(function(p){ return p.preco; }));
+    compareHost.innerHTML = '<table class="simple"><thead><tr><th>Fornecedor</th><th class="num">Preço atual</th><th class="num">Entrega</th><th class="num">Pagamento</th><th>Score</th></tr></thead><tbody>' +
+      precos.sort(function(a,b){ return a.preco-b.preco; }).map(function(p){
+        var s = fornecedorScore(p.f);
+        return '<tr><td>'+p.f.nome+(p.preco===melhor?' <span class="supplier-best">melhor preço</span>':'')+'</td><td class="num">'+fmt(p.preco/1000)+'</td><td class="num">'+p.f.leadTimeDias+' dia(s)</td><td class="num">'+p.f.condPagamentoDias+' dias</td><td><span class="score-badge '+scoreTier(s.geral)+'">'+s.geral+'</span></td></tr>';
+      }).join('') + '</tbody></table>';
+  }
+  renderPrecoHistChart(itemName, fornecedores);
+}
+function renderPrecoHistChart(itemName, fornecedores){
+  var svg = document.getElementById('precoHistChart'); if(!svg) return;
+  svg.innerHTML = '';
+  if(!fornecedores.length) return;
+  var W = svg.clientWidth||900, H=220, padL=52, padR=16, padT=14, padB=28;
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  var months = 6;
+  var series = fornecedores.map(function(f){ return { f:f, vals:precoHistorico(itemName,f.id,months) }; });
+  var allVals = []; series.forEach(function(s){ allVals = allVals.concat(s.vals); });
+  var minV = Math.min.apply(null,allVals)*0.92, maxV = Math.max.apply(null,allVals)*1.08;
+  var plotW=W-padL-padR, plotH=H-padT-padB;
+  function x(i){ return padL+i*plotW/(months-1); }
+  function y(v){ return padT+plotH-(v-minV)/(maxV-minV)*plotH; }
+  [0,0.5,1].forEach(function(f){ var v=minV+(maxV-minV)*f, yy=y(v); el('line',{x1:padL,x2:W-padR,y1:yy,y2:yy,class:'gridline'},svg); el('text',{x:padL-8,y:yy+4,'text-anchor':'end',class:'axis-label'},svg).textContent=fmtChart(v/1000); });
+  var tip = document.getElementById('tipPrecoHist'); var wrap = tip.parentElement;
+  series.forEach(function(s,si){
+    var color = COLORS8[si % COLORS8.length];
+    var pts = s.vals.map(function(v,i){ return [x(i), y(v)]; });
+    el('path',{d:pts.map(function(p,i){ return (i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1); }).join(' '),fill:'none',stroke:color,'stroke-width':2.2,'stroke-linecap':'round','stroke-linejoin':'round'},svg);
+    s.vals.forEach(function(v,i){
+      var dot = el('circle',{cx:x(i),cy:y(v),r:7,fill:'transparent'},svg);
+      el('circle',{cx:x(i),cy:y(v),r:3,fill:color},svg);
+      dot.addEventListener('mousemove', function(ev){ var r=wrap.getBoundingClientRect(); showTip(tip,wrap,ev.clientX-r.left,ev.clientY-r.top,'<b>'+s.f.nome+'</b><div class="tip-row"><span>Preço</span><span>'+fmt(v/1000)+'</span></div>'); });
+      dot.addEventListener('mouseleave', function(){ hideTip(tip); });
+    });
+  });
+  var legend = document.getElementById('precoHistLegend');
+  if(legend) legend.innerHTML = series.map(function(s,si){ return '<span class="legend-item"><span class="legend-line" style="background:'+COLORS8[si%COLORS8.length]+'"></span>'+s.f.nome+'</span>'; }).join('');
+}
+document.getElementById('pedidoItem').addEventListener('change', renderPedidoSupplierCompare);
+document.getElementById('pedidoSalvarRascunho').addEventListener('click', function(){ criarPedido(true); });
+document.getElementById('pedidoEnviar').addEventListener('click', function(){ criarPedido(false); });
+function renderCompras(){
+  var itemSel = document.getElementById('pedidoItem');
+  if(!itemSel.dataset.built){ itemSel.innerHTML = ITEM_CATALOG.map(function(it){ return '<option value="'+it.name+'">'+it.name+'</option>'; }).join(''); itemSel.dataset.built='1'; }
+  renderPedidos();
+  renderFornecedores();
+  renderPrecosTab();
+}
 function localesForUnit(unitKey){ return stockLocais[unitKey] || stockLocais.consolidado; }
 function localInfo(unitKey, localKey){
   var list = localesForUnit(unitKey);
@@ -3577,7 +3997,7 @@ function renderBudgetTrend(unitKey, y, m){
    USUÁRIOS, PAPÉIS & PERMISSÕES
 ============================================================ */
 var PERM_TIERS = { none:{label:'Sem acesso', cls:'badge-neutral'}, view:{label:'Visualizar', cls:'badge-info'}, input:{label:'Lançar', cls:'badge-warn'}, approve:{label:'Validar', cls:'badge-good'}, admin:{label:'Administrar', cls:'badge-admin'} };
-var PERM_MODULES = [ ['financeiro','Financeiro'], ['estoque','Estoque'], ['auditoria','Auditoria'], ['metas','Metas'], ['backoffice','Backoffice'], ['usuarios','Usuários'] ];
+var PERM_MODULES = [ ['financeiro','Financeiro'], ['estoque','Estoque'], ['compras','Compras'], ['auditoria','Auditoria'], ['metas','Metas'], ['backoffice','Backoffice'], ['usuarios','Usuários'] ];
 var ROLE_ICONS = {
   dono:'<path d="M4 17l1.6-8.4L9 12l3-6 3 6 3.4-3.4L20 17z"/><path d="M4 20h16"/>',
   diretor:'<rect x="3" y="7" width="18" height="12" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
@@ -3590,21 +4010,21 @@ var ROLE_ICONS = {
 };
 var ROLES = [
   { key:'dono', name:'Dono', icon:'dono', desc:'Acesso total à rede: todos os módulos, todas as unidades, com poder de administrar usuários e integrações.',
-    perms:{ financeiro:'admin', estoque:'admin', auditoria:'admin', metas:'admin', backoffice:'admin', usuarios:'admin' }, highlight:['financeiro','usuarios','backoffice'] },
+    perms:{ financeiro:'admin', estoque:'admin', compras:'admin', auditoria:'admin', metas:'admin', backoffice:'admin', usuarios:'admin' }, highlight:['financeiro','usuarios','backoffice'] },
   { key:'diretor', name:'Diretor', icon:'diretor', desc:'Visão gerencial completa da rede e poder de validar indicadores e metas — não configura integrações nem usuários.',
-    perms:{ financeiro:'approve', estoque:'approve', auditoria:'approve', metas:'approve', backoffice:'view', usuarios:'view' }, highlight:['financeiro','auditoria','metas'] },
-  { key:'gerente', name:'Gerente de Unidade', icon:'gerente', desc:'Comanda a própria loja: valida contagens de estoque, acompanha o financeiro e responde às auditorias.',
-    perms:{ financeiro:'view', estoque:'approve', auditoria:'input', metas:'view', backoffice:'none', usuarios:'none' }, highlight:['estoque','auditoria','financeiro'] },
+    perms:{ financeiro:'approve', estoque:'approve', compras:'approve', auditoria:'approve', metas:'approve', backoffice:'view', usuarios:'view' }, highlight:['financeiro','auditoria','metas'] },
+  { key:'gerente', name:'Gerente de Unidade', icon:'gerente', desc:'Comanda a própria loja: valida contagens de estoque, aprova pedidos de compra dentro da alçada e responde às auditorias.',
+    perms:{ financeiro:'view', estoque:'approve', compras:'approve', auditoria:'input', metas:'view', backoffice:'none', usuarios:'none' }, highlight:['estoque','compras','auditoria'] },
   { key:'financeiro', name:'Financeiro', icon:'financeiro', desc:'Fecha a DRE, concilia extratos e mapeia o plano de contas — é quem mais vive no Backoffice.',
-    perms:{ financeiro:'approve', estoque:'view', auditoria:'view', metas:'input', backoffice:'admin', usuarios:'none' }, highlight:['backoffice','financeiro','metas'] },
-  { key:'chefeEstoque', name:'Chefe de Estoque', icon:'chefeEstoque', desc:'Lança e valida entradas, contagens e notas fiscais da própria unidade.',
-    perms:{ financeiro:'none', estoque:'approve', auditoria:'view', metas:'none', backoffice:'none', usuarios:'none' }, highlight:['estoque','auditoria','financeiro'] },
+    perms:{ financeiro:'approve', estoque:'view', compras:'view', auditoria:'view', metas:'input', backoffice:'admin', usuarios:'none' }, highlight:['backoffice','financeiro','metas'] },
+  { key:'chefeEstoque', name:'Chefe de Estoque', icon:'chefeEstoque', desc:'Lança e valida entradas, contagens, notas fiscais e cria pedidos de compra da própria unidade.',
+    perms:{ financeiro:'none', estoque:'approve', compras:'input', auditoria:'view', metas:'none', backoffice:'none', usuarios:'none' }, highlight:['estoque','compras','auditoria'] },
   { key:'estoquista', name:'Estoquista', icon:'estoquista', desc:'Só lança: contagens, entradas de nota fiscal e ajustes. Não aprova nada e não vê o financeiro.',
-    perms:{ financeiro:'none', estoque:'input', auditoria:'none', metas:'none', backoffice:'none', usuarios:'none' }, highlight:['estoque','financeiro','auditoria'] },
+    perms:{ financeiro:'none', estoque:'input', compras:'none', auditoria:'none', metas:'none', backoffice:'none', usuarios:'none' }, highlight:['estoque','financeiro','auditoria'] },
   { key:'auditor', name:'Auditor Interno', icon:'auditor', desc:'Executa e valida os checklists de auditoria; enxerga os outros módulos, mas não edita os dados deles.',
-    perms:{ financeiro:'view', estoque:'view', auditoria:'approve', metas:'none', backoffice:'view', usuarios:'none' }, highlight:['auditoria','financeiro','estoque'] },
+    perms:{ financeiro:'view', estoque:'view', compras:'view', auditoria:'approve', metas:'none', backoffice:'view', usuarios:'none' }, highlight:['auditoria','financeiro','estoque'] },
   { key:'admin', name:'Admin do Sistema', icon:'admin', desc:'Cuida de integrações, plano de contas e da lista de usuários — sem acesso aos números do negócio.',
-    perms:{ financeiro:'none', estoque:'none', auditoria:'none', metas:'none', backoffice:'admin', usuarios:'admin' }, highlight:['usuarios','backoffice','financeiro'] }
+    perms:{ financeiro:'none', estoque:'none', compras:'none', auditoria:'none', metas:'none', backoffice:'admin', usuarios:'admin' }, highlight:['usuarios','backoffice','financeiro'] }
 ];
 var USERS = [
   { name:'Marina Torres', email:'marina.torres@darius.app', role:'dono', units:['consolidado'], status:'Ativo', last:'há 2 min' },
@@ -3677,12 +4097,14 @@ document.getElementById('operatorModeBtn').addEventListener('click', function(){
   state.operatorMode = true;
   updateOperatorBanner();
   applyAiPermissionGating();
+  renderPedidosBody();
   logActivity('modo operador', 'Sistema', 'Admin passou a atuar como operador');
 });
 document.getElementById('operatorModeExitBtn').addEventListener('click', function(){
   state.operatorMode = false;
   updateOperatorBanner();
   applyAiPermissionGating();
+  renderPedidosBody();
   logActivity('modo admin', 'Sistema', 'Admin voltou ao modo admin');
 });
 function renderActivityLog(){
@@ -4155,6 +4577,7 @@ function renderAll(){
   document.getElementById('waterfallNote').textContent = 'Valores em Reais (R$) · ' + pA.name + ' · ' + pA.label;
 
   renderInventory(state.unit, state.local);
+  renderCompras();
   renderAudit(state.unit);
   renderMetas(pA, pM);
   renderMicroBench();
@@ -4194,6 +4617,7 @@ renderDonutGeneric('cmvDonut','cmvLegend','tipDonut', CMV_CATS, 'CMV', '34,6% da
 renderInsights();
 renderProjection();
 renderCycle();
+renderComprasTabs();
 renderRoles();
 renderPermTable();
 renderPeopleList();
