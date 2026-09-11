@@ -279,6 +279,7 @@ body.presenting .side, body.presenting .side-backdrop, body.presenting .topbar, 
 body.presenting .content{ padding:0; max-width:none; }
 body.presenting .main{ width:100%; }
 .pres-player{ position:fixed; inset:0; z-index:80; background:var(--page); display:flex; flex-direction:column; }
+.pres-player[hidden]{ display:none; }
 .pres-player-bar{ display:flex; align-items:center; gap:14px; padding:14px 22px; border-bottom:1px solid var(--border); flex:0 0 auto; }
 .pres-player-label{ font-size:12px; color:var(--ink-muted); font-weight:600; }
 .pres-dots{ display:flex; gap:5px; margin-left:auto; }
