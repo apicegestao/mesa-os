@@ -625,6 +625,34 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 .scenario-verdict.risk{ color:var(--critical); }
 .hub-scenario-strip{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding:12px 14px; border-radius:12px; background:var(--surface-sunken); font-size:12.5px; }
 .hub-scenario-strip b{ color:var(--ink); }
+
+/* ---------- estoque: locais, cadastro, transferência ---------- */
+.local-tabs{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:18px; }
+.local-tab{ font-size:12.5px; font-weight:600; padding:7px 14px; border-radius:999px; border:1px solid var(--border); background:var(--surface); color:var(--ink-2); cursor:pointer; display:flex; gap:7px; align-items:center; }
+.local-tab:hover{ background:var(--surface-sunken); }
+.local-tab.selected{ border-color:var(--accent); background:var(--accent-soft); color:var(--accent-strong); }
+.local-tab-tipo{ font-size:9.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-muted); }
+.local-tab.selected .local-tab-tipo{ color:var(--accent-strong); }
+.local-tab-add{ font-size:12px; font-weight:600; padding:7px 12px; border-radius:999px; border:1px dashed var(--border-strong); background:none; color:var(--ink-2); cursor:pointer; }
+.local-tab-add:hover{ border-color:var(--accent); color:var(--accent-strong); }
+.local-tab-remove{ border:none; background:none; color:var(--ink-muted); cursor:pointer; display:flex; padding:0; margin-left:2px; }
+.local-tab-remove:hover{ color:var(--critical); }
+.local-tab-remove svg{ width:11px; height:11px; }
+
+.form-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px 14px; }
+@media(max-width:900px){ .form-grid{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:640px){ .form-grid{ grid-template-columns:1fr; } }
+.form-field{ display:flex; flex-direction:column; gap:5px; }
+.form-field label{ font-size:11px; font-weight:600; color:var(--ink-muted); }
+.form-field input, .form-field select{ font:inherit; font-size:12.5px; border:1px solid var(--border); border-radius:8px; padding:8px 10px; background:var(--surface); color:var(--ink); }
+.form-field input:focus-visible, .form-field select:focus-visible{ outline:2px solid var(--accent); outline-offset:1px; }
+.form-check{ display:flex; align-items:center; gap:7px; font-size:12.5px; color:var(--ink-2); }
+.form-check input{ width:15px; height:15px; accent-color:var(--accent); }
+.form-actions{ display:flex; gap:8px; margin-top:16px; }
+.abc-badge{ font-size:10px; font-weight:700; width:18px; height:18px; border-radius:5px; display:inline-flex; align-items:center; justify-content:center; }
+.abc-badge.A{ background:var(--critical-soft); color:var(--critical); }
+.abc-badge.B{ background:color-mix(in srgb, var(--warning) 30%, transparent); color:#8a5a00; }
+.abc-badge.C{ background:var(--surface-sunken); color:var(--ink-muted); }
 </style>
 
 <div class="shell">
@@ -1114,54 +1142,102 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
       <section class="view" id="view-estoque">
         <div class="ai-strip"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · controle de estoque</div><div class="ai-strip-text" id="invAiHeadline">Analisando níveis de estoque…</div></div></div>
 
+        <div class="local-tabs" id="stockLocalTabs"></div>
+
         <div class="section-title" id="invSectionTitle">Estoque — cada unidade com controle próprio</div>
         <div class="grid g-kpi" id="invKpiRow"></div>
 
-        <div class="section-title">Entrada de notas fiscais</div>
-        <div class="grid g-3">
-          <div class="card card-pad stat"><div class="stat-label">Notas processadas este mês</div><div class="stat-row"><div class="stat-value tnum">42</div><span class="delta up"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 10V2M2.5 5.5L6 2l3.5 3.5"/></svg>+15%</span></div><div class="stat-foot">vs mês anterior</div><div class="stat-explain">Notas fiscais de compra lidas via XML, PDF ou foto tirada pelo celular.</div></div>
-          <div class="card card-pad stat"><div class="stat-label">Itens novos detectados</div><div class="stat-value tnum">3</div><div class="stat-foot">aguardando cadastro no catálogo</div><div class="stat-explain">Vieram em notas fiscais mas ainda não existem como item desta unidade.</div></div>
-          <div class="card card-pad stat"><div class="stat-label">Taxa de leitura automática</div><div class="stat-value tnum">91%</div><div class="stat-foot">dos itens sem revisão manual</div><div class="stat-explain">% dos itens da nota que a IA reconheceu e já mapeou para o catálogo de estoque.</div></div>
-        </div>
+        <div id="stockCentralOnly">
+          <div class="section-title">CMV real (pelo estoque) x CMV lançado na DRE</div>
+          <div class="card card-pad cvp-card">
+            <div id="cmvRealBridge"></div>
+          </div>
 
-        <div class="card card-pad" style="margin-top:16px;">
-          <div class="dropzone">
-            <div class="dropzone-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7l1.5-3h13L20 7"/><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.5" r="3.5"/></svg></div>
-            <div class="dropzone-title">Importe a nota fiscal de compra</div>
-            <div class="dropzone-sub">Envie o XML da NF-e, o PDF do DANFE ou tire uma foto pelo celular — a IA lê os itens, quantidades e valores, e já sugere a entrada no estoque desta unidade.</div>
-            <div class="filefmt-row"><span class="filefmt">XML · NF-e</span><span class="filefmt">PDF · DANFE</span><span class="filefmt">FOTO</span><span class="filefmt">CSV</span></div>
-            <button type="button" class="dropzone-btn">Importar nota fiscal</button>
+          <div class="section-title">Entrada de notas fiscais</div>
+          <div class="grid g-3">
+            <div class="card card-pad stat"><div class="stat-label">Notas processadas este mês</div><div class="stat-row"><div class="stat-value tnum">42</div><span class="delta up"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 10V2M2.5 5.5L6 2l3.5 3.5"/></svg>+15%</span></div><div class="stat-foot">vs mês anterior</div><div class="stat-explain">Notas fiscais de compra lidas via XML, PDF ou foto tirada pelo celular.</div></div>
+            <div class="card card-pad stat"><div class="stat-label">Itens novos detectados</div><div class="stat-value tnum">3</div><div class="stat-foot">aguardando cadastro no catálogo</div><div class="stat-explain">Vieram em notas fiscais mas ainda não existem como item desta unidade.</div></div>
+            <div class="card card-pad stat"><div class="stat-label">Taxa de leitura automática</div><div class="stat-value tnum">91%</div><div class="stat-foot">dos itens sem revisão manual</div><div class="stat-explain">% dos itens da nota que a IA reconheceu e já mapeou para o catálogo de estoque.</div></div>
+          </div>
+
+          <div class="card card-pad" style="margin-top:16px;">
+            <div class="dropzone">
+              <div class="dropzone-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7l1.5-3h13L20 7"/><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.5" r="3.5"/></svg></div>
+              <div class="dropzone-title">Importe a nota fiscal de compra</div>
+              <div class="dropzone-sub">Envie o XML da NF-e, o PDF do DANFE ou tire uma foto pelo celular — a IA lê os itens, quantidades e valores, e já sugere a entrada no estoque central.</div>
+              <div class="filefmt-row"><span class="filefmt">XML · NF-e</span><span class="filefmt">PDF · DANFE</span><span class="filefmt">FOTO</span><span class="filefmt">CSV</span></div>
+              <button type="button" class="dropzone-btn">Importar nota fiscal</button>
+            </div>
+          </div>
+
+          <div class="card card-pad" style="margin-top:16px;">
+            <div class="card-head"><div class="card-title">Notas recentes</div><span class="proto">arquivo ou foto</span></div>
+            <div style="overflow-x:auto;">
+              <table class="simple">
+                <thead><tr><th>Nota</th><th>Fornecedor</th><th>Data</th><th class="num">Itens</th><th class="num">Valor total</th><th>Confiança</th><th>Status</th><th>Ação</th></tr></thead>
+                <tbody>
+                  <tr><td><b>NF-e 48.219</b> <span class="proto">XML</span></td><td>Distribuidora Alimentos SA</td><td class="num">05/09</td><td class="num">14</td><td class="num">R$ 4.230,00</td><td><span class="micro-badge badge-good">Alta</span></td><td><span class="micro-badge badge-neutral">Pendente</span></td><td><button type="button" class="mini-btn primary">Revisar itens</button></td></tr>
+                  <tr><td><b>NF-e 48.220</b> <span class="proto">XML</span></td><td>Hortifruti Nova Safra</td><td class="num">05/09</td><td class="num">8</td><td class="num">R$ 612,00</td><td><span class="micro-badge badge-good">Alta</span></td><td><span class="micro-badge badge-good">Aceito</span></td><td><button type="button" class="mini-btn">Ver itens</button></td></tr>
+                  <tr><td><b>Compra avulsa</b> <span class="proto">FOTO</span></td><td>Feira livre</td><td class="num">04/09</td><td class="num">3</td><td class="num">R$ 180,00</td><td><span class="micro-badge badge-warn">Média</span></td><td><span class="micro-badge badge-neutral">Pendente</span></td><td><button type="button" class="mini-btn primary">Revisar itens</button></td></tr>
+                  <tr><td><b>NF-e 48.207</b> <span class="proto">XML</span></td><td>Bebidas Central Distribuidora</td><td class="num">03/09</td><td class="num">6</td><td class="num">R$ 2.140,00</td><td><span class="micro-badge badge-good">Alta</span></td><td><span class="micro-badge badge-good">Aceito</span></td><td><button type="button" class="mini-btn">Ver itens</button></td></tr>
+                  <tr><td><b>NF-e 48.198</b> <span class="proto">PDF</span></td><td>Frigorífico Boi Manso</td><td class="num">02/09</td><td class="num">5</td><td class="num">R$ 3.860,00</td><td><span class="micro-badge badge-critical">Baixa · 1 item novo</span></td><td><span class="micro-badge badge-critical">Revisar</span></td><td><button type="button" class="mini-btn primary">Revisar itens</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card card-pad" style="margin-top:16px;">
+            <div class="card-head"><div><div class="card-title">Exemplo · itens da NF-e 48.219 mapeados automaticamente</div><div class="card-note">mesma lógica de "de-para" do Plano de Contas — por fornecedor + código quando existir</div></div></div>
+            <div style="overflow-x:auto;">
+              <table class="simple">
+                <thead><tr><th>Item na nota fiscal</th><th></th><th>Item no catálogo Darius</th><th>Confiança</th><th>Status</th><th>Ação</th></tr></thead>
+                <tbody>
+                  <tr><td class="map-src">FILE MIGNON BOVINO KG</td><td class="map-arrow">→</td><td>Filé mignon</td><td><span class="micro-badge badge-good">97%</span></td><td><span class="micro-badge badge-good">Aceito</span></td><td class="row-actions"><button type="button" class="mini-btn">Editar</button></td></tr>
+                  <tr><td class="map-src">CAMARAO 21/25 CX 2KG</td><td class="map-arrow">→</td><td>Camarão 21/25</td><td><span class="micro-badge badge-good">94%</span></td><td><span class="micro-badge badge-good">Aceito</span></td><td class="row-actions"><button type="button" class="mini-btn">Editar</button></td></tr>
+                  <tr><td class="map-src">TEMPERO CASA ESPECIAL 5L</td><td class="map-arrow">→</td><td>Molho especial da casa <span class="proto">sugestão</span></td><td><span class="micro-badge badge-warn">68%</span></td><td><span class="micro-badge badge-critical">Revisar</span></td><td class="row-actions"><button type="button" class="mini-btn primary">Confirmar</button><button type="button" class="mini-btn">Ajustar</button></td></tr>
+                  <tr><td class="map-src">DESCARTAVEL COPO 300ML PCT</td><td class="map-arrow">→</td><td>Não encontrado no catálogo</td><td><span class="micro-badge badge-critical">—</span></td><td><span class="micro-badge badge-critical">Item novo</span></td><td class="row-actions"><button type="button" class="mini-btn primary">Cadastrar em Embalagens</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="section-title">Transferência para dispensas e bares</div>
+          <div class="card card-pad">
+            <div class="card-note" style="margin-bottom:12px;">Cozinha e bar não compram direto — eles recebem do estoque central. Isso mantém o central como a única porta de entrada de compra.</div>
+            <div class="form-grid">
+              <div class="form-field"><label>Item</label><select id="transferItem"></select></div>
+              <div class="form-field"><label>Quantidade</label><input type="number" id="transferQtd" min="1" value="1"></div>
+              <div class="form-field"><label>Destino</label><select id="transferDestino"></select></div>
+            </div>
+            <div class="form-actions"><button type="button" class="mini-btn primary" id="transferBtn">Registrar transferência</button></div>
+            <div style="overflow-x:auto; margin-top:16px;">
+              <table class="simple">
+                <thead><tr><th>Data</th><th>Item</th><th class="num">Qtd</th><th>Destino</th></tr></thead>
+                <tbody id="transferLogBody"></tbody>
+              </table>
+            </div>
           </div>
         </div>
 
-        <div class="card card-pad" style="margin-top:16px;">
-          <div class="card-head"><div class="card-title">Notas recentes</div><span class="proto">arquivo ou foto</span></div>
-          <div style="overflow-x:auto;">
-            <table class="simple">
-              <thead><tr><th>Nota</th><th>Fornecedor</th><th>Data</th><th class="num">Itens</th><th class="num">Valor total</th><th>Confiança</th><th>Status</th><th>Ação</th></tr></thead>
-              <tbody>
-                <tr><td><b>NF-e 48.219</b> <span class="proto">XML</span></td><td>Distribuidora Alimentos SA</td><td class="num">05/09</td><td class="num">14</td><td class="num">R$ 4.230,00</td><td><span class="micro-badge badge-good">Alta</span></td><td><span class="micro-badge badge-neutral">Pendente</span></td><td><button type="button" class="mini-btn primary">Revisar itens</button></td></tr>
-                <tr><td><b>NF-e 48.220</b> <span class="proto">XML</span></td><td>Hortifruti Nova Safra</td><td class="num">05/09</td><td class="num">8</td><td class="num">R$ 612,00</td><td><span class="micro-badge badge-good">Alta</span></td><td><span class="micro-badge badge-good">Aceito</span></td><td><button type="button" class="mini-btn">Ver itens</button></td></tr>
-                <tr><td><b>Compra avulsa</b> <span class="proto">FOTO</span></td><td>Feira livre</td><td class="num">04/09</td><td class="num">3</td><td class="num">R$ 180,00</td><td><span class="micro-badge badge-warn">Média</span></td><td><span class="micro-badge badge-neutral">Pendente</span></td><td><button type="button" class="mini-btn primary">Revisar itens</button></td></tr>
-                <tr><td><b>NF-e 48.207</b> <span class="proto">XML</span></td><td>Bebidas Central Distribuidora</td><td class="num">03/09</td><td class="num">6</td><td class="num">R$ 2.140,00</td><td><span class="micro-badge badge-good">Alta</span></td><td><span class="micro-badge badge-good">Aceito</span></td><td><button type="button" class="mini-btn">Ver itens</button></td></tr>
-                <tr><td><b>NF-e 48.198</b> <span class="proto">PDF</span></td><td>Frigorífico Boi Manso</td><td class="num">02/09</td><td class="num">5</td><td class="num">R$ 3.860,00</td><td><span class="micro-badge badge-critical">Baixa · 1 item novo</span></td><td><span class="micro-badge badge-critical">Revisar</span></td><td><button type="button" class="mini-btn primary">Revisar itens</button></td></tr>
-              </tbody>
-            </table>
+        <div id="stockDispensaOnly" hidden>
+          <div class="section-title">Transferências recebidas do estoque central</div>
+          <div class="card card-pad">
+            <div style="overflow-x:auto;">
+              <table class="simple" id="dispensaTransferTable">
+                <thead><tr><th>Data</th><th>Item</th><th class="num">Qtd recebida</th></tr></thead>
+                <tbody id="dispensaTransferBody"></tbody>
+              </table>
+            </div>
           </div>
-        </div>
-
-        <div class="card card-pad" style="margin-top:16px;">
-          <div class="card-head"><div><div class="card-title">Exemplo · itens da NF-e 48.219 mapeados automaticamente</div><div class="card-note">mesma lógica de "de-para" do Plano de Contas, aplicada aos itens de estoque</div></div></div>
-          <div style="overflow-x:auto;">
-            <table class="simple">
-              <thead><tr><th>Item na nota fiscal</th><th></th><th>Item no catálogo Darius</th><th>Confiança</th><th>Status</th><th>Ação</th></tr></thead>
-              <tbody>
-                <tr><td class="map-src">FILE MIGNON BOVINO KG</td><td class="map-arrow">→</td><td>Filé mignon</td><td><span class="micro-badge badge-good">97%</span></td><td><span class="micro-badge badge-good">Aceito</span></td><td class="row-actions"><button type="button" class="mini-btn">Editar</button></td></tr>
-                <tr><td class="map-src">CAMARAO 21/25 CX 2KG</td><td class="map-arrow">→</td><td>Camarão 21/25</td><td><span class="micro-badge badge-good">94%</span></td><td><span class="micro-badge badge-good">Aceito</span></td><td class="row-actions"><button type="button" class="mini-btn">Editar</button></td></tr>
-                <tr><td class="map-src">TEMPERO CASA ESPECIAL 5L</td><td class="map-arrow">→</td><td>Molho especial da casa <span class="proto">sugestão</span></td><td><span class="micro-badge badge-warn">68%</span></td><td><span class="micro-badge badge-critical">Revisar</span></td><td class="row-actions"><button type="button" class="mini-btn primary">Confirmar</button><button type="button" class="mini-btn">Ajustar</button></td></tr>
-                <tr><td class="map-src">DESCARTAVEL COPO 300ML PCT</td><td class="map-arrow">→</td><td>Não encontrado no catálogo</td><td><span class="micro-badge badge-critical">—</span></td><td><span class="micro-badge badge-critical">Item novo</span></td><td class="row-actions"><button type="button" class="mini-btn primary">Cadastrar em Embalagens</button></td></tr>
-              </tbody>
-            </table>
+          <div class="section-title">Registrar consumo ou perda</div>
+          <div class="card card-pad">
+            <div class="card-note" style="margin-bottom:12px;">Separar o motivo da saída (uso em produção/venda vs. perda/quebra) é o que permite medir a taxa de quebra real deste local.</div>
+            <div class="form-grid">
+              <div class="form-field"><label>Item</label><select id="consumoItem"></select></div>
+              <div class="form-field"><label>Quantidade</label><input type="number" id="consumoQtd" min="1" value="1"></div>
+              <div class="form-field"><label>Motivo</label><select id="consumoMotivo"><option value="uso">Uso em produção/venda</option><option value="perda">Perda / quebra</option><option value="ajuste">Ajuste de contagem</option></select></div>
+            </div>
+            <div class="form-actions"><button type="button" class="mini-btn primary" id="consumoBtn">Registrar saída</button></div>
           </div>
         </div>
 
@@ -1191,11 +1267,30 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
           </div>
         </div>
 
-        <div class="section-title">Itens em estoque</div>
+        <div class="section-title" id="invItemsTitle">Itens em estoque</div>
+        <div class="card card-pad" id="invCadastroForm" hidden>
+          <div class="card-head"><div class="card-title" id="invCadastroFormTitle">Adicionar produto</div><button type="button" class="mini-btn" id="invCadastroCancel">Cancelar</button></div>
+          <div class="form-grid">
+            <div class="form-field"><label>Nome</label><input type="text" id="pfNome"></div>
+            <div class="form-field"><label>Categoria</label><select id="pfCategoria"></select></div>
+            <div class="form-field"><label>Unidade de contagem</label><input type="text" id="pfUnidade" placeholder="kg, L, un"></div>
+            <div class="form-field"><label>Unidade de compra</label><input type="text" id="pfUnidadeCompra" placeholder="ex.: caixa 5kg"></div>
+            <div class="form-field"><label>Fator de conversão</label><input type="number" id="pfFator" min="1" value="1" placeholder="1 caixa = quantas un. de contagem"></div>
+            <div class="form-field"><label>Custo unitário (R$)</label><input type="number" id="pfCusto" min="0" step="0.01"></div>
+            <div class="form-field"><label>Estoque mínimo</label><input type="number" id="pfMin" min="0"></div>
+            <div class="form-field"><label>Estoque máximo</label><input type="number" id="pfMax" min="0"></div>
+            <div class="form-field"><label>Consumo médio/dia</label><input type="number" id="pfConsumo" min="0" step="0.1"></div>
+            <div class="form-field"><label>Curva ABC (prioridade de contagem)</label><select id="pfAbc"><option value="A">A — contagem semanal</option><option value="B">B — contagem quinzenal</option><option value="C">C — contagem mensal</option></select></div>
+            <div class="form-field"><label class="form-check"><input type="checkbox" id="pfPerecivel"> Item perecível</label></div>
+            <div class="form-field" id="pfValidadeWrap"><label>Validade (dias)</label><input type="number" id="pfValidade" min="1"></div>
+          </div>
+          <div class="form-actions"><button type="button" class="mini-btn primary" id="invCadastroSalvar">Salvar produto</button></div>
+        </div>
         <div class="card card-pad">
+          <div class="card-head"><div class="card-note">Cadastro (adicionar/editar/excluir) restrito a supervisores e admins</div><button type="button" class="mini-btn primary" id="invCadastroAddBtn">+ Adicionar produto</button></div>
           <div style="overflow-x:auto;">
             <table class="simple" id="invTable">
-              <thead><tr><th>Item</th><th>Categoria</th><th class="num">Estoque</th><th class="num">Mín / Máx</th><th class="num">Consumo/dia</th><th class="num">Cobertura</th><th>Status</th></tr></thead>
+              <thead><tr><th>Item</th><th>Categoria</th><th class="num">Estoque</th><th class="num">Mín / Máx</th><th class="num">Consumo/dia</th><th class="num">Cobertura</th><th>Status</th><th id="invActionsHead">Ação</th></tr></thead>
               <tbody id="invBody"></tbody>
             </table>
           </div>
@@ -1919,11 +2014,13 @@ YEARS.forEach(function(y){ for(var m=1;m<=12;m++){ PERIODS.push({y:y,m:m}); } })
 periodASel.value = '2026-9';
 periodBSel.value = '2026-8';
 
-var state = { unit:'consolidado', ay:2026, am:9, by:2025, bm:9 };
+var state = { unit:'consolidado', ay:2026, am:9, by:2025, bm:9, local:'central' };
 function syncStateFromSelects(){
   var a = periodASel.value.split('-'); state.ay = +a[0]; state.am = +a[1];
   var b = periodBSel.value.split('-'); state.by = +b[0]; state.bm = +b[1];
+  var prevUnit = state.unit;
   state.unit = document.getElementById('unitSelect').value;
+  if(state.unit!==prevUnit) state.local = 'central';
 }
 
 var COLORS8 = ['var(--c1)','var(--c2)','var(--c3)','var(--c4)','var(--c5)','var(--c6)','var(--c7)','var(--c8)'];
@@ -2842,34 +2939,62 @@ function renderMicroBench(){
    ESTOQUE — inventory module (per unit, AI-assisted)
 ============================================================ */
 var ITEM_CATALOG = [
-  {name:'Filé mignon', cat:'Proteínas', unit:'kg', min:20, max:80, consumo:6, custo:52, validadeDias:5},
-  {name:'Camarão 21/25', cat:'Proteínas', unit:'kg', min:8, max:30, consumo:3.2, custo:68, validadeDias:3},
-  {name:'Frango (peito)', cat:'Proteínas', unit:'kg', min:25, max:90, consumo:9, custo:19, validadeDias:4},
-  {name:'Tomate', cat:'Hortifrúti', unit:'kg', min:15, max:60, consumo:7, custo:6.5, validadeDias:6},
-  {name:'Alface americana', cat:'Hortifrúti', unit:'un', min:20, max:80, consumo:11, custo:3.2, validadeDias:4},
-  {name:'Limão tahiti', cat:'Hortifrúti', unit:'kg', min:10, max:40, consumo:4, custo:5.8, validadeDias:9},
-  {name:'Vinho tinto (casa)', cat:'Bebidas', unit:'un', min:12, max:48, consumo:2.1, custo:34, validadeDias:null},
-  {name:'Cerveja long neck', cat:'Bebidas', unit:'un', min:80, max:320, consumo:38, custo:5.4, validadeDias:null},
-  {name:'Refrigerante lata', cat:'Bebidas', unit:'un', min:60, max:240, consumo:29, custo:3.1, validadeDias:null},
-  {name:'Arroz arbóreo', cat:'Secos/Mercearia', unit:'kg', min:15, max:50, consumo:3.5, custo:11, validadeDias:null},
-  {name:'Farinha de trigo', cat:'Secos/Mercearia', unit:'kg', min:20, max:60, consumo:4.2, custo:5.2, validadeDias:null},
-  {name:'Azeite extravirgem', cat:'Secos/Mercearia', unit:'L', min:8, max:30, consumo:1.4, custo:38, validadeDias:null},
-  {name:'Molho especial da casa', cat:'Secos/Mercearia', unit:'L', min:6, max:20, consumo:1.8, custo:22, validadeDias:7},
-  {name:'Embalagem delivery M', cat:'Embalagens', unit:'un', min:200, max:800, consumo:95, custo:0.9, validadeDias:null},
-  {name:'Guardanapo personalizado', cat:'Embalagens', unit:'un', min:300, max:1200, consumo:140, custo:0.12, validadeDias:null},
-  {name:'Detergente concentrado', cat:'Limpeza', unit:'L', min:6, max:24, consumo:1.1, custo:14, validadeDias:null},
-  {name:'Álcool 70%', cat:'Limpeza', unit:'L', min:8, max:30, consumo:1.6, custo:9.5, validadeDias:null}
+  {name:'Filé mignon', cat:'Proteínas', unit:'kg', min:20, max:80, consumo:6, custo:52, validadeDias:5, abc:'A', unidadeCompra:'caixa 5kg', fatorConversao:5},
+  {name:'Camarão 21/25', cat:'Proteínas', unit:'kg', min:8, max:30, consumo:3.2, custo:68, validadeDias:3, abc:'A', unidadeCompra:'caixa 2kg', fatorConversao:2},
+  {name:'Frango (peito)', cat:'Proteínas', unit:'kg', min:25, max:90, consumo:9, custo:19, validadeDias:4, abc:'A', unidadeCompra:'caixa 10kg', fatorConversao:10},
+  {name:'Tomate', cat:'Hortifrúti', unit:'kg', min:15, max:60, consumo:7, custo:6.5, validadeDias:6, abc:'B', unidadeCompra:'caixa 20kg', fatorConversao:20},
+  {name:'Alface americana', cat:'Hortifrúti', unit:'un', min:20, max:80, consumo:11, custo:3.2, validadeDias:4, abc:'B', unidadeCompra:'unidade', fatorConversao:1},
+  {name:'Limão tahiti', cat:'Hortifrúti', unit:'kg', min:10, max:40, consumo:4, custo:5.8, validadeDias:9, abc:'B', unidadeCompra:'caixa 20kg', fatorConversao:20},
+  {name:'Vinho tinto (casa)', cat:'Bebidas', unit:'un', min:12, max:48, consumo:2.1, custo:34, validadeDias:null, abc:'A', unidadeCompra:'caixa 6un', fatorConversao:6},
+  {name:'Cerveja long neck', cat:'Bebidas', unit:'un', min:80, max:320, consumo:38, custo:5.4, validadeDias:null, abc:'A', unidadeCompra:'fardo 24un', fatorConversao:24},
+  {name:'Refrigerante lata', cat:'Bebidas', unit:'un', min:60, max:240, consumo:29, custo:3.1, validadeDias:null, abc:'B', unidadeCompra:'fardo 12un', fatorConversao:12},
+  {name:'Arroz arbóreo', cat:'Secos/Mercearia', unit:'kg', min:15, max:50, consumo:3.5, custo:11, validadeDias:null, abc:'B', unidadeCompra:'saco 5kg', fatorConversao:5},
+  {name:'Farinha de trigo', cat:'Secos/Mercearia', unit:'kg', min:20, max:60, consumo:4.2, custo:5.2, validadeDias:null, abc:'C', unidadeCompra:'saco 5kg', fatorConversao:5},
+  {name:'Azeite extravirgem', cat:'Secos/Mercearia', unit:'L', min:8, max:30, consumo:1.4, custo:38, validadeDias:null, abc:'B', unidadeCompra:'caixa 6L', fatorConversao:6},
+  {name:'Molho especial da casa', cat:'Secos/Mercearia', unit:'L', min:6, max:20, consumo:1.8, custo:22, validadeDias:7, abc:'B', unidadeCompra:'unidade', fatorConversao:1},
+  {name:'Embalagem delivery M', cat:'Embalagens', unit:'un', min:200, max:800, consumo:95, custo:0.9, validadeDias:null, abc:'C', unidadeCompra:'pacote 100un', fatorConversao:100},
+  {name:'Guardanapo personalizado', cat:'Embalagens', unit:'un', min:300, max:1200, consumo:140, custo:0.12, validadeDias:null, abc:'C', unidadeCompra:'pacote 500un', fatorConversao:500},
+  {name:'Detergente concentrado', cat:'Limpeza', unit:'L', min:6, max:24, consumo:1.1, custo:14, validadeDias:null, abc:'C', unidadeCompra:'unidade', fatorConversao:1},
+  {name:'Álcool 70%', cat:'Limpeza', unit:'L', min:8, max:30, consumo:1.6, custo:9.5, validadeDias:null, abc:'C', unidadeCompra:'unidade', fatorConversao:1}
 ];
-function inventoryForUnit(unitKey){
-  var seed = hashString(unitKey+'-inv');
-  return ITEM_CATALOG.map(function(it,i){
+var ABC_CADENCIA = { A:'Contagem semanal', B:'Contagem quinzenal', C:'Contagem mensal' };
+/* ---------- locais de estoque: central + N dispensas de cozinha + N bares por loja ---------- */
+var LOCAL_TIPOS = { central:{ label:'Estoque Central', cats:null }, cozinha:{ label:'Cozinha', cats:['Proteínas','Hortifrúti','Secos/Mercearia','Embalagens','Limpeza'] }, bar:{ label:'Bar', cats:['Bebidas','Embalagens'] } };
+var stockLocais = {
+  pinheiros:[ {key:'central', tipo:'central', nome:'Estoque Central'}, {key:'cozinha1', tipo:'cozinha', nome:'Cozinha'}, {key:'bar1', tipo:'bar', nome:'Bar'} ],
+  vilamadalena:[ {key:'central', tipo:'central', nome:'Estoque Central'}, {key:'cozinha1', tipo:'cozinha', nome:'Cozinha'}, {key:'bar1', tipo:'bar', nome:'Bar'} ],
+  moema:[ {key:'central', tipo:'central', nome:'Estoque Central'}, {key:'cozinha1', tipo:'cozinha', nome:'Cozinha principal'}, {key:'cozinha2', tipo:'cozinha', nome:'Cozinha fria'}, {key:'bar1', tipo:'bar', nome:'Bar salão'}, {key:'bar2', tipo:'bar', nome:'Bar rooftop'} ],
+  tatuape:[ {key:'central', tipo:'central', nome:'Estoque Central'}, {key:'cozinha1', tipo:'cozinha', nome:'Cozinha'}, {key:'bar1', tipo:'bar', nome:'Bar'} ],
+  consolidado:[ {key:'central', tipo:'central', nome:'Estoque Central (visão rede)'} ]
+};
+var transferLog = [
+  {data:'09/09', origem:'central', destino:'cozinha1', item:'Filé mignon', qtd:15, unit:'kg'},
+  {data:'09/09', origem:'central', destino:'bar1', item:'Cerveja long neck', qtd:96, unit:'un'},
+  {data:'08/09', origem:'central', destino:'cozinha1', item:'Frango (peito)', qtd:20, unit:'kg'}
+];
+function localesForUnit(unitKey){ return stockLocais[unitKey] || stockLocais.consolidado; }
+function localInfo(unitKey, localKey){
+  var list = localesForUnit(unitKey);
+  return list.find(function(l){ return l.key===localKey; }) || list[0];
+}
+function inventoryForUnit(unitKey, localKey){
+  localKey = localKey || 'central';
+  var loc = localInfo(unitKey, localKey);
+  var tipo = loc ? loc.tipo : 'central';
+  var isCentral = tipo==='central';
+  var parFactor = isCentral ? 14 : 0.12; // central estoca pra toda a rede + colchão; dispensas guardam só o par de poucos dias
+  var cats = LOCAL_TIPOS[tipo].cats;
+  var seed = hashString(unitKey+'-inv-'+localKey);
+  return ITEM_CATALOG.filter(function(it){ return !cats || cats.indexOf(it.cat)!==-1; }).map(function(it,i){
+    var min = Math.max(1, Math.round(it.min*parFactor));
+    var max = Math.max(min+1, Math.round(it.max*parFactor));
     var stockRand = mulberry32(seed*17 + i*29)();
-    var stock = Math.max(0, Math.round(it.min*0.55 + (it.max-it.min)*stockRand));
-    var consumo = +(it.consumo * seededNoise(seed*5+i*13, 0.18)).toFixed(1);
+    var stock = Math.max(0, Math.round(min*0.55 + (max-min)*stockRand));
+    var consumo = +(it.consumo * seededNoise(seed*5+i*13, 0.18) * (isCentral?1:1)).toFixed(1);
     var dias = consumo>0 ? stock/consumo : 999;
-    var status = stock>it.max ? 'excesso' : dias<3 ? 'critico' : dias<7 ? 'baixo' : 'ok';
+    var status = stock>max ? 'excesso' : dias<3 ? 'critico' : dias<7 ? 'baixo' : 'ok';
     var validade = it.validadeDias!=null ? Math.max(0, Math.round(it.validadeDias + (seededNoise(seed*11+i*3,0.8)-1)*it.validadeDias)) : null;
-    return { name:it.name, cat:it.cat, unit:it.unit, min:it.min, max:it.max, custo:it.custo, stock:stock, consumo:consumo, dias:Math.round(dias*10)/10, status:status, validade:validade };
+    return { name:it.name, cat:it.cat, unit:it.unit, min:min, max:max, custo:it.custo, stock:stock, consumo:consumo, dias:Math.round(dias*10)/10, status:status, validade:validade, abc:it.abc, unidadeCompra:it.unidadeCompra, fatorConversao:it.fatorConversao };
   });
 }
 function invStatusBadge(status){
@@ -2877,19 +3002,78 @@ function invStatusBadge(status){
   var m = map[status];
   return '<span class="micro-badge '+m[0]+'">'+m[1]+'</span>';
 }
-function renderInventory(unitKey){
-  var items = inventoryForUnit(unitKey);
+function renderStockLocalTabs(unitKey){
+  var host = document.getElementById('stockLocalTabs'); if(!host) return;
+  var list = localesForUnit(unitKey);
+  if(!list.find(function(l){ return l.key===state.local; })) state.local = list[0].key;
+  host.innerHTML = list.map(function(l){
+    var removable = l.tipo!=='central';
+    return '<button type="button" class="local-tab'+(l.key===state.local?' selected':'')+'" data-local="'+l.key+'">'+l.nome+' <span class="local-tab-tipo">'+LOCAL_TIPOS[l.tipo].label+'</span>'+
+      (removable ? '<span class="local-tab-remove" data-remove-local="'+l.key+'" title="Remover local" role="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18"/></svg></span>' : '') +
+      '</button>';
+  }).join('') + '<button type="button" class="local-tab-add" id="stockAddLocalBtn">+ Adicionar dispensa/bar</button><span id="stockAddLocalForm"></span>';
+  host.querySelectorAll('[data-local]').forEach(function(btn){
+    btn.addEventListener('click', function(ev){
+      if(ev.target.closest('[data-remove-local]')) return;
+      state.local = btn.dataset.local; renderInventory(state.unit, state.local);
+    });
+  });
+  host.querySelectorAll('[data-remove-local]').forEach(function(btn){
+    btn.addEventListener('click', function(ev){
+      ev.stopPropagation();
+      var key = btn.dataset.removeLocal;
+      if(!confirm('Remover este local de estoque? O histórico de transferências para ele é mantido.')) return;
+      stockLocais[unitKey] = stockLocais[unitKey].filter(function(l){ return l.key!==key; });
+      if(state.local===key) state.local = 'central';
+      renderInventory(unitKey, state.local);
+    });
+  });
+  var addBtn = document.getElementById('stockAddLocalBtn');
+  if(addBtn) addBtn.addEventListener('click', function(){
+    var formHost = document.getElementById('stockAddLocalForm');
+    formHost.innerHTML = '<span style="display:inline-flex; gap:6px; align-items:center; margin-left:6px;">' +
+      '<select class="mini-select" id="newLocalTipo"><option value="cozinha">Cozinha</option><option value="bar">Bar</option></select>' +
+      '<input type="text" class="mini-select" id="newLocalNome" placeholder="Nome (ex.: Cozinha fria)" style="width:170px;">' +
+      '<button type="button" class="mini-btn primary" id="newLocalSalvar">Adicionar</button>' +
+      '<button type="button" class="mini-btn" id="newLocalCancelar">Cancelar</button></span>';
+    document.getElementById('newLocalCancelar').addEventListener('click', function(){ formHost.innerHTML=''; });
+    document.getElementById('newLocalSalvar').addEventListener('click', function(){
+      var tipo = document.getElementById('newLocalTipo').value;
+      var nome = document.getElementById('newLocalNome').value.trim() || (LOCAL_TIPOS[tipo].label);
+      var key = tipo + Date.now();
+      stockLocais[unitKey] = stockLocais[unitKey] || [];
+      stockLocais[unitKey].push({key:key, tipo:tipo, nome:nome});
+      state.local = key;
+      renderInventory(unitKey, key);
+    });
+  });
+}
+function invItemOptionsHTML(items){
+  return items.map(function(it){ return '<option value="'+it.name+'">'+it.name+' ('+it.unit+')</option>'; }).join('');
+}
+function renderInventory(unitKey, localKey){
+  localKey = localKey || state.local || 'central';
+  state.local = localKey;
+  renderStockLocalTabs(unitKey);
+  var loc = localInfo(unitKey, localKey);
+  var isCentral = loc.tipo==='central';
+  var items = inventoryForUnit(unitKey, localKey);
   var unitName = UNIT_META[unitKey].name;
-  document.getElementById('invSectionTitle').textContent = 'Estoque — ' + unitName + ' · controle próprio da unidade';
+  document.getElementById('invSectionTitle').textContent = loc.nome + ' — ' + unitName + (isCentral ? ' · fonte única de compra' : ' · abastecido por transferência do central');
+  document.getElementById('stockCentralOnly').hidden = !isCentral;
+  document.getElementById('stockDispensaOnly').hidden = isCentral;
+  document.getElementById('invItemsTitle').textContent = isCentral ? 'Catálogo de produtos — estoque central' : 'Itens neste local';
+  document.getElementById('invCadastroAddBtn').hidden = !isCentral;
+  document.getElementById('invActionsHead').textContent = isCentral ? 'Ação' : '';
 
-  var valorTotal = items.reduce(function(s,it){ return s+it.stock*it.custo; },0);
+  var valorTotal = items.reduce(function(s,it){ return s+it.stock*it.custo; },0) || 1;
   var emRisco = items.filter(function(it){ return it.status==='critico'||it.status==='baixo'; }).length;
-  var coberturaMedia = items.reduce(function(s,it){ return s+Math.min(it.dias,60); },0)/items.length;
-  var perdasPct = 0.012 + seededNoise(hashString(unitKey+'-perdas'),0.4)*0.012;
+  var coberturaMedia = items.length ? items.reduce(function(s,it){ return s+Math.min(it.dias,60); },0)/items.length : 0;
+  var perdasPct = 0.012 + seededNoise(hashString(unitKey+localKey+'-perdas'),0.4)*0.012;
   var giro = 30/Math.max(coberturaMedia,3);
 
   document.getElementById('invKpiRow').innerHTML =
-    '<div class="card card-pad stat"><div class="stat-label">Valor total em estoque</div><div class="stat-value tnum">'+fmt(valorTotal/1000)+'</div><div class="stat-foot">'+items.length+' itens monitorados nesta unidade</div><div class="stat-explain">Custo de reposição de todos os itens parados no estoque.</div></div>' +
+    '<div class="card card-pad stat"><div class="stat-label">Valor total em estoque</div><div class="stat-value tnum">'+fmt(valorTotal/1000)+'</div><div class="stat-foot">'+items.length+' itens monitorados neste local</div><div class="stat-explain">Custo de reposição de todos os itens parados no estoque.</div></div>' +
     '<div class="card card-pad stat"><div class="stat-label">Itens em risco de ruptura</div><div class="stat-value tnum">'+emRisco+'</div><div class="stat-foot">de '+items.length+' itens ativos</div><div class="stat-explain">Itens com menos de 7 dias de estoque no ritmo atual de consumo.</div></div>' +
     '<div class="card card-pad stat"><div class="stat-label">Cobertura média de estoque</div><div class="stat-value tnum">'+coberturaMedia.toFixed(1)+' dias</div><div class="stat-foot">giro estimado: '+giro.toFixed(1)+'x/mês</div><div class="stat-explain">Quantos dias o estoque atual sustenta o consumo médio diário.</div></div>' +
     '<div class="card card-pad stat"><div class="stat-label">Perdas registradas</div><div class="stat-value tnum">'+fmtPct(perdasPct)+'</div><div class="stat-foot">% do CMV do período · meta ≤ 1,5%</div><div class="stat-explain">Quebras, vencimentos e desperdício registrados no período.</div></div>';
@@ -2903,7 +3087,7 @@ function renderInventory(unitKey){
       '<div><div class="insight-kicker">'+(urgent?'Urgente · comprar hoje':'Programar compra')+'</div>' +
       '<div class="insight-text"><b>'+it.name+'</b> tem estoque para <b>'+it.dias+' dias</b> no ritmo atual de consumo ('+it.consumo+' '+it.unit+'/dia). Sugestão de pedido: <b>'+qty+' '+it.unit+'</b>.</div>' +
       '<div class="insight-meta">Estoque atual: '+it.stock+' '+it.unit+' · mínimo: '+it.min+' '+it.unit+'</div></div></div>';
-  }).join('') : '<div class="stat-foot">Nenhum item em risco de ruptura nesta unidade.</div>';
+  }).join('') : '<div class="stat-foot">Nenhum item em risco de ruptura neste local.</div>';
 
   var expiring = items.filter(function(it){ return it.validade!=null && it.validade<=6; }).sort(function(a,b){ return a.validade-b.validade; });
   document.getElementById('expiryList').innerHTML = expiring.length ? expiring.map(function(it){
@@ -2919,21 +3103,142 @@ function renderInventory(unitKey){
 
   var body = document.getElementById('invBody');
   body.innerHTML = items.slice().sort(function(a,b){ var order={critico:0,baixo:1,excesso:2,ok:3}; return order[a.status]-order[b.status] || a.dias-b.dias; }).map(function(it){
-    return '<tr><td><b>'+it.name+'</b></td><td>'+it.cat+'</td><td class="num">'+it.stock+' '+it.unit+'</td><td class="num">'+it.min+' / '+it.max+' '+it.unit+'</td><td class="num">'+it.consumo+' '+it.unit+'</td><td class="num">'+it.dias+' dias</td><td>'+invStatusBadge(it.status)+'</td></tr>';
+    var abcBadge = it.abc ? '<span class="abc-badge '+it.abc+'" title="'+ABC_CADENCIA[it.abc]+'">'+it.abc+'</span> ' : '';
+    var actions = isCentral ? '<td class="row-actions"><button type="button" class="mini-btn" data-edit-item="'+it.name+'">Editar</button><button type="button" class="mini-btn" data-del-item="'+it.name+'">Excluir</button></td>' : '<td></td>';
+    return '<tr><td>'+abcBadge+'<b>'+it.name+'</b></td><td>'+it.cat+'</td><td class="num">'+it.stock+' '+it.unit+'</td><td class="num">'+it.min+' / '+it.max+' '+it.unit+'</td><td class="num">'+it.consumo+' '+it.unit+'</td><td class="num">'+it.dias+' dias</td><td>'+invStatusBadge(it.status)+'</td>'+actions+'</tr>';
   }).join('');
+  if(isCentral){
+    body.querySelectorAll('[data-edit-item]').forEach(function(btn){ btn.addEventListener('click', function(){ openProdutoForm(btn.dataset.editItem); }); });
+    body.querySelectorAll('[data-del-item]').forEach(function(btn){ btn.addEventListener('click', function(){
+      if(!confirm('Excluir "'+btn.dataset.delItem+'" do catálogo? Isso remove o item de todos os locais.')) return;
+      ITEM_CATALOG = ITEM_CATALOG.filter(function(it){ return it.name!==btn.dataset.delItem; });
+      renderInventory(unitKey, localKey);
+    }); });
+  }
 
-  var mostCritical = items.slice().sort(function(a,b){ return a.dias-b.dias; })[0];
-  document.getElementById('invAiHeadline').innerHTML = emRisco>0 ?
-    'Previsão de ruptura: <b>'+mostCritical.name+'</b> deve zerar em <b>'+mostCritical.dias+' dias</b> no ritmo atual de consumo. '+emRisco+' iten(s) precisam de atenção nesta unidade.' :
-    'Todos os itens monitorados estão dentro da faixa saudável de estoque nesta unidade.';
+  var mostCritical = items.length ? items.slice().sort(function(a,b){ return a.dias-b.dias; })[0] : null;
+  document.getElementById('invAiHeadline').innerHTML = (emRisco>0 && mostCritical) ?
+    'Previsão de ruptura: <b>'+mostCritical.name+'</b> deve zerar em <b>'+mostCritical.dias+' dias</b> no ritmo atual de consumo. '+emRisco+' iten(s) precisam de atenção neste local.' :
+    'Todos os itens monitorados estão dentro da faixa saudável de estoque neste local.';
 
   var stockEntries = UNIT_ORDER.map(function(k){
-    var its = inventoryForUnit(k);
+    var its = inventoryForUnit(k, 'central');
     var val = its.reduce(function(s,it){ return s+it.stock*it.custo; },0)/1000;
     return { name:UNIT_META[k].name, value:val, current:k===unitKey };
   });
   renderBenchmarkStrip('benchStockStrip', stockEntries, function(v){ return fmt(v); }, true);
+
+  if(isCentral) renderCmvRealBridge(unitKey, valorTotal);
+
+  // ---- transferência (central) ----
+  if(isCentral){
+    var destinos = localesForUnit(unitKey).filter(function(l){ return l.tipo!=='central'; });
+    var destSel = document.getElementById('transferDestino');
+    destSel.innerHTML = destinos.length ? destinos.map(function(l){ return '<option value="'+l.key+'">'+l.nome+'</option>'; }).join('') : '<option value="">Nenhuma dispensa/bar cadastrado</option>';
+    document.getElementById('transferItem').innerHTML = invItemOptionsHTML(items);
+    document.getElementById('transferLogBody').innerHTML = transferLog.slice().reverse().map(function(t){
+      var destInfo = localesForUnit(unitKey).find(function(l){ return l.key===t.destino; });
+      return '<tr><td class="num">'+t.data+'</td><td>'+t.item+'</td><td class="num">'+t.qtd+' '+t.unit+'</td><td>'+(destInfo?destInfo.nome:t.destino)+'</td></tr>';
+    }).join('');
+  } else {
+    document.getElementById('dispensaTransferBody').innerHTML = transferLog.filter(function(t){ return t.destino===localKey; }).slice().reverse().map(function(t){
+      return '<tr><td class="num">'+t.data+'</td><td>'+t.item+'</td><td class="num">'+t.qtd+' '+t.unit+'</td></tr>';
+    }).join('') || '<tr><td colspan="3" class="stat-foot">Nenhuma transferência recebida ainda.</td></tr>';
+    document.getElementById('consumoItem').innerHTML = invItemOptionsHTML(items);
+  }
 }
+function renderCmvRealBridge(unitKey, valorEstoqueFinal){
+  var host = document.getElementById('cmvRealBridge'); if(!host) return;
+  var pA = computePeriod(unitKey, state.ay, state.am);
+  var cmvLancado = pA.dre.cmv; // hoje, na DRE simulada, compra é tratada como se fosse o custo do período
+  var estoqueFinal = valorEstoqueFinal/1000;
+  var estoqueInicial = estoqueFinal * (0.86 + seededNoise(hashString(unitKey+'-ei'),0.06));
+  var compras = cmvLancado;
+  var cmvReal = estoqueInicial + compras - estoqueFinal;
+  var gap = cmvLancado - cmvReal;
+  host.innerHTML =
+    '<div class="cash-vs-profit">' +
+      '<div class="cvp-col"><div class="cvp-label">CMV lançado na DRE</div><div class="cvp-value tnum">'+fmt(cmvLancado)+'</div><div class="cvp-note">hoje = valor comprado no período</div></div>' +
+      '<div class="cvp-vs">≠</div>' +
+      '<div class="cvp-col"><div class="cvp-label">CMV real · pelo estoque</div><div class="cvp-value tnum" style="color:var(--accent-strong);">'+fmt(cmvReal)+'</div><div class="cvp-note">Estoque inicial + Compras − Estoque final</div></div>' +
+    '</div>' +
+    '<p class="cvp-explain">Diferença de <b>'+fmt(Math.abs(gap))+'</b> '+(gap>=0?'a menos no custo real do que a DRE está lançando':'a mais no custo real do que a DRE está lançando')+'. Estoque inicial <b>'+fmt(estoqueInicial)+'</b> + Compras <b>'+fmt(compras)+'</b> − Estoque final <b>'+fmt(estoqueFinal)+'</b> = CMV real. Enquanto a DRE tratar toda compra como custo do mês, ela ignora o que ficou parado em estoque — esse é o próximo passo pra fechar essa ponte de vez, ligando o estoque de verdade à DRE.</p>';
+}
+function invAllCategories(){
+  var cats = []; ITEM_CATALOG.forEach(function(it){ if(cats.indexOf(it.cat)===-1) cats.push(it.cat); }); return cats;
+}
+function openProdutoForm(itemName){
+  var form = document.getElementById('invCadastroForm');
+  var editing = itemName ? ITEM_CATALOG.find(function(it){ return it.name===itemName; }) : null;
+  document.getElementById('invCadastroFormTitle').textContent = editing ? 'Editar produto' : 'Adicionar produto';
+  document.getElementById('pfCategoria').innerHTML = invAllCategories().map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join('');
+  document.getElementById('pfNome').value = editing ? editing.name : '';
+  document.getElementById('pfCategoria').value = editing ? editing.cat : invAllCategories()[0];
+  document.getElementById('pfUnidade').value = editing ? editing.unit : '';
+  document.getElementById('pfUnidadeCompra').value = editing ? editing.unidadeCompra : '';
+  document.getElementById('pfFator').value = editing ? editing.fatorConversao : 1;
+  document.getElementById('pfCusto').value = editing ? editing.custo : '';
+  document.getElementById('pfMin').value = editing ? editing.min : '';
+  document.getElementById('pfMax').value = editing ? editing.max : '';
+  document.getElementById('pfConsumo').value = editing ? editing.consumo : '';
+  document.getElementById('pfAbc').value = editing ? editing.abc : 'B';
+  document.getElementById('pfPerecivel').checked = editing ? editing.validadeDias!=null : false;
+  document.getElementById('pfValidade').value = editing && editing.validadeDias!=null ? editing.validadeDias : '';
+  form.dataset.editing = editing ? editing.name : '';
+  form.hidden = false;
+  form.scrollIntoView({behavior:'smooth', block:'center'});
+}
+document.getElementById('invCadastroAddBtn').addEventListener('click', function(){ openProdutoForm(null); });
+document.getElementById('invCadastroCancel').addEventListener('click', function(){ document.getElementById('invCadastroForm').hidden = true; });
+document.getElementById('invCadastroSalvar').addEventListener('click', function(){
+  var form = document.getElementById('invCadastroForm');
+  var nome = document.getElementById('pfNome').value.trim();
+  if(!nome){ alert('Informe o nome do produto.'); return; }
+  var perecivel = document.getElementById('pfPerecivel').checked;
+  var novo = {
+    name: nome,
+    cat: document.getElementById('pfCategoria').value,
+    unit: document.getElementById('pfUnidade').value.trim() || 'un',
+    unidadeCompra: document.getElementById('pfUnidadeCompra').value.trim() || 'unidade',
+    fatorConversao: +document.getElementById('pfFator').value || 1,
+    custo: +document.getElementById('pfCusto').value || 0,
+    min: +document.getElementById('pfMin').value || 0,
+    max: +document.getElementById('pfMax').value || 1,
+    consumo: +document.getElementById('pfConsumo').value || 0,
+    abc: document.getElementById('pfAbc').value,
+    validadeDias: perecivel ? (+document.getElementById('pfValidade').value || 7) : null
+  };
+  var editingName = form.dataset.editing;
+  if(editingName){
+    var idx = ITEM_CATALOG.findIndex(function(it){ return it.name===editingName; });
+    if(idx!==-1) ITEM_CATALOG[idx] = novo;
+  } else {
+    ITEM_CATALOG.push(novo);
+  }
+  form.hidden = true;
+  renderInventory(state.unit, state.local);
+});
+document.getElementById('pfPerecivel').addEventListener('change', function(){
+  document.getElementById('pfValidadeWrap').style.opacity = this.checked ? 1 : .4;
+});
+document.getElementById('transferBtn').addEventListener('click', function(){
+  var item = document.getElementById('transferItem').value;
+  var qtd = +document.getElementById('transferQtd').value || 0;
+  var destino = document.getElementById('transferDestino').value;
+  if(!item || !destino || qtd<=0) return;
+  var it = ITEM_CATALOG.find(function(x){ return x.name===item; });
+  transferLog.push({ data:'11/09', origem:'central', destino:destino, item:item, qtd:qtd, unit: it ? it.unit : 'un' });
+  renderInventory(state.unit, state.local);
+});
+document.getElementById('consumoBtn').addEventListener('click', function(){
+  var item = document.getElementById('consumoItem').value;
+  var qtd = +document.getElementById('consumoQtd').value || 0;
+  var motivo = document.getElementById('consumoMotivo').value;
+  if(!item || qtd<=0) return;
+  var motivoLabel = motivo==='perda' ? 'perda/quebra' : motivo==='ajuste' ? 'ajuste de contagem' : 'uso em produção/venda';
+  alert('Registrado: '+qtd+' de "'+item+'" — motivo: '+motivoLabel+'.');
+  document.getElementById('consumoQtd').value = 1;
+});
 
 /* ============================================================
    AUDITORIA — operational + admin/financial audit module
@@ -3686,7 +3991,7 @@ function renderAll(){
   renderDRE(pA, pB, pM);
   document.getElementById('waterfallNote').textContent = 'Valores em Reais (R$) · ' + pA.name + ' · ' + pA.label;
 
-  renderInventory(state.unit);
+  renderInventory(state.unit, state.local);
   renderAudit(state.unit);
   renderMetas(pA, pM);
   renderMicroBench();
