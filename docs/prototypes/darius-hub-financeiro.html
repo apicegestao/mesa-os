@@ -464,7 +464,12 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 .map-arrow{ color:var(--ink-muted); flex:0 0 auto; }
 .map-cell{ display:flex; align-items:center; gap:8px; }
 .map-src{ font-size:12px; color:var(--ink-2); }
-.map-src .src-tag{ display:block; font-size:10px; color:var(--ink-muted); font-weight:600; text-transform:uppercase; letter-spacing:.03em; }
+.map-src .src-tag{ display:inline-block; font-size:10px; color:var(--ink-muted); font-weight:600; text-transform:uppercase; letter-spacing:.03em; margin-right:6px; }
+.map-src .src-loja{ display:inline-block; font-size:10px; color:var(--accent-strong); background:var(--accent-soft); border-radius:5px; padding:1px 6px; font-weight:600; }
+.map-src .src-code{ font-variant-numeric:tabular-nums; color:var(--ink-muted); font-size:11px; margin-right:4px; }
+.map-src .src-name{ display:block; margin-top:2px; }
+.map-note{ font-size:10.5px; color:var(--ink-muted); margin-top:3px; }
+.apply-scope-select{ font-size:11px; padding:4px 6px; }
 .row-actions{ display:flex; gap:6px; }
 .mini-btn{ border:1px solid var(--border); background:var(--surface); color:var(--ink); border-radius:6px; padding:4px 10px; font-size:11.5px; font-weight:600; cursor:pointer; white-space:nowrap; }
 .mini-btn:hover{ background:var(--surface-sunken); }
@@ -1499,27 +1504,39 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 
       <!-- ===================== PLANO DE CONTAS ===================== -->
       <section class="view" id="view-planocontas">
-        <div class="ai-strip"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · de-para inteligente</div><div class="ai-strip-text">Cada cliente organiza a própria DRE de um jeito diferente. A IA aprende o "de-para" conta por conta — depois da primeira aceitação, aplica a mesma regra sozinha nos próximos lançamentos daquela conta.</div></div></div>
+        <div class="ai-strip"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · de-para inteligente</div><div class="ai-strip-text">O vínculo é pelo <b>código da conta</b>, não pelo nome — se o sistema de origem renomear uma conta, o mapeamento continua valendo. Mudar um mapeamento afeta só os meses daqui pra frente; recalcular o histórico é uma ação separada, feita por você.</div></div></div>
 
         <div class="grid g-3">
-          <div class="card card-pad stat"><div class="stat-label">Contas mapeadas automaticamente</div><div class="stat-value tnum">86%</div><div class="stat-foot">do plano de contas conectado</div><div class="stat-explain">Contas de origem já associadas a uma linha padrão da DRE Darius.</div></div>
-          <div class="card card-pad stat"><div class="stat-label">Pendentes de revisão</div><div class="stat-value tnum">2</div><div class="stat-foot">confiança média ou baixa</div><div class="stat-explain">A IA sugeriu, mas prefere confirmação humana antes de aplicar.</div></div>
-          <div class="card card-pad stat"><div class="stat-label">Fontes conectadas</div><div class="stat-value tnum">3</div><div class="stat-foot">Nibo, Conta Azul e planilhas manuais</div><div class="stat-explain">Cada fonte pode nomear as contas de um jeito — o mapeamento é por fonte.</div></div>
+          <div class="card card-pad stat"><div class="stat-label">Contas mapeadas por código</div><div class="stat-value tnum">75%</div><div class="stat-foot">o restante é casado por nome (menos estável)</div><div class="stat-explain">Contas com código de origem são vinculadas pelo código — sobrevivem a renomeações. Fontes sem código de conta (planilhas manuais) são casadas por nome.</div></div>
+          <div class="card card-pad stat"><div class="stat-label">Pendentes de revisão</div><div class="stat-value tnum">3</div><div class="stat-foot">inclui 1 conta possivelmente descontinuada</div><div class="stat-explain">Confiança média/baixa, ou uma conta que parou de aparecer nas importações.</div></div>
+          <div class="card card-pad stat"><div class="stat-label">Fontes conectadas</div><div class="stat-value tnum">3</div><div class="stat-foot">Nibo, Conta Azul e planilhas manuais</div><div class="stat-explain">O mapeamento é por fonte + loja — a mesma fonte pode nomear contas de um jeito em cada loja.</div></div>
         </div>
 
         <div class="section-title">Mapeamento de contas — DRE interna Darius</div>
         <div class="card card-pad">
+          <div class="card-head">
+            <div><div class="card-title">De-para por fonte e por loja</div><div class="card-note">Vínculo pelo código da conta sempre que a fonte fornece um</div></div>
+            <select class="mini-select" id="planocontasLojaFilter">
+              <option value="todas">Todas as lojas</option>
+              <option value="rede">Rede (sem loja específica)</option>
+              <option value="pinheiros">Pinheiros</option>
+              <option value="vilamadalena">Vila Madalena</option>
+              <option value="moema">Moema</option>
+              <option value="tatuape">Tatuapé</option>
+            </select>
+          </div>
           <div style="overflow-x:auto;">
-            <table class="simple">
-              <thead><tr><th>Conta de origem</th><th></th><th>Linha na DRE Darius</th><th>Confiança da IA</th><th>Status</th><th>Ação</th></tr></thead>
+            <table class="simple" id="planocontasTable">
+              <thead><tr><th>Conta de origem</th><th></th><th>Linha na DRE Darius</th><th>Confiança</th><th>Status</th><th>Aplicar mudança</th><th>Ação</th></tr></thead>
               <tbody>
-                <tr><td class="map-cell"><span class="map-src"><span class="src-tag">Nibo</span>5.1.02 · CMV Insumos</span></td><td class="map-arrow">→</td><td>CMV</td><td><span class="micro-badge badge-good">98%</span></td><td><span class="micro-badge badge-good">Aceito</span></td><td class="row-actions"><button type="button" class="mini-btn">Editar</button></td></tr>
-                <tr><td class="map-cell"><span class="map-src"><span class="src-tag">Conta Azul</span>Custo Mercadoria/Serv Vendidos</span></td><td class="map-arrow">→</td><td>CMV</td><td><span class="micro-badge badge-good">95%</span></td><td><span class="micro-badge badge-good">Aceito</span></td><td class="row-actions"><button type="button" class="mini-btn">Editar</button></td></tr>
-                <tr><td class="map-cell"><span class="map-src"><span class="src-tag">Planilha · Loja Moema</span>Folha + Encargos</span></td><td class="map-arrow">→</td><td>CMO — pessoal e encargos</td><td><span class="micro-badge badge-good">91%</span></td><td><span class="micro-badge badge-good">Aceito</span></td><td class="row-actions"><button type="button" class="mini-btn">Editar</button></td></tr>
-                <tr><td class="map-cell"><span class="map-src"><span class="src-tag">Nibo</span>Aluguéis e Condomínios</span></td><td class="map-arrow">→</td><td>CTO — ocupação</td><td><span class="micro-badge badge-good">88%</span></td><td><span class="micro-badge badge-good">Aceito</span></td><td class="row-actions"><button type="button" class="mini-btn">Editar</button></td></tr>
-                <tr><td class="map-cell"><span class="map-src"><span class="src-tag">Conta Azul</span>Despesas c/ Cartão</span></td><td class="map-arrow">→</td><td>Despesas administrativas <span class="proto">sugestão</span></td><td><span class="micro-badge badge-warn">62%</span></td><td><span class="micro-badge badge-critical">Revisar</span></td><td class="row-actions"><button type="button" class="mini-btn primary">Confirmar</button><button type="button" class="mini-btn">Ajustar</button></td></tr>
-                <tr><td class="map-cell"><span class="map-src"><span class="src-tag">Planilha · Loja Tatuapé</span>Outras Saídas</span></td><td class="map-arrow">→</td><td>Sem sugestão confiável</td><td><span class="micro-badge badge-critical">31%</span></td><td><span class="micro-badge badge-critical">Revisar</span></td><td class="row-actions"><button type="button" class="mini-btn primary">Mapear</button></td></tr>
-                <tr><td class="map-cell"><span class="map-src"><span class="src-tag">Nibo</span>Receita de Vendas - Delivery</span></td><td class="map-arrow">→</td><td>Receita bruta</td><td><span class="micro-badge badge-good">97%</span></td><td><span class="micro-badge badge-good">Aceito</span></td><td class="row-actions"><button type="button" class="mini-btn">Editar</button></td></tr>
+                <tr data-loja="rede"><td class="map-cell"><span class="map-src"><span class="src-tag">Nibo</span><span class="src-name"><span class="src-code">5.1.02</span>CMV Insumos</span></span></td><td class="map-arrow">→</td><td>CMV</td><td><span class="micro-badge badge-good">98%</span></td><td><span class="micro-badge badge-good">Aceito</span></td><td><select class="mini-select apply-scope-select"><option>Só daqui pra frente</option><option>Recalcular histórico também</option></select></td><td class="row-actions"><button type="button" class="mini-btn">Editar</button></td></tr>
+                <tr data-loja="rede"><td class="map-cell"><span class="map-src"><span class="src-tag">Conta Azul</span><span class="src-name"><span class="src-code">3.1.05</span>Custo Mercadoria/Serv Vendidos</span></span></td><td class="map-arrow">→</td><td>CMV</td><td><span class="micro-badge badge-good">95%</span></td><td><span class="micro-badge badge-good">Aceito</span></td><td><select class="mini-select apply-scope-select"><option>Só daqui pra frente</option><option>Recalcular histórico também</option></select></td><td class="row-actions"><button type="button" class="mini-btn">Editar</button></td></tr>
+                <tr data-loja="moema"><td class="map-cell"><span class="map-src"><span class="src-tag">Planilha</span><span class="src-loja">Loja Moema</span><span class="src-name">Folha + Encargos</span><div class="map-note">Sem código de origem — casado por nome, menos estável a mudanças na planilha.</div></span></td><td class="map-arrow">→</td><td>CMO — pessoal e encargos</td><td><span class="micro-badge badge-good">91%</span></td><td><span class="micro-badge badge-good">Aceito</span></td><td><select class="mini-select apply-scope-select"><option>Só daqui pra frente</option><option>Recalcular histórico também</option></select></td><td class="row-actions"><button type="button" class="mini-btn">Editar</button></td></tr>
+                <tr data-loja="rede"><td class="map-cell"><span class="map-src"><span class="src-tag">Nibo</span><span class="src-name"><span class="src-code">4.2.01</span>Ocupação — Aluguel/Condomínio/IPTU</span><div class="map-note">Nome mudou em 12/09 (antes: "Aluguéis e Condomínios") — código 4.2.01 preservou o vínculo, nada foi pedido pra você.</div></span></td><td class="map-arrow">→</td><td>CTO — ocupação</td><td><span class="micro-badge badge-good">88%</span></td><td><span class="micro-badge badge-info">Renomeada · mantido</span></td><td>—</td><td class="row-actions"><button type="button" class="mini-btn">Ver histórico</button></td></tr>
+                <tr data-loja="rede"><td class="map-cell"><span class="map-src"><span class="src-tag">Conta Azul</span><span class="src-name"><span class="src-code">6.1.12</span>Despesas c/ Cartão</span></span></td><td class="map-arrow">→</td><td>Despesas administrativas <span class="proto">sugestão</span></td><td><span class="micro-badge badge-warn">62%</span></td><td><span class="micro-badge badge-critical">Revisar</span></td><td>—</td><td class="row-actions"><button type="button" class="mini-btn primary">Confirmar</button><button type="button" class="mini-btn">Ajustar</button></td></tr>
+                <tr data-loja="tatuape"><td class="map-cell"><span class="map-src"><span class="src-tag">Planilha</span><span class="src-loja">Loja Tatuapé</span><span class="src-name">Outras Saídas</span><div class="map-note">Sem código de origem — casado por nome.</div></span></td><td class="map-arrow">→</td><td>Sem sugestão confiável</td><td><span class="micro-badge badge-critical">31%</span></td><td><span class="micro-badge badge-critical">Revisar</span></td><td>—</td><td class="row-actions"><button type="button" class="mini-btn primary">Mapear</button></td></tr>
+                <tr data-loja="rede"><td class="map-cell"><span class="map-src"><span class="src-tag">Nibo</span><span class="src-name"><span class="src-code">1.1.03</span>Receita de Vendas - Delivery</span></span></td><td class="map-arrow">→</td><td>Receita bruta</td><td><span class="micro-badge badge-good">97%</span></td><td><span class="micro-badge badge-good">Aceito</span></td><td><select class="mini-select apply-scope-select"><option>Só daqui pra frente</option><option>Recalcular histórico também</option></select></td><td class="row-actions"><button type="button" class="mini-btn">Editar</button></td></tr>
+                <tr data-loja="rede"><td class="map-cell"><span class="map-src"><span class="src-tag">Nibo</span><span class="src-name"><span class="src-code">5.1.07</span>Perdas e Quebras — Estoque</span><div class="map-note">Não aparece em nenhuma importação desde 15/08 — pode ter sido descontinuada no sistema de origem.</div></span></td><td class="map-arrow">→</td><td>CMV — quebras</td><td>—</td><td><span class="micro-badge badge-warn">Verificar</span></td><td>—</td><td class="row-actions"><button type="button" class="mini-btn primary">Investigar</button></td></tr>
               </tbody>
             </table>
           </div>
@@ -3689,6 +3706,16 @@ renderRoles();
 renderPermTable();
 renderPeopleList();
 renderPersonDetail();
+
+var planocontasLojaFilter = document.getElementById('planocontasLojaFilter');
+if(planocontasLojaFilter){
+  planocontasLojaFilter.addEventListener('change', function(){
+    var val = planocontasLojaFilter.value;
+    document.querySelectorAll('#planocontasTable tbody tr[data-loja]').forEach(function(tr){
+      tr.hidden = (val!=='todas' && tr.dataset.loja!==val);
+    });
+  });
+}
 
 window.addEventListener('resize', function(){
   var pA = computePeriod(state.unit, state.ay, state.am);
