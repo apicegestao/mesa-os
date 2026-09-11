@@ -653,6 +653,15 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 .abc-badge.A{ background:var(--critical-soft); color:var(--critical); }
 .abc-badge.B{ background:color-mix(in srgb, var(--warning) 30%, transparent); color:#8a5a00; }
 .abc-badge.C{ background:var(--surface-sunken); color:var(--ink-muted); }
+
+/* ---------- modo operador ---------- */
+.operator-banner{ position:sticky; top:0; z-index:19; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; background:var(--warning); color:#3a2a00; padding:10px 28px; font-size:12.5px; font-weight:500; }
+.operator-banner b{ font-weight:700; }
+.operator-banner .mini-btn{ background:#fff; border-color:transparent; }
+@media(max-width:640px){ .operator-banner{ padding:10px 16px; } }
+.ai-strip.locked{ background:var(--surface-sunken); }
+.ai-strip.locked .insight-ic{ color:var(--ink-muted); }
+.ai-strip-lock-note{ font-size:11px; color:var(--ink-muted); margin-top:4px; }
 </style>
 
 <div class="shell">
@@ -737,6 +746,10 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v4M12 17h.01M10.3 3.9L2.6 18a1.6 1.6 0 0 0 1.4 2.4h16a1.6 1.6 0 0 0 1.4-2.4L13.7 3.9a1.6 1.6 0 0 0-2.8 0z"/></svg>
           IA &amp; anomalias
         </button>
+        <button class="side-sub-link" data-view="log-atividade">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg>
+          Log de atividade
+        </button>
       </div></div>
     </div>
 
@@ -817,7 +830,13 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
           </label>
         </div>
         <div class="ai-pill" id="aiPill"><span class="ai-dot"></span> IA monitorando · 5 novos insights</div>
+        <button type="button" class="mini-btn" id="operatorModeBtn">Acessar como operador</button>
       </div>
+    </div>
+
+    <div class="operator-banner" id="operatorBanner" hidden>
+      <span><b>Modo operador</b> — você está vendo o Darius com acesso limitado a lançamento, como um operador veria. Análises e recomendações ficam restritas.</span>
+      <button type="button" class="mini-btn" id="operatorModeExitBtn">Voltar ao modo admin</button>
     </div>
 
     <div class="content">
@@ -965,7 +984,7 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
       <!-- ===================== APRESENTAÇÃO MENSAL ===================== -->
       <section class="view" id="view-apresentacao">
         <div id="presBuilder">
-          <div class="ai-strip"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · roteiro sugerido</div><div class="ai-strip-text">A IA já monta um resumo executivo com os slides mais relevantes deste período. Adicione, remova ou reordene à vontade — inclusive durante a apresentação.</div></div></div>
+          <div class="ai-strip" data-module="financeiro"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · roteiro sugerido</div><div class="ai-strip-text">A IA já monta um resumo executivo com os slides mais relevantes deste período. Adicione, remova ou reordene à vontade — inclusive durante a apresentação.</div></div></div>
 
           <div class="pres-hero-row">
             <div><h2>Apresentação de resultados</h2><p id="presPeriodLabel">Carregando período…</p></div>
@@ -1026,7 +1045,7 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 
       <!-- ===================== DRE DETALHADA ===================== -->
       <section class="view" id="view-dre">
-        <div class="ai-strip"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · leitura da variação</div><div class="ai-strip-text" id="dreAiText">Calculando…</div></div></div>
+        <div class="ai-strip" data-module="financeiro"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · leitura da variação</div><div class="ai-strip-text" id="dreAiText">Calculando…</div></div></div>
         <div class="card card-pad">
           <div class="card-head">
             <div><div class="card-title">DRE detalhada — clique numa linha para destrinchar <span class="proto" title="Visão para decisão do dia a dia. Pode diferir um pouco da DRE que seu contador envia ao Fisco, que segue regras fiscais e de regime tributário.">DRE gerencial</span></div><div class="card-note" id="dreNote">Valores em Reais (R$) · visão para decisão, não substitui a DRE contábil/fiscal do seu contador</div></div>
@@ -1043,7 +1062,7 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 
       <!-- ===================== INDICADORES OPERACIONAIS ===================== -->
       <section class="view" id="view-micro">
-        <div class="ai-strip"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · leitura operacional</div><div class="ai-strip-text">A margem de contribuição está acima da meta, mas o <b>CTO em Moema</b> segue 1,2 p.p. acima do benchmark da rede — equalizar libera ~R$ 9.000,00/mês.</div></div></div>
+        <div class="ai-strip" data-module="financeiro"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · leitura operacional</div><div class="ai-strip-text">A margem de contribuição está acima da meta, mas o <b>CTO em Moema</b> segue 1,2 p.p. acima do benchmark da rede — equalizar libera ~R$ 9.000,00/mês.</div></div></div>
 
         <div class="picker-head-row">
           <div class="section-title" style="margin:0;">Indicadores selecionados</div>
@@ -1091,7 +1110,7 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 
       <!-- ===================== METAS E ORÇAMENTO ===================== -->
       <section class="view" id="view-metas">
-        <div class="ai-strip"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · acompanhamento de metas</div><div class="ai-strip-text" id="metasAiText">Comparando o período com o orçamento aprovado…</div></div></div>
+        <div class="ai-strip" data-module="metas"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · acompanhamento de metas</div><div class="ai-strip-text" id="metasAiText">Comparando o período com o orçamento aprovado…</div></div></div>
 
         <div class="section-title" id="metasSectionTitle">Painel de metas — todos os módulos</div>
         <div class="card card-pad" style="margin-bottom:16px;">
@@ -1140,7 +1159,7 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 
       <!-- ===================== ESTOQUE ===================== -->
       <section class="view" id="view-estoque">
-        <div class="ai-strip"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · controle de estoque</div><div class="ai-strip-text" id="invAiHeadline">Analisando níveis de estoque…</div></div></div>
+        <div class="ai-strip" data-module="estoque"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · controle de estoque</div><div class="ai-strip-text" id="invAiHeadline">Analisando níveis de estoque…</div></div></div>
 
         <div class="local-tabs" id="stockLocalTabs"></div>
 
@@ -1299,7 +1318,7 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 
       <!-- ===================== AUDITORIA ===================== -->
       <section class="view" id="view-auditoria">
-        <div class="ai-strip"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · auditoria contínua</div><div class="ai-strip-text" id="audAiHeadline">Cruzando checklists, caixa e notas fiscais…</div></div></div>
+        <div class="ai-strip" data-module="auditoria"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · auditoria contínua</div><div class="ai-strip-text" id="audAiHeadline">Cruzando checklists, caixa e notas fiscais…</div></div></div>
 
         <div class="section-title" id="audSectionTitle">Auditoria contínua — checklist do dia a dia</div>
         <div class="grid g-kpi" id="audKpiRow"></div>
@@ -1339,7 +1358,7 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 
       <!-- ===================== AUDITORIA EXTERNA ===================== -->
       <section class="view" id="view-auditoria-externa">
-        <div class="ai-strip"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · comparação contínua × externa</div><div class="ai-strip-text">Vila Madalena: nota da auditoria contínua em <b>91/100</b>, nota da última visita externa em <b>84/100</b> — divergência de 7 pontos pode indicar que a unidade "se arruma" só quando sabe que vem auditoria.</div></div></div>
+        <div class="ai-strip" data-module="auditoria"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · comparação contínua × externa</div><div class="ai-strip-text">Vila Madalena: nota da auditoria contínua em <b>91/100</b>, nota da última visita externa em <b>84/100</b> — divergência de 7 pontos pode indicar que a unidade "se arruma" só quando sabe que vem auditoria.</div></div></div>
 
         <div class="section-title">Agenda de visitas</div>
         <div class="card card-pad">
@@ -1386,7 +1405,7 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 
       <!-- ===================== AUDITORIA · IA & ANOMALIAS ===================== -->
       <section class="view" id="view-auditoria-ia">
-        <div class="ai-strip"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · monitoramento contínuo de anomalias</div><div class="ai-strip-text">A IA olha três frentes o tempo todo: <b>padrões nos dados</b>, <b>comportamento de usuário</b> e <b>quebras de controle interno</b>. Cada achado vem com o motivo — nada é sinalizado sem explicação.</div></div></div>
+        <div class="ai-strip" data-module="auditoria"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · monitoramento contínuo de anomalias</div><div class="ai-strip-text">A IA olha três frentes o tempo todo: <b>padrões nos dados</b>, <b>comportamento de usuário</b> e <b>quebras de controle interno</b>. Cada achado vem com o motivo — nada é sinalizado sem explicação.</div></div></div>
 
         <div class="grid g-3">
           <div class="card card-pad stat"><div class="stat-label">Anomalias em aberto</div><div class="stat-value tnum">7</div><div class="stat-foot">aguardando revisão humana</div><div class="stat-explain">Novas + em análise, das três frentes monitoradas.</div></div>
@@ -1442,9 +1461,35 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
         </div>
       </section>
 
+      <!-- ===================== LOG DE ATIVIDADE ===================== -->
+      <section class="view" id="view-log-atividade">
+        <div class="ai-strip" data-module="usuarios"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · registro de atividade</div><div class="ai-strip-text">Todo login, lançamento, edição e acesso negado fica registrado aqui — mesmo dado que a IA usa quando você pergunta "quem alterou isso?" no assistente flutuante.</div></div></div>
+
+        <div class="card card-note" style="padding:14px 18px; margin-bottom:16px;">Restrito a quem tem permissão "Administrar" em Usuários — o mesmo controle de nível vale aqui.</div>
+
+        <div class="section-title">Filtrar</div>
+        <div class="card card-pad" style="margin-bottom:16px;">
+          <div class="form-grid">
+            <div class="form-field"><label>Usuário</label><select id="logFilterUser"><option value="">Todos</option></select></div>
+            <div class="form-field"><label>Módulo</label><select id="logFilterModulo"><option value="">Todos</option></select></div>
+            <div class="form-field"><label>Ação</label><select id="logFilterAcao"><option value="">Todas</option></select></div>
+          </div>
+        </div>
+
+        <div class="section-title">Eventos</div>
+        <div class="card card-pad">
+          <div style="overflow-x:auto;">
+            <table class="simple">
+              <thead><tr><th>Quando</th><th>Usuário</th><th>Papel</th><th>Módulo</th><th>Ação</th><th>Detalhe</th></tr></thead>
+              <tbody id="activityLogBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
       <!-- ===================== FLUXO DE CAIXA ===================== -->
       <section class="view" id="view-caixa">
-        <div class="ai-strip"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · projeção de caixa</div><div class="ai-strip-text" id="caixaProjectionInsight">—</div></div></div>
+        <div class="ai-strip" data-module="financeiro"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · projeção de caixa</div><div class="ai-strip-text" id="caixaProjectionInsight">—</div></div></div>
 
         <div class="grid g-3">
           <div class="card card-pad stat" id="caixaLivreStatCard">
@@ -1496,7 +1541,7 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 
       <!-- ===================== CENÁRIOS ===================== -->
       <section class="view" id="view-cenarios">
-        <div class="ai-strip"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · leitura dos cenários</div><div class="ai-strip-text" id="cenariosInsight">—</div></div></div>
+        <div class="ai-strip" data-module="financeiro"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · leitura dos cenários</div><div class="ai-strip-text" id="cenariosInsight">—</div></div></div>
 
         <div class="card card-pad">
           <div class="card-head"><div><div class="card-title">Para onde o caixa vai nos próximos 6 meses</div><div class="card-note">3 cenários a partir do mês atual · linha tracejada = colchão de segurança</div></div></div>
@@ -1510,7 +1555,7 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 
       <!-- ===================== INTEGRAÇÕES ===================== -->
       <section class="view" id="view-integracoes">
-        <div class="ai-strip"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · monitoramento de integrações</div><div class="ai-strip-text">A IA identificou <b>3 lançamentos duplicados</b> entre Nibo e Conta Azul no último sync — já filtrados automaticamente antes de chegar à conciliação.</div></div></div>
+        <div class="ai-strip" data-module="backoffice"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · monitoramento de integrações</div><div class="ai-strip-text">A IA identificou <b>3 lançamentos duplicados</b> entre Nibo e Conta Azul no último sync — já filtrados automaticamente antes de chegar à conciliação.</div></div></div>
 
         <div class="section-title">Conectores</div>
         <div class="conn-grid">
@@ -1560,7 +1605,7 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 
       <!-- ===================== CONCILIAÇÃO BANCÁRIA ===================== -->
       <section class="view" id="view-conciliacao">
-        <div class="ai-strip"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · categorização assistida</div><div class="ai-strip-text">A IA já sugeriu conta para <b>94% dos lançamentos</b> deste extrato. Nada é lançado sem a sua confirmação — revise e aceite abaixo.</div></div></div>
+        <div class="ai-strip" data-module="backoffice"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · categorização assistida</div><div class="ai-strip-text">A IA já sugeriu conta para <b>94% dos lançamentos</b> deste extrato. Nada é lançado sem a sua confirmação — revise e aceite abaixo.</div></div></div>
 
         <div class="grid g-kpi">
           <div class="card card-pad stat"><div class="stat-label">Conciliação automática</div><div class="stat-value tnum">94%</div><div class="stat-foot">dos lançamentos do mês</div><div class="stat-explain">Lançamentos que a IA categorizou com confiança alta, prontos para aceite em lote.</div></div>
@@ -1604,7 +1649,7 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 
       <!-- ===================== PLANO DE CONTAS ===================== -->
       <section class="view" id="view-planocontas">
-        <div class="ai-strip"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · de-para inteligente</div><div class="ai-strip-text">O vínculo é pelo <b>código da conta</b>, não pelo nome — se o sistema de origem renomear uma conta, o mapeamento continua valendo. Mudar um mapeamento afeta só os meses daqui pra frente; recalcular o histórico é uma ação separada, feita por você.</div></div></div>
+        <div class="ai-strip" data-module="backoffice"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · de-para inteligente</div><div class="ai-strip-text">O vínculo é pelo <b>código da conta</b>, não pelo nome — se o sistema de origem renomear uma conta, o mapeamento continua valendo. Mudar um mapeamento afeta só os meses daqui pra frente; recalcular o histórico é uma ação separada, feita por você.</div></div></div>
 
         <div class="grid g-3">
           <div class="card card-pad stat"><div class="stat-label">Contas mapeadas por código</div><div class="stat-value tnum">75%</div><div class="stat-foot">o restante é casado por nome (menos estável)</div><div class="stat-explain">Contas com código de origem são vinculadas pelo código — sobrevivem a renomeações. Fontes sem código de conta (planilhas manuais) são casadas por nome.</div></div>
@@ -1645,7 +1690,7 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 
       <!-- ===================== USUÁRIOS & ACESSOS ===================== -->
       <section class="view" id="view-usuarios">
-        <div class="ai-strip"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · apoio à equipe interna</div><div class="ai-strip-text">A IA também ajuda quem opera o sistema: sugere a conta certa para quem está lançando, explica por que um acesso foi negado e aponta quando alguém tem permissão além do que costuma usar.</div></div></div>
+        <div class="ai-strip" data-module="usuarios"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · apoio à equipe interna</div><div class="ai-strip-text">A IA também ajuda quem opera o sistema: sugere a conta certa para quem está lançando, explica por que um acesso foi negado e aponta quando alguém tem permissão além do que costuma usar.</div></div></div>
 
         <div class="section-title">Pessoas com acesso ao Darius</div>
         <div class="grid g-2" style="grid-template-columns:1fr 1.7fr; align-items:start;">
@@ -1659,7 +1704,7 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 
       <!-- ===================== PAPÉIS & PERMISSÕES ===================== -->
       <section class="view" id="view-papeis">
-        <div class="ai-strip"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · consistência de acessos</div><div class="ai-strip-text">Estes papéis são o ponto de partida usado em <b>Pessoas</b> — cada pessoa herda o papel e o admin pode ajustar individualmente a partir dele.</div></div></div>
+        <div class="ai-strip" data-module="usuarios"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · consistência de acessos</div><div class="ai-strip-text">Estes papéis são o ponto de partida usado em <b>Pessoas</b> — cada pessoa herda o papel e o admin pode ajustar individualmente a partir dele.</div></div></div>
 
         <div class="section-title">Papéis do sistema</div>
         <div class="role-grid" id="roleGrid"></div>
@@ -1776,11 +1821,11 @@ var navLinks = document.querySelectorAll('.side-link[data-view], .side-sub-link[
 var MODULE_TITLES = {
   hub:{ title:'Darius' }, apresentacao:{ title:'Apresentação' }, dre:{ title:'Financeiro' }, micro:{ title:'Financeiro' }, caixa:{ title:'Financeiro' }, cenarios:{ title:'Financeiro' },
   metas:{ title:'Metas' }, estoque:{ title:'Estoque' },
-  auditoria:{ title:'Auditoria · Contínua' }, 'auditoria-externa':{ title:'Auditoria · Externa' }, 'auditoria-ia':{ title:'Auditoria · IA & Anomalias' },
+  auditoria:{ title:'Auditoria · Contínua' }, 'auditoria-externa':{ title:'Auditoria · Externa' }, 'auditoria-ia':{ title:'Auditoria · IA & Anomalias' }, 'log-atividade':{ title:'Auditoria · Log de Atividade' },
   integracoes:{ title:'Integrações' }, conciliacao:{ title:'Conciliação' }, planocontas:{ title:'Plano de Contas' },
   usuarios:{ title:'Pessoas' }, papeis:{ title:'Papéis & Permissões' }
 };
-var GLOBAL_VIEWS = ['integracoes','conciliacao','planocontas','usuarios','papeis','auditoria-ia'];
+var GLOBAL_VIEWS = ['integracoes','conciliacao','planocontas','usuarios','papeis','auditoria-ia','log-atividade'];
 var lastPA=null, lastPB=null, lastPM=null;
 function updateTopbarSub(viewKey){
   var t = MODULE_TITLES[viewKey] || MODULE_TITLES.hub;
@@ -1796,6 +1841,7 @@ function updateTopbarSub(viewKey){
   else if(viewKey==='auditoria'){ sub = UNIT_META[state.unit].name+' · checklist do dia a dia'; }
   else if(viewKey==='auditoria-externa'){ sub = UNIT_META[state.unit].name+' · visitas formais agendadas'; }
   else if(viewKey==='auditoria-ia'){ sub = 'Padrões de dados, comportamento e controle interno'; }
+  else if(viewKey==='log-atividade'){ sub = 'Quem fez o quê, quando e em qual módulo'; }
   else if(viewKey==='integracoes'){ sub = 'Conectores e histórico de sincronização'; }
   else if(viewKey==='conciliacao'){ sub = 'Importação e categorização assistida por IA'; }
   else if(viewKey==='planocontas'){ sub = 'De-para entre contas de origem e a DRE Darius'; }
@@ -1860,6 +1906,18 @@ var AI_REPLIES_STATIC = [
   'Essa conta ainda não tem um "de-para" confiante no Plano de Contas — sugiro classificar como despesa administrativa, mas prefiro sua confirmação antes de aplicar.',
   'Sem dados suficientes na minha simulação para essa pergunta específica — no sistema real, eu cruzaria Financeiro, Estoque e Auditoria automaticamente para responder.'
 ];
+var AI_SENSITIVE_TOPICS = [
+  { keywords:['fatur','receita','ebitda','lucro','caixa','dre','margem'], modulo:'financeiro', min:'view' },
+  { keywords:['log','quem acessou','quem editou','quem excluiu','quem alterou','auditoria de acesso'], modulo:'usuarios', min:'admin' }
+];
+function aiBlockedTopic(text){
+  var low = text.toLowerCase();
+  for(var i=0;i<AI_SENSITIVE_TOPICS.length;i++){
+    var t = AI_SENSITIVE_TOPICS[i];
+    if(t.keywords.some(function(k){ return low.indexOf(k)!==-1; }) && !tierAtLeast(currentTier(t.modulo), t.min)) return t;
+  }
+  return null;
+}
 var aiReplyIdx = 0;
 function aiSend(){
   var text = aiInput.value.trim();
@@ -1870,12 +1928,20 @@ function aiSend(){
   aiBody.appendChild(userMsg);
   aiInput.value = '';
   aiBody.scrollTop = aiBody.scrollHeight;
+  var blocked = aiBlockedTopic(text);
   setTimeout(function(){
-    var reply = aiReplyIdx===0 ? ('Olhando os módulos conectados: '+UNIT_META[state.unit].name+' está com EBITDA acima da meta este período — quer que eu compare com as outras unidades?') : AI_REPLIES_STATIC[(aiReplyIdx-1) % AI_REPLIES_STATIC.length];
+    var reply;
+    if(blocked){
+      var modLabel = (PERM_MODULES.find(function(m){ return m[0]===blocked.modulo; })||[null,blocked.modulo])[1];
+      reply = 'Não posso responder isso com seu nível de acesso atual em <b>'+modLabel+'</b>'+(state.operatorMode?' (você está no modo operador)':'')+'. Peça a um administrador se precisar dessa informação.';
+      logActivity('acesso negado', modLabel, 'Pergunta ao assistente fora do nível de permissão: "'+text+'"');
+    } else {
+      reply = aiReplyIdx===0 ? ('Olhando os módulos conectados: '+UNIT_META[state.unit].name+' está com EBITDA acima da meta este período — quer que eu compare com as outras unidades?') : AI_REPLIES_STATIC[(aiReplyIdx-1) % AI_REPLIES_STATIC.length];
+      aiReplyIdx++;
+    }
     var botMsg = document.createElement('div');
     botMsg.className = 'ai-msg bot';
     botMsg.innerHTML = reply;
-    aiReplyIdx++;
     aiBody.appendChild(botMsg);
     aiBody.scrollTop = aiBody.scrollHeight;
   }, 500);
@@ -2014,7 +2080,7 @@ YEARS.forEach(function(y){ for(var m=1;m<=12;m++){ PERIODS.push({y:y,m:m}); } })
 periodASel.value = '2026-9';
 periodBSel.value = '2026-8';
 
-var state = { unit:'consolidado', ay:2026, am:9, by:2025, bm:9, local:'central' };
+var state = { unit:'consolidado', ay:2026, am:9, by:2025, bm:9, local:'central', operatorMode:false, loggedUserIdx:0 };
 function syncStateFromSelects(){
   var a = periodASel.value.split('-'); state.ay = +a[0]; state.am = +a[1];
   var b = periodBSel.value.split('-'); state.by = +b[0]; state.bm = +b[1];
@@ -3212,8 +3278,10 @@ document.getElementById('invCadastroSalvar').addEventListener('click', function(
   if(editingName){
     var idx = ITEM_CATALOG.findIndex(function(it){ return it.name===editingName; });
     if(idx!==-1) ITEM_CATALOG[idx] = novo;
+    logActivity('edição', 'Estoque', 'Produto "'+nome+'" editado no catálogo central');
   } else {
     ITEM_CATALOG.push(novo);
+    logActivity('cadastro', 'Estoque', 'Produto "'+nome+'" adicionado ao catálogo central');
   }
   form.hidden = true;
   renderInventory(state.unit, state.local);
@@ -3228,6 +3296,8 @@ document.getElementById('transferBtn').addEventListener('click', function(){
   if(!item || !destino || qtd<=0) return;
   var it = ITEM_CATALOG.find(function(x){ return x.name===item; });
   transferLog.push({ data:'11/09', origem:'central', destino:destino, item:item, qtd:qtd, unit: it ? it.unit : 'un' });
+  var destInfo = localesForUnit(state.unit).find(function(l){ return l.key===destino; });
+  logActivity('transferência', 'Estoque', qtd+' de "'+item+'" transferido para '+(destInfo?destInfo.nome:destino));
   renderInventory(state.unit, state.local);
 });
 document.getElementById('consumoBtn').addEventListener('click', function(){
@@ -3237,6 +3307,7 @@ document.getElementById('consumoBtn').addEventListener('click', function(){
   if(!item || qtd<=0) return;
   var motivoLabel = motivo==='perda' ? 'perda/quebra' : motivo==='ajuste' ? 'ajuste de contagem' : 'uso em produção/venda';
   alert('Registrado: '+qtd+' de "'+item+'" — motivo: '+motivoLabel+'.');
+  logActivity('lançamento', 'Estoque', qtd+' de "'+item+'" — motivo: '+motivoLabel+' em '+localInfo(state.unit, state.local).nome);
   document.getElementById('consumoQtd').value = 1;
 });
 
@@ -3541,6 +3612,84 @@ function effectivePerm(idx, moduleKey){
   var u = USERS[idx]; var ov = USER_OVERRIDES[idx];
   if(ov && ov[moduleKey]) return ov[moduleKey];
   return roleByKey(u.role).perms[moduleKey];
+}
+
+/* ============================================================
+   MOTOR DE PERMISSÃO — mesma régua vale pra tela e pra IA
+============================================================ */
+var TIER_ORDER = ['none','view','input','approve','admin'];
+function tierIndex(t){ var i = TIER_ORDER.indexOf(t); return i===-1?0:i; }
+function tierAtLeast(t, min){ return tierIndex(t) >= tierIndex(min); }
+function currentTier(moduleKey){
+  var real = effectivePerm(state.loggedUserIdx, moduleKey);
+  if(!state.operatorMode) return real;
+  return TIER_ORDER[Math.min(tierIndex(real), tierIndex('input'))];
+}
+var ACTIVITY_LOG = [
+  { ts:'11/09 08:14', user:'Marina Torres', role:'Dono', modulo:'Estoque', acao:'login', detalhe:'Acesso ao sistema' },
+  { ts:'11/09 08:20', user:'Marina Torres', role:'Dono', modulo:'Estoque', acao:'transferência', detalhe:'96 un de Cerveja long neck → Bar salão' },
+  { ts:'10/09 19:02', user:'Patrícia Nunes', role:'Estoquista', modulo:'Estoque', acao:'lançamento', detalhe:'Contagem registrada — Moema' },
+  { ts:'10/09 14:47', user:'Bruno Kaefer', role:'Financeiro', modulo:'Backoffice', acao:'edição', detalhe:'Mapeamento "Despesas c/ Cartão" confirmado' },
+  { ts:'09/09 11:03', user:'Suporte TI', role:'Admin do Sistema', modulo:'Usuários', acao:'acesso negado', detalhe:'Tentou abrir Financeiro sem permissão' },
+  { ts:'08/09 09:30', user:'Diego Farias', role:'Auditor Interno', modulo:'Auditoria', acao:'validação', detalhe:'Checklist Vila Madalena aprovado' }
+];
+function logActivity(acao, modulo, detalhe){
+  var u = USERS[state.loggedUserIdx];
+  ACTIVITY_LOG.unshift({ ts:'agora', user:u.name, role:roleByKey(u.role).name, modulo:modulo, acao:acao, detalhe:detalhe });
+  if(document.getElementById('activityLogBody')) renderActivityLog();
+}
+function updateOperatorBanner(){
+  document.getElementById('operatorBanner').hidden = !state.operatorMode;
+  var btn = document.getElementById('operatorModeBtn');
+  if(btn) btn.hidden = state.operatorMode;
+}
+function applyAiPermissionGating(){
+  document.querySelectorAll('.ai-strip[data-module]').forEach(function(strip){
+    var mod = strip.dataset.module;
+    var tier = currentTier(mod);
+    var allowed = tierAtLeast(tier, 'view');
+    strip.classList.toggle('locked', !allowed);
+    var textEl = strip.querySelector('.ai-strip-text');
+    if(!allowed){
+      if(!strip.dataset.origText) strip.dataset.origText = textEl.innerHTML;
+      textEl.innerHTML = 'Análise oculta — seu nível de acesso em <b>'+(PERM_MODULES.find(function(m){return m[0]===mod;})||[null,mod])[1]+'</b> não inclui recomendações da IA.' +
+        (state.operatorMode ? '<div class="ai-strip-lock-note">Volte ao modo admin pra ver esta análise.</div>' : '');
+    } else if(strip.dataset.origText){
+      textEl.innerHTML = strip.dataset.origText;
+      delete strip.dataset.origText;
+    }
+  });
+}
+document.getElementById('operatorModeBtn').addEventListener('click', function(){
+  state.operatorMode = true;
+  updateOperatorBanner();
+  applyAiPermissionGating();
+  logActivity('modo operador', 'Sistema', 'Admin passou a atuar como operador');
+});
+document.getElementById('operatorModeExitBtn').addEventListener('click', function(){
+  state.operatorMode = false;
+  updateOperatorBanner();
+  applyAiPermissionGating();
+  logActivity('modo admin', 'Sistema', 'Admin voltou ao modo admin');
+});
+function renderActivityLog(){
+  var host = document.getElementById('activityLogBody'); if(!host) return;
+  var userSel = document.getElementById('logFilterUser'), modSel = document.getElementById('logFilterModulo'), acaoSel = document.getElementById('logFilterAcao');
+  if(userSel && !userSel.dataset.built){
+    var users = []; ACTIVITY_LOG.forEach(function(l){ if(users.indexOf(l.user)===-1) users.push(l.user); });
+    userSel.innerHTML += users.map(function(u){ return '<option value="'+u+'">'+u+'</option>'; }).join('');
+    var mods = []; ACTIVITY_LOG.forEach(function(l){ if(mods.indexOf(l.modulo)===-1) mods.push(l.modulo); });
+    modSel.innerHTML += mods.map(function(m){ return '<option value="'+m+'">'+m+'</option>'; }).join('');
+    var acoes = []; ACTIVITY_LOG.forEach(function(l){ if(acoes.indexOf(l.acao)===-1) acoes.push(l.acao); });
+    acaoSel.innerHTML += acoes.map(function(a){ return '<option value="'+a+'">'+a+'</option>'; }).join('');
+    [userSel,modSel,acaoSel].forEach(function(sel){ sel.dataset.built='1'; sel.addEventListener('change', renderActivityLog); });
+  }
+  var fu = userSel ? userSel.value : '', fm = modSel ? modSel.value : '', fa = acaoSel ? acaoSel.value : '';
+  var rows = ACTIVITY_LOG.filter(function(l){ return (!fu||l.user===fu) && (!fm||l.modulo===fm) && (!fa||l.acao===fa); });
+  host.innerHTML = rows.length ? rows.map(function(l){
+    var isAlerta = l.acao==='acesso negado';
+    return '<tr><td class="num">'+l.ts+'</td><td>'+l.user+'</td><td>'+l.role+'</td><td>'+l.modulo+'</td><td>'+(isAlerta?'<span class="micro-badge badge-critical">':'<span class="micro-badge badge-neutral">')+l.acao+'</span></td><td>'+l.detalhe+'</td></tr>';
+  }).join('') : '<tr><td colspan="6" class="stat-foot">Nenhum evento com esse filtro.</td></tr>';
 }
 function renderPeopleList(){
   document.getElementById('peopleList').innerHTML = USERS.map(function(u,i){
@@ -4016,6 +4165,8 @@ function renderAll(){
   presUpdatePeriodLabel();
   presBuildSlideHost();
   syncTopbarHeight();
+  applyAiPermissionGating();
+  if(document.getElementById('activityLogBody')) renderActivityLog();
 }
 
 document.getElementById('unitSelect').addEventListener('change', renderAll);
