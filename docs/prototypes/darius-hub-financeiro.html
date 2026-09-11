@@ -99,12 +99,13 @@ button{ font-family:inherit; }
 .section-title:first-child{ margin-top:0; }
 .grid{ display:grid; gap:16px; }
 .g-kpi{ grid-template-columns:repeat(4,1fr); }
+.g-kpi-5{ grid-template-columns:repeat(5,1fr); }
 .g-2{ grid-template-columns:1.6fr 1fr; }
 .g-3{ grid-template-columns:repeat(3,1fr); }
 .g-4{ grid-template-columns:repeat(4,1fr); }
 .g-micro{ grid-template-columns:repeat(4,1fr); }
-@media(max-width:1180px){ .g-kpi,.g-micro,.g-4{ grid-template-columns:repeat(2,1fr);} .g-2{ grid-template-columns:1fr; } .g-3{grid-template-columns:repeat(2,1fr);} }
-@media(max-width:640px){ .g-kpi,.g-micro,.g-4,.g-3{ grid-template-columns:1fr; } .content{padding:18px 16px 48px;} .topbar{padding:14px 16px;} }
+@media(max-width:1180px){ .g-kpi,.g-kpi-5,.g-micro,.g-4{ grid-template-columns:repeat(2,1fr);} .g-2{ grid-template-columns:1fr; } .g-3{grid-template-columns:repeat(2,1fr);} }
+@media(max-width:640px){ .g-kpi,.g-kpi-5,.g-micro,.g-4,.g-3{ grid-template-columns:1fr; } .content{padding:18px 16px 48px;} .topbar{padding:14px 16px;} }
 
 /* ---------- stat tile ---------- */
 .stat{ display:flex; flex-direction:column; gap:10px; }
@@ -861,7 +862,7 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 
         <div class="hub-step" id="hub-step-resumo">
           <div class="hub-step-head"><span class="hub-step-num">1</span><div><div class="hub-step-title">Resumo do período</div><div class="hub-step-q">Como fechamos o mês, num só olhar?</div></div></div>
-          <div class="grid g-kpi" id="kpiRow"></div>
+          <div class="grid g-kpi-5" id="kpiRow"></div>
         </div>
 
         <div class="hub-step" id="hub-step-dre">
@@ -2189,12 +2190,16 @@ function renderDonutGeneric(svgId, legendId, tipId, data, centerLabel, centerSub
 ============================================================ */
 function renderKPIs(pA, pB, pM){
   var items = [
+    { label:'Receita bruta', a:pA.dre.receitaBruta, b:pB.dre.receitaBruta, m:pM.dre.receitaBruta, color:'var(--c8)', metric:function(p){return p.dre.receitaBruta;}, extra:'',
+      explain:'Total faturado, antes de impostos sobre venda, cancelamentos e descontos.' },
     { label:'Receita líquida', a:pA.dre.receitaLiquida, b:pB.dre.receitaLiquida, m:pM.dre.receitaLiquida, color:'var(--c1)', metric:function(p){return p.dre.receitaLiquida;}, extra:'',
       explain:'Receita bruta menos impostos sobre venda, cancelamentos e descontos concedidos.' },
-    { label:'EBITDA · margem '+fmtPct(pA.pct.ebitda), a:pA.dre.ebitda, b:pB.dre.ebitda, m:pM.dre.ebitda, color:'var(--accent)', metric:function(p){return p.dre.ebitda;}, extra:'',
-      explain:'Lucro operacional antes de juros, impostos, depreciação e amortização.' },
-    { label:'Resultado do exercício', a:pA.dre.liquido, b:pB.dre.liquido, m:pM.dre.liquido, color:'var(--c3)', metric:function(p){return p.dre.liquido;}, extra:' · margem líquida '+fmtPct(pA.pct.liquido),
-      explain:'Lucro líquido final, depois do resultado financeiro e dos impostos sobre o lucro.' },
+    { label:'EBITDA', a:pA.dre.ebitda, b:pB.dre.ebitda, color:'var(--accent)', metric:function(p){return p.dre.ebitda;}, extra:'',
+      metaPct:{ a:pA.pct.ebitda, m:pM.pct.ebitda, label:'margem EBITDA' },
+      explain:'Lucro operacional antes de juros, impostos, depreciação e amortização. Meta em % de margem — não em R$ fixo, porque a receita varia mês a mês.' },
+    { label:'Resultado do exercício (lucro líquido)', a:pA.dre.liquido, b:pB.dre.liquido, color:'var(--c3)', metric:function(p){return p.dre.liquido;}, extra:'',
+      metaPct:{ a:pA.pct.liquido, m:pM.pct.liquido, label:'margem líquida' },
+      explain:'Lucro líquido final, depois do resultado financeiro e dos impostos sobre o lucro. Meta em % de margem, pelo mesmo motivo do EBITDA.' },
     { label:'Geração de caixa operacional', a:pA.dre.caixaLivre, b:pB.dre.caixaLivre, m:pM.dre.caixaLivre, color:'var(--c7)', metric:function(p){return p.dre.caixaLivre;}, extra:'',
       explain:'Caixa que sobra depois de investimentos (capex), capital de giro e impostos pagos.' }
   ];
@@ -2202,13 +2207,20 @@ function renderKPIs(pA, pB, pM){
   row.innerHTML = items.map(function(it){
     var spark = trailingSeries(pA.unit, pA.year, pA.month, 6, it.metric);
     var delta = pctDelta(it.a, it.b);
-    var atingido = it.m ? it.a/it.m : 1;
+    var atingido, metaFoot;
+    if(it.metaPct){
+      atingido = it.metaPct.m ? it.metaPct.a/it.metaPct.m : 1;
+      metaFoot = 'meta '+fmtPct(it.metaPct.m,1)+' de '+it.metaPct.label+' · realizado '+fmtPct(it.metaPct.a,1);
+    } else {
+      atingido = it.m ? it.a/it.m : 1;
+      metaFoot = 'meta '+fmt(it.m);
+    }
     return '<div class="card card-pad stat">' +
       '<div class="stat-label">'+it.label+'</div>' +
       '<div class="stat-row"><div class="stat-value tnum">'+fmt(it.a)+'</div>' + deltaChip(delta) + '</div>' +
       sparkSVG(spark, it.color) +
       '<div class="meter-row"><span class="stat-foot" style="min-width:34px;">Meta</span><div class="meter-track"><div class="meter-fill" style="width:'+Math.min(atingido*100,100)+'%; background:'+(atingido>=1?'var(--good)':'var(--warning)')+';"></div></div><span class="meter-val">'+fmtPct(atingido,0)+'</span></div>' +
-      '<div class="stat-foot">vs '+pB.label+it.extra+' · meta '+fmt(it.m)+'</div>' +
+      '<div class="stat-foot">vs '+pB.label+it.extra+' · '+metaFoot+'</div>' +
       '<div class="stat-explain">'+it.explain+'</div>' +
       '</div>';
   }).join('');
@@ -3406,7 +3418,8 @@ var MICRO_TARGET_DEFS = [
   { key:'cmo', label:'CMO', lowerBetter:true, explain:'Custo com Mão de Obra sobre a receita líquida.' },
   { key:'cto', label:'CTO (ocupação)', lowerBetter:true, explain:'Aluguel, condomínio e IPTU sobre a receita líquida.' },
   { key:'primeCost', label:'Prime cost', lowerBetter:true, explain:'Soma de CMV e CMO — maior bloco de custo variável.' },
-  { key:'ebitda', label:'Margem EBITDA', lowerBetter:false, explain:'EBITDA sobre a receita líquida do período.' }
+  { key:'ebitda', label:'Margem EBITDA', lowerBetter:false, explain:'EBITDA sobre a receita líquida do período.' },
+  { key:'liquido', label:'Margem líquida', lowerBetter:false, explain:'Lucro líquido sobre a receita líquida do período — a meta de lucro é em %, não em R$ fixo, porque a receita varia mês a mês.' }
 ];
 function budgetStatus(v, m, lowerBetter){
   var ratio = lowerBetter ? m/v : v/m;
@@ -3797,7 +3810,7 @@ var SLIDE_ICONS = {
 };
 var SLIDE_META = [
   { key:'capa', title:'Capa', desc:'Título e período da apresentação.' },
-  { key:'resumo', title:'Resumo executivo', desc:'Os 4 números que mais importam no período.' },
+  { key:'resumo', title:'Resumo executivo', desc:'Os números que mais importam no período, da receita bruta ao caixa.' },
   { key:'dre', title:'DRE em cascata', desc:'Da receita bruta ao resultado líquido.' },
   { key:'caixa', title:'Geração de caixa', desc:'EBITDA até caixa livre do período.' },
   { key:'cenarios', title:'Cenários (6 meses)', desc:'Pessimista, realista e otimista para o caixa.' },
@@ -3829,9 +3842,10 @@ function slideBuilders(pA, pB, pM){
     },
     resumo:function(){
       var items = [
+        {label:'Receita bruta', v:pA.dre.receitaBruta},
         {label:'Receita líquida', v:pA.dre.receitaLiquida},
         {label:'EBITDA · margem '+fmtPct(pA.pct.ebitda), v:pA.dre.ebitda},
-        {label:'Resultado do exercício', v:pA.dre.liquido},
+        {label:'Resultado do exercício · margem '+fmtPct(pA.pct.liquido), v:pA.dre.liquido},
         {label:'Geração de caixa operacional', v:pA.dre.caixaLivre}
       ];
       return '<div class="pres-kicker">Resumo executivo</div><h1 class="pres-title">Como '+unitName+' fechou '+pA.label+'</h1>' +
