@@ -702,6 +702,7 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
 .score-bar-row{ display:grid; grid-template-columns:70px 1fr 32px; gap:8px; align-items:center; font-size:11px; color:var(--ink-muted); }
 .score-bar-track{ height:6px; border-radius:4px; background:var(--surface-sunken); overflow:hidden; }
 .score-bar-fill{ height:100%; border-radius:4px; background:var(--accent); }
+.scope-notice{ background:var(--accent-soft); color:var(--accent-strong); border:1px solid var(--border); border-radius:12px; padding:14px 16px; font-size:13px; line-height:1.5; }
 </style>
 
 <div class="shell">
@@ -852,6 +853,16 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
         <div class="sub" id="topbarSub">Hub de gestão · <span class="proto">Protótipo visual</span></div>
       </div>
       <div class="topbar-fields" id="topbarFields">
+        <label class="field" id="marcaField">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/></svg>
+          <select id="marcaSelect" aria-label="Marca">
+            <option value="grupo">Grupo LF · todas as marcas</option>
+            <option value="casajuja" selected>Casa de Juja</option>
+            <option value="numar">Numar</option>
+            <option value="jujacafe">Juja Café</option>
+            <option value="barjornal">Bar Jornal</option>
+          </select>
+        </label>
         <label class="field" id="unitField">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h18M3 12h18M3 17h12"/></svg>
           <select id="unitSelect" aria-label="Unidade">
@@ -1205,6 +1216,9 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
       <section class="view" id="view-estoque">
         <div class="ai-strip" data-module="estoque"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · controle de estoque</div><div class="ai-strip-text" id="invAiHeadline">Analisando níveis de estoque…</div></div></div>
 
+        <div class="scope-notice" id="estoqueScopeNotice" hidden>Estoque é por loja, cada operação é independente — escolha uma loja específica no topo (não a rede consolidada nem o grupo) pra ver os dados.</div>
+
+        <div id="estoqueContent">
         <div class="local-tabs" id="stockLocalTabs"></div>
 
         <div class="section-title" id="invSectionTitle">Estoque — cada unidade com controle próprio</div>
@@ -1358,12 +1372,16 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
             </table>
           </div>
         </div>
+        </div>
       </section>
 
       <!-- ===================== COMPRAS ===================== -->
       <section class="view" id="view-compras">
         <div class="ai-strip" data-module="compras"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · compras inteligentes</div><div class="ai-strip-text" id="comprasAiHeadline">Comparando preços entre fornecedores…</div></div></div>
 
+        <div class="scope-notice" id="comprasScopeNotice" hidden>Compras é por loja, cada operação é independente — escolha uma loja específica no topo (não a rede consolidada nem o grupo) pra ver pedidos e fornecedores.</div>
+
+        <div id="comprasContent">
         <div class="compras-tabs" id="comprasTabs">
           <button type="button" class="compras-tab selected" data-pane="pedidos">Pedidos de compra</button>
           <button type="button" class="compras-tab" data-pane="fornecedores">Fornecedores</button>
@@ -1430,6 +1448,7 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
             <div class="viz-wrap"><svg id="precoHistChart" width="100%" height="220" role="img" aria-label="Histórico de preço por fornecedor"></svg><div class="viz-tip" id="tipPrecoHist"></div></div>
             <div class="legend" id="precoHistLegend"></div>
           </div>
+        </div>
         </div>
       </section>
 
@@ -2103,13 +2122,54 @@ function stepMonth(y,m,delta){ var idx = periodIdx(y,m)+delta; var yy = 2024+Mat
 function seasonality(m){ var s=[0.90,0.88,0.97,1.0,1.02,0.95,1.0,1.03,1.0,1.05,1.08,1.22]; return s[m-1]; }
 
 var UNIT_META = {
-  consolidado:{ name:'Rede consolidada · 4 lojas', scale:1.0, cmv:0.346, cmo:0.250, cto:0.100 },
+  consolidado:{ name:'Casa de Juja · Rede consolidada · 4 lojas', scale:1.0, cmv:0.346, cmo:0.250, cto:0.100, virtual:true },
   pinheiros:{   name:'Pinheiros',      scale:0.30, cmv:0.332, cmo:0.238, cto:0.095 },
   vilamadalena:{name:'Vila Madalena',  scale:0.24, cmv:0.364, cmo:0.252, cto:0.104 },
   moema:{       name:'Moema',          scale:0.26, cmv:0.352, cmo:0.281, cto:0.112 },
-  tatuape:{     name:'Tatuapé',        scale:0.20, cmv:0.341, cmo:0.244, cto:0.099 }
+  tatuape:{     name:'Tatuapé',        scale:0.20, cmv:0.341, cmo:0.244, cto:0.099 },
+
+  'numar-centro':{ name:'Numar — Centro', scale:0.22, cmv:0.360, cmo:0.260, cto:0.105 },
+  'consolidado-numar':{ name:'Numar · Rede consolidada · 1 loja', scale:0.22, cmv:0.360, cmo:0.260, cto:0.105, virtual:true },
+
+  'jujacafe-augusta':{ name:'Juja Café — Augusta', scale:0.14, cmv:0.330, cmo:0.270, cto:0.130 },
+  'consolidado-jujacafe':{ name:'Juja Café · Rede consolidada · 1 loja', scale:0.14, cmv:0.330, cmo:0.270, cto:0.130, virtual:true },
+
+  'barjornal-liberdade':{ name:'Bar Jornal — Liberdade', scale:0.19, cmv:0.300, cmo:0.240, cto:0.115 },
+  'consolidado-barjornal':{ name:'Bar Jornal · Rede consolidada · 1 loja', scale:0.19, cmv:0.300, cmo:0.240, cto:0.115, virtual:true }
 };
-var UNIT_ORDER = ['pinheiros','tatuape','vilamadalena','moema'];
+var MARCAS = {
+  casajuja:  { nome:'Casa de Juja', lojas:['pinheiros','vilamadalena','moema','tatuape'], consolidadoKey:'consolidado' },
+  numar:     { nome:'Numar',        lojas:['numar-centro'],       consolidadoKey:'consolidado-numar' },
+  jujacafe:  { nome:'Juja Café',    lojas:['jujacafe-augusta'],   consolidadoKey:'consolidado-jujacafe' },
+  barjornal: { nome:'Bar Jornal',   lojas:['barjornal-liberdade'],consolidadoKey:'consolidado-barjornal' }
+};
+var MARCA_ORDER = ['casajuja','numar','jujacafe','barjornal'];
+(function(){
+  var totalScale=0, wCmv=0, wCmo=0, wCto=0;
+  MARCA_ORDER.forEach(function(mk){
+    var u = UNIT_META[MARCAS[mk].consolidadoKey];
+    totalScale += u.scale; wCmv += u.scale*u.cmv; wCmo += u.scale*u.cmo; wCto += u.scale*u.cto;
+  });
+  UNIT_META.grupo = { name:'Grupo LF · '+MARCA_ORDER.length+' marcas', scale:totalScale, cmv:wCmv/totalScale, cmo:wCmo/totalScale, cto:wCto/totalScale, virtual:true };
+})();
+function isRealLoja(key){ return !!(UNIT_META[key] && !UNIT_META[key].virtual); }
+function lojasForCurrentScope(){
+  if(state.marca==='grupo') return MARCA_ORDER.map(function(mk){ return MARCAS[mk].consolidadoKey; });
+  return (MARCAS[state.marca] || MARCAS.casajuja).lojas.slice();
+}
+function currentMarcaFirstLoja(){
+  if(state.marca==='grupo') return MARCAS.casajuja.lojas[0];
+  return (MARCAS[state.marca] || MARCAS.casajuja).lojas[0];
+}
+function populateUnitSelectForMarca(marcaKey){
+  var sel = document.getElementById('unitSelect');
+  var field = document.getElementById('unitField');
+  if(marcaKey==='grupo'){ if(field) field.hidden = true; return; }
+  if(field) field.hidden = false;
+  var m = MARCAS[marcaKey] || MARCAS.casajuja;
+  sel.innerHTML = '<option value="'+m.consolidadoKey+'">Rede consolidada · '+m.lojas.length+' loja'+(m.lojas.length>1?'s':'')+'</option>' +
+    m.lojas.map(function(lk){ return '<option value="'+lk+'">'+UNIT_META[lk].name+'</option>'; }).join('');
+}
 
 function computePeriod(unitKey, y, m){
   var meta = UNIT_META[unitKey];
@@ -2198,12 +2258,13 @@ YEARS.forEach(function(y){ for(var m=1;m<=12;m++){ PERIODS.push({y:y,m:m}); } })
 periodASel.value = '2026-9';
 periodBSel.value = '2026-8';
 
-var state = { unit:'consolidado', ay:2026, am:9, by:2025, bm:9, local:'central', operatorMode:false, loggedUserIdx:0 };
+var state = { marca:'casajuja', unit:'consolidado', ay:2026, am:9, by:2025, bm:9, local:'central', operatorMode:false, loggedUserIdx:0 };
 function syncStateFromSelects(){
   var a = periodASel.value.split('-'); state.ay = +a[0]; state.am = +a[1];
   var b = periodBSel.value.split('-'); state.by = +b[0]; state.bm = +b[1];
   var prevUnit = state.unit;
-  state.unit = document.getElementById('unitSelect').value;
+  state.marca = document.getElementById('marcaSelect').value;
+  state.unit = state.marca==='grupo' ? 'grupo' : document.getElementById('unitSelect').value;
   if(state.unit!==prevUnit) state.local = 'central';
 }
 
@@ -3080,7 +3141,7 @@ function renderCycle(){
 ============================================================ */
 function renderRanking(pA_unused, targetId){
   targetId = targetId || 'unitRanking';
-  var arr = UNIT_ORDER.map(function(k){ return { key:k, u: computePeriod(k, state.ay, state.am) }; });
+  var arr = lojasForCurrentScope().map(function(k){ return { key:k, u: computePeriod(k, state.ay, state.am) }; });
   arr.sort(function(a,b){ return b.u.pct.ebitda - a.u.pct.ebitda; });
   document.getElementById(targetId).innerHTML = arr.map(function(item,i){
     return '<div class="rank-row"><span class="rank-num">'+(i+1)+'</span>' +
@@ -3094,7 +3155,7 @@ function renderBench(ids){
   var svg = document.getElementById(ids.svg); svg.innerHTML='';
   var W = svg.clientWidth||600, H=320, padL=100, padR=20, padT=10, padB=30;
   svg.setAttribute('viewBox','0 0 '+W+' '+H);
-  var units = UNIT_ORDER.map(function(k){ return computePeriod(k, state.ay, state.am); });
+  var units = lojasForCurrentScope().map(function(k){ return computePeriod(k, state.ay, state.am); });
   var rowH = (H-padT-padB)/units.length;
   var maxV = 0.4;
   var plotW = W-padL-padR;
@@ -3123,7 +3184,7 @@ function renderBench(ids){
   });
 }
 function renderMicroBench(){
-  var entries = UNIT_ORDER.map(function(k){
+  var entries = lojasForCurrentScope().map(function(k){
     var u = computePeriod(k, state.ay, state.am);
     return { name:u.name, value:u.pct.cmv, current:k===state.unit };
   });
@@ -3160,7 +3221,10 @@ var stockLocais = {
   vilamadalena:[ {key:'central', tipo:'central', nome:'Estoque Central'}, {key:'cozinha1', tipo:'cozinha', nome:'Cozinha'}, {key:'bar1', tipo:'bar', nome:'Bar'} ],
   moema:[ {key:'central', tipo:'central', nome:'Estoque Central'}, {key:'cozinha1', tipo:'cozinha', nome:'Cozinha principal'}, {key:'cozinha2', tipo:'cozinha', nome:'Cozinha fria'}, {key:'bar1', tipo:'bar', nome:'Bar salão'}, {key:'bar2', tipo:'bar', nome:'Bar rooftop'} ],
   tatuape:[ {key:'central', tipo:'central', nome:'Estoque Central'}, {key:'cozinha1', tipo:'cozinha', nome:'Cozinha'}, {key:'bar1', tipo:'bar', nome:'Bar'} ],
-  consolidado:[ {key:'central', tipo:'central', nome:'Estoque Central (visão rede)'} ]
+  consolidado:[ {key:'central', tipo:'central', nome:'Estoque Central (visão rede)'} ],
+  'numar-centro':[ {key:'central', tipo:'central', nome:'Estoque Central'}, {key:'cozinha1', tipo:'cozinha', nome:'Cozinha'}, {key:'bar1', tipo:'bar', nome:'Bar'} ],
+  'jujacafe-augusta':[ {key:'central', tipo:'central', nome:'Estoque Central'}, {key:'cozinha1', tipo:'cozinha', nome:'Cozinha'} ],
+  'barjornal-liberdade':[ {key:'central', tipo:'central', nome:'Estoque Central'}, {key:'bar1', tipo:'bar', nome:'Bar'} ]
 };
 var transferLog = [
   {data:'09/09', origem:'central', destino:'cozinha1', item:'Filé mignon', qtd:15, unit:'kg'},
@@ -3273,7 +3337,7 @@ function criarPedido(comoRascunho){
   else { status = valorRaw>ALCADA_COMPRA ? 'aguardando_aprovacao' : 'aprovado'; }
   var id = 'PC-'+(++pedidoSeq);
   var u = USERS[state.loggedUserIdx];
-  PEDIDOS_COMPRA.unshift({ id:id, unit:state.unit==='consolidado'?'pinheiros':state.unit, fornecedorId:pedidoSelecionado.fornecedorId, itens:[{item:itemName, qtd:qtd, preco: pedidoSelecionado.preco || 0}], status:status, criadoPor:u.name, aprovadoPor: status==='aprovado' ? u.name : null, data:'11/09' });
+  PEDIDOS_COMPRA.unshift({ id:id, unit:isRealLoja(state.unit)?state.unit:currentMarcaFirstLoja(), fornecedorId:pedidoSelecionado.fornecedorId, itens:[{item:itemName, qtd:qtd, preco: pedidoSelecionado.preco || 0}], status:status, criadoPor:u.name, aprovadoPor: status==='aprovado' ? u.name : null, data:'11/09' });
   logActivity(status==='rascunho'?'rascunho':'pedido de compra', 'Compras', id+' — '+qtd+' de "'+itemName+'"'+(status==='rascunho'?' salvo como rascunho':' criado, status: '+STATUS_LABELS[status]));
   renderCompras();
 }
@@ -3464,6 +3528,14 @@ document.getElementById('pedidoItem').addEventListener('change', renderPedidoSup
 document.getElementById('pedidoSalvarRascunho').addEventListener('click', function(){ criarPedido(true); });
 document.getElementById('pedidoEnviar').addEventListener('click', function(){ criarPedido(false); });
 function renderCompras(){
+  var notice = document.getElementById('comprasScopeNotice'), content = document.getElementById('comprasContent');
+  if(!isRealLoja(state.unit)){
+    if(notice) notice.hidden = false;
+    if(content) content.hidden = true;
+    return;
+  }
+  if(notice) notice.hidden = true;
+  if(content) content.hidden = false;
   var itemSel = document.getElementById('pedidoItem');
   if(!itemSel.dataset.built){ itemSel.innerHTML = ITEM_CATALOG.map(function(it){ return '<option value="'+it.name+'">'+it.name+'</option>'; }).join(''); itemSel.dataset.built='1'; }
   renderPedidos();
@@ -3550,6 +3622,14 @@ function invItemOptionsHTML(items){
   return items.map(function(it){ return '<option value="'+it.name+'">'+it.name+' ('+it.unit+')</option>'; }).join('');
 }
 function renderInventory(unitKey, localKey){
+  var notice = document.getElementById('estoqueScopeNotice'), content = document.getElementById('estoqueContent');
+  if(!isRealLoja(unitKey)){
+    if(notice) notice.hidden = false;
+    if(content) content.hidden = true;
+    return;
+  }
+  if(notice) notice.hidden = true;
+  if(content) content.hidden = false;
   localKey = localKey || state.local || 'central';
   state.local = localKey;
   renderStockLocalTabs(unitKey);
@@ -3619,7 +3699,7 @@ function renderInventory(unitKey, localKey){
     'Previsão de ruptura: <b>'+mostCritical.name+'</b> deve zerar em <b>'+mostCritical.dias+' dias</b> no ritmo atual de consumo. '+emRisco+' iten(s) precisam de atenção neste local.' :
     'Todos os itens monitorados estão dentro da faixa saudável de estoque neste local.';
 
-  var stockEntries = UNIT_ORDER.map(function(k){
+  var stockEntries = lojasForCurrentScope().map(function(k){
     var its = inventoryForUnit(k, 'central');
     var val = its.reduce(function(s,it){ return s+it.stock*it.custo; },0)/1000;
     return { name:UNIT_META[k].name, value:val, current:k===unitKey };
@@ -3822,7 +3902,7 @@ function renderAudit(unitKey){
     criticas+' achado(s) crítico(s) em aberto nesta unidade — prioridade máxima para a auditoria financeira.' :
     'Nenhum achado crítico em aberto nesta unidade. Nota geral: '+a.geral+'/100.';
 
-  var entries = UNIT_ORDER.map(function(k){ var au = auditForUnit(k); return { name:UNIT_META[k].name, value:au.geral, current:k===unitKey }; });
+  var entries = lojasForCurrentScope().map(function(k){ var au = auditForUnit(k); return { name:UNIT_META[k].name, value:au.geral, current:k===unitKey }; });
   renderBenchmarkStrip('benchAuditStrip', entries, function(v){ return v+'/100'; }, true);
 }
 
@@ -4315,7 +4395,7 @@ function slideBuilders(pA, pB, pM){
       return '<div class="pres-kicker">Metas</div><h1 class="pres-title">'+achieved+' de '+MICRO_TARGET_DEFS.length+' metas financeiras no azul</h1><div class="pres-bullets">'+rows+'</div>';
     },
     estoque:function(){
-      var items = inventoryForUnit(state.unit);
+      var items = inventoryForUnit(isRealLoja(state.unit) ? state.unit : currentMarcaFirstLoja());
       var valorTotal = items.reduce(function(s,it){ return s+it.stock*it.custo; },0);
       var emRisco = items.filter(function(it){ return it.status==='critico'||it.status==='baixo'; });
       var cards = '<div class="card pres-num-card"><div class="pres-num-label">Valor em estoque</div><div class="pres-num-value tnum">'+fmt(valorTotal/1000)+'</div></div>' +
@@ -4607,6 +4687,11 @@ function renderAll(){
 }
 
 document.getElementById('unitSelect').addEventListener('change', renderAll);
+document.getElementById('marcaSelect').addEventListener('change', function(){
+  populateUnitSelectForMarca(this.value);
+  renderAll();
+});
+populateUnitSelectForMarca(state.marca);
 periodASel.addEventListener('change', renderAll);
 periodBSel.addEventListener('change', renderAll);
 
