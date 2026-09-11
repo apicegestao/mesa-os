@@ -2171,12 +2171,21 @@ function populateUnitSelectForMarca(marcaKey){
     m.lojas.map(function(lk){ return '<option value="'+lk+'">'+UNIT_META[lk].name+'</option>'; }).join('');
 }
 
+function resolveComputeKey(unitKey){
+  // marca com 1 loja só: "rede consolidada" precisa gerar os mesmos números da loja,
+  // não uma simulação independente (senão os dois nunca batem, mesmo devendo ser idênticos)
+  for(var mk in MARCAS){
+    var mm = MARCAS[mk];
+    if(mm.consolidadoKey===unitKey && mm.lojas.length===1) return mm.lojas[0];
+  }
+  return unitKey;
+}
 function computePeriod(unitKey, y, m){
   var meta = UNIT_META[unitKey];
   var idx = periodIdx(y,m);
   var growth = Math.pow(1.012, idx);
   var seasonal = seasonality(m);
-  var seed = hashString(unitKey);
+  var seed = hashString(resolveComputeKey(unitKey));
   var revNoise = seededNoise(seed*7 + idx*13, 0.035);
   var receitaBruta = Math.max(400, Math.round(4850*meta.scale*growth*seasonal*revNoise/1.47));
   var deducoes = Math.round(receitaBruta*0.1278);
