@@ -165,9 +165,6 @@ button{ font-family:inherit; }
 .perm-legend{ display:flex; flex-wrap:wrap; gap:14px; margin-top:12px; }
 .perm-legend-item{ display:flex; align-items:center; gap:6px; font-size:11.5px; color:var(--ink-2); }
 .avatar{ width:28px; height:28px; border-radius:50%; background:var(--accent-soft); color:var(--accent-strong); font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
-.user-cell{ display:flex; align-items:center; gap:10px; }
-.user-name{ font-weight:600; font-size:12.5px; }
-.user-email{ font-size:11px; color:var(--ink-muted); }
 
 /* ---------- sidebar (accordion nav) ---------- */
 .side{
@@ -186,7 +183,6 @@ button{ font-family:inherit; }
 .side-link:hover, .side-group-head:hover{ background:var(--surface-sunken); color:var(--ink); }
 .side-link.active{ background:var(--accent-soft); color:var(--accent-strong); font-weight:600; }
 .side-link.active svg{ color:var(--accent-strong); }
-.side-group.has-active .side-group-head{ color:var(--ink); }
 .side-group-head .chev{ margin-left:auto; width:13px; height:13px; color:var(--ink-muted); transition:transform .15s; flex:0 0 auto; }
 .side-group.open .chev{ transform:rotate(90deg); }
 .side-group-body{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .18s ease; }
@@ -242,7 +238,6 @@ button{ font-family:inherit; }
 .picker-item{ display:flex; align-items:center; gap:9px; padding:7px 6px; font-size:12.5px; cursor:pointer; border-radius:7px; }
 .picker-item:hover{ background:var(--surface-sunken); }
 .picker-item input{ width:15px; height:15px; accent-color:var(--accent); cursor:pointer; flex:0 0 auto; }
-.picker-item-cat{ font-size:10px; color:var(--ink-muted); margin-left:auto; text-transform:uppercase; letter-spacing:.03em; }
 
 /* ---------- presentation: builder ---------- */
 .pres-hero-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:22px; }
@@ -1995,7 +1990,8 @@ function goToView(viewKey){
   if(activeSub){ var grp = activeSub.closest('.side-group'); if(grp) grp.classList.add('open'); }
   var isGlobal = GLOBAL_VIEWS.indexOf(viewKey) !== -1;
   document.getElementById('compareGroup').style.display = (viewKey==='hub'||viewKey==='dre'||viewKey==='apresentacao') ? '' : 'none';
-  document.getElementById('unitField').style.display = isGlobal ? 'none' : '';
+  document.getElementById('marcaField').hidden = isGlobal;
+  document.getElementById('unitField').hidden = isGlobal || state.marca==='grupo';
   document.getElementById('aiPill').style.display = isGlobal ? 'none' : '';
   updateTopbarSub(viewKey);
   setTimeout(syncTopbarHeight, 0);
