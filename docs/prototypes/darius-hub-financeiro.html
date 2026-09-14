@@ -239,85 +239,6 @@ button{ font-family:inherit; }
 .picker-item:hover{ background:var(--surface-sunken); }
 .picker-item input{ width:15px; height:15px; accent-color:var(--accent); cursor:pointer; flex:0 0 auto; }
 
-/* ---------- presentation: builder ---------- */
-.pres-hero-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:22px; }
-.pres-hero-row h2{ font-size:22px; margin:0 0 4px; }
-.pres-hero-row p{ font-size:13px; color:var(--ink-muted); margin:0; }
-.pres-play-btn{ display:flex; align-items:center; gap:8px; border:none; background:var(--accent); color:#fff; border-radius:11px; padding:12px 20px; font-weight:600; font-size:13.5px; cursor:pointer; flex:0 0 auto; }
-.pres-play-btn:hover{ background:var(--accent-strong); }
-.pres-play-btn svg{ width:16px; height:16px; }
-.pres-template-row{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:22px; }
-.pres-template-btn{ border:1px solid var(--border); background:var(--surface); color:var(--ink); border-radius:10px; padding:9px 15px; font-size:12.5px; font-weight:600; cursor:pointer; }
-.pres-template-btn:hover{ border-color:var(--border-strong); background:var(--surface-sunken); }
-.pres-deck-list{ display:flex; flex-direction:column; gap:8px; }
-.pres-deck-row{ display:flex; align-items:center; gap:12px; padding:11px 12px; border:1px solid var(--border); border-radius:11px; background:var(--surface); }
-.pres-deck-num{ width:24px; height:24px; border-radius:7px; background:var(--surface-sunken); color:var(--ink-muted); font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; flex:0 0 auto; font-variant-numeric:tabular-nums; }
-.pres-deck-ic{ width:32px; height:32px; border-radius:9px; background:var(--accent-soft); color:var(--accent-strong); display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
-.pres-deck-ic svg{ width:16px; height:16px; }
-.pres-deck-title{ font-size:13px; font-weight:600; }
-.pres-deck-desc{ font-size:11.5px; color:var(--ink-muted); }
-.pres-deck-actions{ margin-left:auto; display:flex; gap:4px; flex:0 0 auto; }
-.pres-icon-btn{ width:28px; height:28px; border-radius:7px; border:1px solid var(--border); background:var(--surface); color:var(--ink-muted); cursor:pointer; display:flex; align-items:center; justify-content:center; }
-.pres-icon-btn:hover{ background:var(--surface-sunken); color:var(--ink); }
-.pres-icon-btn:disabled{ opacity:.35; cursor:default; }
-.pres-icon-btn svg{ width:13px; height:13px; }
-.pres-icon-btn.danger:hover{ background:var(--critical-soft); color:var(--critical); border-color:transparent; }
-.pres-catalog-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-@media(max-width:900px){ .pres-catalog-grid{ grid-template-columns:repeat(2,1fr); } }
-@media(max-width:640px){ .pres-catalog-grid{ grid-template-columns:1fr; } }
-.pres-add-chip{ display:flex; align-items:center; gap:9px; border:1px dashed var(--border-strong); background:var(--surface); color:var(--ink-2); border-radius:10px; padding:9px 11px; cursor:pointer; font-size:12px; font-weight:600; text-align:left; }
-.pres-add-chip:hover{ border-color:var(--accent); background:var(--accent-soft); color:var(--accent-strong); }
-.pres-add-chip svg{ width:14px; height:14px; flex:0 0 auto; }
-.pres-empty{ font-size:12.5px; color:var(--ink-muted); padding:16px; text-align:center; border:1px dashed var(--border); border-radius:11px; }
-
-/* ---------- presentation: player ---------- */
-body.presenting .side, body.presenting .side-backdrop, body.presenting .topbar, body.presenting .ai-fab, body.presenting .ai-panel, body.presenting footer.credits{ display:none !important; }
-body.presenting .content{ padding:0; max-width:none; }
-body.presenting .main{ width:100%; }
-.pres-player{ position:fixed; inset:0; z-index:80; background:var(--page); display:flex; flex-direction:column; }
-.pres-player[hidden]{ display:none; }
-.pres-player-bar{ display:flex; align-items:center; gap:14px; padding:14px 22px; border-bottom:1px solid var(--border); flex:0 0 auto; }
-.pres-player-label{ font-size:12px; color:var(--ink-muted); font-weight:600; }
-.pres-dots{ display:flex; gap:5px; margin-left:auto; }
-.pres-dot{ width:6px; height:6px; border-radius:50%; background:var(--border-strong); }
-.pres-dot.on{ background:var(--accent); width:16px; border-radius:3px; }
-.pres-player-actions{ display:flex; gap:8px; }
-.pres-stage{ flex:1; overflow-y:auto; display:flex; align-items:center; justify-content:center; padding:40px 24px; position:relative; }
-.pres-slide{ display:none; width:100%; max-width:980px; margin:0 auto; }
-.pres-slide.on{ display:block; }
-.pres-kicker{ font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--accent-strong); margin-bottom:10px; text-align:center; }
-.pres-title{ font-family:'Fraunces',serif; font-size:clamp(26px,4vw,40px); font-weight:560; text-align:center; margin:0 0 8px; text-wrap:balance; }
-.pres-subtitle{ font-size:14px; color:var(--ink-muted); text-align:center; margin:0 0 34px; }
-.pres-hero-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:22px; margin-top:10px; }
-@media(max-width:700px){ .pres-hero-grid{ grid-template-columns:1fr; } }
-.pres-num-card{ text-align:center; padding:22px 16px; }
-.pres-num-label{ font-size:12.5px; color:var(--ink-muted); font-weight:600; margin-bottom:8px; }
-.pres-num-value{ font-family:'Fraunces',serif; font-size:clamp(26px,3.4vw,36px); font-weight:560; margin-bottom:8px; }
-.pres-bullets{ display:flex; flex-direction:column; gap:16px; max-width:760px; margin:0 auto; }
-.pres-bullet{ display:flex; gap:14px; align-items:flex-start; font-size:15px; line-height:1.6; }
-.pres-bullet-dot{ width:8px; height:8px; border-radius:50%; background:var(--accent); margin-top:8px; flex:0 0 auto; }
-.pres-cover{ text-align:center; }
-.pres-cover-mark{ width:56px; height:56px; border-radius:15px; background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:640; font-size:24px; margin:0 auto 22px; }
-.pres-cover-meta{ font-size:13px; color:var(--ink-muted); margin-top:14px; }
-.pres-nav-side{ position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:50%; border:1px solid var(--border); background:var(--surface); color:var(--ink); cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow); }
-.pres-nav-side:hover{ background:var(--surface-sunken); }
-.pres-nav-side:disabled{ opacity:.3; cursor:default; }
-.pres-nav-side.prev{ left:18px; }
-.pres-nav-side.next{ right:18px; }
-.pres-nav-side svg{ width:18px; height:18px; }
-@media(max-width:640px){
-  .pres-nav-side{ position:fixed; top:auto; bottom:16px; transform:none; width:46px; height:46px; z-index:85; }
-  .pres-nav-side.prev{ left:14px; }
-  .pres-nav-side.next{ right:14px; }
-}
-.pres-edit-overlay{
-  position:fixed; inset:0; z-index:90; background:rgba(11,11,11,.45); display:none; align-items:flex-end; justify-content:center;
-}
-.pres-edit-overlay.open{ display:flex; }
-@media(min-width:760px){ .pres-edit-overlay{ align-items:center; } }
-.pres-edit-panel{ background:var(--surface); width:100%; max-width:560px; max-height:82vh; border-radius:18px 18px 0 0; overflow-y:auto; padding:20px 22px 26px; }
-@media(min-width:760px){ .pres-edit-panel{ border-radius:18px; max-height:78vh; } }
-
 /* ---------- legend ---------- */
 .legend{ display:flex; flex-wrap:wrap; gap:14px; margin-top:10px; }
 .legend-item{ display:flex; align-items:center; gap:6px; font-size:12px; color:var(--ink-2); font-weight:500; }
@@ -712,9 +633,9 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg>
       Hub
     </button>
-    <button class="side-link" data-view="apresentacao">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
-      Apresentação
+    <button class="side-link" data-view="relatorios">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h9l3 3v15H6z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 16h6M9 8h2"/></svg>
+      Relatórios
     </button>
 
     <div class="side-group-label">Gestão</div>
@@ -977,7 +898,7 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
         </div>
 
         <div class="hub-appendix-title">Ir mais fundo</div>
-        <p class="hub-appendix-sub">A leitura acima já é a análise completa. Os atalhos abaixo são pra quando alguém pedir mais detalhe — inclusive em formato de slide, se preferir apresentar assim.</p>
+        <p class="hub-appendix-sub">A leitura acima já é a análise completa. Os atalhos abaixo são pra quando alguém pedir mais detalhe — inclusive em relatório escrito pela IA, pronto pra guardar ou enviar.</p>
         <div class="hub-grid hub-grid-4">
           <div class="card hub-card" data-goto="metas" tabindex="0" role="button">
             <div class="hub-card-top">
@@ -1014,12 +935,12 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
         </div>
 
         <div class="grid g-2" style="margin-top:16px; align-items:stretch;">
-          <button type="button" class="card hub-card" data-goto-link="apresentacao" style="text-align:left; width:100%; background:var(--surface);">
+          <button type="button" class="card hub-card" data-goto-link="relatorios" style="text-align:left; width:100%; background:var(--surface);">
             <div class="hub-card-top">
-              <div class="hub-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l14 8-14 8z"/></svg></div>
-              <span class="status-pill on">Opcional</span>
+              <div class="hub-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h9l3 3v15H6z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 16h6M9 8h2"/></svg></div>
+              <span class="status-pill on">Admins</span>
             </div>
-            <div><h3>Apresentar em slides</h3><div class="hub-card-desc">Monte a mesma análise como uma apresentação em tela cheia, se preferir esse formato numa reunião externa.</div></div>
+            <div><h3>Central de Relatórios</h3><div class="hub-card-desc">Gere um relatório analítico escrito pela IA com os indicadores monitorados e baixe a qualquer momento.</div></div>
           </button>
           <div class="card hub-card inert">
             <div class="hub-card-top">
@@ -1031,64 +952,36 @@ footer.credits{ padding:30px 28px 50px; color:var(--ink-muted); font-size:11.5px
         </div>
       </section>
 
-      <!-- ===================== APRESENTAÇÃO MENSAL ===================== -->
-      <section class="view" id="view-apresentacao">
-        <div id="presBuilder">
-          <div class="ai-strip" data-module="financeiro"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · roteiro sugerido</div><div class="ai-strip-text">A IA já monta um resumo executivo com os slides mais relevantes deste período. Adicione, remova ou reordene à vontade — inclusive durante a apresentação.</div></div></div>
+      <!-- ===================== CENTRAL DE RELATÓRIOS ===================== -->
+      <section class="view" id="view-relatorios">
+        <div class="scope-notice" id="relatoriosScopeNotice" hidden>Central de Relatórios é restrita a administradores da rede — nível "Administrar" em Financeiro. Fale com o dono da conta se precisar de acesso.</div>
+        <div id="relatoriosContent">
+          <div class="ai-strip" data-module="financeiro"><div class="insight-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/></svg></div><div><div class="ai-strip-kicker">IA · relatório analítico</div><div class="ai-strip-text">A IA lê os indicadores do período e escopo selecionados no topo e escreve uma análise completa — não é uma captura de tela, é texto interpretado.</div></div></div>
 
-          <div class="pres-hero-row">
-            <div><h2>Apresentação de resultados</h2><p id="presPeriodLabel">Carregando período…</p></div>
-            <button type="button" class="pres-play-btn" id="presStartBtn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l14 8-14 8z"/></svg>
-              Iniciar apresentação
-            </button>
-          </div>
-
-          <div class="pres-template-row">
-            <button type="button" class="pres-template-btn" data-preset="executivo">Resumo executivo</button>
-            <button type="button" class="pres-template-btn" data-preset="socios">Reunião de sócios</button>
-            <button type="button" class="pres-template-btn" data-preset="conselho">Conselho / investidores</button>
-          </div>
-
-          <div class="section-title">Slides desta apresentação</div>
-          <div class="card card-pad">
-            <div class="pres-deck-list" id="presDeckList"></div>
-          </div>
-
-          <div class="section-title">Adicionar slide</div>
-          <div class="pres-catalog-grid" id="presCatalogGrid"></div>
-        </div>
-
-        <div class="pres-player" id="presPlayer" hidden>
-          <div class="pres-player-bar">
-            <span class="pres-player-label" id="presPlayerLabel">Slide 1</span>
-            <div class="pres-dots" id="presDots"></div>
-            <div class="pres-player-actions">
-              <button type="button" class="pres-icon-btn" id="presEditBtn" title="Editar apresentação" aria-label="Editar apresentação">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
-              </button>
-              <button type="button" class="pres-icon-btn" id="presExitBtn" title="Sair da apresentação" aria-label="Sair da apresentação">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
-              </button>
+          <div class="card card-pad" style="margin-top:16px;">
+            <h3 style="margin-top:0;">Gerar novo relatório</h3>
+            <p class="hub-card-desc">Cobre DRE, caixa livre, cenários, estoque, compras, metas e auditoria do escopo e período atuais (<span id="relatorioEscopoLabel">—</span>).</p>
+            <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-top:12px;">
+              <button type="button" class="mini-btn primary" id="gerarRelatorioBtn">Gerar relatório com IA</button>
+              <span class="hub-card-desc" id="relatorioGerandoMsg" hidden>Analisando indicadores…</span>
             </div>
           </div>
-          <div class="pres-stage" id="presStage">
-            <button type="button" class="pres-nav-side prev" id="presPrevBtn" aria-label="Slide anterior">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>
-            </button>
-            <div id="presSlideHost" style="width:100%;"></div>
-            <button type="button" class="pres-nav-side next" id="presNextBtn" aria-label="Próximo slide">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
-            </button>
-          </div>
-        </div>
 
-        <div class="pres-edit-overlay" id="presEditOverlay">
-          <div class="pres-edit-panel">
-            <div class="card-head"><div class="card-title">Editar apresentação</div><button type="button" class="mini-btn" id="presEditClose">Fechar</button></div>
-            <div class="pres-deck-list" id="presEditDeckList" style="margin-top:12px;"></div>
-            <div class="section-title">Adicionar slide</div>
-            <div class="pres-catalog-grid" id="presEditCatalogGrid"></div>
+          <div class="card card-pad" style="margin-top:16px;">
+            <h3 style="margin-top:0;">Central de Relatórios</h3>
+            <p class="hub-card-desc">Todos os relatórios gerados ficam disponíveis aqui pra consultar ou baixar quando quiser.</p>
+            <table class="simple" id="relatoriosTable">
+              <thead><tr><th>Título</th><th>Escopo</th><th>Período</th><th>Gerado em</th><th>Ações</th></tr></thead>
+              <tbody id="relatoriosList"></tbody>
+            </table>
+          </div>
+
+          <div class="card card-pad" id="relatorioViewPanel" hidden style="margin-top:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+              <h3 style="margin-top:0;" id="relatorioViewTitle">Relatório</h3>
+              <button type="button" class="mini-btn" id="relatorioViewClose">Fechar</button>
+            </div>
+            <div id="relatorioViewBody"></div>
           </div>
         </div>
       </section>
@@ -1950,7 +1843,7 @@ document.getElementById('themeToggle').addEventListener('click', function(){
 ============================================================ */
 var navLinks = document.querySelectorAll('.side-link[data-view], .side-sub-link[data-view]');
 var MODULE_TITLES = {
-  hub:{ title:'Darius' }, apresentacao:{ title:'Apresentação' }, dre:{ title:'Financeiro' }, micro:{ title:'Financeiro' }, caixa:{ title:'Financeiro' }, cenarios:{ title:'Financeiro' },
+  hub:{ title:'Darius' }, relatorios:{ title:'Central de Relatórios' }, dre:{ title:'Financeiro' }, micro:{ title:'Financeiro' }, caixa:{ title:'Financeiro' }, cenarios:{ title:'Financeiro' },
   metas:{ title:'Metas' }, estoque:{ title:'Estoque' }, compras:{ title:'Compras' },
   auditoria:{ title:'Auditoria · Contínua' }, 'auditoria-externa':{ title:'Auditoria · Externa' }, 'auditoria-ia':{ title:'Auditoria · IA & Anomalias' }, 'log-atividade':{ title:'Auditoria · Log de Atividade' },
   integracoes:{ title:'Integrações' }, conciliacao:{ title:'Conciliação' }, planocontas:{ title:'Plano de Contas' },
@@ -1963,7 +1856,7 @@ function updateTopbarSub(viewKey){
   document.getElementById('topbarTitle').textContent = t.title;
   if(viewKey==='hub'){ document.getElementById('topbarSub').innerHTML = 'O hub onde os módulos se conectam · <span class="proto">Protótipo visual</span>'; return; }
   var sub;
-  if(viewKey==='apresentacao'){ sub = lastPA ? (lastPA.label+' vs '+lastPB.label+' · monte e apresente') : ''; }
+  if(viewKey==='relatorios'){ sub = lastPA ? (UNIT_META[state.unit].name+' · '+lastPA.label+' · disponível só para admins') : ''; }
   else if(viewKey==='dre'){ sub = lastPA ? (lastPA.label+' vs '+lastPB.label+' · meta sempre monitorada') : ''; }
   else if(viewKey==='micro' || viewKey==='caixa'){ sub = lastPA ? (UNIT_META[state.unit].name+' · '+lastPA.label) : ''; }
   else if(viewKey==='cenarios'){ sub = lastPA ? (UNIT_META[state.unit].name+' · próximos 6 meses a partir de '+lastPA.label) : ''; }
@@ -1989,7 +1882,7 @@ function goToView(viewKey){
   var activeSub = document.querySelector('.side-sub-link.active');
   if(activeSub){ var grp = activeSub.closest('.side-group'); if(grp) grp.classList.add('open'); }
   var isGlobal = GLOBAL_VIEWS.indexOf(viewKey) !== -1;
-  document.getElementById('compareGroup').style.display = (viewKey==='hub'||viewKey==='dre'||viewKey==='apresentacao') ? '' : 'none';
+  document.getElementById('compareGroup').style.display = (viewKey==='hub'||viewKey==='dre') ? '' : 'none';
   document.getElementById('marcaField').hidden = isGlobal;
   document.getElementById('unitField').hidden = isGlobal || state.marca==='grupo';
   document.getElementById('aiPill').style.display = isGlobal ? 'none' : '';
@@ -4183,6 +4076,7 @@ document.getElementById('operatorModeBtn').addEventListener('click', function(){
   updateOperatorBanner();
   applyAiPermissionGating();
   renderPedidosBody();
+  renderRelatorios();
   logActivity('modo operador', 'Sistema', 'Admin passou a atuar como operador');
 });
 document.getElementById('operatorModeExitBtn').addEventListener('click', function(){
@@ -4190,6 +4084,7 @@ document.getElementById('operatorModeExitBtn').addEventListener('click', functio
   updateOperatorBanner();
   applyAiPermissionGating();
   renderPedidosBody();
+  renderRelatorios();
   logActivity('modo admin', 'Sistema', 'Admin voltou ao modo admin');
 });
 function renderActivityLog(){
@@ -4299,273 +4194,113 @@ function renderPermTable(){
 }
 
 /* ============================================================
-   APRESENTAÇÃO MENSAL — montar e apresentar slides
+   CENTRAL DE RELATÓRIOS — relatório analítico escrito pela IA
 ============================================================ */
-var SLIDE_ICONS = {
-  capa:'<path d="M4 4h16v16H4z"/><path d="M4 9h16"/>',
-  resumo:'<rect x="3" y="12" width="4" height="8" rx="1"/><rect x="10" y="7" width="4" height="13" rx="1"/><rect x="17" y="3" width="4" height="17" rx="1"/>',
-  dre:'<path d="M6 3h9l3 3v15H6z"/><path d="M14 3v4h4"/>',
-  caixa:'<path d="M3 17l5-6 4 3 8-9"/><path d="M13 6h5v5"/>',
-  cenarios:'<path d="M3 20h18"/><path d="M6 20V10M12 20V4M18 20v-7"/>',
-  ranking:'<path d="M8 20V10M14 20V4M20 20v-7M4 20h18"/>',
-  benchmark:'<path d="M4 19h16"/><path d="M7 19v-6M12 19V7M17 19v-10"/>',
-  metas:'<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.7"/><circle cx="12" cy="12" r="1"/>',
-  estoque:'<path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/>',
-  auditoria:'<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 2.3h6v2.7H9z"/><path d="M9 12.3l2 2 4-4.2"/>',
-  insights:'<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/><circle cx="12" cy="12" r="2.6"/>',
-  fechamento:'<path d="M5 12l5 5L20 7"/>'
-};
-var SLIDE_META = [
-  { key:'capa', title:'Capa', desc:'Título e período da apresentação.' },
-  { key:'resumo', title:'Resumo executivo', desc:'Os números que mais importam no período, da receita bruta ao caixa.' },
-  { key:'dre', title:'DRE em cascata', desc:'Da receita bruta ao resultado líquido.' },
-  { key:'caixa', title:'Geração de caixa', desc:'EBITDA até caixa livre do período.' },
-  { key:'cenarios', title:'Cenários (6 meses)', desc:'Pessimista, realista e otimista para o caixa.' },
-  { key:'ranking', title:'Ranking de unidades', desc:'Margem EBITDA loja a loja.' },
-  { key:'benchmark', title:'Benchmark entre unidades', desc:'EBITDA, CMV e CMO lado a lado.' },
-  { key:'metas', title:'Metas do período', desc:'Quantas metas financeiras estão no azul.' },
-  { key:'estoque', title:'Estoque em destaque', desc:'Valor em estoque e itens em risco.' },
-  { key:'auditoria', title:'Auditoria em destaque', desc:'Nota geral e achados críticos.' },
-  { key:'insights', title:'Insights de IA', desc:'Pontos de fala prontos, gerados pela IA.' },
-  { key:'fechamento', title:'Fechamento', desc:'Slide de encerramento — perguntas.' }
-];
-function slideMeta(key){ return SLIDE_META.find(function(s){ return s.key===key; }); }
-var PRES_PRESETS = {
-  executivo: ['capa','resumo','dre','insights','fechamento'],
-  socios: ['capa','resumo','dre','caixa','cenarios','ranking','metas','insights','fechamento'],
-  conselho: ['capa','resumo','dre','caixa','cenarios','benchmark','estoque','auditoria','insights','fechamento']
-};
-var presDeck = PRES_PRESETS.executivo.slice();
-var presCurrentIdx = 0;
+var REPORTS = [];
+var reportSeq = 0;
+function relatoriosIsAdmin(){ return tierAtLeast(currentTier('financeiro'), 'admin'); }
+function relatorioEscopoNome(){ return UNIT_META[state.unit] ? UNIT_META[state.unit].name : state.unit; }
+function buildRelatorioHTML(pA, pB, pM){
+  var d = pA.dre, dB = pB.dre;
+  var unitName = relatorioEscopoNome();
+  var varReceita = dB.receitaLiquida ? (d.receitaLiquida/dB.receitaLiquida-1) : 0;
+  var varEbitda = pA.pct.ebitda - pB.pct.ebitda;
+  var statuses = MICRO_TARGET_DEFS.map(function(def){ return { def:def, st: budgetStatus(pA.pct[def.key], pM.pct[def.key], def.lowerBetter) }; });
+  var abaixo = statuses.filter(function(s){ return s.st.cls==='badge-critical'; });
+  var acima = statuses.filter(function(s){ return s.st.cls==='badge-good'; });
 
-function slideBuilders(pA, pB, pM){
-  var unitName = UNIT_META[state.unit].name;
-  return {
-    capa:function(){
-      return '<div class="pres-cover"><div class="pres-cover-mark">D</div><div class="pres-kicker">Darius</div>' +
-        '<h1 class="pres-title">Resultados de '+pA.label+'</h1>' +
-        '<p class="pres-subtitle">'+unitName+'</p>' +
-        '<p class="pres-cover-meta">Comparado a '+pB.label+' · preparado no Darius</p></div>';
-    },
-    resumo:function(){
-      var items = [
-        {label:'Receita bruta', v:pA.dre.receitaBruta},
-        {label:'Receita líquida', v:pA.dre.receitaLiquida},
-        {label:'EBITDA · margem '+fmtPct(pA.pct.ebitda), v:pA.dre.ebitda},
-        {label:'Resultado do exercício · margem '+fmtPct(pA.pct.liquido), v:pA.dre.liquido},
-        {label:'Geração de caixa operacional', v:pA.dre.caixaLivre}
-      ];
-      return '<div class="pres-kicker">Resumo executivo</div><h1 class="pres-title">Como '+unitName+' fechou '+pA.label+'</h1>' +
-        '<div class="pres-hero-grid">'+items.map(function(it){
-          return '<div class="card pres-num-card"><div class="pres-num-label">'+it.label+'</div><div class="pres-num-value tnum">'+fmt(it.v)+'</div></div>';
-        }).join('')+'</div>';
-    },
-    dre:function(){
-      return '<div class="pres-kicker">Financeiro</div><h1 class="pres-title">Da receita bruta ao resultado líquido</h1>' +
-        '<div class="card card-pad"><div class="viz-wrap"><svg id="presWaterfallChart" width="100%" height="320"></svg><div class="viz-tip" id="presTipWaterfall"></div></div><div class="legend" id="presWaterfallLegend"></div></div>';
-    },
-    caixa:function(){
-      return '<div class="pres-kicker">Financeiro</div><h1 class="pres-title">Caixa é rei — lucro é opinião</h1>' +
-        '<div class="card card-pad cvp-card" style="margin-bottom:16px;">'+profitCashHeadlineHTML(pA)+'</div>' +
-        '<div class="card card-pad"><div class="viz-wrap"><svg id="presCashBridge" width="100%" height="220"></svg><div class="viz-tip" id="presTipCashBridge"></div></div></div>';
-    },
-    cenarios:function(){
-      var projs = {};
-      SCENARIO_DEFS.forEach(function(sd){ projs[sd.key] = computeScenarioProjection(state.unit, pA.year, pA.month, scenarioPremises[sd.key]); });
-      var cards = SCENARIO_DEFS.map(function(sd){
-        var p = projs[sd.key];
-        return '<div class="card pres-num-card"><div class="pres-num-label">'+sd.label+' · caixa livre em 6 meses</div><div class="pres-num-value tnum" style="color:'+(p.finalLivre>=0?'var(--good-text)':'var(--critical)')+';">'+fmt(p.finalLivre)+'</div></div>';
-      }).join('');
-      return '<div class="pres-kicker">Financeiro</div><h1 class="pres-title">Para onde o caixa vai nos próximos 6 meses</h1>' +
-        '<div class="card card-pad"><div class="viz-wrap"><svg id="presScenarioChart" width="100%" height="260"></svg><div class="viz-tip" id="presTipScenarioChart"></div></div><div class="legend" id="presScenarioChartLegend"></div></div>' +
-        '<div class="pres-hero-grid" style="margin-top:20px;">'+cards+'</div>';
-    },
-    ranking:function(){
-      return '<div class="pres-kicker">Unidades</div><h1 class="pres-title">Ranking de margem EBITDA</h1>' +
-        '<div class="card card-pad" id="presRankingCard"></div>';
-    },
-    benchmark:function(){
-      return '<div class="pres-kicker">Unidades</div><h1 class="pres-title">Benchmark entre unidades</h1>' +
-        '<div class="card card-pad"><div class="viz-wrap"><svg id="presUnitBench" width="100%" height="300"></svg><div class="viz-tip" id="presTipBench"></div></div>' +
-        '<div class="legend"><span class="legend-item"><span class="legend-sw" style="background:var(--c1)"></span>Margem EBITDA</span><span class="legend-item"><span class="legend-sw" style="background:var(--c2)"></span>CMV</span><span class="legend-item"><span class="legend-sw" style="background:var(--c4)"></span>CMO</span></div></div>';
-    },
-    metas:function(){
-      var statuses = MICRO_TARGET_DEFS.map(function(def){ return budgetStatus(pA.pct[def.key], pM.pct[def.key], def.lowerBetter); });
-      var achieved = statuses.filter(function(s){ return s.cls!=='badge-critical'; }).length;
-      var rows = MICRO_TARGET_DEFS.map(function(def,i){
-        var st = statuses[i];
-        var dot = st.cls==='badge-critical' ? 'var(--critical)' : (st.cls==='badge-good' ? 'var(--good)' : 'var(--info)');
-        return '<div class="pres-bullet"><span class="pres-bullet-dot" style="background:'+dot+';"></span><span>'+def.label+': <b>'+fmtPct(pA.pct[def.key])+'</b> · meta '+fmtPct(pM.pct[def.key],0)+' — '+st.label+'</span></div>';
-      }).join('');
-      return '<div class="pres-kicker">Metas</div><h1 class="pres-title">'+achieved+' de '+MICRO_TARGET_DEFS.length+' metas financeiras no azul</h1><div class="pres-bullets">'+rows+'</div>';
-    },
-    estoque:function(){
-      var items = inventoryForUnit(isRealLoja(state.unit) ? state.unit : currentMarcaFirstLoja());
-      var valorTotal = items.reduce(function(s,it){ return s+it.stock*it.custo; },0);
-      var emRisco = items.filter(function(it){ return it.status==='critico'||it.status==='baixo'; });
-      var cards = '<div class="card pres-num-card"><div class="pres-num-label">Valor em estoque</div><div class="pres-num-value tnum">'+fmt(valorTotal/1000)+'</div></div>' +
-        '<div class="card pres-num-card"><div class="pres-num-label">Itens em risco de ruptura</div><div class="pres-num-value tnum">'+emRisco.length+'</div></div>';
-      var bullets = emRisco.length ? emRisco.slice(0,3).map(function(it){ return '<div class="pres-bullet"><span class="pres-bullet-dot" style="background:var(--critical);"></span><span><b>'+it.name+'</b> — '+it.dias+' dias de estoque no ritmo atual de consumo.</span></div>'; }).join('')
-        : '<div class="pres-bullet"><span class="pres-bullet-dot" style="background:var(--good);"></span><span>Nenhum item em risco de ruptura nesta unidade.</span></div>';
-      return '<div class="pres-kicker">Estoque</div><h1 class="pres-title">Estoque em destaque — '+unitName+'</h1><div class="pres-hero-grid">'+cards+'</div><div class="pres-bullets" style="margin-top:28px;">'+bullets+'</div>';
-    },
-    auditoria:function(){
-      var a = auditForUnit(state.unit);
-      var findings = FINDINGS_BASE.concat(FINDINGS_UNIT_EXTRA[state.unit]||[]);
-      var criticas = findings.filter(function(f){ return f.sev==='critico' && f.status!=='resolvido'; });
-      var cards = '<div class="card pres-num-card"><div class="pres-num-label">Nota geral de auditoria</div><div class="pres-num-value tnum">'+a.geral+'/100</div></div>' +
-        '<div class="card pres-num-card"><div class="pres-num-label">Achados críticos em aberto</div><div class="pres-num-value tnum">'+criticas.length+'</div></div>';
-      var list = (criticas.length ? criticas : findings.slice(0,2));
-      var bullets = list.map(function(f){ return '<div class="pres-bullet"><span class="pres-bullet-dot" style="background:'+(f.sev==='critico'?'var(--critical)':'var(--accent)')+';"></span><span>'+f.desc+'</span></div>'; }).join('');
-      return '<div class="pres-kicker">Auditoria</div><h1 class="pres-title">Auditoria em destaque — '+unitName+'</h1><div class="pres-hero-grid">'+cards+'</div><div class="pres-bullets" style="margin-top:28px;">'+bullets+'</div>';
-    },
-    insights:function(){
-      var bullets = INSIGHTS.slice(0,4).map(function(ins){ return '<div class="pres-bullet"><span class="pres-bullet-dot"></span><span>'+ins.text+'</span></div>'; }).join('');
-      return '<div class="pres-kicker">IA</div><h1 class="pres-title">O que vale a pena mencionar este mês</h1><div class="pres-bullets">'+bullets+'</div>';
-    },
-    fechamento:function(){
-      return '<div class="pres-cover"><div class="pres-cover-mark">D</div><h1 class="pres-title">Perguntas?</h1><p class="pres-subtitle">Pergunte à IA a qualquer momento — botão flutuante, em qualquer tela do Darius.</p></div>';
-    }
+  var estoqueTxt = '<p>Módulo de Estoque não se aplica a este escopo (rede consolidada ou grupo) — selecione uma loja específica para incluir o detalhe de estoque no relatório.</p>';
+  if(isRealLoja(state.unit)){
+    var inv = inventoryForUnit(state.unit);
+    var risco = inv.filter(function(it){ return it.status==='critico'||it.status==='baixo'; });
+    estoqueTxt = '<p>'+(risco.length ? risco.length+' item(ns) em risco de ruptura em '+unitName+': '+risco.slice(0,4).map(function(it){ return it.name; }).join(', ')+'.' : 'Nenhum item em risco de ruptura em '+unitName+' neste momento.')+'</p>';
+  }
+  var comprasTxt = '<p>Módulo de Compras não se aplica a este escopo — selecione uma loja específica para incluir pedidos e fornecedores no relatório.</p>';
+  if(isRealLoja(state.unit)){
+    var pendentes = PEDIDOS_COMPRA.filter(function(p){ return p.unit===state.unit && (p.status==='aguardando_aprovacao'||p.status==='aprovado'||p.status==='enviado'); });
+    comprasTxt = '<p>'+(pendentes.length ? pendentes.length+' pedido(s) de compra em andamento em '+unitName+', somando '+fmt(pendentes.reduce(function(s,p){ return s+pedidoValor(p);},0)/1000)+'.' : 'Nenhum pedido de compra em andamento em '+unitName+'.')+'</p>';
+  }
+  var aud = auditForUnit(state.unit);
+  var findings = FINDINGS_BASE.concat(FINDINGS_UNIT_EXTRA[state.unit]||[]);
+  var criticas = findings.filter(function(f){ return f.sev==='critico' && f.status==='aberto'; });
+  var auditoriaTxt = '<p>Nota geral de auditoria: <b>'+aud.geral+'/100</b>. '+(criticas.length ? criticas.length+' achado(s) crítico(s) em aberto: '+criticas.slice(0,3).map(function(f){ return f.desc; }).join(' '): 'Nenhum achado crítico em aberto.')+'</p>';
+
+  var col = computeColchaoSeguranca(pA.unit, pA.year, pA.month);
+  var saldo = getSaldoCaixaAtual(pA.unit);
+  var livre = saldo - col;
+
+  return '' +
+    '<div class="hub-appendix-title">Resumo executivo</div>' +
+    '<p>'+unitName+' fechou '+pA.label+' com receita líquida de <b>'+fmt(d.receitaLiquida)+'</b>, '+(varReceita>=0?'alta':'queda')+' de <b>'+fmtPct(Math.abs(varReceita))+'</b> em relação a '+pB.label+'. A margem EBITDA foi de <b>'+fmtPct(pA.pct.ebitda)+'</b>'+(varEbitda>=0?' (subiu ':' (caiu ')+fmtPct(Math.abs(varEbitda))+' p.p. no período). O resultado líquido do período foi <b>'+fmt(d.liquido)+'</b>.</p>' +
+    '<p>Das '+statuses.length+' metas financeiras acompanhadas, <b>'+acima.length+' estão acima da meta</b> e <b>'+abaixo.length+' estão abaixo</b>'+(abaixo.length?(': '+abaixo.map(function(s){ return s.def.label; }).join(', ')+'.'):'.')+'</p>' +
+    '<div class="hub-appendix-title">Financeiro</div>' +
+    '<p>CMV em <b>'+fmtPct(pA.pct.cmv)+'</b>, CMO em <b>'+fmtPct(pA.pct.cmo)+'</b> e CTO em <b>'+fmtPct(pA.pct.cto)+'</b> da receita líquida. Prime cost consolidado: <b>'+fmtPct(pA.pct.primeCost)+'</b>.</p>' +
+    '<div class="hub-appendix-title">Caixa</div>' +
+    '<p>Saldo de caixa atual de <b>'+fmt(saldo)+'</b> contra um colchão de segurança de <b>'+fmt(col)+'</b> (3 meses de custo operacional médio) — caixa livre de <b>'+fmt(livre)+'</b>'+(livre>=0?', disponível para distribuição sem comprometer a operação.':', ainda não há caixa livre formado; recomenda-se não distribuir neste período.')+'</p>' +
+    '<div class="hub-appendix-title">Estoque</div>' + estoqueTxt +
+    '<div class="hub-appendix-title">Compras</div>' + comprasTxt +
+    '<div class="hub-appendix-title">Auditoria</div>' + auditoriaTxt +
+    '<div class="hub-appendix-title">O que a IA recomenda</div>' +
+    '<div>'+INSIGHTS.slice(0,3).map(function(ins){ return '<div style="margin-bottom:8px;">• '+ins.text+'</div>'; }).join('')+'</div>';
+}
+function gerarRelatorio(){
+  if(!relatoriosIsAdmin() || !lastPA || !lastPB || !lastPM) return;
+  reportSeq++;
+  var html = buildRelatorioHTML(lastPA, lastPB, lastPM);
+  var report = {
+    id: 'rel-'+reportSeq,
+    title: 'Relatório analítico — '+relatorioEscopoNome()+' · '+lastPA.label,
+    escopo: relatorioEscopoNome(),
+    periodo: lastPA.label,
+    geradoEm: 'agora',
+    html: html
   };
+  REPORTS.unshift(report);
+  logActivity('geração de relatório', 'financeiro', 'Relatório de '+report.periodo+' gerado para '+report.escopo);
+  renderRelatorios();
+  abrirRelatorio(report.id);
 }
-
-var PRES_CHART_HYDRATORS = {
-  dre:function(){ if(lastPA && lastPB) renderWaterfall(lastPA, lastPB, {svg:'presWaterfallChart', tip:'presTipWaterfall', legend:'presWaterfallLegend'}); },
-  caixa:function(){ if(lastPA) renderCashBridge(lastPA, {svg:'presCashBridge', tip:'presTipCashBridge'}); },
-  cenarios:function(){ if(lastPA) renderScenarioChart({svg:'presScenarioChart', tip:'presTipScenarioChart', legend:'presScenarioChartLegend', insight:null}); },
-  benchmark:function(){ if(document.getElementById('presUnitBench')) renderBench({svg:'presUnitBench', tip:'presTipBench'}); }
-};
-
-function presGoToSlide(idx){
-  var slides = document.querySelectorAll('#presSlideHost .pres-slide');
-  if(!slides.length) return;
-  idx = Math.max(0, Math.min(idx, slides.length-1));
-  presCurrentIdx = idx;
-  slides.forEach(function(s,i){ s.classList.toggle('on', i===idx); });
-  var key = slides[idx].dataset.slide;
-  if(PRES_CHART_HYDRATORS[key]) PRES_CHART_HYDRATORS[key]();
-  var label = document.getElementById('presPlayerLabel'); if(label) label.textContent = 'Slide '+(idx+1)+' de '+slides.length;
-  document.querySelectorAll('#presDots .pres-dot').forEach(function(d,i){ d.classList.toggle('on', i===idx); });
-  var prevBtn = document.getElementById('presPrevBtn'), nextBtn = document.getElementById('presNextBtn');
-  if(prevBtn) prevBtn.disabled = idx===0;
-  if(nextBtn) nextBtn.disabled = idx===slides.length-1;
+function abrirRelatorio(id){
+  var report = REPORTS.find(function(r){ return r.id===id; });
+  if(!report) return;
+  document.getElementById('relatorioViewTitle').textContent = report.title;
+  document.getElementById('relatorioViewBody').innerHTML = report.html;
+  var panel = document.getElementById('relatorioViewPanel');
+  panel.hidden = false;
+  panel.scrollIntoView({behavior:'smooth', block:'start'});
 }
-function presBuildSlideHost(){
-  var host = document.getElementById('presSlideHost');
-  if(!host || !lastPA || !lastPB || !lastPM) return;
-  var builders = slideBuilders(lastPA, lastPB, lastPM);
-  host.innerHTML = presDeck.map(function(key){ return '<div class="pres-slide" data-slide="'+key+'">'+builders[key]()+'</div>'; }).join('');
-  var dots = document.getElementById('presDots');
-  if(dots) dots.innerHTML = presDeck.map(function(){ return '<span class="pres-dot"></span>'; }).join('');
-  if(presDeck.indexOf('ranking')!==-1) renderRanking(null,'presRankingCard');
-  presGoToSlide(Math.min(presCurrentIdx, presDeck.length-1));
-}
-function presUpdatePeriodLabel(){
-  var el = document.getElementById('presPeriodLabel');
-  if(el && lastPA && lastPB) el.textContent = lastPA.label+' comparado a '+lastPB.label+' · '+UNIT_META[state.unit].name;
-}
-function presMoveSlide(idx, dir){
-  var newIdx = idx+dir;
-  if(newIdx<0 || newIdx>=presDeck.length) return;
-  var tmp = presDeck[idx]; presDeck[idx]=presDeck[newIdx]; presDeck[newIdx]=tmp;
-  presRefreshAll();
-}
-function presRemoveSlide(idx){ presDeck.splice(idx,1); presRefreshAll(); }
-function presAddSlide(key){ if(presDeck.indexOf(key)===-1){ presDeck.push(key); presRefreshAll(); } }
-function presRenderDeckList(containerId){
-  var host = document.getElementById(containerId);
-  if(!host) return;
-  if(!presDeck.length){ host.innerHTML = '<div class="pres-empty">Nenhum slide selecionado. Escolha um modelo pronto ou adicione abaixo.</div>'; return; }
-  host.innerHTML = presDeck.map(function(key,i){
-    var m = slideMeta(key);
-    return '<div class="pres-deck-row">' +
-      '<span class="pres-deck-num">'+(i+1)+'</span>' +
-      '<div class="pres-deck-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">'+SLIDE_ICONS[key]+'</svg></div>' +
-      '<div><div class="pres-deck-title">'+m.title+'</div><div class="pres-deck-desc">'+m.desc+'</div></div>' +
-      '<div class="pres-deck-actions">' +
-        '<button type="button" class="pres-icon-btn" data-move="'+i+':-1"'+(i===0?' disabled':'')+' aria-label="Mover para cima"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg></button>' +
-        '<button type="button" class="pres-icon-btn" data-move="'+i+':1"'+(i===presDeck.length-1?' disabled':'')+' aria-label="Mover para baixo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>' +
-        '<button type="button" class="pres-icon-btn danger" data-remove="'+i+'" aria-label="Remover slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
-      '</div></div>';
-  }).join('');
-  host.querySelectorAll('[data-move]').forEach(function(btn){
-    btn.addEventListener('click', function(){ var p = btn.dataset.move.split(':'); presMoveSlide(+p[0], +p[1]); });
+function renderRelatorios(){
+  var notice = document.getElementById('relatoriosScopeNotice'), content = document.getElementById('relatoriosContent');
+  if(!notice || !content) return;
+  if(!relatoriosIsAdmin()){
+    notice.hidden = false;
+    content.hidden = true;
+    return;
+  }
+  notice.hidden = true;
+  content.hidden = false;
+  var escopoLabel = document.getElementById('relatorioEscopoLabel');
+  if(escopoLabel && lastPA) escopoLabel.textContent = relatorioEscopoNome()+' · '+lastPA.label;
+  var list = document.getElementById('relatoriosList');
+  if(!list) return;
+  list.innerHTML = REPORTS.length ? REPORTS.map(function(r){
+    return '<tr><td>'+r.title+'</td><td>'+r.escopo+'</td><td>'+r.periodo+'</td><td>'+r.geradoEm+'</td>' +
+      '<td class="row-actions"><button type="button" class="mini-btn" data-view-report="'+r.id+'">Ver</button> <button type="button" class="mini-btn" data-download-report="'+r.id+'">Baixar</button></td></tr>';
+  }).join('') : '<tr><td colspan="5" style="color:var(--ink-soft);">Nenhum relatório gerado ainda. Use o botão acima para gerar o primeiro.</td></tr>';
+  list.querySelectorAll('[data-view-report]').forEach(function(btn){
+    btn.addEventListener('click', function(){ abrirRelatorio(btn.dataset.viewReport); });
   });
-  host.querySelectorAll('[data-remove]').forEach(function(btn){
-    btn.addEventListener('click', function(){ presRemoveSlide(+btn.dataset.remove); });
+  list.querySelectorAll('[data-download-report]').forEach(function(btn){
+    btn.addEventListener('click', function(){ abrirRelatorio(btn.dataset.downloadReport); });
   });
 }
-function presRenderCatalog(containerId){
-  var host = document.getElementById(containerId);
-  if(!host) return;
-  var available = SLIDE_META.filter(function(m){ return presDeck.indexOf(m.key)===-1; });
-  if(!available.length){ host.innerHTML = '<div class="pres-empty">Todos os slides disponíveis já estão nesta apresentação.</div>'; return; }
-  host.innerHTML = available.map(function(m){
-    return '<button type="button" class="pres-add-chip" data-add="'+m.key+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>'+m.title+'</button>';
-  }).join('');
-  host.querySelectorAll('[data-add]').forEach(function(btn){
-    btn.addEventListener('click', function(){ presAddSlide(btn.dataset.add); });
-  });
-}
-function presRefreshAll(){
-  presRenderDeckList('presDeckList'); presRenderCatalog('presCatalogGrid');
-  presRenderDeckList('presEditDeckList'); presRenderCatalog('presEditCatalogGrid');
-  presBuildSlideHost();
-}
-document.querySelectorAll('.pres-template-btn').forEach(function(btn){
-  btn.addEventListener('click', function(){
-    presDeck = PRES_PRESETS[btn.dataset.preset].slice();
-    presCurrentIdx = 0;
-    presRefreshAll();
-  });
+document.getElementById('gerarRelatorioBtn').addEventListener('click', function(){
+  var btn = document.getElementById('gerarRelatorioBtn'), msg = document.getElementById('relatorioGerandoMsg');
+  btn.disabled = true; msg.hidden = false;
+  setTimeout(function(){ gerarRelatorio(); btn.disabled = false; msg.hidden = true; }, 700);
 });
-function presEnter(){
-  document.getElementById('presPlayer').hidden = false;
-  document.body.classList.add('presenting');
-  presCurrentIdx = 0;
-  presBuildSlideHost();
-}
-function presExit(){
-  document.getElementById('presPlayer').hidden = true;
-  document.body.classList.remove('presenting');
-  document.getElementById('presEditOverlay').classList.remove('open');
-}
-document.getElementById('presStartBtn').addEventListener('click', presEnter);
-document.getElementById('presExitBtn').addEventListener('click', presExit);
-document.getElementById('presPrevBtn').addEventListener('click', function(){ presGoToSlide(presCurrentIdx-1); });
-document.getElementById('presNextBtn').addEventListener('click', function(){ presGoToSlide(presCurrentIdx+1); });
-(function(){
-  var stage = document.getElementById('presStage');
-  if(!stage) return;
-  var startX=null, startY=null;
-  stage.addEventListener('touchstart', function(ev){
-    var t = ev.changedTouches[0]; startX = t.clientX; startY = t.clientY;
-  }, {passive:true});
-  stage.addEventListener('touchend', function(ev){
-    if(startX===null) return;
-    var t = ev.changedTouches[0];
-    var dx = t.clientX-startX, dy = t.clientY-startY;
-    startX = null;
-    if(Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy)*1.5){
-      if(dx < 0) presGoToSlide(presCurrentIdx+1); else presGoToSlide(presCurrentIdx-1);
-    }
-  }, {passive:true});
-})();
-document.getElementById('presEditBtn').addEventListener('click', function(){
-  presRenderDeckList('presEditDeckList'); presRenderCatalog('presEditCatalogGrid');
-  document.getElementById('presEditOverlay').classList.add('open');
-});
-document.getElementById('presEditClose').addEventListener('click', function(){
-  document.getElementById('presEditOverlay').classList.remove('open');
-  presBuildSlideHost();
-});
-document.addEventListener('keydown', function(ev){
-  if(document.getElementById('presPlayer').hidden) return;
-  if(ev.key==='Escape'){
-    var overlay = document.getElementById('presEditOverlay');
-    if(overlay.classList.contains('open')) overlay.classList.remove('open'); else presExit();
-  } else if(ev.key==='ArrowRight'){ presGoToSlide(presCurrentIdx+1); }
-  else if(ev.key==='ArrowLeft'){ presGoToSlide(presCurrentIdx-1); }
+document.getElementById('relatorioViewClose').addEventListener('click', function(){
+  document.getElementById('relatorioViewPanel').hidden = true;
 });
 
 /* ============================================================
@@ -4684,8 +4419,7 @@ function renderAll(){
   })();
   renderProjection();
   renderScenarioChart();
-  presUpdatePeriodLabel();
-  presBuildSlideHost();
+  renderRelatorios();
   syncTopbarHeight();
   applyAiPermissionGating();
   if(document.getElementById('activityLogBody')) renderActivityLog();
@@ -4701,7 +4435,6 @@ periodASel.addEventListener('change', renderAll);
 periodBSel.addEventListener('change', renderAll);
 
 renderAll();
-presRefreshAll();
 renderIndicatorPicker();
 renderDonutGeneric('cmvDonut','cmvLegend','tipDonut', CMV_CATS, 'CMV', '34,6% da receita');
 renderInsights();
@@ -4727,7 +4460,6 @@ window.addEventListener('resize', function(){
   var pA = computePeriod(state.unit, state.ay, state.am);
   var pB = computePeriod(state.unit, state.by, state.bm);
   renderWaterfall(pA,pB); renderCashBridge(pA); renderProfitCashBridge(pA); renderProjection(); renderScenarioChart(); renderBench(); renderBudgetTrend(pA.unit, pA.year, pA.month);
-  if(!document.getElementById('presPlayer').hidden){ presGoToSlide(presCurrentIdx); }
 });
 
 })();
